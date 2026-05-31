@@ -1,0 +1,6836 @@
+{
+  "icc_profile": "G:\\My Drive\\3dprint\\asset\\materials\\cmyk\\icc\\USWebCoatedSWOP.icc",
+  "delta_e_threshold": 2.0,
+  "count_safe": 303,
+  "count_k_ramp": 7,
+  "count_total": 310,
+  "swatches": [
+    {
+      "rgb": [
+        0,
+        89,
+        64
+      ],
+      "hex": "005940",
+      "cmyk": [
+        100,
+        38,
+        93,
+        43
+      ],
+      "lab": [
+        32.94117647058823,
+        -30,
+        8
+      ],
+      "delta_e": 0.91,
+      "base_name": "deep-dusty-green",
+      "name": "deep-dusty-green-02"
+    },
+    {
+      "rgb": [
+        0,
+        152,
+        111
+      ],
+      "hex": "00986f",
+      "cmyk": [
+        88,
+        16,
+        76,
+        3
+      ],
+      "lab": [
+        55.68627450980392,
+        -43,
+        12
+      ],
+      "delta_e": 0.366,
+      "base_name": "mid-fair-green",
+      "name": "mid-fair-green"
+    },
+    {
+      "rgb": [
+        0,
+        155,
+        76
+      ],
+      "hex": "009b4c",
+      "cmyk": [
+        88,
+        14,
+        100,
+        2
+      ],
+      "lab": [
+        56.07843137254902,
+        -50,
+        31
+      ],
+      "delta_e": 1.209,
+      "base_name": "mid-fair-green",
+      "name": "mid-fair-green-03"
+    },
+    {
+      "rgb": [
+        6,
+        118,
+        104
+      ],
+      "hex": "067668",
+      "cmyk": [
+        94,
+        33,
+        67,
+        18
+      ],
+      "lab": [
+        43.92156862745098,
+        -32,
+        -1
+      ],
+      "delta_e": 0.421,
+      "base_name": "mid-dusty-jade",
+      "name": "mid-dusty-jade-02"
+    },
+    {
+      "rgb": [
+        16,
+        147,
+        160
+      ],
+      "hex": "1093a0",
+      "cmyk": [
+        85,
+        26,
+        36,
+        2
+      ],
+      "lab": [
+        55.294117647058826,
+        -30,
+        -17
+      ],
+      "delta_e": 0.683,
+      "base_name": "mid-dusty-teal",
+      "name": "mid-dusty-teal-03"
+    },
+    {
+      "rgb": [
+        22,
+        146,
+        171
+      ],
+      "hex": "1692ab",
+      "cmyk": [
+        85,
+        28,
+        28,
+        1
+      ],
+      "lab": [
+        55.294117647058826,
+        -26,
+        -23
+      ],
+      "delta_e": 0.624,
+      "base_name": "mid-dusty-cyan",
+      "name": "mid-dusty-cyan-02"
+    },
+    {
+      "rgb": [
+        30,
+        111,
+        155
+      ],
+      "hex": "1e6f9b",
+      "cmyk": [
+        93,
+        56,
+        21,
+        3
+      ],
+      "lab": [
+        43.92156862745098,
+        -12,
+        -31
+      ],
+      "delta_e": 0.366,
+      "base_name": "mid-dusty-blue",
+      "name": "mid-dusty-blue"
+    },
+    {
+      "rgb": [
+        33,
+        148,
+        147
+      ],
+      "hex": "219493",
+      "cmyk": [
+        84,
+        24,
+        46,
+        3
+      ],
+      "lab": [
+        55.294117647058826,
+        -32,
+        -9
+      ],
+      "delta_e": 0.752,
+      "base_name": "mid-dusty-teal",
+      "name": "mid-dusty-teal-05"
+    },
+    {
+      "rgb": [
+        35,
+        53,
+        74
+      ],
+      "hex": "23354a",
+      "cmyk": [
+        99,
+        80,
+        45,
+        56
+      ],
+      "lab": [
+        21.176470588235293,
+        -2,
+        -15
+      ],
+      "delta_e": 1.465,
+      "base_name": "deep-dusty-blue",
+      "name": "deep-dusty-blue-03"
+    },
+    {
+      "rgb": [
+        39,
+        84,
+        89
+      ],
+      "hex": "275459",
+      "cmyk": [
+        93,
+        54,
+        56,
+        38
+      ],
+      "lab": [
+        32.549019607843135,
+        -15,
+        -8
+      ],
+      "delta_e": 0.818,
+      "base_name": "deep-dusty-teal",
+      "name": "deep-dusty-teal-02"
+    },
+    {
+      "rgb": [
+        41,
+        83,
+        94
+      ],
+      "hex": "29535e",
+      "cmyk": [
+        93,
+        59,
+        51,
+        35
+      ],
+      "lab": [
+        32.549019607843135,
+        -13,
+        -11
+      ],
+      "delta_e": 0.897,
+      "base_name": "deep-dusty-cyan",
+      "name": "deep-dusty-cyan"
+    },
+    {
+      "rgb": [
+        41,
+        84,
+        83
+      ],
+      "hex": "295453",
+      "cmyk": [
+        91,
+        51,
+        62,
+        42
+      ],
+      "lab": [
+        32.549019607843135,
+        -16,
+        -4
+      ],
+      "delta_e": 0.717,
+      "base_name": "deep-dusty-teal",
+      "name": "deep-dusty-teal"
+    },
+    {
+      "rgb": [
+        41,
+        117,
+        90
+      ],
+      "hex": "29755a",
+      "cmyk": [
+        88,
+        33,
+        78,
+        21
+      ],
+      "lab": [
+        43.92156862745098,
+        -30,
+        8
+      ],
+      "delta_e": 0.366,
+      "base_name": "mid-dusty-green",
+      "name": "mid-dusty-green-03"
+    },
+    {
+      "rgb": [
+        44,
+        51,
+        74
+      ],
+      "hex": "2c334a",
+      "cmyk": [
+        97,
+        89,
+        44,
+        53
+      ],
+      "lab": [
+        21.568627450980394,
+        2,
+        -15
+      ],
+      "delta_e": 1.581,
+      "base_name": "deep-dusty-indigo",
+      "name": "deep-dusty-indigo-03"
+    },
+    {
+      "rgb": [
+        45,
+        143,
+        180
+      ],
+      "hex": "2d8fb4",
+      "cmyk": [
+        82,
+        33,
+        19,
+        0
+      ],
+      "lab": [
+        55.294117647058826,
+        -19,
+        -28
+      ],
+      "delta_e": 0.0,
+      "base_name": "mid-dusty-cyan",
+      "name": "mid-dusty-cyan"
+    },
+    {
+      "rgb": [
+        46,
+        82,
+        98
+      ],
+      "hex": "2e5262",
+      "cmyk": [
+        92,
+        63,
+        47,
+        33
+      ],
+      "lab": [
+        32.549019607843135,
+        -10,
+        -14
+      ],
+      "delta_e": 0.986,
+      "base_name": "deep-dusty-cyan",
+      "name": "deep-dusty-cyan-02"
+    },
+    {
+      "rgb": [
+        46,
+        84,
+        77
+      ],
+      "hex": "2e544d",
+      "cmyk": [
+        87,
+        48,
+        69,
+        44
+      ],
+      "lab": [
+        32.549019607843135,
+        -16,
+        0
+      ],
+      "delta_e": 0.776,
+      "base_name": "deep-dusty-jade",
+      "name": "deep-dusty-jade"
+    },
+    {
+      "rgb": [
+        49,
+        186,
+        104
+      ],
+      "hex": "31ba68",
+      "cmyk": [
+        76,
+        0,
+        86,
+        0
+      ],
+      "lab": [
+        67.05882352941177,
+        -51,
+        31
+      ],
+      "delta_e": 1.134,
+      "base_name": "soft-fair-green",
+      "name": "soft-fair-green-03"
+    },
+    {
+      "rgb": [
+        51,
+        51,
+        51
+      ],
+      "hex": "333333",
+      "cmyk": [
+        70,
+        67,
+        66,
+        77
+      ],
+      "lab": [
+        21.176470588235293,
+        0,
+        0
+      ],
+      "delta_e": 0.0,
+      "base_name": "dark-gray",
+      "name": "dark-gray"
+    },
+    {
+      "rgb": [
+        52,
+        84,
+        70
+      ],
+      "hex": "345446",
+      "cmyk": [
+        83,
+        46,
+        76,
+        47
+      ],
+      "lab": [
+        32.94117647058823,
+        -15,
+        4
+      ],
+      "delta_e": 0.0,
+      "base_name": "deep-dusty-green",
+      "name": "deep-dusty-green"
+    },
+    {
+      "rgb": [
+        53,
+        48,
+        71
+      ],
+      "hex": "353047",
+      "cmyk": [
+        89,
+        93,
+        44,
+        56
+      ],
+      "lab": [
+        21.176470588235293,
+        7,
+        -14
+      ],
+      "delta_e": 0.708,
+      "base_name": "deep-dusty-violet",
+      "name": "deep-dusty-violet-03"
+    },
+    {
+      "rgb": [
+        53,
+        80,
+        101
+      ],
+      "hex": "355065",
+      "cmyk": [
+        91,
+        68,
+        43,
+        30
+      ],
+      "lab": [
+        32.549019607843135,
+        -6,
+        -16
+      ],
+      "delta_e": 0.661,
+      "base_name": "deep-dusty-blue",
+      "name": "deep-dusty-blue-02"
+    },
+    {
+      "rgb": [
+        53,
+        148,
+        133
+      ],
+      "hex": "359485",
+      "cmyk": [
+        81,
+        23,
+        57,
+        4
+      ],
+      "lab": [
+        55.68627450980392,
+        -32,
+        -1
+      ],
+      "delta_e": 0.421,
+      "base_name": "mid-dusty-jade",
+      "name": "mid-dusty-jade-03"
+    },
+    {
+      "rgb": [
+        53,
+        184,
+        140
+      ],
+      "hex": "35b88c",
+      "cmyk": [
+        75,
+        0,
+        64,
+        0
+      ],
+      "lab": [
+        67.05882352941177,
+        -45,
+        12
+      ],
+      "delta_e": 0.0,
+      "base_name": "soft-fair-green",
+      "name": "soft-fair-green"
+    },
+    {
+      "rgb": [
+        57,
+        76,
+        125
+      ],
+      "hex": "394c7d",
+      "cmyk": [
+        96,
+        85,
+        25,
+        11
+      ],
+      "lab": [
+        32.549019607843135,
+        4,
+        -31
+      ],
+      "delta_e": 0.506,
+      "base_name": "deep-dusty-indigo",
+      "name": "deep-dusty-indigo-02"
+    },
+    {
+      "rgb": [
+        59,
+        83,
+        65
+      ],
+      "hex": "3b5341",
+      "cmyk": [
+        77,
+        47,
+        81,
+        48
+      ],
+      "lab": [
+        32.94117647058823,
+        -13,
+        7
+      ],
+      "delta_e": 1.179,
+      "base_name": "deep-gray-green",
+      "name": "deep-gray-green"
+    },
+    {
+      "rgb": [
+        60,
+        46,
+        68
+      ],
+      "hex": "3c2e44",
+      "cmyk": [
+        79,
+        91,
+        45,
+        59
+      ],
+      "lab": [
+        21.176470588235293,
+        10,
+        -11
+      ],
+      "delta_e": 0.758,
+      "base_name": "deep-gray-violet",
+      "name": "deep-gray-violet"
+    },
+    {
+      "rgb": [
+        60,
+        150,
+        91
+      ],
+      "hex": "3c965b",
+      "cmyk": [
+        81,
+        19,
+        90,
+        5
+      ],
+      "lab": [
+        55.68627450980392,
+        -38,
+        23
+      ],
+      "delta_e": 0.6,
+      "base_name": "mid-fair-green",
+      "name": "mid-fair-green-02"
+    },
+    {
+      "rgb": [
+        62,
+        78,
+        102
+      ],
+      "hex": "3e4e66",
+      "cmyk": [
+        87,
+        72,
+        40,
+        29
+      ],
+      "lab": [
+        32.549019607843135,
+        -1,
+        -16
+      ],
+      "delta_e": 0.0,
+      "base_name": "deep-dusty-blue",
+      "name": "deep-dusty-blue"
+    },
+    {
+      "rgb": [
+        62,
+        107,
+        157
+      ],
+      "hex": "3e6b9d",
+      "cmyk": [
+        87,
+        62,
+        16,
+        2
+      ],
+      "lab": [
+        43.92156862745098,
+        -4,
+        -32
+      ],
+      "delta_e": 0.366,
+      "base_name": "mid-dusty-blue",
+      "name": "mid-dusty-blue-02"
+    },
+    {
+      "rgb": [
+        62,
+        116,
+        78
+      ],
+      "hex": "3e744e",
+      "cmyk": [
+        82,
+        34,
+        88,
+        23
+      ],
+      "lab": [
+        44.31372549019608,
+        -26,
+        15
+      ],
+      "delta_e": 0.567,
+      "base_name": "mid-dusty-green",
+      "name": "mid-dusty-green-05"
+    },
+    {
+      "rgb": [
+        66,
+        82,
+        59
+      ],
+      "hex": "42523b",
+      "cmyk": [
+        72,
+        48,
+        88,
+        49
+      ],
+      "lab": [
+        32.94117647058823,
+        -10,
+        11
+      ],
+      "delta_e": 0.661,
+      "base_name": "deep-gray-lime",
+      "name": "deep-gray-lime"
+    },
+    {
+      "rgb": [
+        66,
+        102,
+        181
+      ],
+      "hex": "4266b5",
+      "cmyk": [
+        85,
+        68,
+        0,
+        0
+      ],
+      "lab": [
+        43.529411764705884,
+        7,
+        -47
+      ],
+      "delta_e": 1.152,
+      "base_name": "mid-fair-indigo",
+      "name": "mid-fair-indigo"
+    },
+    {
+      "rgb": [
+        67,
+        178,
+        191
+      ],
+      "hex": "43b2bf",
+      "cmyk": [
+        70,
+        9,
+        25,
+        0
+      ],
+      "lab": [
+        66.66666666666667,
+        -29,
+        -16
+      ],
+      "delta_e": 0.0,
+      "base_name": "soft-dusty-teal",
+      "name": "soft-dusty-teal"
+    },
+    {
+      "rgb": [
+        68,
+        112,
+        117
+      ],
+      "hex": "447075",
+      "cmyk": [
+        80,
+        45,
+        49,
+        18
+      ],
+      "lab": [
+        44.31372549019608,
+        -15,
+        -8
+      ],
+      "delta_e": 0.756,
+      "base_name": "mid-dusty-teal",
+      "name": "mid-dusty-teal-06"
+    },
+    {
+      "rgb": [
+        69,
+        111,
+        123
+      ],
+      "hex": "456f7b",
+      "cmyk": [
+        80,
+        48,
+        44,
+        16
+      ],
+      "lab": [
+        44.31372549019608,
+        -13,
+        -12
+      ],
+      "delta_e": 0.881,
+      "base_name": "mid-dusty-cyan",
+      "name": "mid-dusty-cyan-06"
+    },
+    {
+      "rgb": [
+        69,
+        112,
+        111
+      ],
+      "hex": "45706f",
+      "cmyk": [
+        79,
+        43,
+        54,
+        20
+      ],
+      "lab": [
+        43.92156862745098,
+        -16,
+        -4
+      ],
+      "delta_e": 0.735,
+      "base_name": "mid-dusty-teal",
+      "name": "mid-dusty-teal-04"
+    },
+    {
+      "rgb": [
+        70,
+        140,
+        186
+      ],
+      "hex": "468cba",
+      "cmyk": [
+        76,
+        38,
+        11,
+        0
+      ],
+      "lab": [
+        55.294117647058826,
+        -12,
+        -31
+      ],
+      "delta_e": 0.634,
+      "base_name": "mid-dusty-blue",
+      "name": "mid-dusty-blue-03"
+    },
+    {
+      "rgb": [
+        70,
+        176,
+        203
+      ],
+      "hex": "46b0cb",
+      "cmyk": [
+        69,
+        12,
+        16,
+        0
+      ],
+      "lab": [
+        66.66666666666667,
+        -25,
+        -23
+      ],
+      "delta_e": 0.0,
+      "base_name": "soft-dusty-cyan",
+      "name": "soft-dusty-cyan"
+    },
+    {
+      "rgb": [
+        71,
+        76,
+        101
+      ],
+      "hex": "474c65",
+      "cmyk": [
+        82,
+        75,
+        40,
+        29
+      ],
+      "lab": [
+        32.549019607843135,
+        3,
+        -15
+      ],
+      "delta_e": 0.314,
+      "base_name": "deep-dusty-indigo",
+      "name": "deep-dusty-indigo"
+    },
+    {
+      "rgb": [
+        73,
+        80,
+        56
+      ],
+      "hex": "495038",
+      "cmyk": [
+        66,
+        51,
+        90,
+        51
+      ],
+      "lab": [
+        32.94117647058823,
+        -6,
+        13
+      ],
+      "delta_e": 0.0,
+      "base_name": "deep-gray-yellow",
+      "name": "deep-gray-yellow"
+    },
+    {
+      "rgb": [
+        73,
+        112,
+        104
+      ],
+      "hex": "497068",
+      "cmyk": [
+        76,
+        42,
+        60,
+        22
+      ],
+      "lab": [
+        44.31372549019608,
+        -16,
+        0
+      ],
+      "delta_e": 0.71,
+      "base_name": "mid-dusty-jade",
+      "name": "mid-dusty-jade-04"
+    },
+    {
+      "rgb": [
+        73,
+        147,
+        118
+      ],
+      "hex": "499376",
+      "cmyk": [
+        76,
+        24,
+        67,
+        6
+      ],
+      "lab": [
+        55.68627450980392,
+        -30,
+        8
+      ],
+      "delta_e": 0.846,
+      "base_name": "mid-dusty-green",
+      "name": "mid-dusty-green-08"
+    },
+    {
+      "rgb": [
+        74,
+        67,
+        142
+      ],
+      "hex": "4a438e",
+      "cmyk": [
+        93,
+        96,
+        8,
+        1
+      ],
+      "lab": [
+        32.15686274509804,
+        19,
+        -41
+      ],
+      "delta_e": 0.0,
+      "base_name": "deep-fair-indigo",
+      "name": "deep-fair-indigo"
+    },
+    {
+      "rgb": [
+        74,
+        110,
+        127
+      ],
+      "hex": "4a6e7f",
+      "cmyk": [
+        79,
+        51,
+        40,
+        14
+      ],
+      "lab": [
+        44.31372549019608,
+        -10,
+        -14
+      ],
+      "delta_e": 0.866,
+      "base_name": "mid-dusty-cyan",
+      "name": "mid-dusty-cyan-04"
+    },
+    {
+      "rgb": [
+        74,
+        179,
+        177
+      ],
+      "hex": "4ab3b1",
+      "cmyk": [
+        70,
+        8,
+        36,
+        0
+      ],
+      "lab": [
+        67.05882352941177,
+        -32,
+        -9
+      ],
+      "delta_e": 0.656,
+      "base_name": "soft-dusty-teal",
+      "name": "soft-dusty-teal-03"
+    },
+    {
+      "rgb": [
+        77,
+        77,
+        77
+      ],
+      "hex": "4d4d4d",
+      "cmyk": [
+        66,
+        61,
+        60,
+        46
+      ],
+      "lab": [
+        32.549019607843135,
+        0,
+        0
+      ],
+      "delta_e": 1.485,
+      "base_name": "dark-gray",
+      "name": "dark-gray-02"
+    },
+    {
+      "rgb": [
+        78,
+        71,
+        120
+      ],
+      "hex": "4e4778",
+      "cmyk": [
+        86,
+        89,
+        26,
+        13
+      ],
+      "lab": [
+        32.549019607843135,
+        13,
+        -27
+      ],
+      "delta_e": 0.0,
+      "base_name": "deep-dusty-violet",
+      "name": "deep-dusty-violet"
+    },
+    {
+      "rgb": [
+        79,
+        74,
+        99
+      ],
+      "hex": "4f4a63",
+      "cmyk": [
+        76,
+        77,
+        40,
+        30
+      ],
+      "lab": [
+        32.549019607843135,
+        7,
+        -14
+      ],
+      "delta_e": 0.774,
+      "base_name": "deep-dusty-violet",
+      "name": "deep-dusty-violet-04"
+    },
+    {
+      "rgb": [
+        79,
+        112,
+        98
+      ],
+      "hex": "4f7062",
+      "cmyk": [
+        73,
+        41,
+        65,
+        24
+      ],
+      "lab": [
+        44.31372549019608,
+        -15,
+        4
+      ],
+      "delta_e": 0.744,
+      "base_name": "mid-dusty-green",
+      "name": "mid-dusty-green-06"
+    },
+    {
+      "rgb": [
+        79,
+        114,
+        67
+      ],
+      "hex": "4f7243",
+      "cmyk": [
+        73,
+        36,
+        98,
+        25
+      ],
+      "lab": [
+        44.31372549019608,
+        -20,
+        22
+      ],
+      "delta_e": 0.369,
+      "base_name": "mid-dusty-lime",
+      "name": "mid-dusty-lime"
+    },
+    {
+      "rgb": [
+        80,
+        78,
+        53
+      ],
+      "hex": "504e35",
+      "cmyk": [
+        60,
+        54,
+        93,
+        51
+      ],
+      "lab": [
+        32.94117647058823,
+        -2,
+        15
+      ],
+      "delta_e": 0.0,
+      "base_name": "deep-dusty-yellow",
+      "name": "deep-dusty-yellow"
+    },
+    {
+      "rgb": [
+        81,
+        108,
+        130
+      ],
+      "hex": "516c82",
+      "cmyk": [
+        77,
+        55,
+        36,
+        13
+      ],
+      "lab": [
+        44.31372549019608,
+        -6,
+        -16
+      ],
+      "delta_e": 1.055,
+      "base_name": "mid-dusty-blue",
+      "name": "mid-dusty-blue-07"
+    },
+    {
+      "rgb": [
+        84,
+        174,
+        212
+      ],
+      "hex": "54aed4",
+      "cmyk": [
+        65,
+        16,
+        9,
+        0
+      ],
+      "lab": [
+        66.66666666666667,
+        -19,
+        -28
+      ],
+      "delta_e": 0.542,
+      "base_name": "soft-dusty-cyan",
+      "name": "soft-dusty-cyan-03"
+    },
+    {
+      "rgb": [
+        85,
+        111,
+        91
+      ],
+      "hex": "556f5b",
+      "cmyk": [
+        70,
+        41,
+        70,
+        25
+      ],
+      "lab": [
+        44.31372549019608,
+        -13,
+        8
+      ],
+      "delta_e": 0.0,
+      "base_name": "mid-dusty-green",
+      "name": "mid-dusty-green"
+    },
+    {
+      "rgb": [
+        86,
+        76,
+        53
+      ],
+      "hex": "564c35",
+      "cmyk": [
+        54,
+        58,
+        92,
+        51
+      ],
+      "lab": [
+        32.94117647058823,
+        1,
+        15
+      ],
+      "delta_e": 1.306,
+      "base_name": "deep-dusty-amber",
+      "name": "deep-dusty-amber-02"
+    },
+    {
+      "rgb": [
+        86,
+        103,
+        155
+      ],
+      "hex": "56679b",
+      "cmyk": [
+        79,
+        67,
+        15,
+        2
+      ],
+      "lab": [
+        43.92156862745098,
+        4,
+        -31
+      ],
+      "delta_e": 0.871,
+      "base_name": "mid-dusty-indigo",
+      "name": "mid-dusty-indigo-03"
+    },
+    {
+      "rgb": [
+        87,
+        72,
+        95
+      ],
+      "hex": "57485f",
+      "cmyk": [
+        70,
+        78,
+        42,
+        32
+      ],
+      "lab": [
+        32.94117647058823,
+        10,
+        -11
+      ],
+      "delta_e": 0.891,
+      "base_name": "deep-gray-violet",
+      "name": "deep-gray-violet-02"
+    },
+    {
+      "rgb": [
+        87,
+        179,
+        162
+      ],
+      "hex": "57b3a2",
+      "cmyk": [
+        67,
+        9,
+        45,
+        0
+      ],
+      "lab": [
+        67.05882352941177,
+        -32,
+        0
+      ],
+      "delta_e": 0.0,
+      "base_name": "soft-dusty-jade",
+      "name": "soft-dusty-jade"
+    },
+    {
+      "rgb": [
+        89,
+        106,
+        131
+      ],
+      "hex": "596a83",
+      "cmyk": [
+        74,
+        58,
+        34,
+        12
+      ],
+      "lab": [
+        44.31372549019608,
+        -2,
+        -16
+      ],
+      "delta_e": 1.141,
+      "base_name": "mid-dusty-blue",
+      "name": "mid-dusty-blue-08"
+    },
+    {
+      "rgb": [
+        91,
+        146,
+        105
+      ],
+      "hex": "5b9269",
+      "cmyk": [
+        71,
+        25,
+        75,
+        7
+      ],
+      "lab": [
+        55.68627450980392,
+        -26,
+        16
+      ],
+      "delta_e": 0.366,
+      "base_name": "mid-dusty-green",
+      "name": "mid-dusty-green-04"
+    },
+    {
+      "rgb": [
+        91,
+        147,
+        73
+      ],
+      "hex": "5b9349",
+      "cmyk": [
+        72,
+        23,
+        100,
+        7
+      ],
+      "lab": [
+        55.68627450980392,
+        -30,
+        33
+      ],
+      "delta_e": 0.882,
+      "base_name": "mid-fair-lime",
+      "name": "mid-fair-lime"
+    },
+    {
+      "rgb": [
+        92,
+        74,
+        54
+      ],
+      "hex": "5c4a36",
+      "cmyk": [
+        49,
+        63,
+        88,
+        51
+      ],
+      "lab": [
+        32.94117647058823,
+        6,
+        15
+      ],
+      "delta_e": 0.0,
+      "base_name": "deep-dusty-amber",
+      "name": "deep-dusty-amber"
+    },
+    {
+      "rgb": [
+        92,
+        181,
+        119
+      ],
+      "hex": "5cb577",
+      "cmyk": [
+        68,
+        5,
+        75,
+        0
+      ],
+      "lab": [
+        67.05882352941177,
+        -38,
+        23
+      ],
+      "delta_e": 0.475,
+      "base_name": "soft-fair-green",
+      "name": "soft-fair-green-02"
+    },
+    {
+      "rgb": [
+        93,
+        70,
+        90
+      ],
+      "hex": "5d465a",
+      "cmyk": [
+        63,
+        79,
+        45,
+        35
+      ],
+      "lab": [
+        32.94117647058823,
+        13,
+        -8
+      ],
+      "delta_e": 0.0,
+      "base_name": "deep-dusty-magenta",
+      "name": "deep-dusty-magenta"
+    },
+    {
+      "rgb": [
+        93,
+        110,
+        86
+      ],
+      "hex": "5d6e56",
+      "cmyk": [
+        65,
+        42,
+        74,
+        27
+      ],
+      "lab": [
+        44.31372549019608,
+        -10,
+        11
+      ],
+      "delta_e": 0.369,
+      "base_name": "mid-gray-lime",
+      "name": "mid-gray-lime-02"
+    },
+    {
+      "rgb": [
+        94,
+        111,
+        58
+      ],
+      "hex": "5e6f3a",
+      "cmyk": [
+        65,
+        40,
+        100,
+        27
+      ],
+      "lab": [
+        44.31372549019608,
+        -14,
+        27
+      ],
+      "delta_e": 1.038,
+      "base_name": "mid-dusty-lime",
+      "name": "mid-dusty-lime-05"
+    },
+    {
+      "rgb": [
+        94,
+        136,
+        188
+      ],
+      "hex": "5e88bc",
+      "cmyk": [
+        69,
+        43,
+        6,
+        0
+      ],
+      "lab": [
+        55.294117647058826,
+        -4,
+        -32
+      ],
+      "delta_e": 0.744,
+      "base_name": "mid-dusty-blue",
+      "name": "mid-dusty-blue-06"
+    },
+    {
+      "rgb": [
+        95,
+        66,
+        113
+      ],
+      "hex": "5f4271",
+      "cmyk": [
+        75,
+        92,
+        29,
+        16
+      ],
+      "lab": [
+        32.94117647058823,
+        20,
+        -22
+      ],
+      "delta_e": 0.0,
+      "base_name": "deep-dusty-violet",
+      "name": "deep-dusty-violet-02"
+    },
+    {
+      "rgb": [
+        96,
+        72,
+        56
+      ],
+      "hex": "604838",
+      "cmyk": [
+        45,
+        66,
+        84,
+        51
+      ],
+      "lab": [
+        32.94117647058823,
+        9,
+        14
+      ],
+      "delta_e": 0.0,
+      "base_name": "deep-dusty-orange",
+      "name": "deep-dusty-orange"
+    },
+    {
+      "rgb": [
+        97,
+        141,
+        147
+      ],
+      "hex": "618d93",
+      "cmyk": [
+        68,
+        34,
+        39,
+        4
+      ],
+      "lab": [
+        55.68627450980392,
+        -14,
+        -8
+      ],
+      "delta_e": 0.366,
+      "base_name": "mid-dusty-teal",
+      "name": "mid-dusty-teal"
+    },
+    {
+      "rgb": [
+        98,
+        69,
+        84
+      ],
+      "hex": "624554",
+      "cmyk": [
+        56,
+        78,
+        49,
+        39
+      ],
+      "lab": [
+        32.94117647058823,
+        15,
+        -4
+      ],
+      "delta_e": 0.0,
+      "base_name": "deep-dusty-magenta",
+      "name": "deep-dusty-magenta-02"
+    },
+    {
+      "rgb": [
+        98,
+        104,
+        130
+      ],
+      "hex": "626882",
+      "cmyk": [
+        70,
+        61,
+        33,
+        12
+      ],
+      "lab": [
+        44.31372549019608,
+        2,
+        -15
+      ],
+      "delta_e": 1.244,
+      "base_name": "mid-dusty-indigo",
+      "name": "mid-dusty-indigo-04"
+    },
+    {
+      "rgb": [
+        98,
+        140,
+        152
+      ],
+      "hex": "628c98",
+      "cmyk": [
+        68,
+        36,
+        35,
+        4
+      ],
+      "lab": [
+        55.68627450980392,
+        -13,
+        -11
+      ],
+      "delta_e": 0.809,
+      "base_name": "mid-dusty-cyan",
+      "name": "mid-dusty-cyan-03"
+    },
+    {
+      "rgb": [
+        98,
+        141,
+        140
+      ],
+      "hex": "628d8c",
+      "cmyk": [
+        67,
+        33,
+        45,
+        6
+      ],
+      "lab": [
+        55.294117647058826,
+        -15,
+        -4
+      ],
+      "delta_e": 0.369,
+      "base_name": "mid-dusty-teal",
+      "name": "mid-dusty-teal-02"
+    },
+    {
+      "rgb": [
+        100,
+        70,
+        60
+      ],
+      "hex": "64463c",
+      "cmyk": [
+        43,
+        71,
+        77,
+        49
+      ],
+      "lab": [
+        32.94117647058823,
+        12,
+        11
+      ],
+      "delta_e": 0.882,
+      "base_name": "deep-dusty-orange",
+      "name": "deep-dusty-orange-02"
+    },
+    {
+      "rgb": [
+        100,
+        108,
+        82
+      ],
+      "hex": "646c52",
+      "cmyk": [
+        60,
+        44,
+        76,
+        28
+      ],
+      "lab": [
+        44.31372549019608,
+        -7,
+        14
+      ],
+      "delta_e": 1.015,
+      "base_name": "mid-dusty-lime",
+      "name": "mid-dusty-lime-03"
+    },
+    {
+      "rgb": [
+        101,
+        68,
+        78
+      ],
+      "hex": "65444e",
+      "cmyk": [
+        50,
+        78,
+        54,
+        42
+      ],
+      "lab": [
+        32.94117647058823,
+        16,
+        0
+      ],
+      "delta_e": 0.0,
+      "base_name": "deep-dusty-red",
+      "name": "deep-dusty-red"
+    },
+    {
+      "rgb": [
+        101,
+        141,
+        133
+      ],
+      "hex": "658d85",
+      "cmyk": [
+        66,
+        32,
+        50,
+        7
+      ],
+      "lab": [
+        55.68627450980392,
+        -16,
+        0
+      ],
+      "delta_e": 0.0,
+      "base_name": "mid-dusty-jade",
+      "name": "mid-dusty-jade"
+    },
+    {
+      "rgb": [
+        101,
+        182,
+        78
+      ],
+      "hex": "65b64e",
+      "cmyk": [
+        67,
+        4,
+        100,
+        0
+      ],
+      "lab": [
+        67.05882352941177,
+        -41,
+        44
+      ],
+      "delta_e": 0.385,
+      "base_name": "soft-vivid-lime",
+      "name": "soft-vivid-lime-02"
+    },
+    {
+      "rgb": [
+        102,
+        58,
+        130
+      ],
+      "hex": "663a82",
+      "cmyk": [
+        77,
+        100,
+        15,
+        4
+      ],
+      "lab": [
+        32.549019607843135,
+        30,
+        -33
+      ],
+      "delta_e": 0.786,
+      "base_name": "deep-fair-violet",
+      "name": "deep-fair-violet"
+    },
+    {
+      "rgb": [
+        102,
+        68,
+        71
+      ],
+      "hex": "664447",
+      "cmyk": [
+        45,
+        75,
+        62,
+        45
+      ],
+      "lab": [
+        32.94117647058823,
+        15,
+        4
+      ],
+      "delta_e": 0.937,
+      "base_name": "deep-dusty-vermilion",
+      "name": "deep-dusty-vermilion-03"
+    },
+    {
+      "rgb": [
+        102,
+        69,
+        65
+      ],
+      "hex": "664541",
+      "cmyk": [
+        43,
+        73,
+        70,
+        47
+      ],
+      "lab": [
+        32.94117647058823,
+        14,
+        8
+      ],
+      "delta_e": 0.944,
+      "base_name": "deep-dusty-vermilion",
+      "name": "deep-dusty-vermilion-04"
+    },
+    {
+      "rgb": [
+        103,
+        139,
+        157
+      ],
+      "hex": "678b9d",
+      "cmyk": [
+        66,
+        38,
+        31,
+        3
+      ],
+      "lab": [
+        55.68627450980392,
+        -10,
+        -14
+      ],
+      "delta_e": 0.866,
+      "base_name": "mid-dusty-cyan",
+      "name": "mid-dusty-cyan-05"
+    },
+    {
+      "rgb": [
+        103,
+        170,
+        217
+      ],
+      "hex": "67aad9",
+      "cmyk": [
+        60,
+        22,
+        2,
+        0
+      ],
+      "lab": [
+        66.66666666666667,
+        -12,
+        -31
+      ],
+      "delta_e": 0.709,
+      "base_name": "soft-dusty-blue",
+      "name": "soft-dusty-blue-02"
+    },
+    {
+      "rgb": [
+        103,
+        178,
+        148
+      ],
+      "hex": "67b294",
+      "cmyk": [
+        64,
+        11,
+        54,
+        0
+      ],
+      "lab": [
+        67.05882352941177,
+        -30,
+        8
+      ],
+      "delta_e": 0.0,
+      "base_name": "soft-dusty-green",
+      "name": "soft-dusty-green"
+    },
+    {
+      "rgb": [
+        104,
+        94,
+        173
+      ],
+      "hex": "685ead",
+      "cmyk": [
+        71,
+        76,
+        0,
+        0
+      ],
+      "lab": [
+        43.529411764705884,
+        19,
+        -42
+      ],
+      "delta_e": 1.797,
+      "base_name": "mid-fair-indigo",
+      "name": "mid-fair-indigo-02"
+    },
+    {
+      "rgb": [
+        105,
+        105,
+        105
+      ],
+      "hex": "696969",
+      "cmyk": [
+        60,
+        53,
+        53,
+        23
+      ],
+      "lab": [
+        44.31372549019608,
+        0,
+        0
+      ],
+      "delta_e": 1.045,
+      "base_name": "medium-gray",
+      "name": "medium-gray-02"
+    },
+    {
+      "rgb": [
+        107,
+        98,
+        150
+      ],
+      "hex": "6b6296",
+      "cmyk": [
+        70,
+        72,
+        16,
+        2
+      ],
+      "lab": [
+        43.92156862745098,
+        13,
+        -27
+      ],
+      "delta_e": 0.366,
+      "base_name": "mid-dusty-violet",
+      "name": "mid-dusty-violet"
+    },
+    {
+      "rgb": [
+        107,
+        101,
+        127
+      ],
+      "hex": "6b657f",
+      "cmyk": [
+        65,
+        64,
+        34,
+        12
+      ],
+      "lab": [
+        43.92156862745098,
+        7,
+        -14
+      ],
+      "delta_e": 0.797,
+      "base_name": "mid-dusty-violet",
+      "name": "mid-dusty-violet-05"
+    },
+    {
+      "rgb": [
+        107,
+        141,
+        126
+      ],
+      "hex": "6b8d7e",
+      "cmyk": [
+        63,
+        32,
+        55,
+        8
+      ],
+      "lab": [
+        55.68627450980392,
+        -15,
+        4
+      ],
+      "delta_e": 0.744,
+      "base_name": "mid-dusty-green",
+      "name": "mid-dusty-green-07"
+    },
+    {
+      "rgb": [
+        107,
+        143,
+        94
+      ],
+      "hex": "6b8f5e",
+      "cmyk": [
+        64,
+        28,
+        81,
+        9
+      ],
+      "lab": [
+        55.68627450980392,
+        -20,
+        22
+      ],
+      "delta_e": 0.524,
+      "base_name": "mid-dusty-lime",
+      "name": "mid-dusty-lime-02"
+    },
+    {
+      "rgb": [
+        107,
+        208,
+        235
+      ],
+      "hex": "6bd0eb",
+      "cmyk": [
+        53,
+        0,
+        7,
+        0
+      ],
+      "lab": [
+        78.03921568627452,
+        -25,
+        -23
+      ],
+      "delta_e": 0.634,
+      "base_name": "soft-dusty-cyan",
+      "name": "soft-dusty-cyan-04"
+    },
+    {
+      "rgb": [
+        108,
+        61,
+        102
+      ],
+      "hex": "6c3d66",
+      "cmyk": [
+        62,
+        94,
+        35,
+        22
+      ],
+      "lab": [
+        32.94117647058823,
+        26,
+        -15
+      ],
+      "delta_e": 0.923,
+      "base_name": "deep-dusty-magenta",
+      "name": "deep-dusty-magenta-04"
+    },
+    {
+      "rgb": [
+        108,
+        106,
+        79
+      ],
+      "hex": "6c6a4f",
+      "cmyk": [
+        55,
+        47,
+        77,
+        29
+      ],
+      "lab": [
+        44.31372549019608,
+        -3,
+        16
+      ],
+      "delta_e": 1.218,
+      "base_name": "mid-dusty-yellow",
+      "name": "mid-dusty-yellow-03"
+    },
+    {
+      "rgb": [
+        108,
+        107,
+        53
+      ],
+      "hex": "6c6b35",
+      "cmyk": [
+        55,
+        45,
+        100,
+        29
+      ],
+      "lab": [
+        44.31372549019608,
+        -6,
+        30
+      ],
+      "delta_e": 1.453,
+      "base_name": "mid-dusty-yellow",
+      "name": "mid-dusty-yellow-04"
+    },
+    {
+      "rgb": [
+        110,
+        137,
+        159
+      ],
+      "hex": "6e899f",
+      "cmyk": [
+        64,
+        41,
+        28,
+        2
+      ],
+      "lab": [
+        55.68627450980392,
+        -6,
+        -15
+      ],
+      "delta_e": 0.704,
+      "base_name": "mid-dusty-blue",
+      "name": "mid-dusty-blue-05"
+    },
+    {
+      "rgb": [
+        114,
+        140,
+        119
+      ],
+      "hex": "728c77",
+      "cmyk": [
+        60,
+        33,
+        60,
+        9
+      ],
+      "lab": [
+        55.68627450980392,
+        -13,
+        8
+      ],
+      "delta_e": 0.0,
+      "base_name": "mid-dusty-green",
+      "name": "mid-dusty-green-02"
+    },
+    {
+      "rgb": [
+        115,
+        99,
+        123
+      ],
+      "hex": "73637b",
+      "cmyk": [
+        60,
+        66,
+        36,
+        14
+      ],
+      "lab": [
+        44.31372549019608,
+        10,
+        -11
+      ],
+      "delta_e": 0.706,
+      "base_name": "mid-gray-violet",
+      "name": "mid-gray-violet-02"
+    },
+    {
+      "rgb": [
+        115,
+        104,
+        79
+      ],
+      "hex": "73684f",
+      "cmyk": [
+        50,
+        51,
+        76,
+        29
+      ],
+      "lab": [
+        44.705882352941174,
+        1,
+        16
+      ],
+      "delta_e": 1.277,
+      "base_name": "mid-dusty-amber",
+      "name": "mid-dusty-amber-06"
+    },
+    {
+      "rgb": [
+        115,
+        143,
+        59
+      ],
+      "hex": "738f3b",
+      "cmyk": [
+        61,
+        28,
+        100,
+        10
+      ],
+      "lab": [
+        55.68627450980392,
+        -20,
+        40
+      ],
+      "delta_e": 1.927,
+      "base_name": "mid-fair-lime",
+      "name": "mid-fair-lime-02"
+    },
+    {
+      "rgb": [
+        116,
+        131,
+        186
+      ],
+      "hex": "7483ba",
+      "cmyk": [
+        61,
+        49,
+        4,
+        0
+      ],
+      "lab": [
+        55.294117647058826,
+        5,
+        -31
+      ],
+      "delta_e": 0.0,
+      "base_name": "mid-dusty-indigo",
+      "name": "mid-dusty-indigo"
+    },
+    {
+      "rgb": [
+        117,
+        57,
+        91
+      ],
+      "hex": "75395b",
+      "cmyk": [
+        51,
+        95,
+        41,
+        28
+      ],
+      "lab": [
+        32.94117647058823,
+        30,
+        -8
+      ],
+      "delta_e": 0.537,
+      "base_name": "deep-dusty-magenta",
+      "name": "deep-dusty-magenta-03"
+    },
+    {
+      "rgb": [
+        118,
+        62,
+        43
+      ],
+      "hex": "763e2b",
+      "cmyk": [
+        34,
+        82,
+        100,
+        44
+      ],
+      "lab": [
+        33.333333333333336,
+        24,
+        23
+      ],
+      "delta_e": 1.082,
+      "base_name": "deep-dusty-orange",
+      "name": "deep-dusty-orange-03"
+    },
+    {
+      "rgb": [
+        118,
+        135,
+        160
+      ],
+      "hex": "7687a0",
+      "cmyk": [
+        60,
+        44,
+        26,
+        2
+      ],
+      "lab": [
+        55.68627450980392,
+        -2,
+        -16
+      ],
+      "delta_e": 0.682,
+      "base_name": "mid-dusty-blue",
+      "name": "mid-dusty-blue-04"
+    },
+    {
+      "rgb": [
+        119,
+        205,
+        244
+      ],
+      "hex": "77cdf4",
+      "cmyk": [
+        49,
+        2,
+        0,
+        0
+      ],
+      "lab": [
+        78.03921568627452,
+        -19,
+        -28
+      ],
+      "delta_e": 0.44,
+      "base_name": "soft-dusty-cyan",
+      "name": "soft-dusty-cyan-02"
+    },
+    {
+      "rgb": [
+        120,
+        176,
+        134
+      ],
+      "hex": "78b086",
+      "cmyk": [
+        58,
+        14,
+        62,
+        0
+      ],
+      "lab": [
+        67.05882352941177,
+        -26,
+        16
+      ],
+      "delta_e": 0.0,
+      "base_name": "soft-dusty-green",
+      "name": "soft-dusty-green-02"
+    },
+    {
+      "rgb": [
+        121,
+        48,
+        115
+      ],
+      "hex": "793073",
+      "cmyk": [
+        62,
+        100,
+        25,
+        11
+      ],
+      "lab": [
+        32.549019607843135,
+        39,
+        -23
+      ],
+      "delta_e": 1.984,
+      "base_name": "deep-fair-magenta",
+      "name": "deep-fair-magenta"
+    },
+    {
+      "rgb": [
+        121,
+        102,
+        80
+      ],
+      "hex": "796650",
+      "cmyk": [
+        46,
+        54,
+        73,
+        28
+      ],
+      "lab": [
+        44.705882352941174,
+        5,
+        15
+      ],
+      "delta_e": 1.098,
+      "base_name": "mid-dusty-amber",
+      "name": "mid-dusty-amber-04"
+    },
+    {
+      "rgb": [
+        121,
+        103,
+        51
+      ],
+      "hex": "796733",
+      "cmyk": [
+        46,
+        51,
+        100,
+        29
+      ],
+      "lab": [
+        44.31372549019608,
+        2,
+        32
+      ],
+      "delta_e": 1.757,
+      "base_name": "mid-dusty-amber",
+      "name": "mid-dusty-amber-08"
+    },
+    {
+      "rgb": [
+        121,
+        139,
+        114
+      ],
+      "hex": "798b72",
+      "cmyk": [
+        56,
+        34,
+        62,
+        10
+      ],
+      "lab": [
+        55.68627450980392,
+        -10,
+        11
+      ],
+      "delta_e": 0.366,
+      "base_name": "mid-gray-lime",
+      "name": "mid-gray-lime"
+    },
+    {
+      "rgb": [
+        121,
+        178,
+        101
+      ],
+      "hex": "79b265",
+      "cmyk": [
+        60,
+        11,
+        84,
+        0
+      ],
+      "lab": [
+        67.05882352941177,
+        -30,
+        33
+      ],
+      "delta_e": 0.467,
+      "base_name": "soft-fair-lime",
+      "name": "soft-fair-lime-02"
+    },
+    {
+      "rgb": [
+        122,
+        56,
+        78
+      ],
+      "hex": "7a384e",
+      "cmyk": [
+        40,
+        93,
+        53,
+        34
+      ],
+      "lab": [
+        33.333333333333336,
+        31,
+        1
+      ],
+      "delta_e": 0.421,
+      "base_name": "deep-dusty-red",
+      "name": "deep-dusty-red-02"
+    },
+    {
+      "rgb": [
+        122,
+        58,
+        54
+      ],
+      "hex": "7a3a36",
+      "cmyk": [
+        32,
+        89,
+        87,
+        41
+      ],
+      "lab": [
+        32.94117647058823,
+        28,
+        16
+      ],
+      "delta_e": 0.593,
+      "base_name": "deep-dusty-vermilion",
+      "name": "deep-dusty-vermilion-02"
+    },
+    {
+      "rgb": [
+        122,
+        97,
+        118
+      ],
+      "hex": "7a6176",
+      "cmyk": [
+        55,
+        68,
+        38,
+        15
+      ],
+      "lab": [
+        44.31372549019608,
+        13,
+        -8
+      ],
+      "delta_e": 1.123,
+      "base_name": "mid-dusty-magenta",
+      "name": "mid-dusty-magenta-08"
+    },
+    {
+      "rgb": [
+        123,
+        140,
+        85
+      ],
+      "hex": "7b8c55",
+      "cmyk": [
+        55,
+        32,
+        85,
+        11
+      ],
+      "lab": [
+        55.68627450980392,
+        -14,
+        27
+      ],
+      "delta_e": 1.024,
+      "base_name": "mid-dusty-lime",
+      "name": "mid-dusty-lime-04"
+    },
+    {
+      "rgb": [
+        124,
+        56,
+        66
+      ],
+      "hex": "7c3842",
+      "cmyk": [
+        34,
+        92,
+        69,
+        38
+      ],
+      "lab": [
+        33.333333333333336,
+        31,
+        9
+      ],
+      "delta_e": 0.0,
+      "base_name": "deep-dusty-vermilion",
+      "name": "deep-dusty-vermilion"
+    },
+    {
+      "rgb": [
+        124,
+        93,
+        142
+      ],
+      "hex": "7c5d8e",
+      "cmyk": [
+        61,
+        76,
+        19,
+        3
+      ],
+      "lab": [
+        44.31372549019608,
+        20,
+        -22
+      ],
+      "delta_e": 0.605,
+      "base_name": "mid-dusty-violet",
+      "name": "mid-dusty-violet-02"
+    },
+    {
+      "rgb": [
+        125,
+        166,
+        220
+      ],
+      "hex": "7da6dc",
+      "cmyk": [
+        52,
+        28,
+        0,
+        0
+      ],
+      "lab": [
+        66.66666666666667,
+        -4,
+        -32
+      ],
+      "delta_e": 1.13,
+      "base_name": "soft-dusty-blue",
+      "name": "soft-dusty-blue-05"
+    },
+    {
+      "rgb": [
+        126,
+        99,
+        83
+      ],
+      "hex": "7e6353",
+      "cmyk": [
+        43,
+        58,
+        69,
+        27
+      ],
+      "lab": [
+        44.31372549019608,
+        9,
+        14
+      ],
+      "delta_e": 1.05,
+      "base_name": "mid-dusty-orange",
+      "name": "mid-dusty-orange-08"
+    },
+    {
+      "rgb": [
+        126,
+        171,
+        177
+      ],
+      "hex": "7eabb1",
+      "cmyk": [
+        54,
+        22,
+        29,
+        0
+      ],
+      "lab": [
+        67.05882352941177,
+        -15,
+        -8
+      ],
+      "delta_e": 0.756,
+      "base_name": "soft-dusty-teal",
+      "name": "soft-dusty-teal-04"
+    },
+    {
+      "rgb": [
+        127,
+        96,
+        112
+      ],
+      "hex": "7f6070",
+      "cmyk": [
+        51,
+        68,
+        42,
+        17
+      ],
+      "lab": [
+        44.31372549019608,
+        15,
+        -4
+      ],
+      "delta_e": 0.0,
+      "base_name": "mid-dusty-magenta",
+      "name": "mid-dusty-magenta"
+    },
+    {
+      "rgb": [
+        127,
+        132,
+        160
+      ],
+      "hex": "7f84a0",
+      "cmyk": [
+        56,
+        48,
+        24,
+        2
+      ],
+      "lab": [
+        55.294117647058826,
+        3,
+        -16
+      ],
+      "delta_e": 0.742,
+      "base_name": "mid-dusty-indigo",
+      "name": "mid-dusty-indigo-02"
+    },
+    {
+      "rgb": [
+        127,
+        172,
+        170
+      ],
+      "hex": "7facaa",
+      "cmyk": [
+        54,
+        20,
+        35,
+        0
+      ],
+      "lab": [
+        67.05882352941177,
+        -16,
+        -4
+      ],
+      "delta_e": 0.0,
+      "base_name": "soft-dusty-teal",
+      "name": "soft-dusty-teal-02"
+    },
+    {
+      "rgb": [
+        128,
+        170,
+        183
+      ],
+      "hex": "80aab7",
+      "cmyk": [
+        53,
+        23,
+        25,
+        0
+      ],
+      "lab": [
+        67.05882352941177,
+        -12,
+        -12
+      ],
+      "delta_e": 0.659,
+      "base_name": "soft-dusty-cyan",
+      "name": "soft-dusty-cyan-05"
+    },
+    {
+      "rgb": [
+        129,
+        98,
+        87
+      ],
+      "hex": "816257",
+      "cmyk": [
+        42,
+        61,
+        65,
+        26
+      ],
+      "lab": [
+        44.705882352941174,
+        12,
+        11
+      ],
+      "delta_e": 0.882,
+      "base_name": "mid-dusty-orange",
+      "name": "mid-dusty-orange-07"
+    },
+    {
+      "rgb": [
+        129,
+        137,
+        110
+      ],
+      "hex": "81896e",
+      "cmyk": [
+        52,
+        36,
+        64,
+        11
+      ],
+      "lab": [
+        55.68627450980392,
+        -7,
+        13
+      ],
+      "delta_e": 0.743,
+      "base_name": "mid-gray-lime",
+      "name": "mid-gray-lime-03"
+    },
+    {
+      "rgb": [
+        130,
+        95,
+        105
+      ],
+      "hex": "825f69",
+      "cmyk": [
+        47,
+        67,
+        47,
+        20
+      ],
+      "lab": [
+        44.31372549019608,
+        16,
+        0
+      ],
+      "delta_e": 0.0,
+      "base_name": "mid-dusty-red",
+      "name": "mid-dusty-red"
+    },
+    {
+      "rgb": [
+        131,
+        96,
+        92
+      ],
+      "hex": "83605c",
+      "cmyk": [
+        42,
+        64,
+        60,
+        24
+      ],
+      "lab": [
+        44.31372549019608,
+        14,
+        8
+      ],
+      "delta_e": 0.963,
+      "base_name": "mid-dusty-vermilion",
+      "name": "mid-dusty-vermilion-08"
+    },
+    {
+      "rgb": [
+        131,
+        172,
+        163
+      ],
+      "hex": "83aca3",
+      "cmyk": [
+        53,
+        21,
+        39,
+        0
+      ],
+      "lab": [
+        67.05882352941177,
+        -16,
+        0
+      ],
+      "delta_e": 0.71,
+      "base_name": "soft-dusty-jade",
+      "name": "soft-dusty-jade-03"
+    },
+    {
+      "rgb": [
+        132,
+        86,
+        161
+      ],
+      "hex": "8456a1",
+      "cmyk": [
+        58,
+        83,
+        1,
+        0
+      ],
+      "lab": [
+        44.31372549019608,
+        30,
+        -33
+      ],
+      "delta_e": 0.0,
+      "base_name": "mid-fair-violet",
+      "name": "mid-fair-violet"
+    },
+    {
+      "rgb": [
+        132,
+        95,
+        99
+      ],
+      "hex": "845f63",
+      "cmyk": [
+        44,
+        66,
+        53,
+        22
+      ],
+      "lab": [
+        44.31372549019608,
+        16,
+        4
+      ],
+      "delta_e": 0.0,
+      "base_name": "mid-dusty-vermilion",
+      "name": "mid-dusty-vermilion"
+    },
+    {
+      "rgb": [
+        132,
+        99,
+        54
+      ],
+      "hex": "846336",
+      "cmyk": [
+        39,
+        58,
+        100,
+        28
+      ],
+      "lab": [
+        44.705882352941174,
+        10,
+        31
+      ],
+      "delta_e": 0.592,
+      "base_name": "mid-dusty-amber",
+      "name": "mid-dusty-amber-03"
+    },
+    {
+      "rgb": [
+        133,
+        133,
+        133
+      ],
+      "hex": "858585",
+      "cmyk": [
+        51,
+        44,
+        44,
+        7
+      ],
+      "lab": [
+        55.68627450980392,
+        0,
+        0
+      ],
+      "delta_e": 0.0,
+      "base_name": "medium-gray",
+      "name": "medium-gray"
+    },
+    {
+      "rgb": [
+        133,
+        169,
+        187
+      ],
+      "hex": "85a9bb",
+      "cmyk": [
+        51,
+        25,
+        21,
+        0
+      ],
+      "lab": [
+        67.05882352941177,
+        -10,
+        -14
+      ],
+      "delta_e": 0.987,
+      "base_name": "soft-dusty-cyan",
+      "name": "soft-dusty-cyan-08"
+    },
+    {
+      "rgb": [
+        134,
+        210,
+        178
+      ],
+      "hex": "86d2b2",
+      "cmyk": [
+        48,
+        0,
+        40,
+        0
+      ],
+      "lab": [
+        78.43137254901961,
+        -30,
+        8
+      ],
+      "delta_e": 1.489,
+      "base_name": "soft-dusty-green",
+      "name": "soft-dusty-green-08"
+    },
+    {
+      "rgb": [
+        136,
+        130,
+        157
+      ],
+      "hex": "88829d",
+      "cmyk": [
+        52,
+        50,
+        25,
+        2
+      ],
+      "lab": [
+        55.68627450980392,
+        7,
+        -14
+      ],
+      "delta_e": 0.708,
+      "base_name": "mid-dusty-violet",
+      "name": "mid-dusty-violet-03"
+    },
+    {
+      "rgb": [
+        136,
+        171,
+        156
+      ],
+      "hex": "88ab9c",
+      "cmyk": [
+        51,
+        22,
+        43,
+        1
+      ],
+      "lab": [
+        67.05882352941177,
+        -15,
+        4
+      ],
+      "delta_e": 0.0,
+      "base_name": "soft-dusty-green",
+      "name": "soft-dusty-green-03"
+    },
+    {
+      "rgb": [
+        137,
+        88,
+        131
+      ],
+      "hex": "895883",
+      "cmyk": [
+        52,
+        80,
+        25,
+        6
+      ],
+      "lab": [
+        44.31372549019608,
+        26,
+        -16
+      ],
+      "delta_e": 0.581,
+      "base_name": "mid-dusty-magenta",
+      "name": "mid-dusty-magenta-02"
+    },
+    {
+      "rgb": [
+        137,
+        126,
+        181
+      ],
+      "hex": "897eb5",
+      "cmyk": [
+        52,
+        55,
+        4,
+        0
+      ],
+      "lab": [
+        55.294117647058826,
+        13,
+        -28
+      ],
+      "delta_e": 1.302,
+      "base_name": "mid-dusty-indigo",
+      "name": "mid-dusty-indigo-05"
+    },
+    {
+      "rgb": [
+        137,
+        135,
+        107
+      ],
+      "hex": "89876b",
+      "cmyk": [
+        47,
+        39,
+        65,
+        11
+      ],
+      "lab": [
+        56.07843137254902,
+        -3,
+        15
+      ],
+      "delta_e": 0.602,
+      "base_name": "mid-dusty-yellow",
+      "name": "mid-dusty-yellow"
+    },
+    {
+      "rgb": [
+        137,
+        174,
+        123
+      ],
+      "hex": "89ae7b",
+      "cmyk": [
+        52,
+        17,
+        68,
+        1
+      ],
+      "lab": [
+        67.45098039215686,
+        -20,
+        22
+      ],
+      "delta_e": 0.524,
+      "base_name": "soft-dusty-lime",
+      "name": "soft-dusty-lime"
+    },
+    {
+      "rgb": [
+        138,
+        136,
+        80
+      ],
+      "hex": "8a8850",
+      "cmyk": [
+        47,
+        36,
+        87,
+        13
+      ],
+      "lab": [
+        55.68627450980392,
+        -6,
+        30
+      ],
+      "delta_e": 1.032,
+      "base_name": "mid-dusty-yellow",
+      "name": "mid-dusty-yellow-02"
+    },
+    {
+      "rgb": [
+        139,
+        167,
+        190
+      ],
+      "hex": "8ba7be",
+      "cmyk": [
+        49,
+        27,
+        17,
+        0
+      ],
+      "lab": [
+        67.05882352941177,
+        -6,
+        -15
+      ],
+      "delta_e": 1.036,
+      "base_name": "soft-dusty-blue",
+      "name": "soft-dusty-blue-04"
+    },
+    {
+      "rgb": [
+        142,
+        94,
+        60
+      ],
+      "hex": "8e5e3c",
+      "cmyk": [
+        33,
+        65,
+        94,
+        26
+      ],
+      "lab": [
+        44.705882352941174,
+        17,
+        28
+      ],
+      "delta_e": 0.698,
+      "base_name": "mid-dusty-orange",
+      "name": "mid-dusty-orange-05"
+    },
+    {
+      "rgb": [
+        143,
+        170,
+        149
+      ],
+      "hex": "8faa95",
+      "cmyk": [
+        48,
+        23,
+        47,
+        1
+      ],
+      "lab": [
+        67.05882352941177,
+        -13,
+        8
+      ],
+      "delta_e": 0.809,
+      "base_name": "soft-dusty-green",
+      "name": "soft-dusty-green-06"
+    },
+    {
+      "rgb": [
+        144,
+        128,
+        153
+      ],
+      "hex": "908099",
+      "cmyk": [
+        48,
+        53,
+        26,
+        2
+      ],
+      "lab": [
+        55.68627450980392,
+        10,
+        -11
+      ],
+      "delta_e": 0.366,
+      "base_name": "mid-gray-violet",
+      "name": "mid-gray-violet"
+    },
+    {
+      "rgb": [
+        144,
+        133,
+        106
+      ],
+      "hex": "90856a",
+      "cmyk": [
+        43,
+        42,
+        64,
+        11
+      ],
+      "lab": [
+        56.07843137254902,
+        1,
+        16
+      ],
+      "delta_e": 1.277,
+      "base_name": "mid-dusty-amber",
+      "name": "mid-dusty-amber-07"
+    },
+    {
+      "rgb": [
+        146,
+        173,
+        87
+      ],
+      "hex": "92ad57",
+      "cmyk": [
+        49,
+        18,
+        90,
+        1
+      ],
+      "lab": [
+        67.05882352941177,
+        -20,
+        41
+      ],
+      "delta_e": 0.64,
+      "base_name": "soft-fair-lime",
+      "name": "soft-fair-lime-03"
+    },
+    {
+      "rgb": [
+        147,
+        85,
+        119
+      ],
+      "hex": "935577",
+      "cmyk": [
+        44,
+        81,
+        34,
+        9
+      ],
+      "lab": [
+        44.31372549019608,
+        30,
+        -8
+      ],
+      "delta_e": 0.861,
+      "base_name": "mid-dusty-magenta",
+      "name": "mid-dusty-magenta-06"
+    },
+    {
+      "rgb": [
+        148,
+        165,
+        191
+      ],
+      "hex": "94a5bf",
+      "cmyk": [
+        45,
+        30,
+        15,
+        0
+      ],
+      "lab": [
+        67.05882352941177,
+        -2,
+        -16
+      ],
+      "delta_e": 0.575,
+      "base_name": "soft-dusty-blue",
+      "name": "soft-dusty-blue"
+    },
+    {
+      "rgb": [
+        149,
+        89,
+        69
+      ],
+      "hex": "955945",
+      "cmyk": [
+        31,
+        72,
+        82,
+        24
+      ],
+      "lab": [
+        44.705882352941174,
+        24,
+        23
+      ],
+      "delta_e": 0.563,
+      "base_name": "mid-dusty-orange",
+      "name": "mid-dusty-orange-02"
+    },
+    {
+      "rgb": [
+        150,
+        130,
+        107
+      ],
+      "hex": "96826b",
+      "cmyk": [
+        40,
+        45,
+        62,
+        11
+      ],
+      "lab": [
+        55.68627450980392,
+        5,
+        15
+      ],
+      "delta_e": 1.098,
+      "base_name": "mid-dusty-amber",
+      "name": "mid-dusty-amber-05"
+    },
+    {
+      "rgb": [
+        150,
+        208,
+        164
+      ],
+      "hex": "96d0a4",
+      "cmyk": [
+        43,
+        1,
+        47,
+        0
+      ],
+      "lab": [
+        78.43137254901961,
+        -26,
+        16
+      ],
+      "delta_e": 0.499,
+      "base_name": "soft-dusty-green",
+      "name": "soft-dusty-green-04"
+    },
+    {
+      "rgb": [
+        151,
+        126,
+        147
+      ],
+      "hex": "977e93",
+      "cmyk": [
+        44,
+        55,
+        30,
+        3
+      ],
+      "lab": [
+        55.68627450980392,
+        13,
+        -8
+      ],
+      "delta_e": 0.775,
+      "base_name": "mid-dusty-magenta",
+      "name": "mid-dusty-magenta-05"
+    },
+    {
+      "rgb": [
+        151,
+        132,
+        78
+      ],
+      "hex": "97844e",
+      "cmyk": [
+        40,
+        42,
+        86,
+        13
+      ],
+      "lab": [
+        56.07843137254902,
+        2,
+        32
+      ],
+      "delta_e": 0.0,
+      "base_name": "mid-dusty-amber",
+      "name": "mid-dusty-amber"
+    },
+    {
+      "rgb": [
+        151,
+        169,
+        143
+      ],
+      "hex": "97a98f",
+      "cmyk": [
+        44,
+        24,
+        50,
+        1
+      ],
+      "lab": [
+        67.45098039215686,
+        -10,
+        11
+      ],
+      "delta_e": 0.906,
+      "base_name": "soft-gray-lime",
+      "name": "soft-gray-lime"
+    },
+    {
+      "rgb": [
+        151,
+        210,
+        131
+      ],
+      "hex": "97d283",
+      "cmyk": [
+        44,
+        0,
+        67,
+        0
+      ],
+      "lab": [
+        78.82352941176471,
+        -31,
+        33
+      ],
+      "delta_e": 1.5,
+      "base_name": "soft-fair-lime",
+      "name": "soft-fair-lime-04"
+    },
+    {
+      "rgb": [
+        152,
+        77,
+        145
+      ],
+      "hex": "984d91",
+      "cmyk": [
+        47,
+        89,
+        9,
+        0
+      ],
+      "lab": [
+        44.31372549019608,
+        39,
+        -24
+      ],
+      "delta_e": 0.829,
+      "base_name": "mid-fair-magenta",
+      "name": "mid-fair-magenta-03"
+    },
+    {
+      "rgb": [
+        153,
+        83,
+        106
+      ],
+      "hex": "99536a",
+      "cmyk": [
+        36,
+        81,
+        44,
+        13
+      ],
+      "lab": [
+        44.31372549019608,
+        32,
+        0
+      ],
+      "delta_e": 0.814,
+      "base_name": "mid-dusty-red",
+      "name": "mid-dusty-red-03"
+    },
+    {
+      "rgb": [
+        153,
+        86,
+        80
+      ],
+      "hex": "995650",
+      "cmyk": [
+        30,
+        76,
+        70,
+        21
+      ],
+      "lab": [
+        44.705882352941174,
+        28,
+        16
+      ],
+      "delta_e": 0.61,
+      "base_name": "mid-dusty-vermilion",
+      "name": "mid-dusty-vermilion-04"
+    },
+    {
+      "rgb": [
+        153,
+        170,
+        114
+      ],
+      "hex": "99aa72",
+      "cmyk": [
+        44,
+        22,
+        71,
+        2
+      ],
+      "lab": [
+        67.05882352941177,
+        -13,
+        27
+      ],
+      "delta_e": 0.576,
+      "base_name": "soft-dusty-lime",
+      "name": "soft-dusty-lime-03"
+    },
+    {
+      "rgb": [
+        154,
+        121,
+        172
+      ],
+      "hex": "9a79ac",
+      "cmyk": [
+        44,
+        61,
+        7,
+        0
+      ],
+      "lab": [
+        55.294117647058826,
+        20,
+        -22
+      ],
+      "delta_e": 0.708,
+      "base_name": "mid-dusty-violet",
+      "name": "mid-dusty-violet-04"
+    },
+    {
+      "rgb": [
+        155,
+        84,
+        93
+      ],
+      "hex": "9b545d",
+      "cmyk": [
+        32,
+        80,
+        56,
+        17
+      ],
+      "lab": [
+        44.705882352941174,
+        31,
+        9
+      ],
+      "delta_e": 0.0,
+      "base_name": "mid-dusty-vermilion",
+      "name": "mid-dusty-vermilion-02"
+    },
+    {
+      "rgb": [
+        156,
+        128,
+        110
+      ],
+      "hex": "9c806e",
+      "cmyk": [
+        37,
+        49,
+        59,
+        10
+      ],
+      "lab": [
+        56.07843137254902,
+        9,
+        14
+      ],
+      "delta_e": 0.0,
+      "base_name": "mid-dusty-orange",
+      "name": "mid-dusty-orange"
+    },
+    {
+      "rgb": [
+        157,
+        125,
+        141
+      ],
+      "hex": "9d7d8d",
+      "cmyk": [
+        41,
+        56,
+        33,
+        4
+      ],
+      "lab": [
+        56.07843137254902,
+        15,
+        -4
+      ],
+      "delta_e": 1.027,
+      "base_name": "mid-dusty-magenta",
+      "name": "mid-dusty-magenta-07"
+    },
+    {
+      "rgb": [
+        157,
+        162,
+        191
+      ],
+      "hex": "9da2bf",
+      "cmyk": [
+        41,
+        34,
+        12,
+        0
+      ],
+      "lab": [
+        67.05882352941177,
+        3,
+        -16
+      ],
+      "delta_e": 0.717,
+      "base_name": "soft-dusty-indigo",
+      "name": "soft-dusty-indigo-02"
+    },
+    {
+      "rgb": [
+        157,
+        203,
+        208
+      ],
+      "hex": "9dcbd0",
+      "cmyk": [
+        39,
+        7,
+        18,
+        0
+      ],
+      "lab": [
+        78.43137254901961,
+        -15,
+        -8
+      ],
+      "delta_e": 0.756,
+      "base_name": "soft-dusty-teal",
+      "name": "soft-dusty-teal-05"
+    },
+    {
+      "rgb": [
+        158,
+        203,
+        201
+      ],
+      "hex": "9ecbc9",
+      "cmyk": [
+        39,
+        7,
+        22,
+        0
+      ],
+      "lab": [
+        78.43137254901961,
+        -16,
+        -4
+      ],
+      "delta_e": 0.768,
+      "base_name": "soft-dusty-teal",
+      "name": "soft-dusty-teal-06"
+    },
+    {
+      "rgb": [
+        159,
+        167,
+        139
+      ],
+      "hex": "9fa78b",
+      "cmyk": [
+        41,
+        27,
+        52,
+        1
+      ],
+      "lab": [
+        67.45098039215686,
+        -7,
+        14
+      ],
+      "delta_e": 1.015,
+      "base_name": "soft-dusty-lime",
+      "name": "soft-dusty-lime-05"
+    },
+    {
+      "rgb": [
+        159,
+        201,
+        215
+      ],
+      "hex": "9fc9d7",
+      "cmyk": [
+        37,
+        9,
+        12,
+        0
+      ],
+      "lab": [
+        78.43137254901961,
+        -12,
+        -12
+      ],
+      "delta_e": 0.659,
+      "base_name": "soft-dusty-cyan",
+      "name": "soft-dusty-cyan-06"
+    },
+    {
+      "rgb": [
+        160,
+        124,
+        134
+      ],
+      "hex": "a07c86",
+      "cmyk": [
+        38,
+        56,
+        38,
+        5
+      ],
+      "lab": [
+        55.68627450980392,
+        16,
+        0
+      ],
+      "delta_e": 1.009,
+      "base_name": "mid-dusty-red",
+      "name": "mid-dusty-red-04"
+    },
+    {
+      "rgb": [
+        160,
+        126,
+        115
+      ],
+      "hex": "a07e73",
+      "cmyk": [
+        36,
+        52,
+        54,
+        9
+      ],
+      "lab": [
+        56.07843137254902,
+        12,
+        11
+      ],
+      "delta_e": 0.853,
+      "base_name": "mid-dusty-orange",
+      "name": "mid-dusty-orange-06"
+    },
+    {
+      "rgb": [
+        161,
+        203,
+        194
+      ],
+      "hex": "a1cbc2",
+      "cmyk": [
+        38,
+        7,
+        26,
+        0
+      ],
+      "lab": [
+        78.43137254901961,
+        -16,
+        0
+      ],
+      "delta_e": 0.0,
+      "base_name": "soft-dusty-jade",
+      "name": "soft-dusty-jade-02"
+    },
+    {
+      "rgb": [
+        162,
+        124,
+        127
+      ],
+      "hex": "a27c7f",
+      "cmyk": [
+        36,
+        55,
+        44,
+        6
+      ],
+      "lab": [
+        55.68627450980392,
+        16,
+        4
+      ],
+      "delta_e": 0.807,
+      "base_name": "mid-dusty-vermilion",
+      "name": "mid-dusty-vermilion-07"
+    },
+    {
+      "rgb": [
+        162,
+        125,
+        120
+      ],
+      "hex": "a27d78",
+      "cmyk": [
+        36,
+        54,
+        49,
+        8
+      ],
+      "lab": [
+        56.07843137254902,
+        14,
+        9
+      ],
+      "delta_e": 0.768,
+      "base_name": "mid-dusty-vermilion",
+      "name": "mid-dusty-vermilion-06"
+    },
+    {
+      "rgb": [
+        163,
+        127,
+        81
+      ],
+      "hex": "a37f51",
+      "cmyk": [
+        33,
+        49,
+        82,
+        12
+      ],
+      "lab": [
+        56.07843137254902,
+        10,
+        30
+      ],
+      "delta_e": 0.461,
+      "base_name": "mid-dusty-amber",
+      "name": "mid-dusty-amber-02"
+    },
+    {
+      "rgb": [
+        163,
+        163,
+        163
+      ],
+      "hex": "a3a3a3",
+      "cmyk": [
+        39,
+        33,
+        33,
+        0
+      ],
+      "lab": [
+        67.05882352941177,
+        0,
+        0
+      ],
+      "delta_e": 1.451,
+      "base_name": "light-gray",
+      "name": "light-gray"
+    },
+    {
+      "rgb": [
+        163,
+        200,
+        219
+      ],
+      "hex": "a3c8db",
+      "cmyk": [
+        35,
+        11,
+        9,
+        0
+      ],
+      "lab": [
+        78.43137254901961,
+        -10,
+        -14
+      ],
+      "delta_e": 0.935,
+      "base_name": "soft-dusty-cyan",
+      "name": "soft-dusty-cyan-07"
+    },
+    {
+      "rgb": [
+        166,
+        62,
+        158
+      ],
+      "hex": "a63e9e",
+      "cmyk": [
+        40,
+        95,
+        0,
+        0
+      ],
+      "lab": [
+        44.31372549019608,
+        52,
+        -31
+      ],
+      "delta_e": 1.582,
+      "base_name": "mid-vivid-magenta",
+      "name": "mid-vivid-magenta-03"
+    },
+    {
+      "rgb": [
+        166,
+        71,
+        126
+      ],
+      "hex": "a6477e",
+      "cmyk": [
+        37,
+        92,
+        24,
+        2
+      ],
+      "lab": [
+        44.705882352941174,
+        44,
+        -11
+      ],
+      "delta_e": 0.769,
+      "base_name": "mid-fair-magenta",
+      "name": "mid-fair-magenta-02"
+    },
+    {
+      "rgb": [
+        166,
+        80,
+        51
+      ],
+      "hex": "a65033",
+      "cmyk": [
+        25,
+        82,
+        100,
+        18
+      ],
+      "lab": [
+        44.705882352941174,
+        35,
+        34
+      ],
+      "delta_e": 1.299,
+      "base_name": "mid-fair-orange",
+      "name": "mid-fair-orange-03"
+    },
+    {
+      "rgb": [
+        166,
+        160,
+        188
+      ],
+      "hex": "a6a0bc",
+      "cmyk": [
+        37,
+        36,
+        13,
+        0
+      ],
+      "lab": [
+        67.05882352941177,
+        6,
+        -14
+      ],
+      "delta_e": 1.532,
+      "base_name": "soft-dusty-indigo",
+      "name": "soft-dusty-indigo-03"
+    },
+    {
+      "rgb": [
+        166,
+        202,
+        186
+      ],
+      "hex": "a6caba",
+      "cmyk": [
+        36,
+        9,
+        31,
+        0
+      ],
+      "lab": [
+        78.43137254901961,
+        -15,
+        4
+      ],
+      "delta_e": 0.793,
+      "base_name": "soft-dusty-green",
+      "name": "soft-dusty-green-05"
+    },
+    {
+      "rgb": [
+        167,
+        165,
+        136
+      ],
+      "hex": "a7a588",
+      "cmyk": [
+        37,
+        29,
+        53,
+        2
+      ],
+      "lab": [
+        67.45098039215686,
+        -3,
+        15
+      ],
+      "delta_e": 0.678,
+      "base_name": "soft-dusty-yellow",
+      "name": "soft-dusty-yellow-03"
+    },
+    {
+      "rgb": [
+        167,
+        205,
+        152
+      ],
+      "hex": "a7cd98",
+      "cmyk": [
+        38,
+        4,
+        53,
+        0
+      ],
+      "lab": [
+        78.43137254901961,
+        -20,
+        22
+      ],
+      "delta_e": 0.592,
+      "base_name": "soft-dusty-lime",
+      "name": "soft-dusty-lime-04"
+    },
+    {
+      "rgb": [
+        168,
+        117,
+        161
+      ],
+      "hex": "a875a1",
+      "cmyk": [
+        37,
+        65,
+        13,
+        0
+      ],
+      "lab": [
+        55.68627450980392,
+        26,
+        -15
+      ],
+      "delta_e": 0.611,
+      "base_name": "mid-dusty-magenta",
+      "name": "mid-dusty-magenta-03"
+    },
+    {
+      "rgb": [
+        168,
+        168,
+        78
+      ],
+      "hex": "a8a84e",
+      "cmyk": [
+        38,
+        25,
+        95,
+        2
+      ],
+      "lab": [
+        67.45098039215686,
+        -9,
+        46
+      ],
+      "delta_e": 0.812,
+      "base_name": "soft-fair-yellow",
+      "name": "soft-fair-yellow-02"
+    },
+    {
+      "rgb": [
+        168,
+        208,
+        87
+      ],
+      "hex": "a8d057",
+      "cmyk": [
+        40,
+        0,
+        91,
+        0
+      ],
+      "lab": [
+        78.82352941176471,
+        -27,
+        54
+      ],
+      "delta_e": 0.333,
+      "base_name": "soft-vivid-lime",
+      "name": "soft-vivid-lime"
+    },
+    {
+      "rgb": [
+        169,
+        166,
+        108
+      ],
+      "hex": "a9a66c",
+      "cmyk": [
+        37,
+        27,
+        73,
+        2
+      ],
+      "lab": [
+        67.45098039215686,
+        -5,
+        30
+      ],
+      "delta_e": 0.431,
+      "base_name": "soft-dusty-yellow",
+      "name": "soft-dusty-yellow"
+    },
+    {
+      "rgb": [
+        170,
+        198,
+        222
+      ],
+      "hex": "aac6de",
+      "cmyk": [
+        33,
+        14,
+        5,
+        0
+      ],
+      "lab": [
+        78.43137254901961,
+        -6,
+        -15
+      ],
+      "delta_e": 0.987,
+      "base_name": "soft-dusty-blue",
+      "name": "soft-dusty-blue-03"
+    },
+    {
+      "rgb": [
+        173,
+        73,
+        68
+      ],
+      "hex": "ad4944",
+      "cmyk": [
+        23,
+        88,
+        84,
+        14
+      ],
+      "lab": [
+        44.705882352941174,
+        42,
+        25
+      ],
+      "delta_e": 0.674,
+      "base_name": "mid-fair-vermilion",
+      "name": "mid-fair-vermilion-03"
+    },
+    {
+      "rgb": [
+        173,
+        122,
+        87
+      ],
+      "hex": "ad7a57",
+      "cmyk": [
+        28,
+        56,
+        76,
+        10
+      ],
+      "lab": [
+        56.07843137254902,
+        17,
+        27
+      ],
+      "delta_e": 0.615,
+      "base_name": "mid-dusty-orange",
+      "name": "mid-dusty-orange-04"
+    },
+    {
+      "rgb": [
+        174,
+        67,
+        106
+      ],
+      "hex": "ae436a",
+      "cmyk": [
+        29,
+        93,
+        42,
+        7
+      ],
+      "lab": [
+        44.705882352941174,
+        47,
+        1
+      ],
+      "delta_e": 0.706,
+      "base_name": "mid-fair-red",
+      "name": "mid-fair-red-02"
+    },
+    {
+      "rgb": [
+        174,
+        124,
+        52
+      ],
+      "hex": "ae7c34",
+      "cmyk": [
+        29,
+        53,
+        100,
+        11
+      ],
+      "lab": [
+        56.07843137254902,
+        15,
+        46
+      ],
+      "delta_e": 1.531,
+      "base_name": "mid-fair-amber",
+      "name": "mid-fair-amber"
+    },
+    {
+      "rgb": [
+        174,
+        201,
+        179
+      ],
+      "hex": "aec9b3",
+      "cmyk": [
+        33,
+        10,
+        35,
+        0
+      ],
+      "lab": [
+        78.43137254901961,
+        -13,
+        8
+      ],
+      "delta_e": 1.175,
+      "base_name": "soft-dusty-green",
+      "name": "soft-dusty-green-07"
+    },
+    {
+      "rgb": [
+        175,
+        158,
+        184
+      ],
+      "hex": "af9eb8",
+      "cmyk": [
+        33,
+        39,
+        15,
+        0
+      ],
+      "lab": [
+        67.05882352941177,
+        10,
+        -11
+      ],
+      "delta_e": 1.285,
+      "base_name": "soft-gray-violet",
+      "name": "soft-gray-violet-02"
+    },
+    {
+      "rgb": [
+        175,
+        162,
+        135
+      ],
+      "hex": "afa287",
+      "cmyk": [
+        33,
+        33,
+        52,
+        2
+      ],
+      "lab": [
+        67.05882352941177,
+        2,
+        16
+      ],
+      "delta_e": 0.314,
+      "base_name": "soft-dusty-amber",
+      "name": "soft-dusty-amber-02"
+    },
+    {
+      "rgb": [
+        176,
+        68,
+        87
+      ],
+      "hex": "b04457",
+      "cmyk": [
+        24,
+        92,
+        62,
+        11
+      ],
+      "lab": [
+        44.705882352941174,
+        46,
+        13
+      ],
+      "delta_e": 0.504,
+      "base_name": "mid-fair-vermilion",
+      "name": "mid-fair-vermilion"
+    },
+    {
+      "rgb": [
+        177,
+        205,
+        116
+      ],
+      "hex": "b1cd74",
+      "cmyk": [
+        35,
+        5,
+        74,
+        0
+      ],
+      "lab": [
+        78.82352941176471,
+        -20,
+        41
+      ],
+      "delta_e": 0.0,
+      "base_name": "soft-fair-lime",
+      "name": "soft-fair-lime"
+    },
+    {
+      "rgb": [
+        178,
+        114,
+        148
+      ],
+      "hex": "b27294",
+      "cmyk": [
+        32,
+        68,
+        22,
+        0
+      ],
+      "lab": [
+        55.68627450980392,
+        30,
+        -8
+      ],
+      "delta_e": 0.686,
+      "base_name": "mid-dusty-magenta",
+      "name": "mid-dusty-magenta-04"
+    },
+    {
+      "rgb": [
+        179,
+        196,
+        223
+      ],
+      "hex": "b3c4df",
+      "cmyk": [
+        29,
+        17,
+        3,
+        0
+      ],
+      "lab": [
+        78.43137254901961,
+        -2,
+        -16
+      ],
+      "delta_e": 1.141,
+      "base_name": "soft-dusty-blue",
+      "name": "soft-dusty-blue-06"
+    },
+    {
+      "rgb": [
+        181,
+        118,
+        96
+      ],
+      "hex": "b57660",
+      "cmyk": [
+        25,
+        61,
+        68,
+        8
+      ],
+      "lab": [
+        56.07843137254902,
+        24,
+        23
+      ],
+      "delta_e": 0.601,
+      "base_name": "mid-dusty-orange",
+      "name": "mid-dusty-orange-03"
+    },
+    {
+      "rgb": [
+        181,
+        160,
+        136
+      ],
+      "hex": "b5a088",
+      "cmyk": [
+        30,
+        36,
+        50,
+        1
+      ],
+      "lab": [
+        67.45098039215686,
+        5,
+        16
+      ],
+      "delta_e": 1.081,
+      "base_name": "soft-dusty-amber",
+      "name": "soft-dusty-amber-06"
+    },
+    {
+      "rgb": [
+        182,
+        156,
+        178
+      ],
+      "hex": "b69cb2",
+      "cmyk": [
+        30,
+        41,
+        17,
+        0
+      ],
+      "lab": [
+        67.05882352941177,
+        13,
+        -8
+      ],
+      "delta_e": 0.0,
+      "base_name": "soft-dusty-magenta",
+      "name": "soft-dusty-magenta"
+    },
+    {
+      "rgb": [
+        182,
+        200,
+        173
+      ],
+      "hex": "b6c8ad",
+      "cmyk": [
+        31,
+        12,
+        37,
+        0
+      ],
+      "lab": [
+        78.82352941176471,
+        -10,
+        11
+      ],
+      "delta_e": 1.284,
+      "base_name": "soft-gray-lime",
+      "name": "soft-gray-lime-02"
+    },
+    {
+      "rgb": [
+        183,
+        106,
+        175
+      ],
+      "hex": "b76aaf",
+      "cmyk": [
+        29,
+        73,
+        0,
+        0
+      ],
+      "lab": [
+        55.68627450980392,
+        39,
+        -23
+      ],
+      "delta_e": 0.988,
+      "base_name": "mid-fair-magenta",
+      "name": "mid-fair-magenta-04"
+    },
+    {
+      "rgb": [
+        183,
+        162,
+        107
+      ],
+      "hex": "b7a26b",
+      "cmyk": [
+        30,
+        33,
+        71,
+        2
+      ],
+      "lab": [
+        67.45098039215686,
+        2,
+        32
+      ],
+      "delta_e": 0.806,
+      "base_name": "soft-dusty-amber",
+      "name": "soft-dusty-amber-05"
+    },
+    {
+      "rgb": [
+        184,
+        49,
+        133
+      ],
+      "hex": "b83185",
+      "cmyk": [
+        29,
+        100,
+        12,
+        0
+      ],
+      "lab": [
+        44.705882352941174,
+        59,
+        -15
+      ],
+      "delta_e": 0.872,
+      "base_name": "mid-vivid-magenta",
+      "name": "mid-vivid-magenta"
+    },
+    {
+      "rgb": [
+        184,
+        112,
+        135
+      ],
+      "hex": "b87087",
+      "cmyk": [
+        28,
+        69,
+        33,
+        2
+      ],
+      "lab": [
+        55.68627450980392,
+        31,
+        0
+      ],
+      "delta_e": 0.558,
+      "base_name": "mid-dusty-red",
+      "name": "mid-dusty-red-02"
+    },
+    {
+      "rgb": [
+        184,
+        201,
+        143
+      ],
+      "hex": "b8c98f",
+      "cmyk": [
+        31,
+        10,
+        57,
+        0
+      ],
+      "lab": [
+        78.43137254901961,
+        -13,
+        27
+      ],
+      "delta_e": 0.556,
+      "base_name": "soft-dusty-lime",
+      "name": "soft-dusty-lime-02"
+    },
+    {
+      "rgb": [
+        185,
+        151,
+        204
+      ],
+      "hex": "b997cc",
+      "cmyk": [
+        27,
+        45,
+        0,
+        0
+      ],
+      "lab": [
+        67.05882352941177,
+        20,
+        -22
+      ],
+      "delta_e": 1.861,
+      "base_name": "soft-dusty-violet",
+      "name": "soft-dusty-violet"
+    },
+    {
+      "rgb": [
+        186,
+        115,
+        108
+      ],
+      "hex": "ba736c",
+      "cmyk": [
+        24,
+        65,
+        56,
+        5
+      ],
+      "lab": [
+        56.07843137254902,
+        28,
+        16
+      ],
+      "delta_e": 0.71,
+      "base_name": "mid-dusty-vermilion",
+      "name": "mid-dusty-vermilion-05"
+    },
+    {
+      "rgb": [
+        187,
+        113,
+        121
+      ],
+      "hex": "bb7179",
+      "cmyk": [
+        25,
+        67,
+        45,
+        3
+      ],
+      "lab": [
+        56.07843137254902,
+        31,
+        9
+      ],
+      "delta_e": 0.364,
+      "base_name": "mid-dusty-vermilion",
+      "name": "mid-dusty-vermilion-03"
+    },
+    {
+      "rgb": [
+        187,
+        158,
+        139
+      ],
+      "hex": "bb9e8b",
+      "cmyk": [
+        28,
+        38,
+        47,
+        1
+      ],
+      "lab": [
+        67.45098039215686,
+        9,
+        14
+      ],
+      "delta_e": 0.683,
+      "base_name": "soft-dusty-orange",
+      "name": "soft-dusty-orange-04"
+    },
+    {
+      "rgb": [
+        188,
+        116,
+        63
+      ],
+      "hex": "bc743f",
+      "cmyk": [
+        22,
+        63,
+        96,
+        7
+      ],
+      "lab": [
+        56.07843137254902,
+        26,
+        41
+      ],
+      "delta_e": 0.451,
+      "base_name": "mid-fair-orange",
+      "name": "mid-fair-orange-02"
+    },
+    {
+      "rgb": [
+        188,
+        154,
+        171
+      ],
+      "hex": "bc9aab",
+      "cmyk": [
+        27,
+        43,
+        22,
+        0
+      ],
+      "lab": [
+        67.05882352941177,
+        15,
+        -4
+      ],
+      "delta_e": 0.711,
+      "base_name": "soft-dusty-magenta",
+      "name": "soft-dusty-magenta-04"
+    },
+    {
+      "rgb": [
+        188,
+        193,
+        222
+      ],
+      "hex": "bcc1de",
+      "cmyk": [
+        25,
+        21,
+        2,
+        0
+      ],
+      "lab": [
+        78.43137254901961,
+        3,
+        -15
+      ],
+      "delta_e": 0.276,
+      "base_name": "soft-dusty-indigo",
+      "name": "soft-dusty-indigo"
+    },
+    {
+      "rgb": [
+        189,
+        161,
+        76
+      ],
+      "hex": "bda14c",
+      "cmyk": [
+        27,
+        34,
+        92,
+        2
+      ],
+      "lab": [
+        67.45098039215686,
+        3,
+        47
+      ],
+      "delta_e": 0.939,
+      "base_name": "soft-fair-amber",
+      "name": "soft-fair-amber-04"
+    },
+    {
+      "rgb": [
+        190,
+        198,
+        169
+      ],
+      "hex": "bec6a9",
+      "cmyk": [
+        27,
+        15,
+        38,
+        0
+      ],
+      "lab": [
+        78.82352941176471,
+        -7,
+        14
+      ],
+      "delta_e": 1.052,
+      "base_name": "soft-dusty-lime",
+      "name": "soft-dusty-lime-06"
+    },
+    {
+      "rgb": [
+        190,
+        234,
+        247
+      ],
+      "hex": "beeaf7",
+      "cmyk": [
+        23,
+        0,
+        3,
+        0
+      ],
+      "lab": [
+        89.80392156862744,
+        -13,
+        -11
+      ],
+      "delta_e": 1.667,
+      "base_name": "pale-dusty-cyan",
+      "name": "pale-dusty-cyan-02"
+    },
+    {
+      "rgb": [
+        191,
+        54,
+        56
+      ],
+      "hex": "bf3638",
+      "cmyk": [
+        18,
+        99,
+        100,
+        8
+      ],
+      "lab": [
+        45.09803921568628,
+        55,
+        33
+      ],
+      "delta_e": 0.0,
+      "base_name": "mid-vivid-vermilion",
+      "name": "mid-vivid-vermilion"
+    },
+    {
+      "rgb": [
+        191,
+        154,
+        164
+      ],
+      "hex": "bf9aa4",
+      "cmyk": [
+        26,
+        44,
+        27,
+        0
+      ],
+      "lab": [
+        67.45098039215686,
+        15,
+        0
+      ],
+      "delta_e": 1.039,
+      "base_name": "soft-dusty-red",
+      "name": "soft-dusty-red-04"
+    },
+    {
+      "rgb": [
+        191,
+        156,
+        144
+      ],
+      "hex": "bf9c90",
+      "cmyk": [
+        26,
+        41,
+        42,
+        1
+      ],
+      "lab": [
+        67.45098039215686,
+        12,
+        11
+      ],
+      "delta_e": 0.732,
+      "base_name": "soft-dusty-orange",
+      "name": "soft-dusty-orange-05"
+    },
+    {
+      "rgb": [
+        193,
+        41,
+        107
+      ],
+      "hex": "c1296b",
+      "cmyk": [
+        22,
+        100,
+        37,
+        2
+      ],
+      "lab": [
+        44.705882352941174,
+        62,
+        1
+      ],
+      "delta_e": 1.767,
+      "base_name": "mid-vivid-red",
+      "name": "mid-vivid-red-02"
+    },
+    {
+      "rgb": [
+        193,
+        154,
+        157
+      ],
+      "hex": "c19a9d",
+      "cmyk": [
+        25,
+        44,
+        32,
+        0
+      ],
+      "lab": [
+        67.45098039215686,
+        15,
+        4
+      ],
+      "delta_e": 1.477,
+      "base_name": "soft-dusty-vermilion",
+      "name": "soft-dusty-vermilion-08"
+    },
+    {
+      "rgb": [
+        193,
+        155,
+        150
+      ],
+      "hex": "c19b96",
+      "cmyk": [
+        25,
+        42,
+        37,
+        0
+      ],
+      "lab": [
+        67.45098039215686,
+        14,
+        8
+      ],
+      "delta_e": 0.742,
+      "base_name": "soft-dusty-vermilion",
+      "name": "soft-dusty-vermilion-03"
+    },
+    {
+      "rgb": [
+        194,
+        194,
+        194
+      ],
+      "hex": "c2c2c2",
+      "cmyk": [
+        24,
+        20,
+        20,
+        0
+      ],
+      "lab": [
+        78.43137254901961,
+        0,
+        0
+      ],
+      "delta_e": 1.451,
+      "base_name": "light-gray",
+      "name": "light-gray-02"
+    },
+    {
+      "rgb": [
+        195,
+        232,
+        252
+      ],
+      "hex": "c3e8fc",
+      "cmyk": [
+        21,
+        1,
+        1,
+        0
+      ],
+      "lab": [
+        89.80392156862744,
+        -9,
+        -14
+      ],
+      "delta_e": 1.26,
+      "base_name": "pale-dusty-cyan",
+      "name": "pale-dusty-cyan"
+    },
+    {
+      "rgb": [
+        196,
+        43,
+        81
+      ],
+      "hex": "c42b51",
+      "cmyk": [
+        17,
+        100,
+        67,
+        5
+      ],
+      "lab": [
+        45.09803921568628,
+        61,
+        18
+      ],
+      "delta_e": 1.428,
+      "base_name": "mid-vivid-vermilion",
+      "name": "mid-vivid-vermilion-05"
+    },
+    {
+      "rgb": [
+        196,
+        157,
+        109
+      ],
+      "hex": "c49d6d",
+      "cmyk": [
+        24,
+        39,
+        68,
+        2
+      ],
+      "lab": [
+        67.45098039215686,
+        10,
+        31
+      ],
+      "delta_e": 0.783,
+      "base_name": "soft-dusty-amber",
+      "name": "soft-dusty-amber-04"
+    },
+    {
+      "rgb": [
+        197,
+        191,
+        220
+      ],
+      "hex": "c5bfdc",
+      "cmyk": [
+        21,
+        24,
+        2,
+        0
+      ],
+      "lab": [
+        78.43137254901961,
+        6,
+        -14
+      ],
+      "delta_e": 1.532,
+      "base_name": "soft-dusty-indigo",
+      "name": "soft-dusty-indigo-04"
+    },
+    {
+      "rgb": [
+        198,
+        100,
+        156
+      ],
+      "hex": "c6649c",
+      "cmyk": [
+        21,
+        78,
+        8,
+        0
+      ],
+      "lab": [
+        55.68627450980392,
+        45,
+        -12
+      ],
+      "delta_e": 0.497,
+      "base_name": "mid-fair-magenta",
+      "name": "mid-fair-magenta"
+    },
+    {
+      "rgb": [
+        198,
+        196,
+        166
+      ],
+      "hex": "c6c4a6",
+      "cmyk": [
+        24,
+        18,
+        39,
+        0
+      ],
+      "lab": [
+        78.82352941176471,
+        -3,
+        15
+      ],
+      "delta_e": 0.602,
+      "base_name": "soft-dusty-yellow",
+      "name": "soft-dusty-yellow-02"
+    },
+    {
+      "rgb": [
+        199,
+        147,
+        192
+      ],
+      "hex": "c793c0",
+      "cmyk": [
+        20,
+        50,
+        1,
+        0
+      ],
+      "lab": [
+        67.05882352941177,
+        26,
+        -15
+      ],
+      "delta_e": 0.0,
+      "base_name": "soft-dusty-magenta",
+      "name": "soft-dusty-magenta-02"
+    },
+    {
+      "rgb": [
+        199,
+        201,
+        74
+      ],
+      "hex": "c7c94a",
+      "cmyk": [
+        26,
+        11,
+        94,
+        0
+      ],
+      "lab": [
+        79.2156862745098,
+        -12,
+        61
+      ],
+      "delta_e": 0.274,
+      "base_name": "soft-vivid-yellow",
+      "name": "soft-vivid-yellow"
+    },
+    {
+      "rgb": [
+        200,
+        109,
+        77
+      ],
+      "hex": "c86d4d",
+      "cmyk": [
+        17,
+        71,
+        83,
+        4
+      ],
+      "lab": [
+        56.470588235294116,
+        35,
+        34
+      ],
+      "delta_e": 0.438,
+      "base_name": "mid-fair-orange",
+      "name": "mid-fair-orange"
+    },
+    {
+      "rgb": [
+        200,
+        197,
+        138
+      ],
+      "hex": "c8c58a",
+      "cmyk": [
+        24,
+        16,
+        58,
+        0
+      ],
+      "lab": [
+        78.82352941176471,
+        -6,
+        30
+      ],
+      "delta_e": 0.965,
+      "base_name": "soft-dusty-yellow",
+      "name": "soft-dusty-yellow-04"
+    },
+    {
+      "rgb": [
+        200,
+        199,
+        108
+      ],
+      "hex": "c8c76c",
+      "cmyk": [
+        25,
+        13,
+        76,
+        0
+      ],
+      "lab": [
+        78.82352941176471,
+        -9,
+        45
+      ],
+      "delta_e": 0.343,
+      "base_name": "soft-fair-yellow",
+      "name": "soft-fair-yellow"
+    },
+    {
+      "rgb": [
+        205,
+        234,
+        211
+      ],
+      "hex": "cdead3",
+      "cmyk": [
+        19,
+        0,
+        22,
+        0
+      ],
+      "lab": [
+        90.19607843137256,
+        -13,
+        8
+      ],
+      "delta_e": 0.845,
+      "base_name": "pale-dusty-green",
+      "name": "pale-dusty-green"
+    },
+    {
+      "rgb": [
+        206,
+        152,
+        115
+      ],
+      "hex": "ce9873",
+      "cmyk": [
+        19,
+        44,
+        62,
+        1
+      ],
+      "lab": [
+        67.45098039215686,
+        18,
+        28
+      ],
+      "delta_e": 1.119,
+      "base_name": "soft-dusty-orange",
+      "name": "soft-dusty-orange-08"
+    },
+    {
+      "rgb": [
+        206,
+        188,
+        215
+      ],
+      "hex": "cebcd7",
+      "cmyk": [
+        17,
+        27,
+        3,
+        0
+      ],
+      "lab": [
+        78.43137254901961,
+        10,
+        -11
+      ],
+      "delta_e": 0.891,
+      "base_name": "soft-gray-violet",
+      "name": "soft-gray-violet"
+    },
+    {
+      "rgb": [
+        206,
+        193,
+        165
+      ],
+      "hex": "cec1a5",
+      "cmyk": [
+        20,
+        21,
+        38,
+        0
+      ],
+      "lab": [
+        78.43137254901961,
+        1,
+        16
+      ],
+      "delta_e": 1.307,
+      "base_name": "soft-dusty-amber",
+      "name": "soft-dusty-amber-08"
+    },
+    {
+      "rgb": [
+        207,
+        97,
+        135
+      ],
+      "hex": "cf6187",
+      "cmyk": [
+        16,
+        80,
+        26,
+        0
+      ],
+      "lab": [
+        56.07843137254902,
+        47,
+        1
+      ],
+      "delta_e": 0.319,
+      "base_name": "mid-fair-red",
+      "name": "mid-fair-red"
+    },
+    {
+      "rgb": [
+        207,
+        102,
+        95
+      ],
+      "hex": "cf665f",
+      "cmyk": [
+        15,
+        76,
+        66,
+        2
+      ],
+      "lab": [
+        56.07843137254902,
+        42,
+        24
+      ],
+      "delta_e": 0.606,
+      "base_name": "mid-fair-vermilion",
+      "name": "mid-fair-vermilion-02"
+    },
+    {
+      "rgb": [
+        207,
+        154,
+        80
+      ],
+      "hex": "cf9a50",
+      "cmyk": [
+        18,
+        42,
+        87,
+        1
+      ],
+      "lab": [
+        67.84313725490196,
+        15,
+        46
+      ],
+      "delta_e": 0.792,
+      "base_name": "soft-fair-amber",
+      "name": "soft-fair-amber-03"
+    },
+    {
+      "rgb": [
+        210,
+        98,
+        114
+      ],
+      "hex": "d26272",
+      "cmyk": [
+        14,
+        79,
+        46,
+        1
+      ],
+      "lab": [
+        56.07843137254902,
+        46,
+        14
+      ],
+      "delta_e": 0.803,
+      "base_name": "mid-fair-vermilion",
+      "name": "mid-fair-vermilion-04"
+    },
+    {
+      "rgb": [
+        210,
+        144,
+        179
+      ],
+      "hex": "d290b3",
+      "cmyk": [
+        16,
+        53,
+        8,
+        0
+      ],
+      "lab": [
+        67.45098039215686,
+        30,
+        -8
+      ],
+      "delta_e": 0.314,
+      "base_name": "soft-dusty-magenta",
+      "name": "soft-dusty-magenta-03"
+    },
+    {
+      "rgb": [
+        213,
+        191,
+        167
+      ],
+      "hex": "d5bfa7",
+      "cmyk": [
+        17,
+        24,
+        35,
+        0
+      ],
+      "lab": [
+        78.82352941176471,
+        5,
+        15
+      ],
+      "delta_e": 1.171,
+      "base_name": "soft-dusty-amber",
+      "name": "soft-dusty-amber-07"
+    },
+    {
+      "rgb": [
+        213,
+        232,
+        205
+      ],
+      "hex": "d5e8cd",
+      "cmyk": [
+        16,
+        1,
+        24,
+        0
+      ],
+      "lab": [
+        90.19607843137256,
+        -10,
+        11
+      ],
+      "delta_e": 0.0,
+      "base_name": "pale-gray-lime",
+      "name": "pale-gray-lime"
+    },
+    {
+      "rgb": [
+        214,
+        148,
+        125
+      ],
+      "hex": "d6947d",
+      "cmyk": [
+        15,
+        49,
+        53,
+        0
+      ],
+      "lab": [
+        67.45098039215686,
+        24,
+        23
+      ],
+      "delta_e": 0.0,
+      "base_name": "soft-dusty-orange",
+      "name": "soft-dusty-orange"
+    },
+    {
+      "rgb": [
+        214,
+        186,
+        209
+      ],
+      "hex": "d6bad1",
+      "cmyk": [
+        14,
+        29,
+        5,
+        0
+      ],
+      "lab": [
+        78.43137254901961,
+        13,
+        -8
+      ],
+      "delta_e": 0.772,
+      "base_name": "soft-dusty-magenta",
+      "name": "soft-dusty-magenta-05"
+    },
+    {
+      "rgb": [
+        215,
+        193,
+        136
+      ],
+      "hex": "d7c188",
+      "cmyk": [
+        16,
+        22,
+        56,
+        0
+      ],
+      "lab": [
+        78.82352941176471,
+        2,
+        32
+      ],
+      "delta_e": 0.274,
+      "base_name": "soft-dusty-amber",
+      "name": "soft-dusty-amber"
+    },
+    {
+      "rgb": [
+        216,
+        234,
+        174
+      ],
+      "hex": "d8eaae",
+      "cmyk": [
+        16,
+        0,
+        42,
+        0
+      ],
+      "lab": [
+        90.19607843137256,
+        -14,
+        27
+      ],
+      "delta_e": 1.37,
+      "base_name": "pale-dusty-lime",
+      "name": "pale-dusty-lime-02"
+    },
+    {
+      "rgb": [
+        217,
+        83,
+        163
+      ],
+      "hex": "d953a3",
+      "cmyk": [
+        11,
+        85,
+        0,
+        0
+      ],
+      "lab": [
+        56.07843137254902,
+        59,
+        -15
+      ],
+      "delta_e": 0.915,
+      "base_name": "mid-vivid-magenta",
+      "name": "mid-vivid-magenta-02"
+    },
+    {
+      "rgb": [
+        217,
+        97,
+        58
+      ],
+      "hex": "d9613a",
+      "cmyk": [
+        10,
+        79,
+        98,
+        2
+      ],
+      "lab": [
+        56.470588235294116,
+        46,
+        45
+      ],
+      "delta_e": 0.583,
+      "base_name": "mid-vivid-orange",
+      "name": "mid-vivid-orange"
+    },
+    {
+      "rgb": [
+        217,
+        142,
+        165
+      ],
+      "hex": "d98ea5",
+      "cmyk": [
+        12,
+        55,
+        18,
+        0
+      ],
+      "lab": [
+        67.45098039215686,
+        32,
+        0
+      ],
+      "delta_e": 0.682,
+      "base_name": "soft-dusty-red",
+      "name": "soft-dusty-red"
+    },
+    {
+      "rgb": [
+        217,
+        150,
+        47
+      ],
+      "hex": "d9962f",
+      "cmyk": [
+        15,
+        45,
+        100,
+        1
+      ],
+      "lab": [
+        67.45098039215686,
+        20,
+        61
+      ],
+      "delta_e": 1.334,
+      "base_name": "soft-vivid-amber",
+      "name": "soft-vivid-amber-03"
+    },
+    {
+      "rgb": [
+        219,
+        144,
+        137
+      ],
+      "hex": "db9089",
+      "cmyk": [
+        12,
+        53,
+        42,
+        0
+      ],
+      "lab": [
+        67.45098039215686,
+        29,
+        16
+      ],
+      "delta_e": 0.0,
+      "base_name": "soft-dusty-vermilion",
+      "name": "soft-dusty-vermilion"
+    },
+    {
+      "rgb": [
+        219,
+        189,
+        170
+      ],
+      "hex": "dbbdaa",
+      "cmyk": [
+        14,
+        26,
+        32,
+        0
+      ],
+      "lab": [
+        78.82352941176471,
+        9,
+        14
+      ],
+      "delta_e": 0.0,
+      "base_name": "soft-dusty-orange",
+      "name": "soft-dusty-orange-02"
+    },
+    {
+      "rgb": [
+        220,
+        142,
+        150
+      ],
+      "hex": "dc8e96",
+      "cmyk": [
+        11,
+        55,
+        31,
+        0
+      ],
+      "lab": [
+        67.45098039215686,
+        31,
+        9
+      ],
+      "delta_e": 0.435,
+      "base_name": "soft-dusty-vermilion",
+      "name": "soft-dusty-vermilion-02"
+    },
+    {
+      "rgb": [
+        220,
+        185,
+        202
+      ],
+      "hex": "dcb9ca",
+      "cmyk": [
+        12,
+        31,
+        9,
+        0
+      ],
+      "lab": [
+        78.82352941176471,
+        15,
+        -4
+      ],
+      "delta_e": 1.063,
+      "base_name": "soft-dusty-magenta",
+      "name": "soft-dusty-magenta-06"
+    },
+    {
+      "rgb": [
+        222,
+        146,
+        91
+      ],
+      "hex": "de925b",
+      "cmyk": [
+        11,
+        51,
+        77,
+        0
+      ],
+      "lab": [
+        67.84313725490196,
+        26,
+        41
+      ],
+      "delta_e": 0.451,
+      "base_name": "soft-fair-orange",
+      "name": "soft-fair-orange-02"
+    },
+    {
+      "rgb": [
+        222,
+        192,
+        105
+      ],
+      "hex": "dec069",
+      "cmyk": [
+        14,
+        22,
+        75,
+        0
+      ],
+      "lab": [
+        78.82352941176471,
+        3,
+        47
+      ],
+      "delta_e": 0.693,
+      "base_name": "soft-fair-amber",
+      "name": "soft-fair-amber-02"
+    },
+    {
+      "rgb": [
+        222,
+        230,
+        200
+      ],
+      "hex": "dee6c8",
+      "cmyk": [
+        13,
+        4,
+        25,
+        0
+      ],
+      "lab": [
+        90.19607843137256,
+        -7,
+        14
+      ],
+      "delta_e": 1.015,
+      "base_name": "pale-dusty-lime",
+      "name": "pale-dusty-lime"
+    },
+    {
+      "rgb": [
+        223,
+        187,
+        174
+      ],
+      "hex": "dfbbae",
+      "cmyk": [
+        11,
+        29,
+        29,
+        0
+      ],
+      "lab": [
+        78.82352941176471,
+        12,
+        12
+      ],
+      "delta_e": 0.858,
+      "base_name": "soft-dusty-orange",
+      "name": "soft-dusty-orange-07"
+    },
+    {
+      "rgb": [
+        224,
+        184,
+        195
+      ],
+      "hex": "e0b8c3",
+      "cmyk": [
+        10,
+        31,
+        13,
+        0
+      ],
+      "lab": [
+        78.43137254901961,
+        16,
+        0
+      ],
+      "delta_e": 0.683,
+      "base_name": "soft-dusty-red",
+      "name": "soft-dusty-red-02"
+    },
+    {
+      "rgb": [
+        225,
+        185,
+        180
+      ],
+      "hex": "e1b9b4",
+      "cmyk": [
+        10,
+        30,
+        24,
+        0
+      ],
+      "lab": [
+        78.82352941176471,
+        14,
+        8
+      ],
+      "delta_e": 0.89,
+      "base_name": "soft-dusty-vermilion",
+      "name": "soft-dusty-vermilion-05"
+    },
+    {
+      "rgb": [
+        226,
+        184,
+        187
+      ],
+      "hex": "e2b8bb",
+      "cmyk": [
+        9,
+        31,
+        18,
+        0
+      ],
+      "lab": [
+        78.82352941176471,
+        16,
+        4
+      ],
+      "delta_e": 0.955,
+      "base_name": "soft-dusty-vermilion",
+      "name": "soft-dusty-vermilion-06"
+    },
+    {
+      "rgb": [
+        226,
+        226,
+        226
+      ],
+      "hex": "e2e2e2",
+      "cmyk": [
+        10,
+        8,
+        8,
+        0
+      ],
+      "lab": [
+        89.80392156862744,
+        0,
+        0
+      ],
+      "delta_e": 0.978,
+      "base_name": "white",
+      "name": "white"
+    },
+    {
+      "rgb": [
+        227,
+        86,
+        82
+      ],
+      "hex": "e35652",
+      "cmyk": [
+        5,
+        86,
+        75,
+        0
+      ],
+      "lab": [
+        56.470588235294116,
+        56,
+        33
+      ],
+      "delta_e": 0.398,
+      "base_name": "mid-vivid-vermilion",
+      "name": "mid-vivid-vermilion-02"
+    },
+    {
+      "rgb": [
+        227,
+        191,
+        71
+      ],
+      "hex": "e3bf47",
+      "cmyk": [
+        12,
+        23,
+        93,
+        0
+      ],
+      "lab": [
+        78.82352941176471,
+        4,
+        63
+      ],
+      "delta_e": 0.653,
+      "base_name": "soft-vivid-amber",
+      "name": "soft-vivid-amber-02"
+    },
+    {
+      "rgb": [
+        228,
+        77,
+        136
+      ],
+      "hex": "e44d88",
+      "cmyk": [
+        4,
+        89,
+        17,
+        0
+      ],
+      "lab": [
+        56.07843137254902,
+        63,
+        1
+      ],
+      "delta_e": 0.511,
+      "base_name": "mid-vivid-red",
+      "name": "mid-vivid-red"
+    },
+    {
+      "rgb": [
+        228,
+        188,
+        138
+      ],
+      "hex": "e4bc8a",
+      "cmyk": [
+        10,
+        27,
+        53,
+        0
+      ],
+      "lab": [
+        78.82352941176471,
+        10,
+        31
+      ],
+      "delta_e": 0.451,
+      "base_name": "soft-dusty-amber",
+      "name": "soft-dusty-amber-03"
+    },
+    {
+      "rgb": [
+        230,
+        234,
+        66
+      ],
+      "hex": "e6ea42",
+      "cmyk": [
+        14,
+        0,
+        92,
+        0
+      ],
+      "lab": [
+        90.19607843137256,
+        -15,
+        75
+      ],
+      "delta_e": 0.896,
+      "base_name": "pale-vivid-yellow",
+      "name": "pale-vivid-yellow-02"
+    },
+    {
+      "rgb": [
+        231,
+        79,
+        108
+      ],
+      "hex": "e74f6c",
+      "cmyk": [
+        3,
+        89,
+        47,
+        0
+      ],
+      "lab": [
+        56.470588235294116,
+        61,
+        18
+      ],
+      "delta_e": 0.466,
+      "base_name": "mid-vivid-vermilion",
+      "name": "mid-vivid-vermilion-03"
+    },
+    {
+      "rgb": [
+        231,
+        131,
+        187
+      ],
+      "hex": "e783bb",
+      "cmyk": [
+        5,
+        63,
+        0,
+        0
+      ],
+      "lab": [
+        67.45098039215686,
+        44,
+        -12
+      ],
+      "delta_e": 1.501,
+      "base_name": "soft-fair-magenta",
+      "name": "soft-fair-magenta"
+    },
+    {
+      "rgb": [
+        231,
+        228,
+        197
+      ],
+      "hex": "e7e4c5",
+      "cmyk": [
+        9,
+        6,
+        26,
+        0
+      ],
+      "lab": [
+        90.19607843137256,
+        -3,
+        16
+      ],
+      "delta_e": 1.161,
+      "base_name": "pale-dusty-yellow",
+      "name": "pale-dusty-yellow-02"
+    },
+    {
+      "rgb": [
+        233,
+        229,
+        168
+      ],
+      "hex": "e9e5a8",
+      "cmyk": [
+        9,
+        4,
+        43,
+        0
+      ],
+      "lab": [
+        90.19607843137256,
+        -5,
+        30
+      ],
+      "delta_e": 0.431,
+      "base_name": "pale-dusty-yellow",
+      "name": "pale-dusty-yellow"
+    },
+    {
+      "rgb": [
+        233,
+        231,
+        138
+      ],
+      "hex": "e9e78a",
+      "cmyk": [
+        10,
+        2,
+        61,
+        0
+      ],
+      "lab": [
+        90.19607843137256,
+        -9,
+        45
+      ],
+      "delta_e": 0.723,
+      "base_name": "pale-fair-yellow",
+      "name": "pale-fair-yellow"
+    },
+    {
+      "rgb": [
+        233,
+        233,
+        105
+      ],
+      "hex": "e9e969",
+      "cmyk": [
+        11,
+        0,
+        76,
+        0
+      ],
+      "lab": [
+        90.58823529411765,
+        -12,
+        61
+      ],
+      "delta_e": 0.375,
+      "base_name": "pale-vivid-yellow",
+      "name": "pale-vivid-yellow"
+    },
+    {
+      "rgb": [
+        234,
+        138,
+        105
+      ],
+      "hex": "ea8a69",
+      "cmyk": [
+        4,
+        58,
+        65,
+        0
+      ],
+      "lab": [
+        67.45098039215686,
+        35,
+        34
+      ],
+      "delta_e": 0.438,
+      "base_name": "soft-fair-orange",
+      "name": "soft-fair-orange"
+    },
+    {
+      "rgb": [
+        237,
+        139,
+        64
+      ],
+      "hex": "ed8b40",
+      "cmyk": [
+        4,
+        57,
+        95,
+        0
+      ],
+      "lab": [
+        67.84313725490196,
+        34,
+        55
+      ],
+      "delta_e": 0.777,
+      "base_name": "soft-vivid-orange",
+      "name": "soft-vivid-orange"
+    },
+    {
+      "rgb": [
+        239,
+        183,
+        145
+      ],
+      "hex": "efb791",
+      "cmyk": [
+        4,
+        33,
+        46,
+        0
+      ],
+      "lab": [
+        78.82352941176471,
+        17,
+        28
+      ],
+      "delta_e": 0.75,
+      "base_name": "soft-dusty-orange",
+      "name": "soft-dusty-orange-06"
+    },
+    {
+      "rgb": [
+        239,
+        225,
+        197
+      ],
+      "hex": "efe1c5",
+      "cmyk": [
+        5,
+        10,
+        24,
+        0
+      ],
+      "lab": [
+        90.19607843137256,
+        2,
+        16
+      ],
+      "delta_e": 0.0,
+      "base_name": "pale-dusty-amber",
+      "name": "pale-dusty-amber"
+    },
+    {
+      "rgb": [
+        241,
+        128,
+        165
+      ],
+      "hex": "f180a5",
+      "cmyk": [
+        0,
+        66,
+        10,
+        0
+      ],
+      "lab": [
+        67.45098039215686,
+        47,
+        1
+      ],
+      "delta_e": 0.447,
+      "base_name": "soft-fair-red",
+      "name": "soft-fair-red"
+    },
+    {
+      "rgb": [
+        241,
+        184,
+        109
+      ],
+      "hex": "f1b86d",
+      "cmyk": [
+        4,
+        31,
+        69,
+        0
+      ],
+      "lab": [
+        78.82352941176471,
+        15,
+        46
+      ],
+      "delta_e": 0.654,
+      "base_name": "soft-fair-amber",
+      "name": "soft-fair-amber"
+    },
+    {
+      "rgb": [
+        242,
+        132,
+        123
+      ],
+      "hex": "f2847b",
+      "cmyk": [
+        1,
+        63,
+        48,
+        0
+      ],
+      "lab": [
+        67.84313725490196,
+        42,
+        25
+      ],
+      "delta_e": 0.52,
+      "base_name": "soft-fair-vermilion",
+      "name": "soft-fair-vermilion"
+    },
+    {
+      "rgb": [
+        243,
+        174,
+        210
+      ],
+      "hex": "f3aed2",
+      "cmyk": [
+        2,
+        40,
+        0,
+        0
+      ],
+      "lab": [
+        78.43137254901961,
+        30,
+        -8
+      ],
+      "delta_e": 1.183,
+      "base_name": "soft-dusty-magenta",
+      "name": "soft-dusty-magenta-07"
+    },
+    {
+      "rgb": [
+        244,
+        129,
+        144
+      ],
+      "hex": "f48190",
+      "cmyk": [
+        0,
+        65,
+        29,
+        0
+      ],
+      "lab": [
+        67.84313725490196,
+        46,
+        13
+      ],
+      "delta_e": 0.626,
+      "base_name": "soft-fair-vermilion",
+      "name": "soft-fair-vermilion-02"
+    },
+    {
+      "rgb": [
+        246,
+        64,
+        70
+      ],
+      "hex": "f64046",
+      "cmyk": [
+        0,
+        94,
+        81,
+        0
+      ],
+      "lab": [
+        56.470588235294116,
+        69,
+        41
+      ],
+      "delta_e": 1.29,
+      "base_name": "mid-vivid-vermilion",
+      "name": "mid-vivid-vermilion-04"
+    },
+    {
+      "rgb": [
+        246,
+        223,
+        198
+      ],
+      "hex": "f6dfc6",
+      "cmyk": [
+        2,
+        13,
+        23,
+        0
+      ],
+      "lab": [
+        90.19607843137256,
+        5,
+        15
+      ],
+      "delta_e": 1.124,
+      "base_name": "pale-dusty-amber",
+      "name": "pale-dusty-amber-03"
+    },
+    {
+      "rgb": [
+        248,
+        178,
+        154
+      ],
+      "hex": "f8b29a",
+      "cmyk": [
+        0,
+        37,
+        37,
+        0
+      ],
+      "lab": [
+        78.82352941176471,
+        24,
+        23
+      ],
+      "delta_e": 0.593,
+      "base_name": "soft-dusty-orange",
+      "name": "soft-dusty-orange-03"
+    },
+    {
+      "rgb": [
+        248,
+        224,
+        166
+      ],
+      "hex": "f8e0a6",
+      "cmyk": [
+        2,
+        11,
+        42,
+        0
+      ],
+      "lab": [
+        90.19607843137256,
+        2,
+        32
+      ],
+      "delta_e": 0.858,
+      "base_name": "pale-dusty-amber",
+      "name": "pale-dusty-amber-02"
+    },
+    {
+      "rgb": [
+        250,
+        173,
+        196
+      ],
+      "hex": "faadc4",
+      "cmyk": [
+        0,
+        42,
+        5,
+        0
+      ],
+      "lab": [
+        78.82352941176471,
+        31,
+        0
+      ],
+      "delta_e": 0.82,
+      "base_name": "soft-dusty-red",
+      "name": "soft-dusty-red-03"
+    },
+    {
+      "rgb": [
+        252,
+        175,
+        167
+      ],
+      "hex": "fcafa7",
+      "cmyk": [
+        0,
+        40,
+        27,
+        0
+      ],
+      "lab": [
+        78.82352941176471,
+        28,
+        16
+      ],
+      "delta_e": 0.855,
+      "base_name": "soft-dusty-vermilion",
+      "name": "soft-dusty-vermilion-04"
+    },
+    {
+      "rgb": [
+        252,
+        181,
+        78
+      ],
+      "hex": "fcb54e",
+      "cmyk": [
+        0,
+        34,
+        84,
+        0
+      ],
+      "lab": [
+        79.2156862745098,
+        20,
+        61
+      ],
+      "delta_e": 0.274,
+      "base_name": "soft-vivid-amber",
+      "name": "soft-vivid-amber"
+    },
+    {
+      "rgb": [
+        252,
+        217,
+        235
+      ],
+      "hex": "fcd9eb",
+      "cmyk": [
+        0,
+        19,
+        0,
+        0
+      ],
+      "lab": [
+        90.19607843137256,
+        15,
+        -4
+      ],
+      "delta_e": 1.078,
+      "base_name": "pale-dusty-magenta",
+      "name": "pale-dusty-magenta"
+    },
+    {
+      "rgb": [
+        252,
+        220,
+        201
+      ],
+      "hex": "fcdcc9",
+      "cmyk": [
+        0,
+        16,
+        19,
+        0
+      ],
+      "lab": [
+        90.19607843137256,
+        9,
+        14
+      ],
+      "delta_e": 1.447,
+      "base_name": "pale-dusty-orange",
+      "name": "pale-dusty-orange-02"
+    },
+    {
+      "rgb": [
+        253,
+        128,
+        85
+      ],
+      "hex": "fd8055",
+      "cmyk": [
+        0,
+        65,
+        75,
+        0
+      ],
+      "lab": [
+        67.84313725490196,
+        46,
+        46
+      ],
+      "delta_e": 1.618,
+      "base_name": "soft-vivid-orange",
+      "name": "soft-vivid-orange-02"
+    },
+    {
+      "rgb": [
+        253,
+        173,
+        181
+      ],
+      "hex": "fdadb5",
+      "cmyk": [
+        0,
+        42,
+        16,
+        0
+      ],
+      "lab": [
+        78.82352941176471,
+        31,
+        8
+      ],
+      "delta_e": 1.083,
+      "base_name": "soft-dusty-vermilion",
+      "name": "soft-dusty-vermilion-07"
+    },
+    {
+      "rgb": [
+        255,
+        218,
+        206
+      ],
+      "hex": "ffdace",
+      "cmyk": [
+        0,
+        17,
+        15,
+        0
+      ],
+      "lab": [
+        89.80392156862744,
+        12,
+        11
+      ],
+      "delta_e": 0.783,
+      "base_name": "pale-dusty-orange",
+      "name": "pale-dusty-orange"
+    },
+    {
+      "rgb": [
+        255,
+        224,
+        135
+      ],
+      "hex": "ffe087",
+      "cmyk": [
+        0,
+        11,
+        59,
+        0
+      ],
+      "lab": [
+        90.58823529411765,
+        3,
+        47
+      ],
+      "delta_e": 0.834,
+      "base_name": "pale-fair-amber",
+      "name": "pale-fair-amber"
+    },
+    {
+      "rgb": [
+        255,
+        255,
+        255
+      ],
+      "hex": "ffffff",
+      "cmyk": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "lab": [
+        100.0,
+        0,
+        0
+      ],
+      "delta_e": 0.0,
+      "base_name": "k-000",
+      "k_percent": 0,
+      "name": "k-000"
+    },
+    {
+      "rgb": [
+        212,
+        212,
+        212
+      ],
+      "hex": "d4d4d4",
+      "cmyk": [
+        16,
+        13,
+        13,
+        0
+      ],
+      "lab": [
+        85.09803921568627,
+        0,
+        0
+      ],
+      "delta_e": 1.732,
+      "base_name": "k-017",
+      "k_percent": 17,
+      "name": "k-017"
+    },
+    {
+      "rgb": [
+        170,
+        170,
+        170
+      ],
+      "hex": "aaaaaa",
+      "cmyk": [
+        36,
+        30,
+        30,
+        0
+      ],
+      "lab": [
+        69.41176470588235,
+        0,
+        0
+      ],
+      "delta_e": 1.451,
+      "base_name": "k-033",
+      "k_percent": 33,
+      "name": "k-033"
+    },
+    {
+      "rgb": [
+        128,
+        128,
+        128
+      ],
+      "hex": "808080",
+      "cmyk": [
+        53,
+        45,
+        45,
+        10
+      ],
+      "lab": [
+        53.72549019607843,
+        0,
+        0
+      ],
+      "delta_e": 0.0,
+      "base_name": "k-050",
+      "k_percent": 50,
+      "name": "k-050"
+    },
+    {
+      "rgb": [
+        85,
+        85,
+        85
+      ],
+      "hex": "555555",
+      "cmyk": [
+        64,
+        59,
+        58,
+        38
+      ],
+      "lab": [
+        36.07843137254902,
+        0,
+        0
+      ],
+      "delta_e": 1.488,
+      "base_name": "k-067",
+      "k_percent": 67,
+      "name": "k-067"
+    },
+    {
+      "rgb": [
+        42,
+        42,
+        42
+      ],
+      "hex": "2a2a2a",
+      "cmyk": [
+        72,
+        67,
+        67,
+        87
+      ],
+      "lab": [
+        16.862745098039216,
+        0,
+        0
+      ],
+      "delta_e": 1.259,
+      "base_name": "k-083",
+      "k_percent": 83,
+      "name": "k-083"
+    },
+    {
+      "rgb": [
+        0,
+        0,
+        0
+      ],
+      "hex": "000000",
+      "cmyk": [
+        75,
+        68,
+        65,
+        90
+      ],
+      "lab": [
+        0.0,
+        0,
+        0
+      ],
+      "delta_e": 10.149,
+      "base_name": "k-100",
+      "k_percent": 100,
+      "name": "k-100"
+    }
+  ]
+}

@@ -1,0 +1,115 @@
+{
+  "format": "icc.index/v1",
+  "grid": 17,
+  "lut_header_bytes": 16,
+  "profiles": [
+    {
+      "filename": "CoatedFOGRA39.icc",
+      "label": "Tier 3 \u00b7 Coated FOGRA39",
+      "kind": "cmyk",
+      "lut": "data/luts/CoatedFOGRA39.lut",
+      "rlut": "data/luts/CoatedFOGRA39.rcmyk.lut",
+      "lut_bytes": 250579,
+      "rlut_bytes": 19668
+    },
+    {
+      "filename": "JapanColor2001Uncoated.icc",
+      "label": "Tier 4 \u00b7 Japan Color Uncoated",
+      "kind": "cmyk",
+      "lut": "data/luts/JapanColor2001Uncoated.lut",
+      "rlut": "data/luts/JapanColor2001Uncoated.rcmyk.lut",
+      "lut_bytes": 250579,
+      "rlut_bytes": 19668
+    },
+    {
+      "filename": "JapanColor2002Newspaper.icc",
+      "label": "Tier 4 \u00b7 Japan Color Newspaper",
+      "kind": "cmyk",
+      "lut": "data/luts/JapanColor2002Newspaper.lut",
+      "rlut": "data/luts/JapanColor2002Newspaper.rcmyk.lut",
+      "lut_bytes": 250579,
+      "rlut_bytes": 19668
+    },
+    {
+      "filename": "JapanWebCoated.icc",
+      "label": "Tier 4 \u00b7 Japan Web Coated",
+      "kind": "cmyk",
+      "lut": "data/luts/JapanWebCoated.lut",
+      "rlut": "data/luts/JapanWebCoated.rcmyk.lut",
+      "lut_bytes": 250579,
+      "rlut_bytes": 19668
+    },
+    {
+      "filename": "JapanColor2001Coated.icc",
+      "label": "Tier 4 \u00b7 Japan Color Coated",
+      "kind": "cmyk",
+      "lut": "data/luts/JapanColor2001Coated.lut",
+      "rlut": "data/luts/JapanColor2001Coated.rcmyk.lut",
+      "lut_bytes": 250579,
+      "rlut_bytes": 19668
+    },
+    {
+      "filename": "USWebUncoated.icc",
+      "label": "Tier 5 \u00b7 US Web Uncoated",
+      "kind": "cmyk",
+      "lut": "data/luts/USWebUncoated.lut",
+      "rlut": "data/luts/USWebUncoated.rcmyk.lut",
+      "lut_bytes": 250579,
+      "rlut_bytes": 19668
+    },
+    {
+      "filename": "USSheetfedUncoated.icc",
+      "label": "Tier 5 \u00b7 US Sheetfed Uncoated",
+      "kind": "cmyk",
+      "lut": "data/luts/USSheetfedUncoated.lut",
+      "rlut": "data/luts/USSheetfedUncoated.rcmyk.lut",
+      "lut_bytes": 250579,
+      "rlut_bytes": 19668
+    },
+    {
+      "filename": "USWebCoatedSWOP.icc",
+      "label": "Tier 5 \u00b7 US Web Coated SWOP",
+      "kind": "cmyk",
+      "lut": "data/luts/USWebCoatedSWOP.lut",
+      "rlut": "data/luts/USWebCoatedSWOP.rcmyk.lut",
+      "lut_bytes": 250579,
+      "rlut_bytes": 19668
+    },
+    {
+      "filename": "USSheetfedCoated.icc",
+      "label": "Tier 5 \u00b7 US Sheetfed Coated",
+      "kind": "cmyk",
+      "lut": "data/luts/USSheetfedCoated.lut",
+      "rlut": "data/luts/USSheetfedCoated.rcmyk.lut",
+      "lut_bytes": 250579,
+      "rlut_bytes": 19668
+    },
+    {
+      "filename": "CoatedFOGRA27.icc",
+      "label": "Tier 5 \u00b7 Coated FOGRA27",
+      "kind": "cmyk",
+      "lut": "data/luts/CoatedFOGRA27.lut",
+      "rlut": "data/luts/CoatedFOGRA27.rcmyk.lut",
+      "lut_bytes": 250579,
+      "rlut_bytes": 19668
+    },
+    {
+      "filename": "WebCoatedFOGRA28.icc",
+      "label": "Tier 5 \u00b7 Web Coated FOGRA28",
+      "kind": "cmyk",
+      "lut": "data/luts/WebCoatedFOGRA28.lut",
+      "rlut": "data/luts/WebCoatedFOGRA28.rcmyk.lut",
+      "lut_bytes": 250579,
+      "rlut_bytes": 19668
+    },
+    {
+      "filename": "UncoatedFOGRA29.icc",
+      "label": "Tier 5 \u00b7 Uncoated FOGRA29",
+      "kind": "cmyk",
+      "lut": "data/luts/UncoatedFOGRA29.lut",
+      "rlut": "data/luts/UncoatedFOGRA29.rcmyk.lut",
+      "lut_bytes": 250579,
+      "rlut_bytes": 19668
+    }
+  ]
+}
