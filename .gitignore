@@ -1,2 +1,54 @@
-.claude/
+# ─── Build / runtime artifacts ─────────────────────────────────────────────
+
+# ICC profiles are NOT redistributable in general (Adobe / ECI / Mimaki
+# licenses vary). Bring your own; this tree never carries them.
+icc/*.icc
+icc/*.icm
+icc/*.ICC
+icc/*.ICM
+# icc/luts/
+
+# Generated lookup tables (large; rebuilt by scripts/gen_luts.py).
+# data/luts/*.lut
+# data/luts/index.json
+
+# Generated curated libraries (rebuilt by scripts/gen_libraries.py).
+# data/libraries/*.json
+# data/libraries/*.ase
+# data/libraries/*.gpl
+
+# ─── Python ────────────────────────────────────────────────────────────────
+
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+.python-version
+
+# ─── Test / scratch artifacts (left over from dev sessions) ────────────────
+
+*.png
 *.tmp
+manifest.txt
+manifest.csv
+phase*.png
+cmyk-current-state.png
+
+# ─── Tool dirs ─────────────────────────────────────────────────────────────
+
+.claude/
+.agents/
+.playwright-mcp/
+.idea/
+.vscode/
+_verify/
+swatches/
+skills-lock.json
+CLAUDE.md
+
+# ─── OS noise ──────────────────────────────────────────────────────────────
+
+.DS_Store
+Thumbs.db
+desktop.ini

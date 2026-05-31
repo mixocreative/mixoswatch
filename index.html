@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CMYK Swatch Tools</title>
+<meta name="description" content="Two browser tools for designing print-safe colors against real ICC profiles. CMYK explorer for live exploration, 3D explorer for curated libraries.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#161514;
+  --surface:#1F1E1D;
+  --line:rgba(255,255,255,.10);
+  --line-strong:rgba(255,255,255,.18);
+  --text:#EDEAE3;
+  --muted:#8C8A84;
+  --faint:#5B5955;
+  --accent:#7FB6E8;
+  --display:'Outfit', system-ui, sans-serif;
+  --mono:'IBM Plex Mono','Fira Mono',ui-monospace,monospace;
+  color-scheme:dark;
+}
+@media (prefers-color-scheme:light){
+  :root{
+    --bg:#FAF8F4;
+    --surface:#FFFFFF;
+    --line:rgba(0,0,0,.10);
+    --line-strong:rgba(0,0,0,.18);
+    --text:#1B1A18;
+    --muted:#6E6C66;
+    --faint:#A09E97;
+    --accent:#2E6FB0;
+    color-scheme:light;
+  }
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg);color:var(--text);font-family:var(--display);font-weight:300;-webkit-font-smoothing:antialiased}
+body{min-height:100dvh;display:flex;flex-direction:column}
+
+/* layout: tight max width, generous vertical breathing */
+.shell{
+  width:100%;max-width:760px;
+  margin:0 auto;
+  padding:48px 28px 56px;
+  flex:1;
+  display:flex;flex-direction:column;gap:64px;
+}
+
+/* identifier strip */
+.mark{
+  font-family:var(--mono);font-size:11px;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--muted);
+  display:flex;align-items:center;gap:14px;
+}
+.mark::after{content:"";flex:1;height:1px;background:var(--line);}
+
+/* hero */
+.hero{display:flex;flex-direction:column;gap:24px;}
+.hero h1{
+  font-family:var(--display);font-weight:300;
+  font-size:clamp(38px,6.5vw,64px);line-height:1.04;letter-spacing:-.02em;
+  max-width:14ch;
+}
+.hero h1 em{font-style:italic;font-weight:400;color:var(--accent);padding-bottom:.06em;display:inline-block;}
+.hero p{
+  color:var(--muted);font-size:15.5px;line-height:1.6;max-width:54ch;
+}
+
+/* tool cards: two side-by-side, equal weight */
+.tools{
+  display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:8px;
+}
+@media (max-width:640px){.tools{grid-template-columns:1fr}}
+.tool{
+  display:flex;flex-direction:column;justify-content:space-between;
+  gap:24px;padding:24px 22px;
+  background:var(--surface);border:1px solid var(--line);
+  border-radius:10px;
+  text-decoration:none;color:inherit;
+  transition:border-color .18s ease, transform .18s ease;
+  min-height:160px;
+}
+.tool:hover{border-color:var(--accent);}
+.tool:active{transform:translateY(1px)}
+.tool .label{
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;
+  color:var(--faint);text-transform:uppercase;
+}
+.tool h2{
+  font-family:var(--display);font-weight:400;
+  font-size:22px;line-height:1.2;letter-spacing:-.01em;margin-top:6px;
+}
+.tool .desc{
+  color:var(--muted);font-size:13.5px;line-height:1.55;margin-top:8px;
+}
+.tool .go{
+  font-family:var(--mono);font-size:11px;letter-spacing:.15em;
+  color:var(--accent);text-transform:uppercase;
+  display:flex;align-items:center;gap:6px;
+}
+.tool .go::after{
+  content:"";display:inline-block;width:14px;height:1px;background:currentColor;
+  transition:width .18s ease;
+}
+.tool:hover .go::after{width:22px;}
+
+/* about + how */
+.section{display:flex;flex-direction:column;gap:14px}
+.section h3{
+  font-family:var(--mono);font-size:11px;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--muted);font-weight:500;
+}
+.section p{font-size:14.5px;line-height:1.6;color:var(--text);max-width:60ch}
+.section p + p{color:var(--muted);}
+
+/* footer hairline */
+footer{
+  border-top:1px solid var(--line);
+  font-family:var(--mono);font-size:11px;color:var(--faint);
+  padding:18px 28px;display:flex;flex-wrap:wrap;gap:18px;justify-content:center;
+}
+footer a{color:var(--muted);text-decoration:none;border-bottom:1px solid transparent;padding-bottom:1px;}
+footer a:hover{color:var(--text);border-bottom-color:var(--line-strong);}
+
+/* gentle entry */
+@media (prefers-reduced-motion: no-preference){
+  .hero,.tools,.section{opacity:0;transform:translateY(6px);animation:rise .55s cubic-bezier(.16,1,.3,1) forwards;}
+  .hero{animation-delay:.06s}
+  .tools{animation-delay:.18s}
+  .section{animation-delay:.28s}
+}
+@keyframes rise{to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+
+<main class="shell">
+
+  <div class="mark">cmyk · swatch tools</div>
+
+  <section class="hero">
+    <h1>Pick colors that <em>survive</em> the press.</h1>
+    <p>Two small browser tools for designing with CMYK against real ICC profiles. Explore live, or browse a curated library that has already passed a round-trip safety filter.</p>
+  </section>
+
+  <nav class="tools" aria-label="Choose a tool">
+    <a class="tool" href="app/cmyk-explorer.html">
+      <div>
+        <div class="label">01 · live</div>
+        <h2>CMYK Explorer</h2>
+        <p class="desc">A grid of every CMYK value at your chosen step, rendered through the ICC profile you pick. Compare presses, find named colors, build palettes.</p>
+      </div>
+      <span class="go">open</span>
+    </a>
+    <a class="tool" href="app/3d-explorer.html">
+      <div>
+        <div class="label">02 · curated</div>
+        <h2>3D Swatch Explorer</h2>
+        <p class="desc">A pre-filtered library of print-safe colors per profile, generated offline with a round-trip ΔE gate. Sort by hue, lightness, or safety.</p>
+      </div>
+      <span class="go">open</span>
+    </a>
+  </nav>
+
+  <section class="section">
+    <h3>What the tools share</h3>
+    <p>Both run as static HTML. Both load the same per-profile lookup tables produced by the Python toolchain in <code style="font-family:var(--mono);font-size:13px;color:var(--muted)">scripts/</code>. Both export palettes as ASE, GPL, PNG, and JSON. Palettes saved in one tool import cleanly into the other.</p>
+    <p>No telemetry. No backend. The color math is real, the profile choices are explicit, the data is on disk.</p>
+  </section>
+
+  <section class="section">
+    <h3>How it works</h3>
+    <p>Add CMYK ICC profiles to <code style="font-family:var(--mono);font-size:13px;color:var(--muted)">icc/</code>, run <code style="font-family:var(--mono);font-size:13px;color:var(--muted)">python scripts/gen_luts.py</code> to build the lookup tables and <code style="font-family:var(--mono);font-size:13px;color:var(--muted)">python scripts/gen_libraries.py</code> to produce the curated library. Open <code style="font-family:var(--mono);font-size:13px;color:var(--muted)">index.html</code> over a local HTTP server. ICCs are not committed to the repo; bring your own.</p>
+  </section>
+
+</main>
+
+<footer>
+  <a href="README.md">README</a>
+  <a href="ARCHITECTURE.md">Architecture</a>
+  <a href="https://github.com/">Repository</a>
+</footer>
+
+</body>
+</html>

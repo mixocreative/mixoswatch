@@ -1,0 +1,1652 @@
+{
+  "version": 2,
+  "schema_rev": "2.1",
+  "_doc": "corpora[].fields[] declares displayable name fields in priority order. The browser UI builds one radio button per declared field + a 'hide' option, per library. Each entry may carry hex and/or cmyk anchors plus any number of named fields. New corpora can be added freely by appending to corpora[]; each must declare its own fields[] and anchor.",
+  "corpora": [
+    {
+      "id": "jpn",
+      "label": "Japanese traditional",
+      "fields": [
+        {
+          "id": "name",
+          "label": "kanji"
+        },
+        {
+          "id": "romaji",
+          "label": "romaji"
+        }
+      ],
+      "default_display": "name",
+      "anchor": "hex",
+      "entries": [
+        {
+          "name": "クリーム色",
+          "romaji": "kuriimu-iro",
+          "hex": "#FFE6CC"
+        },
+        {
+          "name": "亜麻色",
+          "romaji": "ama-iro",
+          "hex": "#CCB88F"
+        },
+        {
+          "name": "京紫",
+          "romaji": "kyo-murasaki",
+          "hex": "#7A2E7A"
+        },
+        {
+          "name": "刈安色",
+          "romaji": "kariyasu-iro",
+          "hex": "#E6CF17"
+        },
+        {
+          "name": "利休鼠",
+          "romaji": "rikyu-nezumi",
+          "hex": "#665C52"
+        },
+        {
+          "name": "千歳緑",
+          "romaji": "chitose-midori",
+          "hex": "#174D3D"
+        },
+        {
+          "name": "古代紫",
+          "romaji": "kodai-murasaki",
+          "hex": "#8A5C7A"
+        },
+        {
+          "name": "向日葵色",
+          "romaji": "himawari-iro",
+          "hex": "#FFCC19"
+        },
+        {
+          "name": "土色",
+          "romaji": "tsuchi-iro",
+          "hex": "#B88F66"
+        },
+        {
+          "name": "墨色",
+          "romaji": "sumi-iro",
+          "hex": "#404040"
+        },
+        {
+          "name": "墨茶",
+          "romaji": "sumi-cha",
+          "hex": "#3D1F0F"
+        },
+        {
+          "name": "小豆色",
+          "romaji": "azuki-iro",
+          "hex": "#994D4D"
+        },
+        {
+          "name": "小麦色",
+          "romaji": "komugi-iro",
+          "hex": "#E6B88A"
+        },
+        {
+          "name": "山吹色",
+          "romaji": "yamabuki-iro",
+          "hex": "#E69900"
+        },
+        {
+          "name": "常磐色",
+          "romaji": "tokiwa-iro",
+          "hex": "#007D47"
+        },
+        {
+          "name": "弁柄",
+          "romaji": "bengara",
+          "hex": "#8F3D29"
+        },
+        {
+          "name": "弁柄色",
+          "romaji": "bengara-iro",
+          "hex": "#8F2424"
+        },
+        {
+          "name": "抹茶色",
+          "romaji": "matcha-iro",
+          "hex": "#999933"
+        },
+        {
+          "name": "撫子色",
+          "romaji": "nadeshiko-iro",
+          "hex": "#E6A1A1"
+        },
+        {
+          "name": "朱色",
+          "romaji": "shu-iro",
+          "hex": "#E65C00"
+        },
+        {
+          "name": "松葉色",
+          "romaji": "matsuba-iro",
+          "hex": "#366B36"
+        },
+        {
+          "name": "柿色",
+          "romaji": "kaki-iro",
+          "hex": "#E6732E"
+        },
+        {
+          "name": "栗色",
+          "romaji": "kuri-iro",
+          "hex": "#7A3D0F"
+        },
+        {
+          "name": "桃色",
+          "romaji": "momo-iro",
+          "hex": "#FF99B2"
+        },
+        {
+          "name": "桜色",
+          "romaji": "sakura-iro",
+          "hex": "#FFE6E6"
+        },
+        {
+          "name": "梅鼠",
+          "romaji": "ume-nezumi",
+          "hex": "#A16B7D"
+        },
+        {
+          "name": "橙色",
+          "romaji": "daidai-iro",
+          "hex": "#FF8033"
+        },
+        {
+          "name": "水浅葱",
+          "romaji": "mizu-asagi",
+          "hex": "#A3CCCC"
+        },
+        {
+          "name": "水色",
+          "romaji": "mizu-iro",
+          "hex": "#B2CCE6"
+        },
+        {
+          "name": "水鉛色",
+          "romaji": "mizunamari-iro",
+          "hex": "#A3B8CC"
+        },
+        {
+          "name": "江戸紫",
+          "romaji": "edo-murasaki",
+          "hex": "#592673"
+        },
+        {
+          "name": "浅葱色",
+          "romaji": "asagi-iro",
+          "hex": "#3D8A99"
+        },
+        {
+          "name": "海松色",
+          "romaji": "miru-iro",
+          "hex": "#4C5C2E"
+        },
+        {
+          "name": "淡黄",
+          "romaji": "tanko",
+          "hex": "#E6E6B8"
+        },
+        {
+          "name": "深紅",
+          "romaji": "shinku",
+          "hex": "#990033"
+        },
+        {
+          "name": "深紫",
+          "romaji": "fuka-murasaki",
+          "hex": "#4C1966"
+        },
+        {
+          "name": "深緑",
+          "romaji": "fuka-midori",
+          "hex": "#1F5233"
+        },
+        {
+          "name": "漆黒",
+          "romaji": "shikkoku",
+          "hex": "#0D0D0D"
+        },
+        {
+          "name": "濃紺",
+          "romaji": "nokon",
+          "hex": "#081F3D"
+        },
+        {
+          "name": "灰茶",
+          "romaji": "haich",
+          "hex": "#8A6B5C"
+        },
+        {
+          "name": "焦茶",
+          "romaji": "kogecha",
+          "hex": "#5C2E0F"
+        },
+        {
+          "name": "煤竹色",
+          "romaji": "susutake-iro",
+          "hex": "#80664D"
+        },
+        {
+          "name": "牡丹色",
+          "romaji": "botan-iro",
+          "hex": "#CF458A"
+        },
+        {
+          "name": "珊瑚色",
+          "romaji": "sango-iro",
+          "hex": "#E69980"
+        },
+        {
+          "name": "瑠璃色",
+          "romaji": "ruri-iro",
+          "hex": "#2952A3"
+        },
+        {
+          "name": "生成色",
+          "romaji": "kinari-iro",
+          "hex": "#E6E6CF"
+        },
+        {
+          "name": "白",
+          "romaji": "shiro",
+          "hex": "#FFFFFF"
+        },
+        {
+          "name": "白磁",
+          "romaji": "hakuji",
+          "hex": "#E6FFE6"
+        },
+        {
+          "name": "白茶",
+          "romaji": "shiracha",
+          "hex": "#B8A18A"
+        },
+        {
+          "name": "砂色",
+          "romaji": "suna-iro",
+          "hex": "#B8A173"
+        },
+        {
+          "name": "空色",
+          "romaji": "sora-iro",
+          "hex": "#8FB8CC"
+        },
+        {
+          "name": "紅",
+          "romaji": "kurenai",
+          "hex": "#CF1745"
+        },
+        {
+          "name": "紅梅",
+          "romaji": "kobai",
+          "hex": "#CC4D80"
+        },
+        {
+          "name": "紅梅色",
+          "romaji": "kobai-iro",
+          "hex": "#E673A1"
+        },
+        {
+          "name": "紅紫",
+          "romaji": "beni-murasaki",
+          "hex": "#CC3399"
+        },
+        {
+          "name": "紅藤",
+          "romaji": "beni-fuji",
+          "hex": "#CC8FB8"
+        },
+        {
+          "name": "紫",
+          "romaji": "murasaki",
+          "hex": "#7A3D8A"
+        },
+        {
+          "name": "紫根色",
+          "romaji": "shikon-iro",
+          "hex": "#5C1F4C"
+        },
+        {
+          "name": "紫苑色",
+          "romaji": "shion-iro",
+          "hex": "#7D7DB2"
+        },
+        {
+          "name": "紺色",
+          "romaji": "kon-iro",
+          "hex": "#14335C"
+        },
+        {
+          "name": "紺鼠",
+          "romaji": "kon-nezumi",
+          "hex": "#4C5C7A"
+        },
+        {
+          "name": "緑",
+          "romaji": "midori",
+          "hex": "#367D59"
+        },
+        {
+          "name": "縹色",
+          "romaji": "hanada-iro",
+          "hex": "#127DA1"
+        },
+        {
+          "name": "群青色",
+          "romaji": "gunjo-iro",
+          "hex": "#3D52A3"
+        },
+        {
+          "name": "肌色",
+          "romaji": "hada-iro",
+          "hex": "#FFCC99"
+        },
+        {
+          "name": "胡粉色",
+          "romaji": "gofun-iro",
+          "hex": "#E6E6E6"
+        },
+        {
+          "name": "臙脂",
+          "romaji": "enji",
+          "hex": "#A12436"
+        },
+        {
+          "name": "苔色",
+          "romaji": "koke-iro",
+          "hex": "#7A7A29"
+        },
+        {
+          "name": "若竹色",
+          "romaji": "wakatake-iro",
+          "hex": "#80CC99"
+        },
+        {
+          "name": "若草色",
+          "romaji": "wakakusa-iro",
+          "hex": "#B2CC80"
+        },
+        {
+          "name": "茜色",
+          "romaji": "akane-iro",
+          "hex": "#B24759"
+        },
+        {
+          "name": "茶色",
+          "romaji": "cha-iro",
+          "hex": "#995C3D"
+        },
+        {
+          "name": "草色",
+          "romaji": "kusa-iro",
+          "hex": "#7A8A3D"
+        },
+        {
+          "name": "菫色",
+          "romaji": "sumire-iro",
+          "hex": "#5C4C8A"
+        },
+        {
+          "name": "萌黄",
+          "romaji": "moegi",
+          "hex": "#7AA314"
+        },
+        {
+          "name": "萩色",
+          "romaji": "hagi-iro",
+          "hex": "#CC7A8F"
+        },
+        {
+          "name": "葡萄色",
+          "romaji": "budo-iro",
+          "hex": "#5C2E45"
+        },
+        {
+          "name": "薄桜",
+          "romaji": "usu-zakura",
+          "hex": "#FFCCCC"
+        },
+        {
+          "name": "薄藤色",
+          "romaji": "usu-fuji-iro",
+          "hex": "#B8A1CF"
+        },
+        {
+          "name": "薔薇色",
+          "romaji": "bara-iro",
+          "hex": "#E6452E"
+        },
+        {
+          "name": "藍色",
+          "romaji": "ai-iro",
+          "hex": "#194D80"
+        },
+        {
+          "name": "藤納戸",
+          "romaji": "fujinando",
+          "hex": "#45738A"
+        },
+        {
+          "name": "藤色",
+          "romaji": "fuji-iro",
+          "hex": "#8080CC"
+        },
+        {
+          "name": "藤鼠",
+          "romaji": "fuji-nezumi",
+          "hex": "#8A8AA1"
+        },
+        {
+          "name": "蜜柑色",
+          "romaji": "mikan-iro",
+          "hex": "#FFB233"
+        },
+        {
+          "name": "象牙色",
+          "romaji": "zouge-iro",
+          "hex": "#FFFFE6"
+        },
+        {
+          "name": "赤",
+          "romaji": "aka",
+          "hex": "#CC2929"
+        },
+        {
+          "name": "赤橙",
+          "romaji": "aka-daidai",
+          "hex": "#E64D00"
+        },
+        {
+          "name": "躑躅色",
+          "romaji": "tsutsuji-iro",
+          "hex": "#E64573"
+        },
+        {
+          "name": "金色",
+          "romaji": "kin-iro",
+          "hex": "#CCA329"
+        },
+        {
+          "name": "金茶",
+          "romaji": "kincha",
+          "hex": "#CF8A2E"
+        },
+        {
+          "name": "鉄色",
+          "romaji": "tetsu-iro",
+          "hex": "#26454D"
+        },
+        {
+          "name": "鉄黒",
+          "romaji": "tetsu-guro",
+          "hex": "#292929"
+        },
+        {
+          "name": "鉛色",
+          "romaji": "namari-iro",
+          "hex": "#808080"
+        },
+        {
+          "name": "銀鼠",
+          "romaji": "ginnezumi",
+          "hex": "#A1A1A1"
+        },
+        {
+          "name": "錆浅葱",
+          "romaji": "sabi-asagi",
+          "hex": "#5C7A8A"
+        },
+        {
+          "name": "錆色",
+          "romaji": "sabi-iro",
+          "hex": "#8A4C2E"
+        },
+        {
+          "name": "青",
+          "romaji": "ao",
+          "hex": "#246BB2"
+        },
+        {
+          "name": "青竹色",
+          "romaji": "aotake-iro",
+          "hex": "#366B47"
+        },
+        {
+          "name": "青紫",
+          "romaji": "ao-murasaki",
+          "hex": "#4C4C99"
+        },
+        {
+          "name": "青緑",
+          "romaji": "ao-midori",
+          "hex": "#1F6B4C"
+        },
+        {
+          "name": "青鼠",
+          "romaji": "ao-nezumi",
+          "hex": "#6B7DA1"
+        },
+        {
+          "name": "鬱金色",
+          "romaji": "ukon-iro",
+          "hex": "#E6B219"
+        },
+        {
+          "name": "鴇色",
+          "romaji": "toki-iro",
+          "hex": "#E6B2B2"
+        },
+        {
+          "name": "鶸色",
+          "romaji": "hiwa-iro",
+          "hex": "#99B219"
+        },
+        {
+          "name": "黄丹",
+          "romaji": "ootan",
+          "hex": "#E67317"
+        },
+        {
+          "name": "黄土色",
+          "romaji": "odo-iro",
+          "hex": "#B87A3D"
+        },
+        {
+          "name": "黄緑",
+          "romaji": "ki-midori",
+          "hex": "#A1CFA1"
+        },
+        {
+          "name": "黄色",
+          "romaji": "ki-iro",
+          "hex": "#FFE619"
+        },
+        {
+          "name": "黄金色",
+          "romaji": "kogane-iro",
+          "hex": "#E6B800"
+        },
+        {
+          "name": "黒",
+          "romaji": "kuro",
+          "hex": "#E6E6E6"
+        }
+      ]
+    },
+    {
+      "id": "html",
+      "label": "W3C named colors",
+      "fields": [
+        {
+          "id": "name",
+          "label": "name"
+        }
+      ],
+      "default_display": "name",
+      "anchor": "hex",
+      "entries": [
+        {
+          "name": "aliceblue",
+          "hex": "#F0F8FF"
+        },
+        {
+          "name": "antiquewhite",
+          "hex": "#FAEBD7"
+        },
+        {
+          "name": "aqua",
+          "hex": "#00FFFF"
+        },
+        {
+          "name": "aquamarine",
+          "hex": "#7FFFD4"
+        },
+        {
+          "name": "azure",
+          "hex": "#F0FFFF"
+        },
+        {
+          "name": "beige",
+          "hex": "#F5F5DC"
+        },
+        {
+          "name": "bisque",
+          "hex": "#FFE4C4"
+        },
+        {
+          "name": "black",
+          "hex": "#000000"
+        },
+        {
+          "name": "blanchedalmond",
+          "hex": "#FFEBCD"
+        },
+        {
+          "name": "blue",
+          "hex": "#0000FF"
+        },
+        {
+          "name": "blueviolet",
+          "hex": "#8A2BE2"
+        },
+        {
+          "name": "brown",
+          "hex": "#A52A2A"
+        },
+        {
+          "name": "burlywood",
+          "hex": "#DEB887"
+        },
+        {
+          "name": "cadetblue",
+          "hex": "#5F9EA0"
+        },
+        {
+          "name": "chartreuse",
+          "hex": "#7FFF00"
+        },
+        {
+          "name": "chocolate",
+          "hex": "#D2691E"
+        },
+        {
+          "name": "coral",
+          "hex": "#FF7F50"
+        },
+        {
+          "name": "cornflowerblue",
+          "hex": "#6495ED"
+        },
+        {
+          "name": "cornsilk",
+          "hex": "#FFF8DC"
+        },
+        {
+          "name": "crimson",
+          "hex": "#DC143C"
+        },
+        {
+          "name": "cyan",
+          "hex": "#00FFFF"
+        },
+        {
+          "name": "darkblue",
+          "hex": "#00008B"
+        },
+        {
+          "name": "darkcyan",
+          "hex": "#008B8B"
+        },
+        {
+          "name": "darkgoldenrod",
+          "hex": "#B8860B"
+        },
+        {
+          "name": "darkgray",
+          "hex": "#A9A9A9"
+        },
+        {
+          "name": "darkgreen",
+          "hex": "#006400"
+        },
+        {
+          "name": "darkkhaki",
+          "hex": "#BDB76B"
+        },
+        {
+          "name": "darkmagenta",
+          "hex": "#8B008B"
+        },
+        {
+          "name": "darkolivegreen",
+          "hex": "#556B2F"
+        },
+        {
+          "name": "darkorange",
+          "hex": "#FF8C00"
+        },
+        {
+          "name": "darkorchid",
+          "hex": "#9932CC"
+        },
+        {
+          "name": "darkred",
+          "hex": "#8B0000"
+        },
+        {
+          "name": "darksalmon",
+          "hex": "#E9967A"
+        },
+        {
+          "name": "darkseagreen",
+          "hex": "#8FBC8F"
+        },
+        {
+          "name": "darkslateblue",
+          "hex": "#483D8B"
+        },
+        {
+          "name": "darkslategray",
+          "hex": "#2F4F4F"
+        },
+        {
+          "name": "darkturquoise",
+          "hex": "#00CED1"
+        },
+        {
+          "name": "darkviolet",
+          "hex": "#9400D3"
+        },
+        {
+          "name": "deeppink",
+          "hex": "#FF1493"
+        },
+        {
+          "name": "deepskyblue",
+          "hex": "#00BFFF"
+        },
+        {
+          "name": "dimgray",
+          "hex": "#696969"
+        },
+        {
+          "name": "dodgerblue",
+          "hex": "#1E90FF"
+        },
+        {
+          "name": "firebrick",
+          "hex": "#B22222"
+        },
+        {
+          "name": "floralwhite",
+          "hex": "#FFFAF0"
+        },
+        {
+          "name": "forestgreen",
+          "hex": "#228B22"
+        },
+        {
+          "name": "fuchsia",
+          "hex": "#FF00FF"
+        },
+        {
+          "name": "gainsboro",
+          "hex": "#DCDCDC"
+        },
+        {
+          "name": "ghostwhite",
+          "hex": "#F8F8FF"
+        },
+        {
+          "name": "gold",
+          "hex": "#FFD700"
+        },
+        {
+          "name": "goldenrod",
+          "hex": "#DAA520"
+        },
+        {
+          "name": "gray",
+          "hex": "#808080"
+        },
+        {
+          "name": "green",
+          "hex": "#008000"
+        },
+        {
+          "name": "greenyellow",
+          "hex": "#ADFF2F"
+        },
+        {
+          "name": "honeydew",
+          "hex": "#F0FFF0"
+        },
+        {
+          "name": "hotpink",
+          "hex": "#FF69B4"
+        },
+        {
+          "name": "indianred",
+          "hex": "#CD5C5C"
+        },
+        {
+          "name": "indigo",
+          "hex": "#4B0082"
+        },
+        {
+          "name": "ivory",
+          "hex": "#FFFFF0"
+        },
+        {
+          "name": "khaki",
+          "hex": "#F0E68C"
+        },
+        {
+          "name": "lavender",
+          "hex": "#E6E6FA"
+        },
+        {
+          "name": "lavenderblush",
+          "hex": "#FFF0F5"
+        },
+        {
+          "name": "lawngreen",
+          "hex": "#7CFC00"
+        },
+        {
+          "name": "lemonchiffon",
+          "hex": "#FFFACD"
+        },
+        {
+          "name": "lightblue",
+          "hex": "#ADD8E6"
+        },
+        {
+          "name": "lightcoral",
+          "hex": "#F08080"
+        },
+        {
+          "name": "lightcyan",
+          "hex": "#E0FFFF"
+        },
+        {
+          "name": "lightgoldenrodyellow",
+          "hex": "#FAFAD2"
+        },
+        {
+          "name": "lightgray",
+          "hex": "#D3D3D3"
+        },
+        {
+          "name": "lightgreen",
+          "hex": "#90EE90"
+        },
+        {
+          "name": "lightpink",
+          "hex": "#FFB6C1"
+        },
+        {
+          "name": "lightsalmon",
+          "hex": "#FFA07A"
+        },
+        {
+          "name": "lightseagreen",
+          "hex": "#20B2AA"
+        },
+        {
+          "name": "lightskyblue",
+          "hex": "#87CEFA"
+        },
+        {
+          "name": "lightslategray",
+          "hex": "#778899"
+        },
+        {
+          "name": "lightsteelblue",
+          "hex": "#B0C4DE"
+        },
+        {
+          "name": "lightyellow",
+          "hex": "#FFFFE0"
+        },
+        {
+          "name": "lime",
+          "hex": "#00FF00"
+        },
+        {
+          "name": "limegreen",
+          "hex": "#32CD32"
+        },
+        {
+          "name": "linen",
+          "hex": "#FAF0E6"
+        },
+        {
+          "name": "magenta",
+          "hex": "#FF00FF"
+        },
+        {
+          "name": "maroon",
+          "hex": "#800000"
+        },
+        {
+          "name": "mediumaquamarine",
+          "hex": "#66CDAA"
+        },
+        {
+          "name": "mediumblue",
+          "hex": "#0000CD"
+        },
+        {
+          "name": "mediumorchid",
+          "hex": "#BA55D3"
+        },
+        {
+          "name": "mediumpurple",
+          "hex": "#9370DB"
+        },
+        {
+          "name": "mediumseagreen",
+          "hex": "#3CB371"
+        },
+        {
+          "name": "mediumslateblue",
+          "hex": "#7B68EE"
+        },
+        {
+          "name": "mediumspringgreen",
+          "hex": "#00FA9A"
+        },
+        {
+          "name": "mediumturquoise",
+          "hex": "#48D1CC"
+        },
+        {
+          "name": "mediumvioletred",
+          "hex": "#C71585"
+        },
+        {
+          "name": "midnightblue",
+          "hex": "#191970"
+        },
+        {
+          "name": "mintcream",
+          "hex": "#F5FFFA"
+        },
+        {
+          "name": "mistyrose",
+          "hex": "#FFE4E1"
+        },
+        {
+          "name": "moccasin",
+          "hex": "#FFE4B5"
+        },
+        {
+          "name": "navajowhite",
+          "hex": "#FFDEAD"
+        },
+        {
+          "name": "navy",
+          "hex": "#000080"
+        },
+        {
+          "name": "oldlace",
+          "hex": "#FDF5E6"
+        },
+        {
+          "name": "olive",
+          "hex": "#808000"
+        },
+        {
+          "name": "olivedrab",
+          "hex": "#6B8E23"
+        },
+        {
+          "name": "orange",
+          "hex": "#FFA500"
+        },
+        {
+          "name": "orangered",
+          "hex": "#FF4500"
+        },
+        {
+          "name": "orchid",
+          "hex": "#DA70D6"
+        },
+        {
+          "name": "palegoldenrod",
+          "hex": "#EEE8AA"
+        },
+        {
+          "name": "palegreen",
+          "hex": "#98FB98"
+        },
+        {
+          "name": "paleturquoise",
+          "hex": "#AFEEEE"
+        },
+        {
+          "name": "palevioletred",
+          "hex": "#DB7093"
+        },
+        {
+          "name": "papayawhip",
+          "hex": "#FFEFD5"
+        },
+        {
+          "name": "peachpuff",
+          "hex": "#FFDAB9"
+        },
+        {
+          "name": "peru",
+          "hex": "#CD853F"
+        },
+        {
+          "name": "pink",
+          "hex": "#FFC0CB"
+        },
+        {
+          "name": "plum",
+          "hex": "#DDA0DD"
+        },
+        {
+          "name": "powderblue",
+          "hex": "#B0E0E6"
+        },
+        {
+          "name": "purple",
+          "hex": "#800080"
+        },
+        {
+          "name": "rebeccapurple",
+          "hex": "#663399"
+        },
+        {
+          "name": "red",
+          "hex": "#FF0000"
+        },
+        {
+          "name": "rosybrown",
+          "hex": "#BC8F8F"
+        },
+        {
+          "name": "royalblue",
+          "hex": "#4169E1"
+        },
+        {
+          "name": "saddlebrown",
+          "hex": "#8B4513"
+        },
+        {
+          "name": "salmon",
+          "hex": "#FA8072"
+        },
+        {
+          "name": "sandybrown",
+          "hex": "#F4A460"
+        },
+        {
+          "name": "seagreen",
+          "hex": "#2E8B57"
+        },
+        {
+          "name": "seashell",
+          "hex": "#FFF5EE"
+        },
+        {
+          "name": "sienna",
+          "hex": "#A0522D"
+        },
+        {
+          "name": "silver",
+          "hex": "#C0C0C0"
+        },
+        {
+          "name": "skyblue",
+          "hex": "#87CEEB"
+        },
+        {
+          "name": "slateblue",
+          "hex": "#6A5ACD"
+        },
+        {
+          "name": "slategray",
+          "hex": "#708090"
+        },
+        {
+          "name": "snow",
+          "hex": "#FFFAFA"
+        },
+        {
+          "name": "springgreen",
+          "hex": "#00FF7F"
+        },
+        {
+          "name": "steelblue",
+          "hex": "#4682B4"
+        },
+        {
+          "name": "tan",
+          "hex": "#D2B48C"
+        },
+        {
+          "name": "teal",
+          "hex": "#008080"
+        },
+        {
+          "name": "thistle",
+          "hex": "#D8BFD8"
+        },
+        {
+          "name": "tomato",
+          "hex": "#FF6347"
+        },
+        {
+          "name": "turquoise",
+          "hex": "#40E0D0"
+        },
+        {
+          "name": "violet",
+          "hex": "#EE82EE"
+        },
+        {
+          "name": "wheat",
+          "hex": "#F5DEB3"
+        },
+        {
+          "name": "white",
+          "hex": "#FFFFFF"
+        },
+        {
+          "name": "whitesmoke",
+          "hex": "#F5F5F5"
+        },
+        {
+          "name": "yellow",
+          "hex": "#FFFF00"
+        },
+        {
+          "name": "yellowgreen",
+          "hex": "#9ACD32"
+        }
+      ]
+    },
+    {
+      "id": "jpn-dic",
+      "label": "DIC Japanese Traditional (matte, seed)",
+      "fields": [
+        {
+          "id": "name",
+          "label": "kanji"
+        },
+        {
+          "id": "romaji",
+          "label": "romaji"
+        },
+        {
+          "id": "english",
+          "label": "english"
+        },
+        {
+          "id": "dic_code",
+          "label": "DIC code"
+        }
+      ],
+      "default_display": "name",
+      "anchor": "cmyk",
+      "entries": [
+        {
+          "name": "蒸栗色",
+          "romaji": "mushikuri-iro",
+          "english": "Steamed Chestnut",
+          "dic_code": "DIC-N801",
+          "hex": "#E7CD8C",
+          "cmyk": [
+            3,
+            14,
+            48,
+            0
+          ]
+        },
+        {
+          "name": "黄水仙",
+          "romaji": "ki-suisen",
+          "english": "Yellow Daffodil",
+          "dic_code": "DIC-N802",
+          "hex": "#F9D36E",
+          "cmyk": [
+            0,
+            14,
+            63,
+            0
+          ]
+        },
+        {
+          "name": "黄蘗色",
+          "romaji": "kihada-iro",
+          "english": "Phellodendron Yellow",
+          "dic_code": "DIC-N803",
+          "hex": "#EFCD52",
+          "cmyk": [
+            0,
+            14,
+            72,
+            0
+          ]
+        },
+        {
+          "name": "苅安色",
+          "romaji": "kariyasu-iro",
+          "english": "Kariyasu Yellow",
+          "dic_code": "DIC-N804",
+          "hex": "#FDC600",
+          "cmyk": [
+            0,
+            19,
+            100,
+            0
+          ]
+        },
+        {
+          "name": "蒲公英色",
+          "romaji": "tanpopo-iro",
+          "english": "Dandelion",
+          "dic_code": "DIC-N805",
+          "hex": "#EEBA00",
+          "cmyk": [
+            0,
+            23,
+            100,
+            0
+          ]
+        },
+        {
+          "name": "レモン色",
+          "romaji": "lemon-iro",
+          "english": "Lemon",
+          "dic_code": "DIC-N806",
+          "hex": "#E2C200",
+          "cmyk": [
+            6,
+            15,
+            100,
+            0
+          ]
+        },
+        {
+          "name": "カナリヤ色",
+          "romaji": "kanariya-iro",
+          "english": "Canary",
+          "dic_code": "DIC-N807",
+          "hex": "#EAB905",
+          "cmyk": [
+            1,
+            23,
+            95,
+            0
+          ]
+        },
+        {
+          "name": "菜の花色",
+          "romaji": "nanohana-iro",
+          "english": "Rapeseed Flower",
+          "dic_code": "DIC-N808",
+          "hex": "#E7BE00",
+          "cmyk": [
+            3,
+            19,
+            96,
+            0
+          ]
+        },
+        {
+          "name": "藁色",
+          "romaji": "wara-iro",
+          "english": "Straw",
+          "dic_code": "DIC-N809",
+          "hex": "#D1B15A",
+          "cmyk": [
+            14,
+            26,
+            69,
+            0
+          ]
+        },
+        {
+          "name": "菜種色",
+          "romaji": "natane-iro",
+          "english": "Rape Seed",
+          "dic_code": "DIC-N810",
+          "hex": "#C6A647",
+          "cmyk": [
+            19,
+            29,
+            78,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "id": "zh-dic",
+      "label": "DIC Chinese Traditional (seed)",
+      "fields": [
+        {
+          "id": "name",
+          "label": "hanzi"
+        },
+        {
+          "id": "pinyin",
+          "label": "pinyin"
+        },
+        {
+          "id": "english",
+          "label": "english"
+        },
+        {
+          "id": "dic_code",
+          "label": "DIC code"
+        }
+      ],
+      "default_display": "name",
+      "anchor": "cmyk",
+      "entries": [
+        {
+          "name": "粉鳳仙",
+          "pinyin": "fen fengxian",
+          "english": "Impatiens Pink",
+          "dic_code": "DIC-C1",
+          "hex": "#EFB4C5",
+          "cmyk": [
+            7,
+            39,
+            11,
+            0
+          ]
+        },
+        {
+          "name": "浅粉",
+          "pinyin": "qian fen",
+          "english": "Light Pink",
+          "dic_code": "DIC-C2",
+          "hex": "#E9B9C1",
+          "cmyk": [
+            10,
+            35,
+            16,
+            0
+          ]
+        },
+        {
+          "name": "淡粉",
+          "pinyin": "dan fen",
+          "english": "Pale Pink",
+          "dic_code": "DIC-C3",
+          "hex": "#E8ABBE",
+          "cmyk": [
+            1,
+            42,
+            13,
+            0
+          ]
+        },
+        {
+          "name": "紫薇花",
+          "pinyin": "ziwei hua",
+          "english": "Crape Myrtle",
+          "dic_code": "DIC-C4",
+          "hex": "#F29FD6",
+          "cmyk": [
+            10,
+            48,
+            0,
+            0
+          ]
+        },
+        {
+          "name": "暗粉",
+          "pinyin": "an fen",
+          "english": "Muted Pink",
+          "dic_code": "DIC-C5",
+          "hex": "#E286A7",
+          "cmyk": [
+            14,
+            60,
+            16,
+            0
+          ]
+        },
+        {
+          "name": "荷花紅",
+          "pinyin": "hehua hong",
+          "english": "Lotus Red",
+          "dic_code": "DIC-C6",
+          "hex": "#EE7BAC",
+          "cmyk": [
+            8,
+            65,
+            7,
+            0
+          ]
+        },
+        {
+          "name": "長春花色",
+          "pinyin": "changchun hua se",
+          "english": "Periwinkle",
+          "dic_code": "DIC-C11",
+          "hex": "#E575AD",
+          "cmyk": [
+            13,
+            67,
+            5,
+            0
+          ]
+        },
+        {
+          "name": "妃紅",
+          "pinyin": "fei hong",
+          "english": "Concubine Red",
+          "dic_code": "DIC-C32",
+          "hex": "#BE4943",
+          "cmyk": [
+            32,
+            84,
+            73,
+            1
+          ]
+        },
+        {
+          "name": "猩紅",
+          "pinyin": "xing hong",
+          "english": "Scarlet",
+          "dic_code": "DIC-C33",
+          "hex": "#B92832",
+          "cmyk": [
+            35,
+            96,
+            85,
+            2
+          ]
+        },
+        {
+          "name": "血紅",
+          "pinyin": "xie hong",
+          "english": "Blood Red",
+          "dic_code": "DIC-C34",
+          "hex": "#973B2A",
+          "cmyk": [
+            45,
+            87,
+            94,
+            13
+          ]
+        },
+        {
+          "name": "月季紅",
+          "pinyin": "yueji hong",
+          "english": "Rose Red",
+          "dic_code": "DIC-C35",
+          "hex": "#B0152F",
+          "cmyk": [
+            38,
+            100,
+            88,
+            4
+          ]
+        },
+        {
+          "name": "茉莉花紅",
+          "pinyin": "molihua hong",
+          "english": "Jasmine Red",
+          "dic_code": "DIC-C36",
+          "hex": "#B32047",
+          "cmyk": [
+            38,
+            99,
+            66,
+            1
+          ]
+        },
+        {
+          "name": "黄琉璃",
+          "pinyin": "huang liuli",
+          "english": "Yellow Glaze",
+          "dic_code": "DIC-C83",
+          "hex": "#DFA340",
+          "cmyk": [
+            17,
+            43,
+            80,
+            0
+          ]
+        },
+        {
+          "name": "琉璃色",
+          "pinyin": "liuli se",
+          "english": "Glazed Tile",
+          "dic_code": "DIC-C84",
+          "hex": "#C68E46",
+          "cmyk": [
+            29,
+            50,
+            78,
+            0
+          ]
+        },
+        {
+          "name": "檀香色",
+          "pinyin": "tanxiang se",
+          "english": "Sandalwood",
+          "dic_code": "DIC-C85",
+          "hex": "#D68834",
+          "cmyk": [
+            21,
+            50,
+            84,
+            0
+          ]
+        },
+        {
+          "name": "富春紡色",
+          "pinyin": "fuchun fang se",
+          "english": "Fuchun Silk",
+          "dic_code": "DIC-C98",
+          "hex": "#F8D5A5",
+          "cmyk": [
+            5,
+            22,
+            38,
+            0
+          ]
+        },
+        {
+          "name": "浅棕灰",
+          "pinyin": "qian zong hui",
+          "english": "Light Brown Grey",
+          "dic_code": "DIC-C103",
+          "hex": "#E2D8C3",
+          "cmyk": [
+            14,
+            16,
+            25,
+            0
+          ]
+        },
+        {
+          "name": "粉棕",
+          "pinyin": "fen zong",
+          "english": "Pink Brown",
+          "dic_code": "DIC-C104",
+          "hex": "#DCC2AC",
+          "cmyk": [
+            17,
+            27,
+            32,
+            0
+          ]
+        },
+        {
+          "name": "浅肉粉",
+          "pinyin": "qian rou fen",
+          "english": "Light Flesh",
+          "dic_code": "DIC-C105",
+          "hex": "#F5DCBE",
+          "cmyk": [
+            6,
+            18,
+            27,
+            0
+          ]
+        },
+        {
+          "name": "姜黄",
+          "pinyin": "jiang huang",
+          "english": "Turmeric",
+          "dic_code": "DIC-C136",
+          "hex": "#AF8D3A",
+          "cmyk": [
+            40,
+            47,
+            87,
+            0
+          ]
+        },
+        {
+          "name": "鴨蛋青",
+          "pinyin": "ya dan qing",
+          "english": "Duck Egg Blue",
+          "dic_code": "DIC-C204",
+          "hex": "#D4E6E0",
+          "cmyk": [
+            21,
+            5,
+            15,
+            0
+          ]
+        },
+        {
+          "name": "浅水緑",
+          "pinyin": "qian shui lv",
+          "english": "Pale Water Green",
+          "dic_code": "DIC-C205",
+          "hex": "#C0E8E2",
+          "cmyk": [
+            30,
+            0,
+            16,
+            0
+          ]
+        },
+        {
+          "name": "浅青瓷釉色",
+          "pinyin": "qian qing ci you se",
+          "english": "Pale Celadon Glaze",
+          "dic_code": "DIC-C206",
+          "hex": "#C8DFD4",
+          "cmyk": [
+            28,
+            20,
+            20,
+            0
+          ]
+        },
+        {
+          "name": "月白色",
+          "pinyin": "yue bai se",
+          "english": "Moon White",
+          "dic_code": "DIC-C209",
+          "hex": "#D1E4E4",
+          "cmyk": [
+            23,
+            12,
+            12,
+            0
+          ]
+        }
+      ]
+    }
+  ]
+}
