@@ -1513,21 +1513,9 @@
             <span class="tag">real math</span>
           </h4>
           <p>
-            <span data-en>Raster Image Processor (RIP) is the core hardware/software engine at a print house that
-              translates vector paths, fonts, and digital pixel layouts into precise microscopic physical halftone
-              screen patterns for plates or lasers; instead of using a web browser's approximate guesses or Photoshop's
-              rough estimates, our lookup tables are sampled from the exact same underlying LittleCMS / Pillow math
-              libraries that high-end commercial RIP servers use to compute color gamut mappings. This means the color
-              you see on screen is an honest reflection of the exact data the RIP will hand over to the physical press
-              before paper and ink physically remix it.</span>
-            <span data-ja>RIP（Raster Image
-              Processor：画像処理演算器）は、デジタルデータを実際のプリント用の点（網点）に変換する、プリント現場の基幹エンジンです。ベクターパスやフォント、レイアウトを微細なハーフトーンパターンへと翻訳します。当ツールはブラウザの安易な近似推測やPhotoshop風の粗い推測値を排し、ハイエンドの商業用RIPサーバーが色域マッピングを計算する際に使用する、まさにそのものと同じLittleCMS
-              /
-              Pillow数式ライブラリからルックアップテーブル（LUT）を直接サンプリングしています。これにより、画面上の色は、紙とインクが物理的に混ざり合う前に、RIPが実際にプリンターへと引き渡す色そのものを正確に反映します。</span>
-            <span data-zh>RIP（點陣色彩處理器，Raster Image
-              Processor）是印刷廠的核心硬體或軟體引擎，負責將向量路徑、字型與數位像素版面，轉換為供印版或雷射使用的微觀物理網點（半色調）圖案。本工具直接捨棄瀏覽器常見的粗估推算與 Photoshop
-              的粗估數值，我們的顏色查找表（LUT）是直接自高階商業 RIP 伺服器專用的 LittleCMS / Pillow 底層數學核心函數庫取樣而來，用以計算並呈現精準的色域映射結果。這意味著你在螢幕上看到的，就是
-              RIP 最終在紙張與油墨產生實體化學反應前，直接交付給列印機的精確色彩。</span>
+            <span data-en><b>Real ICC math, not Photoshop guesses.</b> Our lookup tables sample sRGB → CMYK at LittleCMS, the open-source color engine inside GIMP, Scribus, Krita, and many prepress tools. The data layer matches what a LittleCMS prepress flow computes. What your monitor renders is still sRGB, and what your press lays down still depends on stock, ink, and lighting.</span>
+            <span data-ja>本物のICC演算、Photoshopの推測ではない。当ツールのLUTは、GIMP、Scribus、Krita、多くのプリプレスツールの内部で動いているオープンソースの色エンジン「LittleCMS」でsRGB → CMYKを標本化している。データ層はLittleCMSベースのプリプレスフローと同じ計算結果を返す。モニタに映る色はsRGBのレンダリング、プリンターに乗る色は依然として用紙・インク・照明に依存する。</span>
+            <span data-zh>真實的 ICC 演算，不是 Photoshop 的猜測。我們的查找表在 LittleCMS 取樣 sRGB → CMYK。LittleCMS 是 GIMP、Scribus、Krita 與許多印前工具內部使用的開源色彩引擎。資料層計算結果與 LittleCMS 印前流程一致。螢幕呈現的仍是 sRGB，印刷機落紙的顏色仍受紙張、油墨與光照影響。</span>
           </p><br />
           <h4>
             <span data-en>You set the tolerance</span>
