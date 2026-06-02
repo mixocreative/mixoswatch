@@ -64,6 +64,27 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
 }
 .sidebar > *{min-width:0}
 .sidebar input[type=range]{min-width:0}
+/* 4-step workflow grouping in the sidebar */
+.step-group-header{
+  display:flex;align-items:baseline;gap:10px;
+  margin:20px -4px 8px;padding:14px 6px 6px;
+  border-top:1px solid var(--border);
+  font-family:var(--font-mono);
+}
+.step-group-header:first-of-type{
+  border-top:none;padding-top:0;margin-top:2px;
+}
+.step-group-header .num{
+  font-size:17px;color:var(--accent);font-weight:500;
+  letter-spacing:.04em;line-height:1;font-variant-numeric:tabular-nums;
+}
+.step-group-header .lbl{
+  font-size:10.5px;color:var(--text);text-transform:uppercase;letter-spacing:.18em;
+}
+.step-group-header .sub{
+  font-size:9.5px;color:var(--faint);letter-spacing:.04em;margin-left:auto;font-style:italic;
+}
+
 .sec{display:flex;flex-direction:column;gap:7px}
 .sec-label{
   font-size:10px;font-weight:500;letter-spacing:.08em;
@@ -376,6 +397,32 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
 .nm-head{font-size:11px;color:var(--text);font-family:var(--font-sans);letter-spacing:.01em}
 .nm-ctrls{display:flex;gap:6px;flex-wrap:wrap}
 .nm-sel{flex:1;min-width:100px;font-size:11px;padding:3px 8px}
+.nm-radios{display:flex;flex-wrap:wrap;gap:4px 8px}
+.nm-radio{display:inline-flex;align-items:center;gap:3px;font-size:10.5px;color:var(--muted);cursor:pointer;line-height:1.4}
+.nm-radio input{margin:0;cursor:pointer}
+.nm-radio:hover{color:var(--text)}
+
+/* Filter checkboxes */
+.flt-row{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text);padding:3px 0;cursor:pointer;line-height:1.4}
+.flt-row input{margin:0;cursor:pointer}
+.flt-row:hover{color:var(--accent)}
+.flt-all{font-weight:600;border-bottom:1px solid var(--border2);padding-bottom:5px;margin-bottom:3px}
+
+/* Anchor switch (hex / cmyk segmented toggle) */
+.ax-row{display:flex;align-items:center;gap:8px;margin-top:4px}
+.ax-label{font-size:10px;color:var(--faint);text-transform:uppercase;letter-spacing:.08em}
+.ax-switch{display:inline-flex;border:1px solid var(--border);border-radius:999px;overflow:hidden;background:var(--bg2);padding:2px}
+.ax-opt{font-family:var(--font-mono);font-size:10.5px;padding:3px 10px;border:none;background:transparent;color:var(--muted);cursor:pointer;border-radius:999px;line-height:1.3}
+.ax-opt:hover{color:var(--text)}
+.ax-opt.active{background:var(--accent);color:#fff;font-weight:500}
+
+/* Loading progress overlay */
+#loadProgress{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:center;justify-content:center;z-index:9999;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.lp-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:24px 28px;min-width:320px;max-width:80vw;display:flex;flex-direction:column;gap:10px;box-shadow:0 12px 40px rgba(0,0,0,.4)}
+.lp-label{font-size:13px;color:var(--text);font-family:var(--font-sans);font-weight:500}
+.lp-bar{height:6px;background:var(--bg2);border-radius:3px;overflow:hidden}
+.lp-fill{height:100%;background:var(--accent);width:0%;transition:width .15s ease-out}
+.lp-sub{font-size:11px;color:var(--muted);font-family:var(--font-mono)}
 </style>
 </head>
 <body>
@@ -386,6 +433,7 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
   <span class="topbar-title">CMYK Swatch Explorer</span>
   <div class="topbar-sep"></div>
   <span class="count-tag" id="countLabel" title="How many swatches the filters currently allow.">— swatches</span>
+  <button class="btn" onclick="resetUIToDefaults()" title="Reset all UI controls (cell size, sort, filters, naming) to the values in data/ui_defaults.json. Saved palettes are kept.">↺ Reset UI to defaults</button>
   <div class="mode-group" id="modeGroup" role="tablist" aria-label="View mode"><button class="btn mode-btn active" id="mode-grid"     onclick="setViewMode('grid')" title="Regular swatch grid — every filtered swatch as a cell.">Grid</button><button class="btn mode-btn"        id="mode-huelight" onclick="setViewMode('huelight')" title="Hue × Lightness map. One representative cell per (hue,light) bucket — quick palette overview.">Hue × Light</button><button class="btn mode-btn"        id="mode-palettes" onclick="setViewMode('palettes')" title="Palettes mode — manage all saved palettes with per-palette actions.">Palettes</button></div>
   <button class="btn" onclick="exportCSV()" title="Save the currently filtered swatches as a UTF-8 CSV (Excel-ready, keeps kanji).">↓ CSV</button>
   <button class="btn" onclick="exportPNG()" title="Save the currently filtered swatches as a square PNG board with title band.">↓ PNG</button>
@@ -395,6 +443,10 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
 
   <!-- ── Sidebar ── -->
   <aside class="sidebar">
+
+    <div class="step-group-header">
+      <span class="num">01</span><span class="lbl">Pick a profile</span><span class="sub">press + size</span>
+    </div>
 
     <!-- ICC Profile -->
     <div class="sec">
@@ -492,6 +544,10 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
     <div class="divider"></div>
 
     <!-- CMYK ranges -->
+    <div class="step-group-header">
+      <span class="num">02</span><span class="lbl">Narrow the set</span><span class="sub">filters + limits</span>
+    </div>
+
     <div class="sec">
       <div class="sec-label">CMYK range</div>
       <div class="slider-row">
@@ -559,14 +615,19 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
 
     <div class="divider"></div>
 
+    <div class="step-group-header">
+      <span class="num">03</span><span class="lbl">Pick + name</span><span class="sub">corpora + match</span>
+    </div>
+
     <div class="sec">
       <div class="sec-label">Named swatches · filter</div>
       <div class="pill-row" style="flex-direction:column;border-radius:var(--r)">
         <button class="ktier-pill active" id="nm-all"  onclick="setNamed('all')" title="Show every swatch — no name filter.">
           <span class="kt-name">All swatches</span><span class="kt-range">no filter</span></button>
-        <button class="ktier-pill"        id="nm-any"  onclick="setNamed('any')" title="Show only swatches that match a name in at least one corpus.">
-          <span class="kt-name">Any named</span><span class="kt-range">≥ 1 corpus</span></button>
+        <button class="ktier-pill"        id="nm-any"  onclick="setNamed('any')" title="Show only swatches that match a name in at least one checked library below.">
+          <span class="kt-name">Any named</span><span class="kt-range">checked libs</span></button>
       </div>
+      <div id="filterCheckboxes" style="margin-top:6px" title="When 'Any named' is on, only swatches that match a name in at least one of these checked libraries pass the filter. Independent of which name each library is set to display."></div>
       <div class="sec-label" style="margin-top:8px">Name tolerance · ΔE ≤ <span id="vTol" title="Current name-match tolerance.">0</span></div>
       <div class="slider-row">
         <input type="range" min="0" max="20" step="0.5" value="0" id="slTol" oninput="onTol(this.value)" title="How loose the name match must be (Delta-E). 0 = only the single closest swatch wears the name. Higher = more swatches share the name (looser match).">
@@ -586,15 +647,6 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
       </div>
     </div>
 
-    <div class="divider"></div>
-
-    <div class="sec">
-      <div class="sec-label">Defaults</div>
-      <button class="btn" style="width:100%" onclick="resetUIToDefaults()" title="Reset all UI controls (cell size, sort, filters, naming) to the values in data/ui_defaults.json. Saved palettes are kept.">↺ Reset UI to defaults</button>
-      <div style="font-size:10px;color:var(--faint);line-height:1.5;margin-top:6px">
-        Reads <code>data/ui_defaults.json</code>. Palettes are stored separately and survive a reset.
-      </div>
-    </div>
 
     <div class="divider"></div>
 
@@ -627,6 +679,10 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
     </div>
 
     <div class="divider"></div>
+
+    <div class="step-group-header">
+      <span class="num">04</span><span class="lbl">Sort + view</span><span class="sub">order + reset</span>
+    </div>
 
     <div class="sec">
       <div class="sec-label">Sort by</div>
@@ -836,6 +892,7 @@ async function resetUIToDefaults() {
   const fresh = (UI_DEFAULTS && UI_DEFAULTS[UI_TOOL_KEY]) || {};
   applyUIState(fresh);
   buildNamingUI();
+  buildFilterUI();
   await rebuildAll();   // re-derive everything against current profile
 }
 
@@ -1088,7 +1145,10 @@ function _saveCorporaPrefs() {
 }
 function _libPref(libId) {
   const lib = CORPORA.libraries.find(l => l.id === libId);
-  const def = { display: 'primary', anchor: lib?.anchor || 'hex' };
+  // Factory anchor default = 'cmyk' for every library. When a library has
+  // no cmyk attributes on its entries, _entryAnchorLab silently falls back
+  // to the hex anchor, so this is safe even for hex-only corpora.
+  const def = { display: 'primary', anchor: 'cmyk' };
   return Object.assign(def, CORPORA_PREFS[libId] || {});
 }
 function _setLibPref(libId, key, value) {
@@ -1185,29 +1245,9 @@ function matchNearest(s, fwdLUT) {
   for (const lib of CORPORA.libraries) {
     const prefs = _libPref(lib.id);
     if (prefs.anchor === 'cmyk' && lib._hasCmyk) _ensureCorpusCmykLabs(lib, fwdLUT);
-    let best=null, bestD=Infinity;
-    for (const e of lib.entries) {
-      const lab = _entryAnchorLab(e, prefs.anchor);
-      if (!lab) continue;
-      const d = deltaE2000(s.L_star,s.a_star,s.b_star, lab[0],lab[1],lab[2]);
-      if (d < bestD) { bestD = d; best = e; }
-    }
-    s.matches[lib.id] = best ? {
-      entry:  best,
-      deltaE: +bestD.toFixed(2),
-      anchor: prefs.anchor,
-    } : null;
+    _matchOneCorpus(s, lib, prefs);
   }
-  // Legacy mirror fields: keep older render / export / palette code working.
-  // Read field-id values from the entry directly so v2.1 stays compatible.
-  const jLib = CORPORA.libraries.find(l => l.id === 'jpn');
-  const hLib = CORPORA.libraries.find(l => l.id === 'html');
-  const j = s.matches.jpn, h = s.matches.html;
-  s.jpn_name    = (j && jLib?.fields[0]) ? (j.entry[jLib.fields[0].id] || '') : '';
-  s.jpn_romaji  = (j && jLib?.fields[1]) ? (j.entry[jLib.fields[1].id] || '') : '';
-  s.deltaE_jpn  = j ? j.deltaE : Infinity;
-  s.html_name   = (h && hLib?.fields[0]) ? (h.entry[hLib.fields[0].id] || '') : '';
-  s.deltaE_html = h ? h.deltaE : Infinity;
+  _syncMirrorFor(s);
 }
 
 // Field text this corpus contributes to a swatch label for the current
@@ -1229,14 +1269,105 @@ function corpusVisible(libId, sw) {
   return false;
 }
 
-// Re-run matching across all derived data. Heavy (14k × N corpora) but
-// only triggered on explicit user action (anchor swap).
+// rAF-coalesced render scheduler. Rapid sidebar clicks (radios, checkboxes,
+// keyboard nav) used to call render() synchronously per event, which queued
+// up multiple full grid rebuilds for the same end state. With ~500 visible
+// cells × 4 corpus labels + a forced-layout font-fit pass, every queued
+// render added 100–300 ms of UI-thread work and chained into a visible
+// hang. _scheduleRender drops back-to-back calls into a single rAF, so:
+//   - the browser paints the input state change (checked radio) on the
+//     next frame BEFORE the heavy work starts,
+//   - duplicate calls (multiple input/change events for one click,
+//     keyboard hold) collapse into one render.
+let _renderRafId = 0;
+function _scheduleRender() {
+  if (_renderRafId) return;
+  _renderRafId = requestAnimationFrame(() => {
+    _renderRafId = 0;
+    render();
+  });
+}
+let _persistRafId = 0;
+function _schedulePersist() {
+  if (_persistRafId) return;
+  _persistRafId = requestAnimationFrame(() => {
+    _persistRafId = 0;
+    persistUI();
+  });
+}
+
+// Match ONE corpus for ONE swatch. Shared by matchNearest + rematchOne.
+function _matchOneCorpus(s, lib, prefs) {
+  s.matches = s.matches || {};
+  let best=null, bestD=Infinity;
+  for (const e of lib.entries) {
+    const lab = _entryAnchorLab(e, prefs.anchor);
+    if (!lab) continue;
+    const d = deltaE2000(s.L_star,s.a_star,s.b_star, lab[0],lab[1],lab[2]);
+    if (d < bestD) { bestD = d; best = e; }
+  }
+  s.matches[lib.id] = best ? {
+    entry:  best,
+    deltaE: +bestD.toFixed(2),
+    anchor: prefs.anchor,
+  } : null;
+}
+
+// Refresh the jpn_*/html_* legacy mirror fields for a single swatch.
+function _syncMirrorFor(s) {
+  const jLib = CORPORA.libraries.find(l => l.id === 'jpn');
+  const hLib = CORPORA.libraries.find(l => l.id === 'html');
+  const j = s.matches?.jpn, h = s.matches?.html;
+  s.jpn_name    = (j && jLib?.fields[0]) ? (j.entry[jLib.fields[0].id] || '') : '';
+  s.jpn_romaji  = (j && jLib?.fields[1]) ? (j.entry[jLib.fields[1].id] || '') : '';
+  s.deltaE_jpn  = j ? j.deltaE : Infinity;
+  s.html_name   = (h && hLib?.fields[0]) ? (h.entry[hLib.fields[0].id] || '') : '';
+  s.deltaE_html = h ? h.deltaE : Infinity;
+}
+
+// Rematch ONLY the changed library against ALL swatches, chunked so the
+// UI thread breathes between batches and the progress overlay updates.
+// Anchor flips used to call matchNearest for every corpus on every swatch
+// — that was the lag source. Now we touch one corpus's matches only.
+async function rematchOne(libId) {
+  if (!Array.isArray(DEDUP) || DEDUP.length === 0) return;
+  const lib = CORPORA.libraries.find(l => l.id === libId);
+  if (!lib) return;
+  const prefs = _libPref(libId);
+  _showProgress('Rematching ' + lib.label);
+  _setProgress(2, prefs.anchor === 'cmyk' ? 'Preparing cmyk anchors' : 'Preparing hex anchors');
+  if (prefs.anchor === 'cmyk' && lib._hasCmyk) {
+    let fwd = ACTIVE_PROFILE ? LUT_CACHE.get(ACTIVE_PROFILE.lut) : null;
+    if (!fwd && ACTIVE_PROFILE) {
+      try { fwd = await loadLUT(ACTIVE_PROFILE.lut); } catch {}
+    }
+    _ensureCorpusCmykLabs(lib, fwd);
+  }
+  const CHUNK = 1500;
+  const N = DEDUP.length;
+  for (let i = 0; i < N; i += CHUNK) {
+    const end = Math.min(i + CHUNK, N);
+    for (let j = i; j < end; j++) {
+      _matchOneCorpus(DEDUP[j], lib, prefs);
+      if (libId === 'jpn' || libId === 'html') _syncMirrorFor(DEDUP[j]);
+    }
+    _setProgress(5 + (end / N) * 90, `${end.toLocaleString()} / ${N.toLocaleString()}`);
+    if (end < N) await new Promise(r => requestAnimationFrame(r));
+  }
+  if (libId === 'jpn')  _markClosest('jpn_name',  'deltaE_jpn',  'jpn_closest');
+  if (libId === 'html') _markClosest('html_name', 'deltaE_html', 'html_closest');
+  _setProgress(100);
+  setTimeout(_hideProgress, 150);
+}
+
+// Legacy entrypoint kept for callsites that still want a full rematch
+// (e.g. resetUIToDefaults). Routes through rematchOne sequentially.
 async function rematchAll() {
   if (!Array.isArray(DEDUP) || DEDUP.length === 0) return;
-  const fwd = ACTIVE_PROFILE ? await loadLUT(ACTIVE_PROFILE.lut) : null;
-  for (const s of DEDUP) matchNearest(s, fwd);
-  _markClosest('jpn_name',  'deltaE_jpn',  'jpn_closest');
-  _markClosest('html_name', 'deltaE_html', 'html_closest');
+  for (const lib of CORPORA.libraries) {
+    // eslint-disable-next-line no-await-in-loop
+    await rematchOne(lib.id);
+  }
 }
 
 // Dynamic sidebar UI: one row per corpus library, with a display dropdown
@@ -1258,51 +1389,121 @@ function buildNamingUI() {
     const head = document.createElement('div');
     head.className = 'nm-head';
     head.textContent = lib.label;
-    head.title = `${lib.entries.length} entries · primary "${lib.primary?.label || lib.primary?.field || '—'}"`
-              + (lib.secondary ? ` · secondary "${lib.secondary.label || lib.secondary.field}"` : '');
+    head.title = `${lib.entries.length} entries · fields: `
+              + lib.fields.map(f => f.label || f.id).join(', ');
     row.appendChild(head);
 
-    const ctrls = document.createElement('div');
-    ctrls.className = 'nm-ctrls';
-
-    // display select
-    const dispSel = document.createElement('select');
-    dispSel.className = 'pal-sel nm-sel';
-    dispSel.title = 'Which name to show on swatch labels';
-    const opts = [['primary', lib.primary?.label || 'name']];
-    if (lib.secondary) opts.push(['secondary', lib.secondary.label || lib.secondary.field]);
-    opts.push(['none', 'hide']);
-    for (const [v, t] of opts) {
-      const o = document.createElement('option');
-      o.value = v; o.textContent = t;
-      if (prefs.display === v) o.selected = true;
-      dispSel.appendChild(o);
-    }
-    dispSel.onchange = () => { _setLibPref(lib.id, 'display', dispSel.value); render(); };
-    ctrls.appendChild(dispSel);
-
-    // anchor select (only if any entry has cmyk)
-    if (lib._hasCmyk && lib._hasHex) {
-      const anchSel = document.createElement('select');
-      anchSel.className = 'pal-sel nm-sel';
-      anchSel.title = 'Which entry attribute drives the name match. '
-                    + '"hex" matches against entry.hex; "cmyk" matches against '
-                    + 'entry.cmyk routed through the active ICC profile.';
-      for (const [v, t] of [['hex','anchor: hex'], ['cmyk','anchor: cmyk']]) {
-        const o = document.createElement('option');
-        o.value = v; o.textContent = t;
-        if (prefs.anchor === v) o.selected = true;
-        anchSel.appendChild(o);
-      }
-      anchSel.onchange = async () => {
-        _setLibPref(lib.id, 'anchor', anchSel.value);
-        await rematchAll();
-        render();
+    // Radio group: one radio per declared field + hide.
+    const radios = document.createElement('div');
+    radios.className = 'nm-radios';
+    const groupName = 'nm-' + lib.id;
+    const currentField = _libDisplayField(lib.id);  // null = hidden
+    const opts = lib.fields.map(f => [f.id, f.label || f.id])
+                           .concat([['__hide__', 'hide']]);
+    for (const [val, lbl] of opts) {
+      const id = `${groupName}-${val}`;
+      const wrapL = document.createElement('label');
+      wrapL.className = 'nm-radio';
+      wrapL.htmlFor = id;
+      const r = document.createElement('input');
+      r.type  = 'radio';
+      r.name  = groupName;
+      r.id    = id;
+      r.value = val;
+      if ((val === '__hide__' && currentField === null) || val === currentField) r.checked = true;
+      r.onchange = () => {
+        _setLibPref(lib.id, 'display', val === '__hide__' ? 'none' : val);
+        _scheduleRender();
       };
-      ctrls.appendChild(anchSel);
+      const txt = document.createElement('span');
+      txt.textContent = lbl;
+      wrapL.appendChild(r);
+      wrapL.appendChild(txt);
+      radios.appendChild(wrapL);
+    }
+    row.appendChild(radios);
+
+    // Anchor switch shown only when entries carry both hex and cmyk.
+    // Segmented two-button toggle. Flipping rematches ONLY this library
+    // (chunked, with progress) so the UI thread does not stall.
+    if (lib._hasCmyk && lib._hasHex) {
+      const swc = document.createElement('div');
+      swc.className = 'ax-switch';
+      swc.title = 'Match anchor: "hex" matches entry.hex; "cmyk" matches '
+                + 'entry.cmyk routed through the active ICC profile.';
+      for (const [v, t] of [['hex','hex'], ['cmyk','cmyk']]) {
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'ax-opt' + (prefs.anchor === v ? ' active' : '');
+        b.dataset.val = v;
+        b.textContent = t;
+        b.onclick = async () => {
+          if (b.classList.contains('active')) return;     // no-op when already selected
+          swc.querySelectorAll('.ax-opt').forEach(x => x.classList.toggle('active', x === b));
+          _setLibPref(lib.id, 'anchor', v);
+          await rematchOne(lib.id);
+          render();
+        };
+        swc.appendChild(b);
+      }
+      const wrap2 = document.createElement('div');
+      wrap2.className = 'ax-row';
+      const label = document.createElement('span');
+      label.className = 'ax-label';
+      label.textContent = 'anchor';
+      wrap2.appendChild(label);
+      wrap2.appendChild(swc);
+      row.appendChild(wrap2);
     }
 
-    row.appendChild(ctrls);
+    wrap.appendChild(row);
+  }
+}
+
+function buildFilterUI() {
+  const wrap = document.getElementById('filterCheckboxes');
+  if (!wrap) return;
+  wrap.innerHTML = '';
+  if (!CORPORA.libraries.length) {
+    wrap.innerHTML = '<div style="font-size:10.5px;color:var(--faint)">No corpora loaded.</div>';
+    return;
+  }
+  // Master "all" toggle.
+  const all = document.createElement('label');
+  all.className = 'flt-row flt-all';
+  const allBox = document.createElement('input');
+  allBox.type = 'checkbox';
+  allBox.id   = 'flt-all';
+  const allOn = CORPORA.libraries.every(l => _libFilterEnabled(l.id));
+  allBox.checked = allOn;
+  allBox.onchange = () => {
+    for (const lib of CORPORA.libraries) _setLibFilter(lib.id, allBox.checked);
+    buildFilterUI();
+    _scheduleRender();
+  };
+  all.appendChild(allBox);
+  const allTxt = document.createElement('span');
+  allTxt.textContent = ' All libraries';
+  all.appendChild(allTxt);
+  wrap.appendChild(all);
+  // Per-lib checkboxes.
+  for (const lib of CORPORA.libraries) {
+    const row = document.createElement('label');
+    row.className = 'flt-row';
+    const cb = document.createElement('input');
+    cb.type = 'checkbox';
+    cb.checked = _libFilterEnabled(lib.id);
+    cb.onchange = () => {
+      _setLibFilter(lib.id, cb.checked);
+      const masterOn = CORPORA.libraries.every(l => _libFilterEnabled(l.id));
+      const m = document.getElementById('flt-all');
+      if (m) m.checked = masterOn;
+      _scheduleRender();
+    };
+    row.appendChild(cb);
+    const txt = document.createElement('span');
+    txt.textContent = ' ' + lib.label;
+    row.appendChild(txt);
     wrap.appendChild(row);
   }
 }
@@ -1335,18 +1536,54 @@ async function onProfileChange() {
 }
 
 // -- Master rebuild ------------------------------------------------------
+// Visual progress overlay used during rebuildAll. Drawn over the grid area
+// so the user sees forward motion even on step-5 / many-corpora workloads.
+function _showProgress(label) {
+  let el = document.getElementById('loadProgress');
+  if (!el) {
+    el = document.createElement('div');
+    el.id = 'loadProgress';
+    el.innerHTML =
+      '<div class="lp-card">' +
+      '  <div class="lp-label" id="lpLabel">Loading…</div>' +
+      '  <div class="lp-bar"><div class="lp-fill" id="lpFill"></div></div>' +
+      '  <div class="lp-sub" id="lpSub"></div>' +
+      '</div>';
+    document.body.appendChild(el);
+  }
+  el.style.display = 'flex';
+  document.getElementById('lpLabel').textContent = label || 'Loading…';
+  document.getElementById('lpFill').style.width = '0%';
+  document.getElementById('lpSub').textContent  = '';
+}
+function _setProgress(pct, sub) {
+  const fill = document.getElementById('lpFill');
+  const subEl = document.getElementById('lpSub');
+  if (fill) fill.style.width = Math.max(0, Math.min(100, pct)) + '%';
+  if (subEl && sub != null) subEl.textContent = sub;
+}
+function _hideProgress() {
+  const el = document.getElementById('loadProgress');
+  if (el) el.style.display = 'none';
+}
+
 async function rebuildAll() {
   if (!ACTIVE_PROFILE) return;
   const status = document.getElementById('iccStatus');
   if (status) status.textContent = 'Loading ' + ACTIVE_PROFILE.filename + '…';
+  _showProgress('Loading ' + ACTIVE_PROFILE.label);
+  _setProgress(2, 'Fetching LUTs');
   const lut = await loadLUT(ACTIVE_PROFILE.lut);
   ACTIVE_RLUT = ACTIVE_PROFILE.rlut ? await loadRLUT(ACTIVE_PROFILE.rlut) : null;
+  _setProgress(8, 'Generating lattice');
 
-  // generate lattice + derive — batched to keep UI responsive on step 5
   RAW = genLattice(curStep);
   if (status) status.textContent = 'Deriving ' + RAW.length.toLocaleString() + ' swatches…';
 
-  const CHUNK = 4000;
+  // Smaller chunks so the progress bar moves smoothly + browser stays
+  // responsive across more corpora. Step 10 = 14k swatches → ~10 chunks;
+  // step 5 = 130k → ~85 chunks.
+  const CHUNK = 1500;
   for (let i=0; i<RAW.length; i+=CHUNK) {
     const end = Math.min(i+CHUNK, RAW.length);
     for (let j=i; j<end; j++) {
@@ -1355,28 +1592,30 @@ async function rebuildAll() {
       RAW[j].delta_e_print = ACTIVE_RLUT ? +deltaERoundTrip(RAW[j], lut, ACTIVE_RLUT).toFixed(2) : null;
       matchNearest(RAW[j], lut);
     }
-    if (i+CHUNK < RAW.length) {
+    const pct = 8 + (end / RAW.length) * 88;     // 8 → 96
+    _setProgress(pct, `${end.toLocaleString()} / ${RAW.length.toLocaleString()} swatches`);
+    if (end < RAW.length) {
       if (status) status.textContent = 'Processing ' + end.toLocaleString() + '/' + RAW.length.toLocaleString() + '…';
       await new Promise(r => requestAnimationFrame(r));
     }
   }
 
-  // dedupe by CMYK (lattice shouldn't dup but defensive)
+  _setProgress(97, 'Dedupe + sort');
   const seen = new Set();
   DEDUP = RAW.filter(s => {
     const k = `${s.C}|${s.M}|${s.Y}|${s.K}`;
     if (seen.has(k)) return false;
     seen.add(k); return true;
   });
-
   GS_DATA   = DEDUP.filter(s => s.C===0 && s.M===0 && s.Y===0 && s.K>0);
   MAIN_DATA = DEDUP.filter(s => !(s.C===0 && s.M===0 && s.Y===0 && s.K>0));
-
   _markClosest('jpn_name',  'deltaE_jpn',  'jpn_closest');
   _markClosest('html_name', 'deltaE_html', 'html_closest');
 
+  _setProgress(100, 'Done');
   if (status) status.textContent = ACTIVE_PROFILE.label;
   render();
+  setTimeout(_hideProgress, 250);
 }
 
 function _markClosest(field, deltaField, flag) {
@@ -1546,7 +1785,7 @@ function setViewMode(m) {
       `${palettes.length} palette${palettes.length===1?'':'s'}`;
   else
     document.getElementById('countLabel').textContent = '';
-  render();
+  _scheduleRender();
 }
 
 // Backwards-compat: any caller using togglePaletteMode falls through cleanly
@@ -1718,30 +1957,22 @@ function renderPaletteMode() {
           e.textContent=sw.hex;
           cell.appendChild(e);
         }
-        if (showJpn && sw.jpn_name && sw.text_color) {
-          const jPref = _libPref('jpn').display;
-          if (jPref === 'primary' || jPref === 'secondary') {
-            const j=document.createElement('div');
-            j.className='cell-jpn';
-            j.style.cssText=`color:${sw.text_color};font-size:${fzJpn}px;top:${topJpn}px;font-weight:600`;
-            j.textContent= jPref === 'secondary' ? (sw.jpn_romaji||'') : sw.jpn_name;
-            cell.appendChild(j);
-            if (jPref === 'primary' && sw.jpn_romaji) {
-              const r=document.createElement('div');
-              r.className='cell-jpn';
-              r.style.cssText=`color:${sw.text_color};font-size:${fzRoma}px;top:${topRoma}px;opacity:.8;font-style:italic`;
-              r.textContent=sw.jpn_romaji;
-              cell.appendChild(r);
-            }
-          }
-        }
-        if (showHtml && sw.html_name && sw.text_color) {
-          if (_libPref('html').display !== 'none') {
-            const h=document.createElement('div');
-            h.className='cell-html';
-            h.style.cssText=`color:${sw.text_color};font-size:${fzHtml}px;top:${topHtml}px`;
-            h.textContent=sw.html_name;
-            cell.appendChild(h);
+        if (showJpn && sw.text_color) {
+          let yCursor = topJpn;
+          for (const lib of CORPORA.libraries) {
+            if (!corpusVisible(lib.id, sw)) continue;
+            const text = corpusCellText(lib.id, sw);
+            if (!text) continue;
+            const isJpn = (lib.id === 'jpn');
+            if (!isJpn && !showHtml) continue;
+            const fz = isJpn ? fzJpn : fzHtml;
+            const e = document.createElement('div');
+            e.className = isJpn ? 'cell-jpn' : 'cell-html';
+            e.style.cssText = `color:${sw.text_color};font-size:${fz}px;top:${yCursor}px`
+                            + (isJpn ? ';font-weight:600' : '');
+            e.textContent = text;
+            cell.appendChild(e);
+            yCursor += fz + 2;
           }
         }
         if (showBadge && sw.wcag_aa !== undefined) {
@@ -1882,22 +2113,20 @@ function setCell(px) {
   curCell = px;
   document.getElementById('cellSlider').value = px;
   document.getElementById('cellVal').textContent = px + ' px';
-  // update preset button highlights
   document.querySelectorAll('.preset-btn').forEach(b => {
     b.classList.toggle('active', +b.dataset.size === px);
   });
-  render();
+  _scheduleRender();
 }
 
 function setCellSlider(v) {
   const px = +v;
   curCell = px;
   document.getElementById('cellVal').textContent = px + ' px';
-  // match nearest preset or clear all
   document.querySelectorAll('.preset-btn').forEach(b => {
     b.classList.toggle('active', +b.dataset.size === px);
   });
-  render();
+  _scheduleRender();
 }
 
 // ── filtering ────────────────────────────────────────────────────────────────
@@ -1936,9 +2165,9 @@ function filtered() {
       const parts = [s.hex];
       for (const lib of CORPORA.libraries) {
         const m = s.matches?.[lib.id];
-        if (m) { parts.push(m.primary); parts.push(m.secondary); }
+        if (m && m.entry) for (const f of lib.fields) parts.push(m.entry[f.id]);
       }
-      if (!parts.join(' ').toLowerCase().includes(q)) return false;
+      if (!parts.filter(Boolean).join(' ').toLowerCase().includes(q)) return false;
     }
     return true;
   });
@@ -2002,30 +2231,26 @@ function _makeSwatchCell(sw, ctx) {
     e.textContent = sw.hex;
     cell.appendChild(e);
   }
-  if (ctx.showJpn && jpnVisible(sw)) {
-    const jPref = _libPref('jpn').display;
-    if (jPref === 'primary' || jPref === 'secondary') {
-      const j = document.createElement('div');
-      j.className = 'cell-jpn';
-      j.style.cssText = `color:${sw.text_color};font-size:${ctx.fzJpn}px;top:${ctx.topJpn}px;font-weight:600`;
-      j.textContent = jPref === 'secondary' ? (sw.jpn_romaji || '') : sw.jpn_name;
-      cell.appendChild(j);
-      if (jPref === 'primary' && sw.jpn_romaji) {
-        const r = document.createElement('div');
-        r.className = 'cell-jpn';
-        r.style.cssText = `color:${sw.text_color};font-size:${ctx.fzRoma}px;top:${ctx.topRoma}px;opacity:.8;font-style:italic`;
-        r.textContent = sw.jpn_romaji;
-        cell.appendChild(r);
-      }
-    }
-  }
-  if (ctx.showHtml && htmlVisible(sw)) {
-    if (_libPref('html').display !== 'none') {
-      const e = document.createElement('div');
-      e.className = 'cell-html';
-      e.style.cssText = `color:${sw.text_color};font-size:${ctx.fzHtml}px;top:${ctx.topHtml}px`;
-      e.textContent = sw.html_name;
+  // v2.1: iterate every loaded corpus dynamically. Each visible corpus
+  // adds one stacked label line. Field shown = user's radio choice. jpn
+  // gets the heavier sans-serif treatment; everything else uses mono.
+  if (ctx.showJpn) {
+    let yCursor = ctx.topJpn;
+    for (const lib of CORPORA.libraries) {
+      if (!corpusVisible(lib.id, sw)) continue;
+      const text = corpusCellText(lib.id, sw);
+      if (!text) continue;
+      // Size threshold: jpn uses fzJpn, others use fzHtml-class.
+      const isJpn = (lib.id === 'jpn');
+      if (!isJpn && !ctx.showHtml) continue;
+      const fz = isJpn ? ctx.fzJpn : ctx.fzHtml;
+      const e  = document.createElement('div');
+      e.className = isJpn ? 'cell-jpn' : 'cell-html';
+      e.style.cssText = `color:${sw.text_color};font-size:${fz}px;top:${yCursor}px`
+                      + (isJpn ? ';font-weight:600' : '');
+      e.textContent = text;
       cell.appendChild(e);
+      yCursor += fz + 2;
     }
   }
   if (ctx.showBadge) {
@@ -2371,15 +2596,20 @@ function openDetail(sw) {
     chips += `<span class="chip" style="background:#eee;color:#333" title="Internal descriptive system name (lightness · chroma · hue)">${sw.system_name}</span>`;
   for (const lib of CORPORA.libraries) {
     const m = sw.matches?.[lib.id];
-    if (!m || !m.primary) continue;
+    if (!m || !m.entry) continue;
     const klass = lib.id === 'jpn' ? 'chip jpn' : 'chip';
-    const secondary = (lib.secondary && m.secondary) ? ` · ${m.secondary}` : '';
+    // v2.1: render every declared field of the matched entry, separated by " · "
+    const fieldTxt = lib.fields
+      .map(f => m.entry[f.id])
+      .filter(Boolean)
+      .join(' · ');
+    if (!fieldTxt) continue;
     const anchorTag = lib._hasCmyk
       ? ` <em style="opacity:.5;font-style:normal">[${m.anchor}]</em>`
       : '';
     chips += `<span class="${klass}" title="${lib.label} · anchor: ${m.anchor}">`
           +  `<em style="opacity:.6;font-style:normal;font-size:.85em">${lib.label}:</em> `
-          +  `${m.primary}${secondary} `
+          +  `${fieldTxt} `
           +  `<em style="opacity:.65;font-style:normal">ΔE ${m.deltaE.toFixed(1)}</em>`
           +  `${anchorTag}</span>`;
   }
@@ -2435,7 +2665,7 @@ function onFilter() {
   document.getElementById('vKmn').textContent = document.getElementById('slKmn').value;
   document.getElementById('vKmx').textContent = document.getElementById('slKmx').value;
   document.getElementById('vTAC').textContent = document.getElementById('slTAC').value + '%';
-  render();
+  _scheduleRender();
 }
 
 function setKTier(t) {
@@ -2443,25 +2673,23 @@ function setKTier(t) {
   document.getElementById('kt1').classList.toggle('active', t===1);
   document.getElementById('kt2').classList.toggle('active', t===2);
   document.getElementById('kt3').classList.toggle('active', t===3);
-  render();
+  _scheduleRender();
 }
 
 function setNamed(m) {
-  // v2: 'all' (no filter) or 'any' (must match >=1 enabled corpus). The
-  // corpus-specific pills were removed in favor of the per-library
-  // Naming UI; visibility per corpus is controlled by its 'display' pref.
+  // v2: 'all' (no filter) or 'any' (must match >=1 enabled corpus).
   curNamed = m;
   ['all','any'].forEach(k => {
     const el = document.getElementById('nm-'+k);
     if (el) el.classList.toggle('active', k===m);
   });
-  render();
+  _scheduleRender();
 }
 
 function onTol(v) {
   curTol = +v;
   document.getElementById('vTol').textContent = curTol.toFixed(1);
-  render();
+  _scheduleRender();
 }
 
 // helpers respecting tolerance + per-library display pref
@@ -2494,7 +2722,7 @@ function setSort(m) {
   sortMode = m;
   document.querySelectorAll('.sort-btn').forEach(b=>b.classList.remove('active'));
   document.getElementById('sort-'+m).classList.add('active');
-  render();
+  _scheduleRender();
 }
 
 // ── CSV export ───────────────────────────────────────────────────────────────
@@ -3218,11 +3446,17 @@ window.addEventListener('load', async () => {
     // Apply defaults < user-saved state before first render.
     applyUIState(_resolvedUI());
     buildNamingUI();
+    buildFilterUI();
     // Sidebar-wide change listener: persist on every control flip.
     const sb = document.querySelector('.sidebar');
     if (sb) {
-      sb.addEventListener('change', persistUI);
-      sb.addEventListener('input',  persistUI);
+      // rAF-coalesce: a single radio click fires BOTH input + change events,
+      // and slider drags fire input on every pixel. Without coalescing,
+      // persistUI runs N times per user gesture (each = JSON.stringify +
+      // localStorage write) and stacks up with the radio's own render
+      // callback. _schedulePersist collapses bursts to one write per frame.
+      sb.addEventListener('change', _schedulePersist);
+      sb.addEventListener('input',  _schedulePersist);
     }
     await rebuildAll();
   } catch (e) {
