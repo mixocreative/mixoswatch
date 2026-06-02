@@ -13,7 +13,7 @@ pick CMYK colors and palettes that will print faithfully on a chosen press
 profile (FOGRA39, Japan Color, SWOP, Mimaki 3DUJ, etc.), and produce
 design-app-ready palette files (.ase / .gpl) plus per-swatch PNG manifests.
 
-The single tool is `app/cmyk-explorer.html`. It explores the full CMYK
+The single tool is `app/mixo-swatch.html` (Mixo Swatch). It explores the full CMYK
 uniform grid through a chosen ICC profile so the user can hand-pick swatches.
 Data is generated at runtime: CMYK lattice, LUT lookup, derived fields.
 
@@ -33,7 +33,7 @@ A zen landing at `index.html` links to the explorer. One Python script in
 cmyk/
 |-- index.html                     Zen landing page
 |-- app/
-|   `-- cmyk-explorer.html         Live CMYK explorer (LUT-driven)
+|   `-- mixo-swatch.html           Mixo Swatch (LUT-driven Mixo Swatch)
 |-- scripts/
 |   `-- gen_luts.py                Build CMYK->sRGB + sRGB->CMYK LUTs from ICCs
 |-- data/                          Generated, mostly gitignored
@@ -112,7 +112,7 @@ Real presses limit:
 | Mimaki 3DUJ (3D color print) | profile-dependent, usually <=300% |
 
 Exceeding TAC causes ink not to dry, smudges, paper warping. We expose
-TAC as a UI filter in the CMYK explorer; user typically caps at 240% for
+TAC as a UI filter in the Mixo Swatch; user typically caps at 240% for
 safe coated work.
 
 ### 2.5 K-tier philosophy (project-specific)
@@ -330,7 +330,7 @@ as Coated.
 
 ## 5. Greyscale rendering (in-browser)
 
-The CMYK explorer renders two greyscale strips below the main grid using
+The Mixo Swatch renders two greyscale strips below the main grid using
 the live LUTs. No precomputed library is needed; both strips are derived
 at runtime from the active profile's forward and reverse LUTs.
 
@@ -526,7 +526,7 @@ Current corpus sources:
 
 ---
 
-## 7. HTML data pipeline (CMYK explorer)
+## 7. HTML data pipeline (Mixo Swatch)
 
 ### 7.1 Lifecycle
 
@@ -707,7 +707,7 @@ Whitespace-separated R G B integers, tab, name.
 
 ### 8.1 Why a single tool
 
-The system used to ship two HTMLs: an open CMYK explorer and a curated
+The system used to ship two HTMLs: an open Mixo Swatch and a curated
 print-safe library viewer. The library viewer was deprecated once the
 explorer grew a ΔE max slider (§7.5) that delivers the same round-trip
 safety on the live LUT pipeline. One tool removes the mental model

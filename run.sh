@@ -5,7 +5,7 @@ cd "$(dirname "$0")"
 echo "Starting local server at http://localhost:8765 ..."
 echo
 echo "  Landing:       http://localhost:8765/"
-echo "  CMYK explorer: http://localhost:8765/app/cmyk-explorer.html"
+echo "  Mixo Swatch:   http://localhost:8765/app/mixo-swatch.html"
 echo
 echo "Ctrl+C to stop."
 echo
