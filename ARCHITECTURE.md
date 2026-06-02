@@ -19,7 +19,7 @@ Data is generated at runtime: CMYK lattice, LUT lookup, derived fields.
 
 3D-print color matching is a supported use case via the same pipeline. The
 Mimaki 3DUJ ICC profile sits alongside the offset profiles. The tool's ΔE
-max filter (§8.5) provides round-trip safety for any selected profile,
+max filter (§7.5) provides round-trip safety for any selected profile,
 including 3DUJ.
 
 A zen landing at `index.html` links to the explorer. One Python script in
@@ -144,7 +144,7 @@ will clip, step 3 won't recover the original Lab, ΔE > 0. Higher ΔE
 means deeper into out-of-gamut territory.
 
 The explorer exposes this round-trip ΔE as `delta_e_print` on every swatch
-and as the **ΔE max** filter slider (see §8.5). Setting the slider tight
+and as the **ΔE max** filter slider (see §7.5). Setting the slider tight
 (e.g. 2.0) hides swatches the chosen press cannot hold confidently. This
 slider is the surviving safety mechanism for round-trip gamut control.
 Pure neutrals (K-ramp) are always achievable on essentially every CMYK
