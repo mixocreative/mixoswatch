@@ -33,6 +33,9 @@ Goal: ship best swatches that work on digital + 2D press + 3D print outputs.
 | Mobile | Responsive breakpoints at 1024/768/480 + sidebar drawer | Touch targets >=44px |
 | Dynamic corpora | Drop hardcoded library IDs (jpn, html) from swatch fields, use ${lib.id}__name pattern | Add corpus to JSON -> UI auto-builds, zero code |
 | Tri-lingual fill | Field-per-language (name_en, name_ja, name_zh) + translit (romaji/pinyin); no empty strings; loader fills with fallback | Memory rule compliance, dictionary integrity |
+| Hue x Light placement | Move from topbar mode-group into Sort by row | Conceptually a sort+collapse, not a distinct view mode |
+| Palettes UI | Collapsable panel above grid (combines sidebar block + pm-wrap); collapsed by default | Frees sidebar space; one place for all palette controls + palettes-view |
+| Per-swatch export | Top-level ZIP button: one 128x128 pure PNG per filtered swatch + manifest | Mirrors per-palette ZIP feature; works on full filtered set |
 
 ## Architecture
 
@@ -198,7 +201,77 @@ TAC quick-preset buttons:
 
 3D-print preset checkbox: snaps TAC <=240, dE max <=3, hides unreliable swatches in one click.
 
-### Dark-only + responsive + dynamic corpora (Section 5)
+### UI consolidation (Section 5)
+
+Three layout simplifications to reduce conceptual clutter:
+
+**1. Move "Hue x Light" into "Sort by" section.**
+
+Currently `Hue × Light` is a view-mode button in topbar `mode-group` (next to `Grid` + `Palettes`). It is conceptually a sort+collapse (one cell per hue/light bucket), not a distinct mode. Move to `Sort by` row as 7th button:
+
+```
+Sort by:  [Hue] [Light] [TAC] [Cyan] [Chroma] [Safety] [Hue x Light]
+```
+
+Clicking it sets `viewMode = 'huelight'` and triggers the existing `renderHueLightMap()` path. Mode-group in topbar shrinks to `[Grid] [Palettes]` only.
+
+Wiring: when any other sort button is clicked, switch back to `viewMode = 'grid'` automatically (sort buttons are mutually exclusive with hue-light view).
+
+**2. Collapsable Palettes panel above grid (combine sidebar palette UI + `pm-wrap`).**
+
+Currently:
+- Palette UI (selector, select-mode toggle, palette strip, export buttons) lives in sidebar at line 466-510 (large block, ~50 lines)
+- `pm-wrap` (Palettes-view grid) renders inside `grid-scroll` only when `viewMode === 'palettes'`
+
+Consolidate into ONE collapsable panel positioned directly above the swatch grid (between topbar and grid-scroll):
+
+```
+┌──────────────────────────────────────────────────────────────┐
+│ topbar                                                        │
+├────────────┬─────────────────────────────────────────────────┤
+│            │ ┌─────────────────────────────────────────────┐ │
+│            │ │ Palettes  [v]  (collapsed by default)       │ │
+│            │ ├─────────────────────────────────────────────┤ │
+│            │ │  [palette selector]  [+] [edit] [delete]    │ │
+│  sidebar   │ │  Select mode [ ]    Active: 12 swatches     │ │
+│  (no       │ │  [active palette strip preview]              │ │
+│   palette  │ │  Exports: [PNG] [ZIP] [ASE] [GPL] [JSON]    │ │
+│   block)   │ │  Palettes-view grid (when viewMode=palettes)│ │
+│            │ └─────────────────────────────────────────────┘ │
+│            │ swatch grid (filtered)                          │
+└────────────┴─────────────────────────────────────────────────┘
+```
+
+- Collapsed by default (single `Palettes [v]` header bar visible)
+- Click header to expand (chevron rotates)
+- Expanded shows: selector + buttons + strip + exports + (when viewMode=palettes) the palettes grid inside the same panel
+- Sidebar `<!-- Palettes -->` block (lines 466-510) deleted entirely
+- `pm-wrap` div moved out of `grid-scroll`, becomes child of the new panel
+- Collapsed state persisted in localStorage (`palette_panel_open: false`)
+
+**3. "Download every swatch as individual PNG" top-level export.**
+
+Currently the per-swatch ZIP exporter (`exportActivePaletteZIP`, 128x128 pure PNG + manifest) only works on the active palette. Add a parallel exporter for ALL currently-filtered swatches in the grid.
+
+New button in topbar export row (next to existing `CSV` + `PNG board` buttons):
+
+```
+[↓ CSV]  [↓ PNG board]  [↓ ZIP (per-swatch, 128px pure)]
+```
+
+Tooltip: "Download a .zip with one 128x128 solid-color PNG per currently-filtered swatch plus manifest.csv/json. Pure color, no text."
+
+Implementation: reuse the `exportActivePaletteZIP` worker function, pass `filtered()` result instead of active palette. Manifest carries: filename, CMYK, hex, R, G, B, L_star, a_star, b_star, delta_e_print, plus per-library closest names.
+
+File-size estimate: 14,641 swatches at step=10, 128x128 pure PNG (~600 bytes each compressed) = ~9MB ZIP. 130k swatches at step=5 = ~78MB. Add user confirmation dialog if filtered count > 5000:
+
+```
+"You're about to download 14,641 swatches as individual PNGs (~9MB ZIP). Continue?"
+```
+
+Concurrency: use Web Workers + chunked ZIP build to keep UI responsive. Fall back to single-threaded build if Worker unavailable.
+
+### Dark-only + responsive + dynamic corpora (Section 6)
 
 Dark mode lock: drop `@media (prefers-color-scheme:light)` block. Reason: surrounding luminance bias skews color picking in light mode.
 
@@ -295,7 +368,7 @@ else { state = defaults; }
 
 | Path | Change |
 |---|---|
-| `app/mixo-swatch.html` | Bradford + dual Lab + LAB_MODE toggle + drop systemName/HUE_NAMES + drop hardcoded library IDs (dynamic `${lib.id}__field` naming) + global anchor/tolerance + per-library display radios + TAC quick-presets + 3D-print preset + dark-only CSS + responsive breakpoints + mobile drawer + v1->v2 migration |
+| `app/mixo-swatch.html` | Bradford + dual Lab + LAB_MODE toggle + drop systemName/HUE_NAMES + drop hardcoded library IDs (dynamic `${lib.id}__field` naming) + global anchor/tolerance + per-library display radios + TAC quick-presets + 3D-print preset + dark-only CSS + responsive breakpoints + mobile drawer + v1->v2 migration + move Hue×Light to Sort by + Palettes collapsable panel + per-swatch ZIP export |
 | `data/corpora/name_corpora.json` | v3 schema, jp-trad (250 NipponColors), html (147 W3C canonical), zh-trad (526 community) |
 | `data/luts/index.json` | per-profile tac_recommended + tac_max + paper |
 | `data/ui_defaults.json` | new field defaults |
@@ -316,7 +389,10 @@ else { state = defaults; }
 9. **Mobile:** test 1024 / 768 / 480 widths in Chrome DevTools responsive mode. Sidebar drawer opens/closes. Touch targets >= 44px.
 10. **Dark-only:** confirm no light-mode flash; OS light preference does not break layout.
 11. **localStorage migration:** start with v1 in DevTools, reload, confirm v2 written + UI populated from migrated state.
-12. **Em-dash compliance:** run `python -c "import sys; bad=[chr(0x2014),chr(0x2013)]; [print(p) for p in sys.argv[1:] if any(c in open(p,encoding='utf-8').read() for c in bad)]" app/mixo-swatch.html data/corpora/name_corpora.json` and confirm no paths printed. Hunts U+2014 and U+2013 (both banned per memory).
+12. **Hue×Light relocation:** click `Hue x Light` sort button, confirm view switches to huelight map and other sort buttons deactivate. Click any other sort button, confirm view returns to grid.
+13. **Palettes panel collapse:** confirm panel collapsed by default, header click expands, all palette UI (selector + strip + exports + palettes-grid) lives inside. Sidebar no longer carries palette block.
+14. **Per-swatch ZIP:** filter to ~100 swatches, click `ZIP (per-swatch)`, confirm download contains N 128x128 pure-color PNGs + manifest.csv/json. Filter to 14k swatches, confirm confirmation dialog appears before download.
+15. **Em-dash compliance:** run `python -c "import sys; bad=[chr(0x2014),chr(0x2013)]; [print(p) for p in sys.argv[1:] if any(c in open(p,encoding='utf-8').read() for c in bad)]" app/mixo-swatch.html data/corpora/name_corpora.json` and confirm no paths printed. Hunts U+2014 and U+2013 (both banned per memory).
 
 ## Out of scope
 
