@@ -2,7 +2,7 @@
 
 One browser tool for designing print-safe colors against real ICC profiles, plus a small Python script that prepares the lookup tables it consumes. Built for designers who work across **2D commercial print** and **3D color printing** (Mimaki 3DUJ, Stratasys J55, Cura material libraries, etc.).
 
-- **`app/cmyk-explorer.html`** · live grid of every CMYK value at a chosen step, rendered through a CMYK ICC profile of your choice. Filter by total area coverage, by named-color closeness (Japanese traditional + W3C CSS + DIC Japanese + DIC Chinese), by **ΔE max** for round-trip safety, build palettes, export ASE / GPL / PNG / JSON.
+- **`app/mixo-swatch.html`** (Mixo Swatch) · live grid of every CMYK value at a chosen step, rendered through a CMYK ICC profile of your choice. Filter by total area coverage, by named-color closeness (Japanese traditional + W3C CSS + DIC Japanese + DIC Chinese), by **ΔE max** for round-trip safety, build palettes, export ASE / GPL / PNG / JSON.
 - **`index.html`** · zen landing with live interactive demos for every sidebar control, tri-lingual (EN / 日本語 / 繁中).
 
 ## Why
@@ -17,7 +17,7 @@ For full color theory + pipeline rationale see **`ARCHITECTURE.md`** (the contra
 mixoswatch/
 ├── index.html                      Zen landing (tri-lingual, live demos)
 ├── app/
-│   └── cmyk-explorer.html          Live CMYK explorer
+│   └── mixo-swatch.html            Mixo Swatch (live CMYK explorer)
 ├── scripts/
 │   └── gen_luts.py                 Build CMYK↔sRGB lookup tables from ICCs
 ├── data/
@@ -83,8 +83,8 @@ One script. Uses Pillow's `ImageCms` binding to LittleCMS. Same color engine man
 
 | File | Direction | Grid | Size | Used by |
 |---|---|---|---|---|
-| `data/luts/<profile>.lut` | CMYK → sRGB | 17⁴ = 83,521 nodes | ~250 KB | cmyk-explorer (cell rendering) |
-| `data/luts/<profile>.rcmyk.lut` | sRGB → CMYK | 17³ = 4,913 nodes | ~20 KB | cmyk-explorer (round-trip safety / ΔE max filter) |
+| `data/luts/<profile>.lut` | CMYK → sRGB | 17⁴ = 83,521 nodes | ~250 KB | Mixo Swatch (cell rendering) |
+| `data/luts/<profile>.rcmyk.lut` | sRGB → CMYK | 17³ = 4,913 nodes | ~20 KB | Mixo Swatch (round-trip safety / ΔE max filter) |
 
 Plus a manifest the HTML reads to populate its profile dropdown:
 

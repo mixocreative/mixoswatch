@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CMYK Swatch Explorer</title>
+<title>Mixo Swatch</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+JP:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -430,7 +430,7 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
 
 <!-- Top bar -->
 <header class="topbar">
-  <span class="topbar-title">CMYK Swatch Explorer</span>
+  <span class="topbar-title">Mixo Swatch</span>
   <div class="topbar-sep"></div>
   <span class="count-tag" id="countLabel" title="How many swatches the filters currently allow.">- swatches</span>
   <button class="btn" onclick="resetUIToDefaults()" title="Reset all UI controls (cell size, sort, filters, naming) to the values in data/ui_defaults.json. Saved palettes are kept.">↺ Reset UI to defaults</button>
@@ -2764,7 +2764,7 @@ function exportPNG() {
   const data = sorted(filtered());
   if (!data.length) { alert('No swatches to export.'); return; }
   _renderSwatchPNG(data, `cmyk_swatches_${data.length}_step${curStep}_${curCell}px.png`,
-                   { title: 'CMYK Swatch Explorer - filtered view' });
+                   { title: 'Mixo Swatch - filtered view' });
 }
 
 function _renderSwatchPNG(data, filename, opts = {}) {
@@ -2785,7 +2785,7 @@ function _renderSwatchPNG(data, filename, opts = {}) {
   ctx.textBaseline = 'top';
   ctx.fillStyle = '#F4F4F6';
   ctx.font = `600 28px "IBM Plex Sans", system-ui, sans-serif`;
-  const title = opts.title || 'CMYK Swatch Explorer';
+  const title = opts.title || 'Mixo Swatch';
   ctx.fillText(title, 22, 18);
   ctx.font = `13px "IBM Plex Mono", ui-monospace, monospace`;
   ctx.fillStyle = '#B5B5BE';
