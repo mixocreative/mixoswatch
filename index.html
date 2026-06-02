@@ -1557,12 +1557,12 @@
             <span class="tag">best of both worlds</span>
           </h4>
           <p>
-            <span data-en>Same library serves 2D print and 3D-print color matching. The colors are rough by physics but
+            <span data-en>One tool serves 2D print and 3D-print color matching. The colors are rough by physics but
               tight by math: hex for screen and web mockups, CMYK + profile for the press or printer. Pick once, ship to
               both.</span>
             <span
-              data-ja>同じライブラリが2Dプリントと3Dプリントのカラーマッチングを両方支えます。物理的には大まかでも、数学的には厳密。画面とウェブのモックアップにはHexを、プリンターやプリンターにはCMYK＋プロファイルを使用。一度選べば、両方の環境へシームレスに出荷できます。</span>
-            <span data-zh>相同的色票庫同時滿足 2D 傳統印刷與 3D 印刷的色彩整合。在物理表現上或許留有容差，但在數學計算上絕對嚴密：Hex 用於螢幕與網頁原型開發，CMYK
+              data-ja>一つのツールで2Dプリントと3Dプリントのカラーマッチングを両方支えます。物理的には大まかでも、数学的には厳密。画面とウェブのモックアップにはHexを、プリンタにはCMYK＋プロファイルを使用。一度選べば、両方の環境へシームレスに出荷できます。</span>
+            <span data-zh>單一工具同時滿足 2D 傳統印刷與 3D 印刷的色彩整合。在物理表現上或許留有容差，但在數學計算上絕對嚴密：Hex 用於螢幕與網頁原型開發，CMYK
               加上描述檔則直通列印機或印表機。一次選色，雙端同步。</span>
           </p>
         </div>
@@ -2226,12 +2226,15 @@
       </div>
 
       <p>
-        <span data-en>That's it. Refresh the browser, both explorers now see your new profile in their dropdowns. The
-          CMYK explorer renders every CMYK value through it live, the 3D explorer browses the pre-filtered safe set you
-          just generated. Full breakdown of every Python flag, the LUT binary format, the round-trip safety gate, and
-          the curation algorithm: see <a href="ARCHITECTURE.md">ARCHITECTURE.md</a> sections 4 through 6.</span>
-        <span data-ja>最後に、ブラウザをリロード（再読み込み）すると、2つのエクスプローラーのドロップダウンメニューに新しいプロファイルが表示されます。CMYKエクスプローラーはすべてのCMYK値をリアルタイムでレンダリングし、3Dエクスプローラーは作成したばかりの安全なカラーパレットをブラウズできます。Pythonパイプライン、LUT形式、双方向アルゴリズムなどの詳細については、<a href="ARCHITECTURE.md">ARCHITECTURE.md</a> の第4章から第6章をご参照ください。</span>
-        <span data-zh>最後，重新整理瀏覽器，兩個探索器的下拉選單就會出現你的新描述檔。CMYK 探索器即時渲染所有 CMYK 值，3D 探索器瀏覽你剛產出的安全色組。所有 Python、LUT 格式、雙向演算法等詳細內容請參考：<a href="ARCHITECTURE.md">ARCHITECTURE.md</a> 第 4 至 6 章。</span>
+        <span data-en>That's it. Refresh the browser, the cmyk-explorer now sees your new profile in its dropdown. Every
+          CMYK value renders through it live; the ΔE max slider hides anything that drifts too far on the round-trip,
+          giving you the same print-safe set the curated library used to ship offline. Full breakdown of every Python
+          flag, the LUT binary format, and the round-trip safety gate: see <a
+            href="ARCHITECTURE.md">ARCHITECTURE.md</a> sections 4 through 6.</span>
+        <span data-ja>最後に、ブラウザをリロード（再読み込み）すると、cmyk-explorerのドロップダウンメニューに新しいプロファイルが表示されます。すべてのCMYK値がリアルタイムでレンダリングされ、ΔE上限スライダが往復で誤差の大きい色塊を隠してくれるため、以前のキュレーションライブラリが提供していた印刷安全色集合と同じものが得られます。Pythonパイプライン、LUT形式、往復安全ゲートなどの詳細については、<a
+            href="ARCHITECTURE.md">ARCHITECTURE.md</a> の第4章から第6章をご参照ください。</span>
+        <span data-zh>最後，重新整理瀏覽器，cmyk-explorer 的下拉選單就會出現你的新描述檔。所有 CMYK 值即時渲染；ΔE 上限滑桿會隱藏往返誤差過大的色塊，提供與離線匯出的精選色庫相同的印刷安全色集合。所有 Python、LUT
+          格式、往返安全閾值的詳細內容請參考：<a href="ARCHITECTURE.md">ARCHITECTURE.md</a> 第 4 至 6 章。</span>
       </p>
     </section>
 
