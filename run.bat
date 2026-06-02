@@ -8,7 +8,6 @@ echo Starting local server at http://localhost:8765 ...
 echo.
 echo  Landing:       http://localhost:8765/
 echo  CMYK explorer: http://localhost:8765/app/cmyk-explorer.html
-echo  3D explorer:   http://localhost:8765/app/3d-explorer.html
 echo.
 echo Close this window to stop the server.
 echo.
