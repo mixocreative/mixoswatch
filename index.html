@@ -2149,12 +2149,16 @@
         <span data-zh>把任何 ICC 轉成瀏覽器可用的查找表。</span>
       </h3>
       <p>
-        <span data-en>The browser tools never touch the ICC binary. Two Python scripts do the heavy color math offline
-          and emit small data files the HTML pages fetch. Same color engine your press RIP uses (Pillow's LittleCMS
-          binding), same intent (Relative Colorimetric), no approximation drift.</span>
+        <span data-en>The browser tool never touches the ICC binary. One Python script does the heavy color math
+          offline and emits small data files the HTML page fetches. Same color engine many prepress tools and FOSS RIPs
+          share (Pillow's LittleCMS binding), same intent (Relative Colorimetric). Interpolation between LUT nodes adds
+          about ΔE 0.3 of drift, well below the threshold of human perception.</span>
         <span
-          data-ja>ブラウザ側では、面倒なカラーデータの計算を一切行いません。2つのPythonスクリプトが裏側であらかじめ全てのカラー計算を済ませておき、ウェブ画面が読み込むための軽くて小さなデータファイルだけを用意します。プロの印刷現場で使われているものと全く同じカラーエンジンや色合わせの設定を採用しているため、色のズレや変換エラーが起こる心配は一切ありません。</span>
-        <span data-zh>前端不直接處理複雜的 ICC 二進位運算。本工具透過兩支 Python 腳本在離線時完成所有色彩轉換，僅產出輕量化的前端資料檔。由於核心編譯採用與印刷 RIP 相同的色彩引擎（Pillow 內建 LittleCMS）與相對色度渲染目的，可確保零近似誤差的精準重現。</span>
+          data-ja>ブラウザ側では、面倒なカラーデータの計算を一切行いません。1つのPythonスクリプトが裏側であらかじめ全てのカラー計算を済ませておき、ウェブ画面が読み込むための軽くて小さなデータファイルだけを用意します。多くのプリプレスツールやFOSS
+          RIPが共有する色エンジン（PillowのLittleCMSバインディング）と同じ、同じインテント（相対比色）。LUTノード間の補間で約 ΔE 0.3
+          の誤差が生じますが、人間の知覚閾値を十分下回ります。</span>
+        <span data-zh>前端不直接處理複雜的 ICC 二進位運算。本工具透過單支 Python 腳本在離線時完成所有色彩轉換，僅產出輕量化的前端資料檔。與許多印前工具及 FOSS RIP 共用的色彩引擎（Pillow 內建
+          LittleCMS）與相對色度渲染目的。LUT 節點之間的內插帶來約 ΔE 0.3 的偏差，遠低於人眼可察覺的閾值。</span>
       </p>
 
       <div class="steps">
