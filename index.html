@@ -1603,17 +1603,19 @@
             <span class="tag">curated</span>
           </h4>
           <p>
-            <span data-en>Most 3D modeling tools severe out-of-gamut color clipping swatches that are not print-ready
-              for prepress production. To prevent these industrial translation failures before they ever happen, this
-              tool provides a smaller, pre-filtered, profile-specific dataset where every single swatch has already
-              successfully passed a mathematical round-trip safety check: converting from sRGB into CMYK and back,
-              accepting only stable entries with extremely low color shifts.</span>
+            <span data-en>Most 3D modeling tools render skin textures and product colors that look fine on screen but
+              clip violently out of gamut when the 3D color printer ingests them in prepress. To prevent these
+              industrial translation failures before they ever happen, load your printer's ICC profile (Mimaki 3DUJ,
+              your bureau's measured profile, anything Pillow recognises) and pull the ΔE max slider down. Every cell
+              still visible has already passed a round-trip safety check under that exact profile. The math runs live,
+              so swapping profiles instantly reshapes the safe set.</span>
             <span
-              data-ja>一般的な3Dツールでは見落とされがちな皮膚テクスチャの「色域外（アウト・オブ・ガマット）」による変換失敗を、生産前に徹底防止。本ツールは、特定のプロファイルで事前検証された安全なカラーデータセットのみを提供します。
-              全てのカラーパッチは「sRGB ⇄ CMYK」の双方向変換テストをクリアし、色ズレを最小限に抑えた評価済みのデータです。</span>
+              data-ja>一般的な3Dツールでは画面上では問題なく見える皮膚テクスチャや製品色が、3Dカラープリンタの印前処理（プリプレス）に入った瞬間に色域外で激しくクリップされがちです。本ツールはプリンタのICCプロファイル（Mimaki
+              3DUJ、ビューローで実測したプロファイル、Pillowが読み込める任意のCMYKプロファイル）を読み込み、ΔE上限スライダを下げるだけ。表示されている色塊はすべて、その特定プロファイルでの往復安全テスト合格済み。演算はライブで走るため、プロファイルを切り替えれば安全色の集合も即時に再構成されます。</span>
             <span
-              data-zh>多數3D設計工具沒有考慮皮膚貼圖在物理上3D彩色列印機中重現的數位色彩，這會導致在印前製程（Prepress）中發生超出列印色域範圍的情況（Out-of-gamut）。為了在生產前就徹底杜絕這類工業轉換失敗，本工具提供了一套規模較精簡、針對特定描述檔經過事前篩選的專屬資料集。這裡的每個色塊都已通過嚴格的sRGB
-              ⇄ CMYK雙向安全轉換數學測試，且僅保留色偏極低的穩定項目。</span>
+              data-zh>多數 3D 設計工具產生的皮膚貼圖與產品色彩在螢幕上看似正常，但在 3D
+              彩色列印機進入印前製程（Prepress）的瞬間，會發生劇烈的色域外裁切。為了在生產前就杜絕這類工業轉換失敗，載入你列印機的 ICC 描述檔（Mimaki 3DUJ、配合廠商實測的描述檔、任何
+              Pillow 可讀的描述檔皆可），把 ΔE 上限滑桿往下拉。所有仍然顯示的色塊都已通過該特定描述檔下的往返安全檢驗。運算即時執行，切換描述檔可即刻重塑安全色集。</span>
           </p>
         </div>
       </div>
