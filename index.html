@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>mixoswatch · CMYK colors that survive the press</title>
   <meta name="description"
-    content="Two browser tools for picking print-safe CMYK colors through real ICC profiles. Live explorer for hand-picking, curated library for browsing pre-filtered safe palettes.">
+    content="Browser tool for picking print-safe CMYK colors through real ICC profiles. Live explorer with ΔE max filter for round-trip safety.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
@@ -1428,10 +1428,10 @@
         <span data-zh>數位 × 紙本 × 3D列印中<em><b>平衡對照</b></em> 的色彩</span>
       </h1>
       <p class="lede">
-        <span data-en>Two browser tools for designing with CMYK through real ICC profiles. Live exploration, or a
-          curated library of pre-tested print-safe colors. No upload. No telemetry.</span>
-        <span data-ja>実際のICCプロファイルを通してCMYK設計を行う、二つの小さなブラウザツール。ライブ探索、または事前に検証済みのプリント安全色キュレーション。アップロード不要、計測なし。</span>
-        <span data-zh>兩個輕量瀏覽器工具，透過真實 ICC 描述檔處理 CMYK 設計。可即時探索，或瀏覽已預先檢驗的印刷安全色庫。不上傳、不追蹤。</span>
+        <span data-en>One browser tool for designing with CMYK through real ICC profiles. Live exploration with a
+          ΔE max filter for round-trip safety. No upload. No telemetry.</span>
+        <span data-ja>実際のICCプロファイルを通してCMYK設計を行う、小さなブラウザツール。ライブ探索と、往復安全性のためのΔE上限フィルタ。アップロード不要、計測なし。</span>
+        <span data-zh>單一輕量瀏覽器工具，透過真實 ICC 描述檔處理 CMYK 設計。可即時探索並提供 ΔE 上限篩選確保往返色彩安全。不上傳、不追蹤。</span>
       </p>
       <nav class="tools" aria-label="Choose a tool">
         <a class="tool" href="app/cmyk-explorer.html">
@@ -1451,28 +1451,11 @@
           </div>
           <span class="go">open</span>
         </a>
-        <a class="tool" href="app/3d-explorer.html">
-          <div>
-            <div class="micro">curated</div>
-            <h2>Mixoswatch 3D Swatch Explorer</h2>
-            <h3 data-en>3D modeling and 3D color printing</h3>
-            <h3 data-zh>3D建模與3D彩色列印用專用色票對照表</h3>
-            <h3 data-ja>3Dモデルと3D彩色プリントの專用色見本</h3>
-          </div>
-          <p class="desc">
-            <span data-en>A pre-filtered library of print-safe colors per profile. Already passed a round-trip ΔE gate.
-              Sort by hue, lightness, or safety. Built for 3D printing on Mimaki.</span>
-            <span data-ja>プロファイルごとに事前フィルタ済みのプリント安全色ライブラリ。往復ΔEチェック合格済み。色相、明度、安全性でソート。Mimaki 3Dプリンタ向けに構築。</span>
-            <span data-zh>每個描述檔皆有預先過濾的印刷安全色庫，已通過 ΔE 往返檢驗。可依色相、明度或安全度排序。為 Mimaki 3D 列印量身打造。</span>
-          </p>
-          </div>
-          <span class="go">open</span>
-        </a>
       </nav>
     </section>
 
     <section class="section" id="why">
-      <div class="eyebrow"><span data-en>why two tools</span><span data-ja>二つの理由</span><span data-zh>為何兩個工具</span></div>
+      <div class="eyebrow"><span data-en>why this tool</span><span data-ja>このツールの理由</span><span data-zh>為何這個工具</span></div>
       <h3>
         <span data-en>What screens cannot promise, our workflow narrows.</span>
         <span data-ja>画面が保証できない領域を、ワークフローで狭める。</span>
