@@ -1634,19 +1634,18 @@
           
           <p>
             <span data-en>If your printing ICC profile is not bundled here, drop the <code>.icc</code>
-              / <code>.icm</code> file in <code>icc/</code> and run our two small Python scripts
-              (<code>scripts/gen_luts.py</code> + <code>scripts/gen_libraries.py</code>). They use the same Pillow +
-              LittleCMS engine a print RIP runs, sample the profile at a 17⁴ grid, and write the lookup tables the browser
-              reads. Full Python pipeline rationale + binary format spec is in <a
+              / <code>.icm</code> file in <code>icc/</code> and run the single Python script
+              (<code>scripts/gen_luts.py</code>). It uses the same Pillow + LittleCMS engine many prepress tools share,
+              samples the profile at a 17⁴ grid, and writes the lookup tables the browser reads. Full Python pipeline
+              rationale + binary format spec is in <a
                 href="https://github.com/mixocreative/mixoswatch/blob/main/ARCHITECTURE.md" target="_blank" rel="noopener">ARCHITECTURE.md</a>.</span>
             <span data-ja>当ツールに同梱されていないICC プロファイルがあれば、<code>.icc</code> /
-              <code>.icm</code>を<code>icc/</code>に入れて、Pythonスクリプト（<code>scripts/gen_luts.py</code> +
-              <code>scripts/gen_libraries.py</code>）を実行するだけ。プリンターと同じPillow +
-              LittleCMSエンジンを使い、17⁴グリッドでプロファイルを標本化し、ブラウザが読むLUTを書き出す。アルゴリズムの仕組み<a
+              <code>.icm</code>を<code>icc/</code>に入れて、単一のPythonスクリプト（<code>scripts/gen_luts.py</code>）を実行するだけ。多くのプリプレスツールが共有するPillow
+              + LittleCMSエンジンを使い、17⁴グリッドでプロファイルを標本化し、ブラウザが読むLUTを書き出す。アルゴリズムの仕組み<a
                 href="https://github.com/mixocreative/mixoswatch/blob/main/ARCHITECTURE.md" target="_blank" rel="noopener">ARCHITECTURE.md</a>に詳述。</span>
-            <span data-zh>若本工具未內建你工廠的描述檔，把 <code>.icc</code> / <code>.icm</code> 放進 <code>icc/</code>，執行兩支
-              Python 腳本（<code>scripts/gen_luts.py</code> 與 <code>scripts/gen_libraries.py</code>）即可。它們使用 Pillow +
-              LittleCMS 引擎，以 17⁴ 網格取樣描述檔，並輸出瀏覽器讀取的查找表。演算法原理詳述於 <a
+            <span data-zh>若本工具未內建你工廠的描述檔，把 <code>.icc</code> / <code>.icm</code> 放進 <code>icc/</code>，執行單支
+              Python 腳本（<code>scripts/gen_luts.py</code>）即可。它使用許多印前工具共用的 Pillow + LittleCMS
+              引擎，以 17⁴ 網格取樣描述檔，並輸出瀏覽器讀取的查找表。演算法原理詳述於 <a
                 href="https://github.com/mixocreative/mixoswatch/blob/main/ARCHITECTURE.md" target="_blank" rel="noopener">ARCHITECTURE.md</a>。</span>
           </p>
         </div>
@@ -2211,24 +2210,6 @@
             <span data-zh><code>python scripts/gen_luts.py</code>。每個描述檔以 17⁴ 網格（83,521 點）取樣，輸出
               <code>data/luts/&lt;profile&gt;.lut</code>（正向約 250 KB）與 <code>.rcmyk.lut</code>（逆向約 20 KB）。僅 RGB
               的描述檔會自動跳過。</span>
-          </p>
-        </div>
-        <div class="step">
-          <span class="pythonstep">STEP 04</span>
-          <h5>
-            <span data-en>Build the curated library</span>
-            <span data-ja>キュレーションライブラリ生成</span>
-            <span data-zh>甄選色庫</span>
-          </h5>
-          <p>
-            <span data-en>run <code>python scripts/gen_libraries.py</code> <code>--delta-e 2.0</code>. Samples in CIELCh, round-trips
-              through each profile, keeps swatches with ΔE under the threshold. Output:
-              <code>data/libraries/&lt;profile&gt;.json</code>. Tighten with flag <code>--delta-e 1.0</code>; rebuild
-              forcibly with <code>--force</code>.</span>
-            <span data-ja><code>python scripts/gen_libraries.py</code> <code>--delta-e 2.0</code> を実行すると、CIELCh空間でサンプリングが行われ、各プロファイル間でラウンドトリップ（往復）変換演算を実行し、偏差が $\Delta E$ 閾値（しきいち）以下のカラーパッチのみを保持します。出力先は <code>data/libraries/&lt;profile&gt;.json</code> です。<code>--delta-e 1.0</code> フラグを使用して閾値をカスタマイズしたり、<code>--force</code> で強制的に再ビルド（再構築）したりすることも可能です。</span>
-            <span data-zh>執行 <code>python scripts/gen_libraries.py</code> <code>--delta-e 2.0</code> 在 CIELCh 取樣，於各描述檔做往返來回轉換演算，僅保留 ΔE
-              在偏差閾值以下的色塊。輸出至：<code>data/libraries/&lt;profile&gt;.json</code>。可以 flag  <code>--delta-e 1.0</code> 自訂閾值，以
-              <code>--force</code> 強制重建。</span>
           </p>
         </div>
       </div>
