@@ -594,6 +594,14 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
       </div>
     </div>
 
+    <div class="sec">
+      <div class="sec-label">ΔE max (round-trip safety)</div>
+      <div class="slider-row">
+        <input type="range" min="0" max="100" value="100" step="1" id="slDEmax" oninput="onFilter()" title="Hide swatches whose round-trip color drift exceeds this ΔE. Off = show all. 0.5 = mathematically equal under the profile. 1.0 = trained-eye limit. Slider at far right = off.">
+        <span class="sv2" id="vDEmax">off</span>
+      </div>
+    </div>
+
 
     <div class="divider"></div>
 
@@ -2140,6 +2148,8 @@ function filtered() {
   const kMn=+document.getElementById('slKmn').value;
   const kMx=+document.getElementById('slKmx').value;
   const tac =+document.getElementById('slTAC').value;
+  const deRaw = +document.getElementById('slDEmax').value;
+  const deMax = deRaw >= 100 ? Infinity : deRaw / 10;
   const aa  = document.getElementById('togAA').checked;
   const aaa = document.getElementById('togAAA').checked;
   const wt  = document.getElementById('togWt').checked;
@@ -2154,6 +2164,7 @@ function filtered() {
     if (s.Y<yMn||s.Y>yMx) return false;
     if (s.K<kMn||s.K>kMx) return false;
     if (s.tac>tac) return false;
+    if (typeof s.delta_e_print === 'number' && s.delta_e_print > deMax) return false;
     if (s.k_tier > curKTier) return false;
     if (curNamed === 'any' && !anyCorpusVisible(s)) return false;
     if (aa  && !s.wcag_aa)  return false;
@@ -2665,6 +2676,10 @@ function onFilter() {
   document.getElementById('vKmn').textContent = document.getElementById('slKmn').value;
   document.getElementById('vKmx').textContent = document.getElementById('slKmx').value;
   document.getElementById('vTAC').textContent = document.getElementById('slTAC').value + '%';
+  {
+    const deRaw = +document.getElementById('slDEmax').value;
+    document.getElementById('vDEmax').textContent = deRaw >= 100 ? 'off' : 'ΔE ≤ ' + (deRaw / 10).toFixed(1);
+  }
   _scheduleRender();
 }
 
