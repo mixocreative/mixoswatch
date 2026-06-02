@@ -274,7 +274,7 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
   border:1px dashed var(--border);border-radius:6px;
 }
 
-/* Text layers inside cell — sizes set via JS custom props */
+/* Text layers inside cell - sizes set via JS custom props */
 .cell-cmyk{
   position:absolute;top:0;left:0;right:0;
   font-family:var(--font-mono);font-weight:500;
@@ -432,9 +432,9 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
 <header class="topbar">
   <span class="topbar-title">CMYK Swatch Explorer</span>
   <div class="topbar-sep"></div>
-  <span class="count-tag" id="countLabel" title="How many swatches the filters currently allow.">— swatches</span>
+  <span class="count-tag" id="countLabel" title="How many swatches the filters currently allow.">- swatches</span>
   <button class="btn" onclick="resetUIToDefaults()" title="Reset all UI controls (cell size, sort, filters, naming) to the values in data/ui_defaults.json. Saved palettes are kept.">↺ Reset UI to defaults</button>
-  <div class="mode-group" id="modeGroup" role="tablist" aria-label="View mode"><button class="btn mode-btn active" id="mode-grid"     onclick="setViewMode('grid')" title="Regular swatch grid — every filtered swatch as a cell.">Grid</button><button class="btn mode-btn"        id="mode-huelight" onclick="setViewMode('huelight')" title="Hue × Lightness map. One representative cell per (hue,light) bucket — quick palette overview.">Hue × Light</button><button class="btn mode-btn"        id="mode-palettes" onclick="setViewMode('palettes')" title="Palettes mode — manage all saved palettes with per-palette actions.">Palettes</button></div>
+  <div class="mode-group" id="modeGroup" role="tablist" aria-label="View mode"><button class="btn mode-btn active" id="mode-grid"     onclick="setViewMode('grid')" title="Regular swatch grid - every filtered swatch as a cell.">Grid</button><button class="btn mode-btn"        id="mode-huelight" onclick="setViewMode('huelight')" title="Hue × Lightness map. One representative cell per (hue,light) bucket - quick palette overview.">Hue × Light</button><button class="btn mode-btn"        id="mode-palettes" onclick="setViewMode('palettes')" title="Palettes mode - manage all saved palettes with per-palette actions.">Palettes</button></div>
   <button class="btn" onclick="exportCSV()" title="Save the currently filtered swatches as a UTF-8 CSV (Excel-ready, keeps kanji).">↓ CSV</button>
   <button class="btn" onclick="exportPNG()" title="Save the currently filtered swatches as a square PNG board with title band.">↓ PNG</button>
 </header>
@@ -452,7 +452,7 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
     <div class="sec">
       <div class="sec-label">ICC profile (CMYK output)</div>
       <select class="pal-sel" id="iccSel" onchange="onProfileChange()" title="Choose how to render the colors. Each profile (FOGRA39, Japan Color, SWOP…) is a real-world press behavior. Switch to see how the SAME CMYK values look on different print conditions."></select>
-      <div id="iccStatus" style="font-size:10px;color:var(--muted);font-family:var(--font-mono);margin-top:2px" title="Active profile + how many colors it has.">—</div>
+      <div id="iccStatus" style="font-size:10px;color:var(--muted);font-family:var(--font-mono);margin-top:2px" title="Active profile + how many colors it has.">-</div>
       <div style="font-size:10px;color:var(--faint);line-height:1.45;margin-top:6px">
         To add a profile: drop the <code>.icc</code> into <code>icc/</code>,
         run <code>python scripts/gen_luts.py</code>, refresh.
@@ -525,14 +525,14 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
     <div class="sec">
       <div class="sec-label">Cell size</div>
       <div class="grid-size-presets" id="presetBtns">
-        <button class="preset-btn" data-size="20" onclick="setCell(20)" title="Tiny cells — 20px. Overview at a glance.">20</button>
-        <button class="preset-btn" data-size="32" onclick="setCell(32)" title="Small cells — 32px.">32</button>
-        <button class="preset-btn active" data-size="48" onclick="setCell(48)" title="Default cell size — 48px.">48</button>
-        <button class="preset-btn" data-size="64" onclick="setCell(64)" title="Medium cells — 64px.">64</button>
-        <button class="preset-btn" data-size="80" onclick="setCell(80)" title="Large cells — 80px.">80</button>
-        <button class="preset-btn" data-size="100" onclick="setCell(100)" title="Big cells — 100px. CMYK + hex visible.">100</button>
-        <button class="preset-btn" data-size="120" onclick="setCell(120)" title="Very big — 120px. Names start to fit.">120</button>
-        <button class="preset-btn" data-size="160" onclick="setCell(160)" title="Huge cells — 160px. Full label set readable.">160</button>
+        <button class="preset-btn" data-size="20" onclick="setCell(20)" title="Tiny cells - 20px. Overview at a glance.">20</button>
+        <button class="preset-btn" data-size="32" onclick="setCell(32)" title="Small cells - 32px.">32</button>
+        <button class="preset-btn active" data-size="48" onclick="setCell(48)" title="Default cell size - 48px.">48</button>
+        <button class="preset-btn" data-size="64" onclick="setCell(64)" title="Medium cells - 64px.">64</button>
+        <button class="preset-btn" data-size="80" onclick="setCell(80)" title="Large cells - 80px.">80</button>
+        <button class="preset-btn" data-size="100" onclick="setCell(100)" title="Big cells - 100px. CMYK + hex visible.">100</button>
+        <button class="preset-btn" data-size="120" onclick="setCell(120)" title="Very big - 120px. Names start to fit.">120</button>
+        <button class="preset-btn" data-size="160" onclick="setCell(160)" title="Huge cells - 160px. Full label set readable.">160</button>
       </div>
       <div class="grid-size-row">
         <input type="range" id="cellSlider" min="16" max="200" step="4" value="48"
@@ -554,7 +554,7 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
         <span class="sk c">C</span>
         <input type="range" min="0" max="100" value="0"   step="5" id="slCmn" oninput="onFilter()" title="Lower limit for Cyan ink (%).">
         <span class="sv" id="vCmn">0</span>
-        <span style="font-size:9px;color:var(--faint)">–</span>
+        <span style="font-size:9px;color:var(--faint)">-</span>
         <input type="range" min="0" max="100" value="100" step="5" id="slCmx" oninput="onFilter()" title="Upper limit for Cyan ink (%).">
         <span class="sv2" id="vCmx">100</span>
       </div>
@@ -562,7 +562,7 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
         <span class="sk m">M</span>
         <input type="range" min="0" max="100" value="0"   step="5" id="slMmn" oninput="onFilter()" title="Lower limit for Magenta ink (%).">
         <span class="sv" id="vMmn">0</span>
-        <span style="font-size:9px;color:var(--faint)">–</span>
+        <span style="font-size:9px;color:var(--faint)">-</span>
         <input type="range" min="0" max="100" value="100" step="5" id="slMmx" oninput="onFilter()" title="Upper limit for Magenta ink (%).">
         <span class="sv2" id="vMmx">100</span>
       </div>
@@ -570,7 +570,7 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
         <span class="sk y">Y</span>
         <input type="range" min="0" max="100" value="0"   step="5" id="slYmn" oninput="onFilter()" title="Lower limit for Yellow ink (%).">
         <span class="sv" id="vYmn">0</span>
-        <span style="font-size:9px;color:var(--faint)">–</span>
+        <span style="font-size:9px;color:var(--faint)">-</span>
         <input type="range" min="0" max="100" value="100" step="5" id="slYmx" oninput="onFilter()" title="Upper limit for Yellow ink (%).">
         <span class="sv2" id="vYmx">100</span>
       </div>
@@ -578,7 +578,7 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
         <span class="sk k">K</span>
         <input type="range" min="0" max="100" value="0"   step="5" id="slKmn" oninput="onFilter()" title="Lower limit for Black ink (%).">
         <span class="sv" id="vKmn">0</span>
-        <span style="font-size:9px;color:var(--faint)">–</span>
+        <span style="font-size:9px;color:var(--faint)">-</span>
         <input type="range" min="0" max="100" value="100" step="5" id="slKmx" oninput="onFilter()" title="Upper limit for Black ink (%).">
         <span class="sv2" id="vKmx">100</span>
       </div>
@@ -589,7 +589,7 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
     <div class="sec">
       <div class="sec-label">TAC limit</div>
       <div class="slider-row">
-        <input type="range" min="0" max="400" value="240" step="10" id="slTAC" oninput="onFilter()" title="Total ink limit (C+M+Y+K %). Real presses can usually only handle 240–320% before paper saturates. Lower = safer for press.">
+        <input type="range" min="0" max="400" value="240" step="10" id="slTAC" oninput="onFilter()" title="Total ink limit (C+M+Y+K %). Real presses can usually only handle 240-320% before paper saturates. Lower = safer for press.">
         <span class="sv2" id="vTAC">240%</span>
       </div>
     </div>
@@ -610,11 +610,11 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
       <div class="sec-label">Black (K) tier</div>
       <div class="pill-row" style="flex-direction:column;border-radius:var(--r)">
         <button class="ktier-pill" id="kt1" onclick="setKTier(1)" title="Brand zone: K (black ink) under 25%. Clean, premium, easy to reproduce. Where most logo + brand colors should live.">
-          <span class="kt-name">Tier 1 · Brand</span><span class="kt-range">K 0–25</span></button>
+          <span class="kt-name">Tier 1 · Brand</span><span class="kt-range">K 0-25</span></button>
         <button class="ktier-pill" id="kt2" onclick="setKTier(2)" title="Adds Tier 2 (K up to 50%). Secondary darks for added depth.">
-          <span class="kt-name">+ Tier 2 · Support</span><span class="kt-range">K 0–50</span></button>
-        <button class="ktier-pill active" id="kt3" onclick="setKTier(3)" title="Adds Tier 3 (K up to 100%). True charcoals, espresso, deep wine — use only when you need that depth.">
-          <span class="kt-name">+ Tier 3 · Deep</span><span class="kt-range">K 0–100</span></button>
+          <span class="kt-name">+ Tier 2 · Support</span><span class="kt-range">K 0-50</span></button>
+        <button class="ktier-pill active" id="kt3" onclick="setKTier(3)" title="Adds Tier 3 (K up to 100%). True charcoals, espresso, deep wine - use only when you need that depth.">
+          <span class="kt-name">+ Tier 3 · Deep</span><span class="kt-range">K 0-100</span></button>
       </div>
       <div style="font-size:10px;color:var(--faint);line-height:1.5;margin-top:2px">
         Low K by default; deep darks only when needed.
@@ -630,7 +630,7 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
     <div class="sec">
       <div class="sec-label">Named swatches · filter</div>
       <div class="pill-row" style="flex-direction:column;border-radius:var(--r)">
-        <button class="ktier-pill active" id="nm-all"  onclick="setNamed('all')" title="Show every swatch — no name filter.">
+        <button class="ktier-pill active" id="nm-all"  onclick="setNamed('all')" title="Show every swatch - no name filter.">
           <span class="kt-name">All swatches</span><span class="kt-range">no filter</span></button>
         <button class="ktier-pill"        id="nm-any"  onclick="setNamed('any')" title="Show only swatches that match a name in at least one checked library below.">
           <span class="kt-name">Any named</span><span class="kt-range">checked libs</span></button>
@@ -717,7 +717,7 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
         <code>data/corpora/name_corpora.json</code>. Append an entry
         (<code>{"name": "桜色", "romaji": "sakura-iro", "hex": "#FCC9D2"}</code>
         for jpn, <code>{"name": "rose", "hex": "#FF007F"}</code> for html), save,
-        refresh. No Python rebuild needed — Lab is computed in browser.
+        refresh. No Python rebuild needed - Lab is computed in browser.
       </div>
     </div>
 
@@ -728,9 +728,9 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
     <div class="grid-scroll" id="gridScroll">
       <div class="swatch-grid" id="swatchGrid"></div>
       <div class="gs-wrap" id="gsWrap">
-        <div class="gs-divider" title="Greys built via the active ICC profile from RGB-grayscale input. Reflects the printer's GCR / UCR — mixes CMY + K to hit the neutral axis.">Neutral ramp (ICC) · how the press hits a real grey</div>
+        <div class="gs-divider" title="Greys built via the active ICC profile from RGB-grayscale input. Reflects the printer's GCR / UCR - mixes CMY + K to hit the neutral axis.">Neutral ramp (ICC) · how the press hits a real grey</div>
         <div class="gs-strip" id="gsStripNeutral"></div>
-        <div class="gs-divider" style="margin-top:10px" title="Greys built with K ink only — CMYK(0,0,0,K) at K = 0,10,…,100. Shows what the press does without CMY mixing. Usually shows hue drift vs the ICC-neutral row above.">Pure K-only sweep · CMYK(0,0,0,K = 0 → 100)</div>
+        <div class="gs-divider" style="margin-top:10px" title="Greys built with K ink only - CMYK(0,0,0,K) at K = 0,10,…,100. Shows what the press does without CMY mixing. Usually shows hue drift vs the ICC-neutral row above.">Pure K-only sweep · CMYK(0,0,0,K = 0 → 100)</div>
         <div class="gs-strip" id="gsStripPureK"></div>
       </div>
       <div class="pm-wrap" id="pmWrap" style="display:none"></div>
@@ -750,19 +750,19 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
     </div>
     <div class="d-body">
       <div>
-        <div class="d-row"><span class="d-key">CMYK</span><span class="d-val" id="dCMYK">—</span></div>
-        <div class="d-row"><span class="d-key">TAC</span><span class="d-val" id="dTAC">—</span></div>
-        <div class="d-row"><span class="d-key">K tier</span><span class="d-val" id="dKTier">—</span></div>
-        <div class="d-row"><span class="d-key">ΔE round-trip</span><span class="d-val" id="dDEprint">—</span></div>
+        <div class="d-row"><span class="d-key">CMYK</span><span class="d-val" id="dCMYK">-</span></div>
+        <div class="d-row"><span class="d-key">TAC</span><span class="d-val" id="dTAC">-</span></div>
+        <div class="d-row"><span class="d-key">K tier</span><span class="d-val" id="dKTier">-</span></div>
+        <div class="d-row"><span class="d-key">ΔE round-trip</span><span class="d-val" id="dDEprint">-</span></div>
         <div class="d-row" style="margin-top:4px">
-          <span class="d-key">HEX</span><span class="d-val" id="dHex">—</span></div>
-        <div class="d-row"><span class="d-key">RGB</span><span class="d-val" id="dRGB">—</span></div>
+          <span class="d-key">HEX</span><span class="d-val" id="dHex">-</span></div>
+        <div class="d-row"><span class="d-key">RGB</span><span class="d-val" id="dRGB">-</span></div>
       </div>
       <div>
-        <div class="d-row"><span class="d-key">L* a* b*</span><span class="d-val" id="dLab">—</span></div>
-        <div class="d-row"><span class="d-key">Luminance</span><span class="d-val" id="dLum">—</span></div>
+        <div class="d-row"><span class="d-key">L* a* b*</span><span class="d-val" id="dLab">-</span></div>
+        <div class="d-row"><span class="d-key">Luminance</span><span class="d-val" id="dLum">-</span></div>
         <div>
-          <div class="d-row"><span class="d-key">Contrast</span><span class="d-val" id="dCR">—</span></div>
+          <div class="d-row"><span class="d-key">Contrast</span><span class="d-val" id="dCR">-</span></div>
           <div class="cr-bar-bg"><div class="cr-bar-fill" id="dCRFill" style="width:0"></div></div>
         </div>
       </div>
@@ -920,7 +920,7 @@ function rgb2lab(r,g,b){
   return [116*fy - 16, 500*(fx-fy), 200*(fy-fz)];
 }
 function luminance(r,g,b){
-  // WCAG relative luminance — same coefficients as Y in XYZ
+  // WCAG relative luminance - same coefficients as Y in XYZ
   const R=srgb2lin(r), G=srgb2lin(g), B=srgb2lin(b);
   return 0.2126*R + 0.7152*G + 0.0722*B;
 }
@@ -929,7 +929,7 @@ function contrast(l1,l2){
   return (a+0.05)/(b+0.05);
 }
 
-// CIEDE2000 — port of swatches.py:delta_e_2000
+// CIEDE2000 - port of swatches.py:delta_e_2000
 function deltaE2000(L1,a1,b1, L2,a2,b2){
   const C1=Math.hypot(a1,b1), C2=Math.hypot(a2,b2);
   const avgC=(C1+C2)/2;
@@ -1004,7 +1004,7 @@ function rlutLookup(rlut, R, G, B) {
   return [C*100/255, M*100/255, Y*100/255, K*100/255];
 }
 
-// -- system_name — port of swatches.py base_name -------------------------
+// -- system_name - port of swatches.py base_name -------------------------
 const HUE_NAMES = ['red','vermilion','orange','amber','yellow','lime',
                    'green','jade','teal','cyan','blue','indigo',
                    'violet','magenta'];
@@ -1031,7 +1031,7 @@ function systemName(s){
   return baseName(s.L_star, s.a_star, s.b_star);
 }
 
-// -- Round-trip ΔE — measures how well the profile holds this color ------
+// -- Round-trip ΔE - measures how well the profile holds this color ------
 let ACTIVE_RLUT = null;  // populated by rebuildAll when rlut exists
 function deltaERoundTrip(s, fwdLut, revLut) {
   // CMYK_in → RGB1 (already have via deriveSwatch)
@@ -1136,7 +1136,7 @@ function deriveSwatch(s, lut) {
 //
 // New v2 schema: { version:2, corpora:[{ id, label, primary:{field,label},
 // secondary:{field,label}|null, anchor:'hex'|'cmyk', entries:[…] }] }.
-// Each entry may carry `hex` and/or `cmyk` as anchor attributes — these
+// Each entry may carry `hex` and/or `cmyk` as anchor attributes - these
 // drive the nearest-match math, NOT the displayed color. The displayed
 // color always comes from the swatch's own LUT-computed sRGB.
 //
@@ -1281,7 +1281,7 @@ function corpusVisible(libId, sw) {
 // keyboard nav) used to call render() synchronously per event, which queued
 // up multiple full grid rebuilds for the same end state. With ~500 visible
 // cells × 4 corpus labels + a forced-layout font-fit pass, every queued
-// render added 100–300 ms of UI-thread work and chained into a visible
+// render added 100-300 ms of UI-thread work and chained into a visible
 // hang. _scheduleRender drops back-to-back calls into a single rAF, so:
 //   - the browser paints the input state change (checked radio) on the
 //     next frame BEFORE the heavy work starts,
@@ -1336,7 +1336,7 @@ function _syncMirrorFor(s) {
 // Rematch ONLY the changed library against ALL swatches, chunked so the
 // UI thread breathes between batches and the progress overlay updates.
 // Anchor flips used to call matchNearest for every corpus on every swatch
-// — that was the lag source. Now we touch one corpus's matches only.
+// - that was the lag source. Now we touch one corpus's matches only.
 async function rematchOne(libId) {
   if (!Array.isArray(DEDUP) || DEDUP.length === 0) return;
   const lib = CORPORA.libraries.find(l => l.id === libId);
@@ -1528,7 +1528,7 @@ function populateProfileSelect() {
   ICC_INDEX.profiles.forEach(p => {
     const o = document.createElement('option');
     o.value = p.filename;
-    o.textContent = p.label + ' — ' + p.filename;
+    o.textContent = p.label + ' - ' + p.filename;
     sel.appendChild(o);
   });
   // default = FOGRA39 if available
@@ -1639,9 +1639,9 @@ function _markClosest(field, deltaField, flag) {
 
 // ── state ────────────────────────────────────────────────────────────────────
 let curStep  = 10;
-let curCell  = 48;   // px — user-controlled
+let curCell  = 48;   // px - user-controlled
 let sortMode = 'hue';
-let curKTier = 3;   // default: show all K tiers — user narrows via the Tier 1/2/3 pills
+let curKTier = 3;   // default: show all K tiers - user narrows via the Tier 1/2/3 pills
 let curNamed = 'all'; // all|any|jpn|html|dic|pantone
 let curTol   = 0;     // ΔE tolerance for name display/filter (0 = closest only)
 let paletteMode = false;
@@ -1688,7 +1688,7 @@ function refreshPalUI() {
   // Always offer a "no selection" placeholder.
   const none = document.createElement('option');
   none.value = '';
-  none.textContent = palettes.length ? '— no palette selected —' : '(none — create a palette to start)';
+  none.textContent = palettes.length ? '- no palette selected -' : '(none - create a palette to start)';
   if (!activeId) none.selected = true;
   sel.appendChild(none);
   palettes.forEach(p => {
@@ -1699,7 +1699,7 @@ function refreshPalUI() {
     sel.appendChild(o);
   });
   const p = _activePalette();
-  document.getElementById('palCount').textContent = p ? p.swatches.length : '—';
+  document.getElementById('palCount').textContent = p ? p.swatches.length : '-';
   const strip = document.getElementById('palStrip');
   strip.innerHTML = '';
   if (!p) {
@@ -1712,14 +1712,14 @@ function refreshPalUI() {
   } else if (!p.swatches.length) {
     const e = document.createElement('div');
     e.className = 'pal-empty';
-    e.textContent = 'Empty — enable Select mode and click swatches.';
+    e.textContent = 'Empty - enable Select mode and click swatches.';
     strip.appendChild(e);
   } else {
     p.swatches.forEach(sw => {
       const c = document.createElement('div');
       c.className = 'pal-chip';
       c.style.background = sw.hex;
-      c.title = `C${sw.C} M${sw.M} Y${sw.Y} K${sw.K} · ${sw.hex} — click to remove`;
+      c.title = `C${sw.C} M${sw.M} Y${sw.Y} K${sw.K} · ${sw.hex} - click to remove`;
       c.onclick = () => { removeFromPalette(sw); };
       strip.appendChild(c);
     });
@@ -1843,7 +1843,7 @@ function exportPalettePNGById(id) {
   const p = palettes.find(x => x.id === id); if (!p || !p.swatches.length) { alert('Empty palette.'); return; }
   const data = p.swatches.map(s => DEDUP.find(d => _swKey(d) === _swKey(s)) || s);
   _renderSwatchPNG(data, `palette_${p.name.replace(/[^\w\-]+/g,'_')}.png`,
-                   { title: `Palette — ${p.name}` });
+                   { title: `Palette - ${p.name}` });
 }
 
 function exportPaletteJSONById(id) {
@@ -2113,7 +2113,7 @@ function exportActivePalettePNG() {
     return full || s;
   });
   _renderSwatchPNG(data, `palette_${p.name.replace(/[^\w\-]+/g,'_')}.png`,
-                   { title: `Palette — ${p.name}` });
+                   { title: `Palette - ${p.name}` });
 }
 
 // ── cell size ────────────────────────────────────────────────────────────────
@@ -2222,7 +2222,7 @@ function sorted(arr) {
 
 // ── render ───────────────────────────────────────────────────────────────────
 
-// -- _makeSwatchCell — shared between full + virtualized renderers ------
+// -- _makeSwatchCell - shared between full + virtualized renderers ------
 function _makeSwatchCell(sw, ctx) {
   const cell = document.createElement('div');
   cell.className = 'swatch-cell' + (ctx.palSet.has(_swKey(sw)) ? ' in-palette' : '');
@@ -2294,7 +2294,7 @@ function _makeSwatchCell(sw, ctx) {
 //      in that group (all-or-nothing per the user's "if one cell too
 //      small, all should disappear" rule).
 // The kanji line and the romaji line live in the same .cell-jpn class but
-// are painted at different initial font sizes (fzJpn vs fzRoma) — they
+// are painted at different initial font sizes (fzJpn vs fzRoma) - they
 // therefore land in separate groups and shrink / hide independently.
 function _fitCellTexts(root) {
   if (!root) return;
@@ -2354,7 +2354,7 @@ function render() {
   grid.style.setProperty('--gap', gap + 'px');
   grid.style.gap = gap + 'px';
 
-  // Font sizes scale with cell — CMYK now matches small DIC/HTML scale
+  // Font sizes scale with cell - CMYK now matches small DIC/HTML scale
   const fzCmyk = Math.max(5,  Math.round(cs * 0.09));
   const fzHex  = Math.max(5,  Math.round(cs * 0.10));
   const fzJpn  = Math.max(6,  Math.round(cs * 0.12));
@@ -2584,7 +2584,7 @@ function openDetail(sw) {
   document.getElementById('dTAC').textContent  = sw.tac + '%';
   document.getElementById('dKTier').textContent = `${sw.k_tier} · ${sw.k_tier_name} (K${sw.K})`;
   document.getElementById('dDEprint').textContent =
-    sw.delta_e_print == null ? '—' : sw.delta_e_print.toFixed(2);
+    sw.delta_e_print == null ? '-' : sw.delta_e_print.toFixed(2);
   document.getElementById('dHex').textContent  = sw.hex;
   document.getElementById('dRGB').textContent  = `${sw.R}  ${sw.G}  ${sw.B}`;
   document.getElementById('dLab').textContent  =
@@ -2760,12 +2760,12 @@ function exportCSV() {
   a.click();
 }
 
-// ── PNG export — square grid, no gaps ────────────────────────────────────────
+// ── PNG export - square grid, no gaps ────────────────────────────────────────
 function exportPNG() {
   const data = sorted(filtered());
   if (!data.length) { alert('No swatches to export.'); return; }
   _renderSwatchPNG(data, `cmyk_swatches_${data.length}_step${curStep}_${curCell}px.png`,
-                   { title: 'CMYK Swatch Explorer — filtered view' });
+                   { title: 'CMYK Swatch Explorer - filtered view' });
 }
 
 function _renderSwatchPNG(data, filename, opts = {}) {
@@ -2780,7 +2780,7 @@ function _renderSwatchPNG(data, filename, opts = {}) {
   canvas.height = TITLE_BAND + rows * cs;
   const ctx = canvas.getContext('2d');
 
-  // Title band — dark slate background, white text
+  // Title band - dark slate background, white text
   ctx.fillStyle = '#1F1F23';
   ctx.fillRect(0, 0, canvas.width, TITLE_BAND);
   ctx.textBaseline = 'top';
@@ -2880,7 +2880,7 @@ function _renderSwatchPNG(data, filename, opts = {}) {
   }, 'image/png');
 }
 
-// -- assignUniqueNames — port of swatches.py assign_unique_names ---------
+// -- assignUniqueNames - port of swatches.py assign_unique_names ---------
 // Group by base name, sort by delta_e_print, suffix -02, -03... on dupes
 function assignUniqueNames(swatches, baseField = 'system_name') {
   const groups = new Map();
@@ -2897,7 +2897,7 @@ function assignUniqueNames(swatches, baseField = 'system_name') {
   }
 }
 
-// -- GPL — GIMP Palette plain text -------------------------------------
+// -- GPL - GIMP Palette plain text -------------------------------------
 function buildGPL(swatches, title='palette') {
   const lines = [
     'GIMP Palette',
@@ -2915,7 +2915,7 @@ function buildGPL(swatches, title='palette') {
   return lines.join('\n') + '\n';
 }
 
-// -- ASE — Adobe Swatch Exchange binary --------------------------------
+// -- ASE - Adobe Swatch Exchange binary --------------------------------
 function buildASE(swatches, title='palette') {
   // Encode names as UTF-16BE + null terminator
   const enc = (name) => {
@@ -3037,7 +3037,7 @@ function renderHueLightMap() {
   const wrap = document.getElementById('pmWrap');
   wrap.innerHTML = '';
   const data = sorted(filtered());
-  // Pick best swatch per (hue,light) cell — lowest delta_e_print wins ties
+  // Pick best swatch per (hue,light) cell - lowest delta_e_print wins ties
   const grid = new Map();
   for (const s of data) {
     const [hb, lb] = pickHLBucket(s);
@@ -3103,7 +3103,7 @@ function renderHueLightMap() {
         palSet,
       };
       const built = _makeSwatchCell(s, ctx);
-      built.title = `${s.system_name || ''} · ${s.hex} · ΔE ${s.delta_e_print?.toFixed(2) ?? '—'}`;
+      built.title = `${s.system_name || ''} · ${s.hex} · ΔE ${s.delta_e_print?.toFixed(2) ?? '-'}`;
       container.appendChild(built);
     }
   }
@@ -3305,7 +3305,7 @@ function exportActivePalettePNGSized() {
   if (!p || !p.swatches.length) { alert('Active palette is empty.'); return; }
   const sw = paletteSwatchesFromActive();
   const sz = _palettePngSize();
-  _renderPaletteLabelledPNG(sw, `palette_${p.name.replace(/[^\w\-]+/g,'_')}_${sz}.png`, sz, `Palette — ${p.name}`);
+  _renderPaletteLabelledPNG(sw, `palette_${p.name.replace(/[^\w\-]+/g,'_')}_${sz}.png`, sz, `Palette - ${p.name}`);
 }
 function exportActivePalettePNGPure() {
   const p = _activePalette();
@@ -3324,7 +3324,7 @@ function _palSwatchesById(id) {
 function exportPalettePNGSizedById(id) {
   const r = _palSwatchesById(id); if (!r) { alert('Empty palette.'); return; }
   const sz = _palettePngSize();
-  _renderPaletteLabelledPNG(r.sw, `palette_${r.p.name.replace(/[^\w\-]+/g,'_')}_${sz}.png`, sz, `Palette — ${r.p.name}`);
+  _renderPaletteLabelledPNG(r.sw, `palette_${r.p.name.replace(/[^\w\-]+/g,'_')}_${sz}.png`, sz, `Palette - ${r.p.name}`);
 }
 function exportPalettePNGPureById(id) {
   const r = _palSwatchesById(id); if (!r) { alert('Empty palette.'); return; }
@@ -3359,14 +3359,14 @@ async function _buildPaletteZip(palette, swatches) {
     entries.push({ name: fn, data });
   }
 
-  // 2. manifest.txt — header + columns (mirror swatches.py:1078–1093)
+  // 2. manifest.txt - header + columns (mirror swatches.py:1078-1093)
   const profile = (typeof ACTIVE_PROFILE !== 'undefined' && ACTIVE_PROFILE)
     ? ACTIVE_PROFILE.filename
     : (typeof LIBRARY_META !== 'undefined' && LIBRARY_META) ? LIBRARY_META.icc_profile : 'unknown';
   const dEthr = (typeof LIBRARY_META !== 'undefined' && LIBRARY_META)
     ? LIBRARY_META.delta_e_threshold : null;
   const lines = [];
-  lines.push(`# Palette manifest — ${palette.name}`);
+  lines.push(`# Palette manifest - ${palette.name}`);
   lines.push(`# ICC profile     : ${profile}`);
   if (dEthr != null) lines.push(`# deltaE threshold: ${dEthr}`);
   lines.push(`# Total swatches  : ${swatches.length}`);
@@ -3377,12 +3377,12 @@ async function _buildPaletteZip(palette, swatches) {
     const hex   = sw.hex.toUpperCase();
     const rgb   = `RGB(${String(sw.R).padStart(3)},${String(sw.G).padStart(3)},${String(sw.B).padStart(3)})`;
     const cmyk  = `CMYK(${String(sw.C).padStart(3)},${String(sw.M).padStart(3)},${String(sw.Y).padStart(3)},${String(sw.K).padStart(3)})%`;
-    const dE    = sw.delta_e_print == null ? '   —' : `dE=${(+sw.delta_e_print).toFixed(2)}`;
+    const dE    = sw.delta_e_print == null ? '   -' : `dE=${(+sw.delta_e_print).toFixed(2)}`;
     lines.push(`${name} | ${hex} | ${rgb} | ${cmyk} | ${dE}`);
   }
   entries.push({ name: 'manifest.txt', data: enc.encode(lines.join('\n') + '\n') });
 
-  // 3. manifest.csv — same columns as swatches.py (l.1095–1102)
+  // 3. manifest.csv - same columns as swatches.py (l.1095-1102)
   const csvRows = [['name','hex','r','g','b','c','m','y','k','delta_e','filename']];
   for (const sw of swatches) {
     const hex = sw.hex.replace('#','').toLowerCase();
@@ -3400,7 +3400,7 @@ async function _buildPaletteZip(palette, swatches) {
   }).join(',')).join('\n') + '\n';
   entries.push({ name: 'manifest.csv', data: enc.encode(csvText) });
 
-  // 4. swatches.json — mirror swatches.py output shape
+  // 4. swatches.json - mirror swatches.py output shape
   const jsObj = {
     icc_profile: profile,
     delta_e_threshold: dEthr,
@@ -3445,7 +3445,7 @@ window.addEventListener('load', async () => {
   loadPalettes();
   refreshPalUI();
   if (location.protocol === 'file:') {
-    const msg = 'Opened via file:// — browsers block fetch() from local files.\n\n' +
+    const msg = 'Opened via file:// - browsers block fetch() from local files.\n\n' +
                 'Start the local server, then open the page through it:\n' +
                 '  Windows:  double-click run.bat\n' +
                 '  Mac/Linux: bash run.sh\n\n' +
