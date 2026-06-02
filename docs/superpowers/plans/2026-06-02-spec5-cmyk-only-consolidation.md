@@ -65,11 +65,17 @@ cd S:/mixoswatch && git cherry-pick b290e2a
 ```
 Expected: `[spec5-cmyk-only <new-sha>] fix(landing): honest framing for ICC math claim (Fix A)`.
 
-- [ ] **Step 7: Cherry-pick `ee2236f` (Spec 5 design doc) + `b13928c` (Spec 5 plan doc) onto new branch**
+- [ ] **Step 7: Cherry-pick `ee2236f` (Spec 5 design doc) + the Spec 5 plan doc onto new branch**
 
-Run:
+First, find the plan commit SHA on the source branch:
 ```bash
-cd S:/mixoswatch && git cherry-pick ee2236f b13928c
+cd S:/mixoswatch && git log spec1-landing-honesty --oneline | grep "Spec 5 implementation plan" | head -1
+```
+Note the SHA (call it `<PLAN_SHA>`).
+
+Then cherry-pick both:
+```bash
+cd S:/mixoswatch && git cherry-pick ee2236f <PLAN_SHA>
 ```
 Expected: two successful cherry-pick lines printed.
 
