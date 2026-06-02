@@ -710,8 +710,7 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
       <div style="font-size:10.5px;color:var(--text);line-height:1.55">
         <b>New ICC profile?</b> Drop the <code>.icc</code> / <code>.icm</code>
         into <code>icc/</code> then run
-        <code>python scripts/gen_luts.py</code> AND
-        <code>python scripts/gen_libraries.py</code>, then refresh.<br><br>
+        <code>python scripts/gen_luts.py</code>, then refresh.<br><br>
 
         <b>New Japanese / HTML name?</b> Edit
         <code>data/corpora/name_corpora.json</code>. Append an entry
@@ -3400,7 +3399,7 @@ async function _buildPaletteZip(palette, swatches) {
   }).join(',')).join('\n') + '\n';
   entries.push({ name: 'manifest.csv', data: enc.encode(csvText) });
 
-  // 4. swatches.json - mirror swatches.py output shape
+  // 4. palette.json - structured swatch data
   const jsObj = {
     icc_profile: profile,
     delta_e_threshold: dEthr,
@@ -3420,7 +3419,7 @@ async function _buildPaletteZip(palette, swatches) {
       html_name: s.html_name || null,
     })),
   };
-  entries.push({ name: 'swatches.json', data: enc.encode(JSON.stringify(jsObj, null, 2)) });
+  entries.push({ name: 'palette.json', data: enc.encode(JSON.stringify(jsObj, null, 2)) });
 
   return buildZip(entries);
 }
