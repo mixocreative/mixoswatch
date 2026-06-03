@@ -1,0 +1,17 @@
+{
+  "海棠红": {"en": "crabapple red",    "ja": "海棠紅"},
+  "桃红":   {"en": "peach blossom",    "ja": "桃紅"},
+  "翠绿":   {"en": "emerald green",    "ja": "翠緑"},
+  "象牙白": {"en": "ivory white",      "ja": "象牙色"},
+  "玫瑰红": {"en": "rose red",         "ja": "薔薇色"},
+  "孔雀蓝": {"en": "peacock blue",     "ja": "孔雀藍"},
+  "孔雀绿": {"en": "peacock green",    "ja": "孔雀緑"},
+  "竹绿":   {"en": "bamboo green",     "ja": "竹緑"},
+  "群青":   {"en": "ultramarine",      "ja": "群青"},
+  "靛青":   {"en": "indigo blue",      "ja": "藍青"},
+  "朱红":   {"en": "vermilion red",    "ja": "朱紅"},
+  "大红":   {"en": "crimson red",      "ja": "大紅"},
+  "金黄":   {"en": "golden yellow",    "ja": "金黄"},
+  "藤黄":   {"en": "gamboge yellow",   "ja": "藤黄"},
+  "胭脂红": {"en": "carmine",          "ja": "臙脂紅"}
+}
