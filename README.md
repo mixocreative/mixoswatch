@@ -1,107 +1,232 @@
-# CMYK Swatch Tools
+# mixoswatch
 
-Two browser tools for designing print-safe colors against real ICC profiles, plus a small Python toolchain that prepares the data they consume.
+One browser tool for designing print-safe colors against real ICC profiles, plus a small Python script that prepares the lookup tables it consumes. Built for designers who work across **2D commercial print** and **3D color printing** (Mimaki 3DUJ, Stratasys J55, Cura material libraries, etc.).
 
-- **`app/cmyk-explorer.html`** — live grid of every CMYK value at a chosen step, rendered through a CMYK ICC profile of your choice. Filter by total area coverage, by named-color closeness (Japanese traditional + W3C CSS names), build palettes, export ASE / GPL / PNG / JSON.
-- **`app/3d-explorer.html`** — curated, pre-filtered library per profile. Every swatch has already passed a sRGB → CMYK → sRGB round-trip with ΔE ≤ threshold. Default sort is "safety" (lowest ΔE first). Pure-K neutral ramp included for 3D-print K-only printing.
-
-A short zen landing at `index.html` links to both.
+- **`app/mixo-swatch.html`** (Mixo Swatch) · live grid of every CMYK value at a chosen step, rendered through a CMYK ICC profile of your choice. Filter by total area coverage, by named-color closeness (Japanese traditional + Chinese traditional + W3C CSS), by **ΔE max** for round-trip safety, build palettes, export ASE / GPL / PNG / JSON / ZIP.
+- **`index.html`** · zen landing with live interactive demos for every sidebar control, tri-lingual (EN / 日本語 / 繁中).
 
 ## Why
 
-LLM color tools default to naive `R = 255 (1 − C/100)(1 − K/100)` math, which is what every web "CMYK picker" does. That math is fiction: the same CMYK ink mix prints differently on a Japanese coated press, a US web coated, a FOGRA39 sheet, and a Mimaki 3DUJ. These tools call real ICC profiles via a precomputed LUT pipeline so the displayed sRGB actually matches what the press would output.
+LLM color tools default to naive `R = 255 × (1 − C/100) × (1 − K/100)` math, which is what every web "CMYK picker" does. That math is fiction. The same CMYK ink mix prints differently on a Japanese coated press, a US web coated, a FOGRA39 sheet, and a Mimaki 3DUJ. mixoswatch routes every color through a real ICC profile (the same files prepress tools and FOSS RIPs load), so what you see on screen matches what the press will actually produce. No surprises at the proof stage.
+
+For full color theory + pipeline rationale see **`ARCHITECTURE.md`** (the contract document).
 
 ## Repository layout
 
 ```
-.
-├── index.html                    zen landing
+mixoswatch/
+├── index.html                      Zen landing (tri-lingual, live demos)
 ├── app/
-│   ├── cmyk-explorer.html        live CMYK explorer
-│   └── 3d-explorer.html          curated library viewer
+│   └── mixo-swatch.html            Mixo Swatch (live CMYK explorer)
+├── scripts/
+│   └── gen_luts.py                 Build CMYK↔sRGB lookup tables from ICCs
 ├── data/
 │   ├── corpora/
-│   │   └── name_corpora.json     Japanese + W3C named-color dictionary (committed)
-│   ├── luts/                     generated, gitignored
-│   │   ├── index.json            profile manifest
-│   │   ├── *.lut                 forward CMYK → sRGB (17⁴, ~250 KB each)
-│   │   └── *.rcmyk.lut           reverse sRGB → CMYK (17³, ~20 KB each)
-│   └── libraries/                generated, gitignored
-│       ├── library_index.json    library manifest
-│       └── *.json                per-profile curated library
-├── icc/                          gitignored: user supplies their own .icc / .icm
-├── scripts/
-│   ├── gen_luts.py               build the LUTs and luts/index.json
-│   └── gen_libraries.py          build the curated libraries and library_index.json
-├── ARCHITECTURE.md               full color theory + pipeline rationale
-├── run.bat                       Windows local server launcher
-└── run.sh                        macOS / Linux local server launcher
+│   │   └── name_corpora.json       Named-color dictionaries (committed)
+│   ├── ui_defaults.json            Factory defaults (committed)
+│   └── luts/                       Generated, gitignored
+│       ├── index.json              Profile manifest
+│       ├── *.lut                   Forward CMYK → sRGB (17⁴, ~250 KB each)
+│       └── *.rcmyk.lut             Reverse sRGB → CMYK (17³, ~20 KB each)
+├── icc/                            Gitignored: you supply your own .icc / .icm
+├── run.bat / run.sh                Local HTTP server launcher
+├── README.md                       This file
+├── ARCHITECTURE.md                 Full pipeline + rationale
+└── .gitignore
 ```
 
-## ICC profiles are not included
+## ICC profiles are not bundled
 
-Adobe / ECI / Mimaki / Fogra all distribute their CMYK ICC profiles under licenses that do not allow redistribution. So `icc/` is `.gitignore`d and you bring your own.
+Adobe / ECI / Mimaki / Fogra all distribute their CMYK ICC profiles under licenses that do not allow redistribution. `icc/` is `.gitignore`d and you bring your own.
 
-Free, common options:
+Free, common sources:
 
 | Profile | Where to get it |
 |---|---|
-| `CoatedFOGRA39.icc` (recommended baseline) | [Adobe ICC Profiles bundle](https://www.adobe.com/support/downloads/iccprofiles/) — extract, find `CMYK Profiles/CoatedFOGRA39.icc` |
+| `CoatedFOGRA39.icc` (recommended baseline) | [Adobe ICC Profiles bundle](https://www.adobe.com/support/downloads/iccprofiles/) → extract → `CMYK Profiles/CoatedFOGRA39.icc` |
 | `ISOcoated_v2_eci.icc` | [ECI offset profiles](https://www.eci.org/doku.php?id=en:colourstandards:offset) |
 | `JapanColor2001Coated.icc` | Adobe ICC Profiles bundle |
 | `USWebCoatedSWOP.icc` | Adobe ICC Profiles bundle |
-| Mimaki 3DUJ profile | Mimaki Profile Master 3 (MPM3), or request from Mimaki technical support |
+| `Mimaki 3DUJ` profile | Mimaki Profile Master 3 (MPM3), or by request from Mimaki support |
 
 Drop them into `icc/` and run the build commands below.
 
-## Setup
+---
+
+## Quickstart
 
 ```bash
-# 1. Install Python dependency (Pillow ships LittleCMS bindings).
+# 1. Install the only Python dependency.
 python -m pip install --upgrade Pillow
 
 # 2. Drop one or more CMYK ICC profiles into icc/.
 
-# 3. Build the lookup tables the HTML uses to render CMYK → sRGB.
+# 3. Build the lookup tables the HTML uses to render CMYK ↔ sRGB.
 python scripts/gen_luts.py
 
-# 4. Build the curated print-safe libraries the 3D explorer browses.
-python scripts/gen_libraries.py
-
-# 5. Serve the folder locally. Browsers block fetch() from file:// .
+# 4. Serve the folder locally (browsers block fetch() from file://).
 ./run.sh        # macOS / Linux
 run.bat         # Windows
 ```
 
-Then open <http://localhost:8000/> in a browser.
+Open <http://localhost:8765/> in a browser.
 
-## Common tasks
+---
 
-**Add a profile.** Drop the `.icc` into `icc/`. Re-run `python scripts/gen_luts.py` and `python scripts/gen_libraries.py`. Refresh the page.
+## Python pipeline in detail
 
-**Add a named color, or a whole new corpus.** Edit `data/corpora/name_corpora.json` (v2 schema — see `ARCHITECTURE.md §7`). Append an entry to an existing corpus, or add a new corpus block under `corpora`. Each entry may carry `hex` and/or `cmyk` as match *anchors* (not display values — the displayed color always comes from the ICC-routed sRGB). Refresh the browser; no Python rebuild needed. The sidebar's per-library "Naming" controls let you pick which name field to show on swatches and which attribute drives the match.
+One script. Uses Pillow's `ImageCms` binding to LittleCMS. Same color engine many prepress tools and FOSS RIPs share, so the numbers we sample match what a real RIP would emit at the same intent.
 
-**Change the factory defaults.** `data/ui_defaults.json` carries the values both tools apply on first run and on **↺ Reset UI to defaults**. The tools layer the user's last-session state from browser localStorage on top — so the reset button restores the JSON defaults while leaving your saved palettes untouched. The "no palette selected" state is also persisted.
+### `scripts/gen_luts.py` · lookup-table generator
 
-**Rebuild everything from scratch.** `python scripts/gen_luts.py --force && python scripts/gen_libraries.py --force`.
+**What it does.** Walks `icc/`, finds every CMYK profile (RGB-only working spaces like AdobeRGB are auto-skipped), and emits two binary lookup tables per profile:
 
-**Loosen / tighten the curated library.** `python scripts/gen_libraries.py --delta-e 1.5`. Smaller ΔE = stricter, fewer swatches. Default 2.0.
+| File | Direction | Grid | Size | Used by |
+|---|---|---|---|---|
+| `data/luts/<profile>.lut` | CMYK → sRGB | 17⁴ = 83,521 nodes | ~250 KB | Mixo Swatch (cell rendering) |
+| `data/luts/<profile>.rcmyk.lut` | sRGB → CMYK | 17³ = 4,913 nodes | ~20 KB | Mixo Swatch (round-trip safety / ΔE max filter) |
 
-**Use ArgyllCMS xicclu as an extra in-gamut filter.** Install ArgyllCMS, ensure `xicclu` is on `PATH`, then `python scripts/gen_libraries.py --argyll`.
+Plus a manifest the HTML reads to populate its profile dropdown:
+
+```json
+// data/luts/index.json
+{
+  "format": "icc.index/v1",
+  "grid": 17,
+  "lut_header_bytes": 16,
+  "profiles": [
+    { "filename": "CoatedFOGRA39.icc",
+      "label": "Tier 3 · Coated FOGRA39",
+      "kind": "cmyk",
+      "lut": "luts/CoatedFOGRA39.lut",
+      "lut_bytes": 250579 }
+  ]
+}
+```
+
+**Flags.**
+
+| Flag | Effect |
+|---|---|
+| `--force` | Rebuild every LUT even when its timestamp is newer than the source ICC |
+| `<filename.icc>` | Build just one profile by name (positional argument) |
+
+**LUT binary format.** Documented in `ARCHITECTURE.md §4.2`. Magic `LUT4` for forward, `CMK4` for reverse, 16-byte header, little-endian, row-major RGB / CMYK triples. The browser tool interpolates the 16 surrounding LUT corners quadrilinearly for arbitrary CMYK inputs.
+
+### Common operations
+
+```bash
+# Add a new profile end-to-end:
+cp ~/Downloads/MyMimaki3DUJ.icc icc/
+python scripts/gen_luts.py
+
+# Rebuild everything from scratch (after a project pull or schema bump):
+python scripts/gen_luts.py --force
+
+# Build only one profile (after editing just one ICC):
+python scripts/gen_luts.py CoatedFOGRA39.icc
+```
+
+---
+
+## Editing the named-color corpora (no rebuild needed)
+
+`data/corpora/name_corpora.json` ships with three corpora. Add more by editing the JSON; refresh the browser; done. No Python step.
+
+| ID | Source | Anchor | Entries |
+|---|---|---|---|
+| `jp-trad` | NipponColors.com Japanese traditional colors | hex | 250 |
+| `html` | W3C CSS Color Module Level 4 canonical named colors | hex | 148 |
+| `zh-trad` | Chinese traditional color corpus | hex | 526 |
+
+Schema (v3) lives in `ARCHITECTURE.md §6.1`. The short version:
+
+```json
+{
+  "version": 3,
+  "schema_rev": "3.0",
+  "corpora": [
+    {
+      "id": "jp-trad",
+      "label": { "en": "Japanese traditional", "ja": "日本の伝統色", "zh": "日本傳統色" },
+      "fields": [
+        { "id": "name_ja", "label": { "en": "kanji",  "ja": "漢字", "zh": "漢字" } },
+        { "id": "romaji",  "label": { "en": "romaji", "ja": "ローマ字", "zh": "羅馬字" } },
+        { "id": "name_en", "label": { "en": "english","ja": "英語", "zh": "英語" } }
+      ],
+      "default_display": "name_ja",
+      "anchor": "hex",
+      "entries": [
+        {
+          "name_ja": "桜色", "name_en": "Sakura Pink", "name_zh": "櫻花色",
+          "romaji": "sakura-iro", "hex": "#FCC9D2"
+        }
+      ]
+    }
+  ]
+}
+```
+
+Each entry carries `name_en`, `name_ja`, and `name_zh`. Empty slots fall back gracefully (see `ARCHITECTURE.md §6.1`). Each entry can also carry `hex` and/or `cmyk` as match anchors (not display values). The browser UI lets the user flip the per-library anchor between `hex` and `cmyk` live.
+
+---
+
+## Factory UI defaults (`data/ui_defaults.json`)
+
+First-run UI state lives in this JSON. The tool reads it on load and on "Reset to defaults". User session state layers on top via `localStorage` (key: `cmykUIState_v2`), so the reset restores the JSON values while leaving saved palettes intact.
+
+Edit this file when you want your team to start with non-default values (default profile, default cell size, default sort, default ΔE max, per-corpus display + anchor, etc.). Full key reference in `ARCHITECTURE.md §6.5`.
+
+**v1 migration.** If a browser has a `cmykUIState_v1` key from a pre-Spec-6 session, the tool migrates it to v2 on first load (reshaping `corpora_prefs` keys from `jpn`/`html` to `jp-trad`/`html`/`zh-trad`). The v1 key is preserved for downgrade.
+
+---
+
+## Running locally
+
+```bash
+./run.sh        # macOS / Linux
+run.bat         # Windows
+```
+
+Both call `python -m http.server 8765` from the project root and open the landing page in your default browser. The HTML fetches JSON and LUT files via `fetch()`, so `file://` will not work (browser CORS/security). If you prefer a different server (`npx serve`, nginx, etc.) any plain static-file host works.
+
+---
 
 ## Hosting on GitHub Pages
 
-The HTML tools are static and use only `fetch()` from disk-relative paths, so the entire repo is GitHub-Pages-ready as-is once you have built `data/luts/` and `data/libraries/`. Because both are gitignored, you have two choices:
+The HTML tool is static and references data via disk-relative `fetch()` paths, so the entire repo is GitHub-Pages-ready as-is once you have built `data/luts/`. The folder is gitignored by default; pick one:
 
-1. **Public LUTs, public libraries.** Build locally, then commit `data/luts/*.lut`, `data/luts/index.json`, `data/libraries/*.json`, `data/libraries/library_index.json` with an explicit `git add -f` so they ship to GH Pages. ICC files stay out.
-2. **Self-host instead.** Run `./run.sh` or `run.bat` locally; never push the data folder.
+1. **Commit the LUT folder.** Build locally, then force-add the artifacts:
+   ```bash
+   git add -f data/luts/*.lut data/luts/*.rcmyk.lut data/luts/index.json
+   git commit -m "ship LUT artifacts for GitHub Pages"
+   git push
+   ```
+   ICC files stay out. LUTs are derived sampling results, not the source profile.
+2. **Self-host.** Run `./run.sh` / `run.bat` locally; never push the data folder.
 
-Option (1) is fine because LUTs and libraries do not contain the ICC profile binary, only sampled output points.
+---
+
+## Performance notes
+
+| Operation | Target | How |
+|---|---|---|
+| Initial page load | < 200 ms | LUT lazy-fetched, corpora ~36 KB |
+| Profile switch, step 10 | < 200 ms | LUT fetch + derive 14k swatches in chunks |
+| Profile switch, step 5 | < 1.5 s | rAF-batched derive + visible progress bar |
+| Slider drag | rAF-coalesced | One `render()` per animation frame max |
+| Scroll | 60 fps | Virtualized grid (~500 cells in DOM at a time) |
+| PNG export 4096² | ~2 s | One-shot canvas, no virtualization |
+| ZIP export (50 swatches) | < 200 ms | Pure JS, STORE-only |
+
+Detailed budget + the lag-prevention rationale (rAF-coalesced render scheduler, chunked match passes, etc.) in `ARCHITECTURE.md §11`.
+
+---
 
 ## Architecture
 
-`ARCHITECTURE.md` carries the full rationale: color theory (CMYK / Lab / LCh, ΔE variants, GCR/UCR, K-tier philosophy, gamut), the LUT binary format (magic header, quadrilinear interpolation pseudocode), the round-trip safety gate, the descriptive naming system, the HTML pipeline (lifecycle, virtualization, two greyscale strips, view modes, palette format), the performance budget, and a step-by-step rebuild guide. Read it if you want to reproduce, extend, or audit the toolchain.
+`ARCHITECTURE.md` is the full pipeline contract: color theory (CMYK / Lab / LCh, ΔE variants, GCR / UCR, K-tier philosophy, gamut, Bradford D50/D65 CAT), the LUT binary format (magic header, quadrilinear interpolation pseudocode), the round-trip safety gate, the corpora schema v3 (tri-lingual fields, dynamic library IDs, per-(lib,entry) tiebreak), the HTML pipeline (lifecycle, virtualization, two greyscale strips, view modes, palette format), per-profile TAC defaults, and a step-by-step rebuild guide. Read it if you want to reproduce, extend, or audit the toolchain.
 
 ## License
 
-Code: MIT. ICC profiles are not redistributed.
+Code: MIT. ICC profiles, DIC color guides, and Pantone are not redistributed.

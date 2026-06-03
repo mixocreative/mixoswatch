@@ -10,7 +10,10 @@
       "lut": "data/luts/CoatedFOGRA39.lut",
       "rlut": "data/luts/CoatedFOGRA39.rcmyk.lut",
       "lut_bytes": 250579,
-      "rlut_bytes": 19668
+      "rlut_bytes": 19668,
+      "tac_recommended": 330,
+      "tac_max": 350,
+      "paper": "coated"
     },
     {
       "filename": "JapanColor2001Uncoated.icc",
@@ -19,7 +22,10 @@
       "lut": "data/luts/JapanColor2001Uncoated.lut",
       "rlut": "data/luts/JapanColor2001Uncoated.rcmyk.lut",
       "lut_bytes": 250579,
-      "rlut_bytes": 19668
+      "rlut_bytes": 19668,
+      "tac_recommended": 260,
+      "tac_max": 290,
+      "paper": "uncoated"
     },
     {
       "filename": "JapanColor2002Newspaper.icc",
@@ -28,7 +34,10 @@
       "lut": "data/luts/JapanColor2002Newspaper.lut",
       "rlut": "data/luts/JapanColor2002Newspaper.rcmyk.lut",
       "lut_bytes": 250579,
-      "rlut_bytes": 19668
+      "rlut_bytes": 19668,
+      "tac_recommended": 240,
+      "tac_max": 260,
+      "paper": "newsprint"
     },
     {
       "filename": "JapanWebCoated.icc",
@@ -37,7 +46,10 @@
       "lut": "data/luts/JapanWebCoated.lut",
       "rlut": "data/luts/JapanWebCoated.rcmyk.lut",
       "lut_bytes": 250579,
-      "rlut_bytes": 19668
+      "rlut_bytes": 19668,
+      "tac_recommended": 300,
+      "tac_max": 320,
+      "paper": "coated-web"
     },
     {
       "filename": "JapanColor2001Coated.icc",
@@ -46,7 +58,10 @@
       "lut": "data/luts/JapanColor2001Coated.lut",
       "rlut": "data/luts/JapanColor2001Coated.rcmyk.lut",
       "lut_bytes": 250579,
-      "rlut_bytes": 19668
+      "rlut_bytes": 19668,
+      "tac_recommended": 350,
+      "tac_max": 350,
+      "paper": "coated"
     },
     {
       "filename": "USWebUncoated.icc",
@@ -55,7 +70,10 @@
       "lut": "data/luts/USWebUncoated.lut",
       "rlut": "data/luts/USWebUncoated.rcmyk.lut",
       "lut_bytes": 250579,
-      "rlut_bytes": 19668
+      "rlut_bytes": 19668,
+      "tac_recommended": 260,
+      "tac_max": 290,
+      "paper": "uncoated"
     },
     {
       "filename": "USSheetfedUncoated.icc",
@@ -64,7 +82,10 @@
       "lut": "data/luts/USSheetfedUncoated.lut",
       "rlut": "data/luts/USSheetfedUncoated.rcmyk.lut",
       "lut_bytes": 250579,
-      "rlut_bytes": 19668
+      "rlut_bytes": 19668,
+      "tac_recommended": 260,
+      "tac_max": 290,
+      "paper": "uncoated"
     },
     {
       "filename": "USWebCoatedSWOP.icc",
@@ -73,7 +94,10 @@
       "lut": "data/luts/USWebCoatedSWOP.lut",
       "rlut": "data/luts/USWebCoatedSWOP.rcmyk.lut",
       "lut_bytes": 250579,
-      "rlut_bytes": 19668
+      "rlut_bytes": 19668,
+      "tac_recommended": 300,
+      "tac_max": 320,
+      "paper": "coated-web"
     },
     {
       "filename": "USSheetfedCoated.icc",
@@ -82,7 +106,10 @@
       "lut": "data/luts/USSheetfedCoated.lut",
       "rlut": "data/luts/USSheetfedCoated.rcmyk.lut",
       "lut_bytes": 250579,
-      "rlut_bytes": 19668
+      "rlut_bytes": 19668,
+      "tac_recommended": 320,
+      "tac_max": 340,
+      "paper": "coated"
     },
     {
       "filename": "CoatedFOGRA27.icc",
@@ -91,7 +118,10 @@
       "lut": "data/luts/CoatedFOGRA27.lut",
       "rlut": "data/luts/CoatedFOGRA27.rcmyk.lut",
       "lut_bytes": 250579,
-      "rlut_bytes": 19668
+      "rlut_bytes": 19668,
+      "tac_recommended": 320,
+      "tac_max": 340,
+      "paper": "coated"
     },
     {
       "filename": "WebCoatedFOGRA28.icc",
@@ -100,7 +130,10 @@
       "lut": "data/luts/WebCoatedFOGRA28.lut",
       "rlut": "data/luts/WebCoatedFOGRA28.rcmyk.lut",
       "lut_bytes": 250579,
-      "rlut_bytes": 19668
+      "rlut_bytes": 19668,
+      "tac_recommended": 300,
+      "tac_max": 320,
+      "paper": "coated-web"
     },
     {
       "filename": "UncoatedFOGRA29.icc",
@@ -109,7 +142,10 @@
       "lut": "data/luts/UncoatedFOGRA29.lut",
       "rlut": "data/luts/UncoatedFOGRA29.rcmyk.lut",
       "lut_bytes": 250579,
-      "rlut_bytes": 19668
+      "rlut_bytes": 19668,
+      "tac_recommended": 260,
+      "tac_max": 290,
+      "paper": "uncoated"
     }
   ]
 }

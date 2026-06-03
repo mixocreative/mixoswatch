@@ -42,7 +42,6 @@ cmyk-current-state.png
 .playwright-mcp/
 .idea/
 .vscode/
-_verify/
 swatches/
 skills-lock.json
 CLAUDE.md

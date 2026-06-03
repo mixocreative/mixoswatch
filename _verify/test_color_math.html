@@ -1,0 +1,57 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Color math test</title>
+<style>body{font-family:monospace;background:#111;color:#eee;padding:16px}
+.pass{color:#7fffa0}.fail{color:#ff7f7f}.warn{color:#ffd966}</style>
+</head><body>
+<h1>Bradford D65 / D50 regression test</h1>
+<pre id="out">Loading...</pre>
+<script>
+// Duplicate of math functions in app/mixo-swatch.html (kept in sync manually).
+function srgb2lin(u){u/=255;return u<=0.04045?u/12.92:Math.pow((u+0.055)/1.055,2.4);}
+function rgb2xyz(r,g,b){
+  const R=srgb2lin(r),G=srgb2lin(g),B=srgb2lin(b);
+  return [0.4124564*R+0.3575761*G+0.1804375*B,
+          0.2126729*R+0.7151522*G+0.0721750*B,
+          0.0193339*R+0.1191920*G+0.9503041*B];
+}
+const WP_D65={Xn:0.95047,Yn:1.0,Zn:1.08883};
+const WP_D50={Xn:0.96422,Yn:1.0,Zn:0.82521};
+const M_BRAD=[[1.0478112,0.0228866,-0.0501270],
+              [0.0295424,0.9904844,-0.0170491],
+              [-0.0092345,0.0150436,0.7521316]];
+function f_(t){return t>0.008856?Math.cbrt(t):(7.787*t+16/116);}
+function _xyzToLab(X,Y,Z,wp){
+  const fx=f_(X/wp.Xn),fy=f_(Y/wp.Yn),fz=f_(Z/wp.Zn);
+  return [116*fy-16,500*(fx-fy),200*(fy-fz)];
+}
+function rgb2lab_d65(r,g,b){const[X,Y,Z]=rgb2xyz(r,g,b);return _xyzToLab(X,Y,Z,WP_D65);}
+function rgb2lab_d50(r,g,b){
+  const[X,Y,Z]=rgb2xyz(r,g,b);const M=M_BRAD;
+  return _xyzToLab(M[0][0]*X+M[0][1]*Y+M[0][2]*Z,
+                   M[1][0]*X+M[1][1]*Y+M[1][2]*Z,
+                   M[2][0]*X+M[2][1]*Y+M[2][2]*Z, WP_D50);
+}
+function deltaE76(L1,a1,b1,L2,a2,b2){
+  return Math.sqrt((L1-L2)**2+(a1-a2)**2+(b1-b2)**2);
+}
+async function run(){
+  const out = document.getElementById('out');
+  const truth = await fetch('color_math_truth.json').then(r=>r.json());
+  let pass = 0, fail = 0, lines = [];
+  const TOL_D50 = 1.5;  // Pillow Lab quantization adds noise vs analytic Bradford
+  const TOL_D65 = 0.01; // D65 truth is analytic (same formula) - only FP rounding noise expected
+  for (const row of truth.rows) {
+    const [r,g,b] = row.rgb;
+    const myD50 = rgb2lab_d50(r,g,b);
+    const myD65 = rgb2lab_d65(r,g,b);
+    const dE50 = deltaE76(...myD50, ...row.lab_d50);
+    const dE65 = deltaE76(...myD65, ...row.lab_d65);
+    const ok50 = dE50 <= TOL_D50;
+    const ok65 = dE65 <= TOL_D65;
+    if (ok50 && ok65) pass++; else fail++;
+    lines.push(`${row.hex}  D50 dE=${dE50.toFixed(3)} ${ok50?'PASS':'FAIL'}  D65 dE=${dE65.toFixed(3)} ${ok65?'PASS':'FAIL'}`);
+  }
+  out.innerHTML = `<span class="${fail?'fail':'pass'}">${pass} pass / ${fail} fail</span>\n\n` + lines.join('\n');
+}
+run();
+</script></body></html>

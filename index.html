@@ -1,187 +1,2692 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" id="html">
+
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>CMYK Swatch Tools</title>
-<meta name="description" content="Two browser tools for designing print-safe colors against real ICC profiles. CMYK explorer for live exploration, 3D explorer for curated libraries.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
-:root{
-  --bg:#161514;
-  --surface:#1F1E1D;
-  --line:rgba(255,255,255,.10);
-  --line-strong:rgba(255,255,255,.18);
-  --text:#EDEAE3;
-  --muted:#8C8A84;
-  --faint:#5B5955;
-  --accent:#7FB6E8;
-  --display:'Outfit', system-ui, sans-serif;
-  --mono:'IBM Plex Mono','Fira Mono',ui-monospace,monospace;
-  color-scheme:dark;
-}
-@media (prefers-color-scheme:light){
-  :root{
-    --bg:#FAF8F4;
-    --surface:#FFFFFF;
-    --line:rgba(0,0,0,.10);
-    --line-strong:rgba(0,0,0,.18);
-    --text:#1B1A18;
-    --muted:#6E6C66;
-    --faint:#A09E97;
-    --accent:#2E6FB0;
-    color-scheme:light;
-  }
-}
-*{box-sizing:border-box;margin:0;padding:0}
-html,body{background:var(--bg);color:var(--text);font-family:var(--display);font-weight:300;-webkit-font-smoothing:antialiased}
-body{min-height:100dvh;display:flex;flex-direction:column}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>mixoswatch · CMYK colors that survive the press</title>
+  <meta name="description"
+    content="Browser tool for picking print-safe CMYK colors through real ICC profiles. Live explorer with ΔE max filter for round-trip safety.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+JP:wght@300;400&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --bg: #141312;
+      --bg2: #1B1A18;
+      --surface: #1F1E1C;
+      --line: rgba(255, 255, 255, .09);
+      --line2: rgba(255, 255, 255, .16);
+      --text: #EEEBE4;
+      --muted: #A6A39B;
+      --faint: #7E7C75;
+      --accent: #d1d1b3;
+      --accent-dim: #6E869C;
+      --display: 'Outfit', -apple-system, system-ui, serif;
+      --mono: 'IBM Plex Mono', ui-monospace, monospace;
+      --jp: 'Noto Sans JP', -apple-system, sans-serif;
+      color-scheme: dark;
+    }
 
-/* layout: tight max width, generous vertical breathing */
-.shell{
-  width:100%;max-width:760px;
-  margin:0 auto;
-  padding:48px 28px 56px;
-  flex:1;
-  display:flex;flex-direction:column;gap:64px;
-}
+    @media (prefers-color-scheme:light) {
+      :root {
+        --bg: #F8F6F1;
+        --bg2: #F0EDE6;
+        --surface: #FFFFFF;
+        --line: rgba(0, 0, 0, .07);
+        --line2: rgba(0, 0, 0, .14);
+        --text: #1A1916;
+        --muted: #6E6C66;
+        --faint: #A39F97;
+        --accent: #3B5A75;
+        --accent-dim: #7E94A8;
+        color-scheme: light;
+      }
+    }
 
-/* identifier strip */
-.mark{
-  font-family:var(--mono);font-size:11px;letter-spacing:.18em;
-  text-transform:uppercase;color:var(--muted);
-  display:flex;align-items:center;gap:14px;
-}
-.mark::after{content:"";flex:1;height:1px;background:var(--line);}
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
 
-/* hero */
-.hero{display:flex;flex-direction:column;gap:24px;}
-.hero h1{
-  font-family:var(--display);font-weight:300;
-  font-size:clamp(38px,6.5vw,64px);line-height:1.04;letter-spacing:-.02em;
-  max-width:14ch;
-}
-.hero h1 em{font-style:italic;font-weight:400;color:var(--accent);padding-bottom:.06em;display:inline-block;}
-.hero p{
-  color:var(--muted);font-size:15.5px;line-height:1.6;max-width:54ch;
-}
+    html,
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--display);
+      font-weight: 300;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility
+    }
 
-/* tool cards: two side-by-side, equal weight */
-.tools{
-  display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:8px;
-}
-@media (max-width:640px){.tools{grid-template-columns:1fr}}
-.tool{
-  display:flex;flex-direction:column;justify-content:space-between;
-  gap:24px;padding:24px 22px;
-  background:var(--surface);border:1px solid var(--line);
-  border-radius:10px;
-  text-decoration:none;color:inherit;
-  transition:border-color .18s ease, transform .18s ease;
-  min-height:160px;
-}
-.tool:hover{border-color:var(--accent);}
-.tool:active{transform:translateY(1px)}
-.tool .label{
-  font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;
-  color:var(--faint);text-transform:uppercase;
-}
-.tool h2{
-  font-family:var(--display);font-weight:400;
-  font-size:22px;line-height:1.2;letter-spacing:-.01em;margin-top:6px;
-}
-.tool .desc{
-  color:var(--muted);font-size:13.5px;line-height:1.55;margin-top:8px;
-}
-.tool .go{
-  font-family:var(--mono);font-size:11px;letter-spacing:.15em;
-  color:var(--accent);text-transform:uppercase;
-  display:flex;align-items:center;gap:6px;
-}
-.tool .go::after{
-  content:"";display:inline-block;width:14px;height:1px;background:currentColor;
-  transition:width .18s ease;
-}
-.tool:hover .go::after{width:22px;}
+    body {
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      line-height: 1.55
+    }
 
-/* about + how */
-.section{display:flex;flex-direction:column;gap:14px}
-.section h3{
-  font-family:var(--mono);font-size:11px;letter-spacing:.18em;
-  text-transform:uppercase;color:var(--muted);font-weight:500;
-}
-.section p{font-size:14.5px;line-height:1.6;color:var(--text);max-width:60ch}
-.section p + p{color:var(--muted);}
+    ::selection {
+      background: var(--accent);
+      color: var(--bg)
+    }
 
-/* footer hairline */
-footer{
-  border-top:1px solid var(--line);
-  font-family:var(--mono);font-size:11px;color:var(--faint);
-  padding:18px 28px;display:flex;flex-wrap:wrap;gap:18px;justify-content:center;
-}
-footer a{color:var(--muted);text-decoration:none;border-bottom:1px solid transparent;padding-bottom:1px;}
-footer a:hover{color:var(--text);border-bottom-color:var(--line-strong);}
+    .shell {
+      width: 100%;
+      max-width: 880px;
+      margin: 0 auto;
+      padding: 56px 28px 80px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 96px;
+    }
 
-/* gentle entry */
-@media (prefers-reduced-motion: no-preference){
-  .hero,.tools,.section{opacity:0;transform:translateY(6px);animation:rise .55s cubic-bezier(.16,1,.3,1) forwards;}
-  .hero{animation-delay:.06s}
-  .tools{animation-delay:.18s}
-  .section{animation-delay:.28s}
-}
-@keyframes rise{to{opacity:1;transform:translateY(0)}}
-</style>
+    @media (max-width:640px) {
+      .shell {
+        padding: 36px 22px 56px;
+        gap: 64px
+      }
+    }
+
+    .mark-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px
+    }
+
+    .mark {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .22em;
+      text-transform: lowercase;
+      color: var(--muted);
+    }
+
+    .mark .dot {
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      vertical-align: middle;
+      margin-right: 8px;
+      opacity: .7
+    }
+
+    .mark-jp {
+      font-family: var(--jp);
+      font-size: 11px;
+      color: var(--faint);
+      letter-spacing: .04em;
+      margin-left: 6px
+    }
+
+    .nav-mini {
+      display: flex;
+      gap: 18px
+    }
+
+    .nav-mini a {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: .06em
+    }
+
+    .nav-mini a:hover {
+      color: var(--text)
+    }
+
+    .hero {
+      display: flex;
+      flex-direction: column;
+      gap: 28px
+    }
+
+    .hero h1 {
+      font-family: var(--display);
+      font-weight: bolder;
+      font-size: clamp(36px, 6vw, 60px);
+      line-height: 1.05;
+      letter-spacing: -.025em;
+      max-width: 16ch;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      font-weight: 300;
+      color: var(--accent)
+    }
+
+    .hero .lede {
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.65;
+      max-width: 54ch;
+    }
+
+    .tools {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 8px
+    }
+
+    @media (max-width:680px) {
+      .tools {
+        grid-template-columns: 1fr
+      }
+    }
+
+    /* Reversed CTA tiles: washi-paper fill on dark, sumi-ink on light. */
+    .tool {
+      --tool-bg: #ECE7DA;
+      /* washi cream */
+      --tool-ink: #1A1916;
+      /* sumi ink */
+      --tool-micro: #8C7E60;
+      /* aged brass */
+      --tool-muted: #5B544A;
+      /* faded ink */
+      --tool-rule: rgba(26, 25, 22, .18);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 22px;
+      padding: 26px 26px 22px;
+      background: var(--tool-bg);
+      border: 1px solid var(--tool-bg);
+      color: var(--tool-ink);
+      border-radius: 10px;
+      text-decoration: none;
+      transition: transform .22s cubic-bezier(.16, 1, .3, 1), box-shadow .22s ease, background .22s ease;
+      min-height: 170px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 1px 0 rgba(255, 255, 255, .04) inset, 0 8px 24px rgba(0, 0, 0, .32);
+    }
+
+    .tool::after {
+      content: "";
+      position: absolute;
+      left: 26px;
+      right: 26px;
+      bottom: 0;
+      height: 1px;
+      background: var(--tool-rule);
+      transform: scaleX(.18);
+      transform-origin: left;
+      transition: transform .35s cubic-bezier(.16, 1, .3, 1);
+    }
+
+    .tool:hover {
+      transform: translateY(-3px);
+      background: #F4F0E4;
+      box-shadow: 0 1px 0 rgba(255, 255, 255, .06) inset, 0 18px 40px rgba(0, 0, 0, .48);
+    }
+
+    .tool:hover::after {
+      transform: scaleX(1)
+    }
+
+    .tool:active {
+      transform: translateY(0)
+    }
+
+    .tool .micro {
+      font-family: var(--mono);
+      font-size: 10.5px;
+      letter-spacing: .22em;
+      color: var(--tool-micro);
+      text-transform: uppercase;
+    }
+
+    .tool h2 {
+      font-family: var(--display);
+      font-weight: 400;
+      font-size: 24px;
+      line-height: 1.18;
+      letter-spacing: -.012em;
+      margin-top: 10px;
+      color: var(--tool-ink);
+    }
+
+    .tool .desc {
+      color: var(--tool-muted);
+      font-size: 13.5px;
+      line-height: 1.6;
+      margin-top: 10px
+    }
+
+    .tool .go {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .22em;
+      color: var(--tool-ink);
+      text-transform: uppercase;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .tool .go::after {
+      content: "";
+      display: inline-block;
+      width: 18px;
+      height: 1px;
+      background: currentColor;
+      transition: width .22s ease;
+    }
+
+    .tool:hover .go::after {
+      width: 30px
+    }
+
+    /* Light-mode fallback: invert so tiles still pop on the cream page bg. */
+    @media (prefers-color-scheme:light) {
+      .tool {
+        --tool-bg: #1A1916;
+        --tool-ink: #F5F2EA;
+        --tool-micro: #A89881;
+        --tool-muted: #A6A097;
+        --tool-rule: rgba(245, 242, 234, .22);
+        box-shadow: 0 1px 0 rgba(255, 255, 255, .04) inset, 0 10px 26px rgba(0, 0, 0, .18);
+      }
+
+      .tool:hover {
+        background: #262320;
+        box-shadow: 0 1px 0 rgba(255, 255, 255, .06) inset, 0 18px 40px rgba(0, 0, 0, .28)
+      }
+    }
+
+    .section {
+      display: flex;
+      flex-direction: column;
+      gap: 18px
+    }
+
+    .section .eyebrow {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section .eyebrow::before {
+      content: "";
+      width: 18px;
+      height: 1px;
+      background: currentColor;
+      display: inline-block;
+    }
+
+    .section h3 {
+      font-family: var(--display);
+      font-weight: 300;
+      font-size: clamp(24px, 3.4vw, 32px);
+      line-height: 1.15;
+      letter-spacing: -.018em;
+      max-width: 22ch;
+    }
+
+    .section p {
+      font-size: 15px;
+      line-height: 1.7;
+      color: var(--text);
+      max-width: 62ch
+    }
+
+    .section p+p {
+      color: var(--muted);
+      font-size: 14.5px
+    }
+
+    .section p code,
+    .panel code {
+      font-family: var(--mono);
+      font-size: .9em;
+      color: var(--accent);
+      background: var(--bg2);
+      padding: 1px 5px;
+      border-radius: 3px;
+      border: 1px solid var(--line);
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      margin-top: 8px
+    }
+
+    @media (max-width:680px) {
+      .split {
+        grid-template-columns: 1fr;
+        gap: 24px
+      }
+    }
+
+    .split .col {
+      display: flex;
+      flex-direction: column;
+      gap: 8px
+    }
+
+    .split .col h4 {
+      font-family: var(--display);
+      font-weight: 400;
+      font-size: 15px;
+      letter-spacing: -.01em;
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+    }
+
+    .split .col h4 .tag {
+      font-family: var(--mono);
+      font-size: 10.5px;
+      color: var(--faint);
+      text-transform: uppercase;
+      letter-spacing: .14em;
+      font-weight: 400;
+    }
+
+    .split .col p {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.65;
+      max-width: 38ch
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-top: 8px;
+      counter-reset: step
+    }
+
+    @media (max-width:880px) {
+      .steps {
+        grid-template-columns: 1fr 1fr
+      }
+    }
+
+    @media (max-width:480px) {
+      .steps {
+        grid-template-columns: 1fr
+      }
+    }
+
+    .step {
+      padding: 20px 18px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      counter-increment: step;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition: border-color .2s ease, transform .2s ease;
+      position: relative;
+      min-width: auto;
+    }
+
+    .step:hover {
+      border-color: var(--line2)
+    }
+
+
+    .step h5 {
+      font-family: var(--display);
+      font-weight: 400;
+      font-size: 14.5px;
+      letter-spacing: -.005em
+    }
+
+    .step p {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.55
+    }
+
+    /* ── Terminal register for the Python pipeline section (#byo) ─────────
+   Step cards in the BYO section read as "command tiles" instead of
+   "workflow tiles": mono headers, $ prompt prefix, faint scanline grid
+   in the background, accent-colored CLI flags. */
+    #byo .steps {
+      counter-reset: step
+    }
+
+    #byo .step {
+      background:
+        linear-gradient(180deg, rgba(168, 194, 216, .025), transparent 60%),
+        var(--surface);
+      background-image:
+        linear-gradient(180deg, rgba(168, 194, 216, .03), transparent 60%),
+        repeating-linear-gradient(0deg, transparent, transparent 5px, rgba(168, 194, 216, .018) 5px, rgba(168, 194, 216, .018) 6px);
+      border-color: var(--line2);
+    }
+
+    #byo .step:hover {
+      border-color: var(--accent-dim);
+      transform: translateY(-1px);
+    }
+
+    .pythonstep {
+      font-family: var(--display);
+      font-size: 24px;
+      color: var(--accent);
+      letter-spacing: .12em;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 8px;
+      margin-bottom: 4px;
+
+    }
+
+    #byo .step h5 {
+      font-family: var(--mono);
+      font-weight: 500;
+      font-size: 12.5px;
+      letter-spacing: .02em;
+      color: var(--text);
+      text-transform: lowercase;
+    }
+
+    #byo .step p {
+      font-size: 12.5px;
+      line-height: 1.6
+    }
+
+    #byo .step p code {
+      display: inline-block;
+      background: rgba(168, 194, 216, .07);
+      border: 1px solid rgba(168, 194, 216, .18);
+      color: var(--accent);
+      font-size: 11.5px;
+      padding: 1px 6px;
+      border-radius: 3px;
+      white-space: nowrap;
+    }
+
+    /* Highlight CLI flags inside code blocks: --foo → italic muted accent. */
+    #byo .step p code::first-letter {
+      font-feature-settings: "ss01"
+    }
+
+    /* Closing paragraph beneath the step grid: render as a command-output block. */
+    #byo>p:last-of-type {
+      margin-top: 18px;
+      padding: 14px 18px;
+      background: var(--bg2);
+      border: 1px solid var(--line);
+      border-left: 2px solid var(--accent);
+      border-radius: 0 6px 6px 0;
+      font-size: 13.5px;
+      font-family: var(--display);
+      color: var(--muted);
+      position: relative;
+    }
+
+    #byo>p:last-of-type::before {
+      content: "→";
+      position: absolute;
+      left: -12px;
+      top: 13px;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: var(--bg);
+      font-family: var(--mono);
+      font-size: 13px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #byo>p:last-of-type a {
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px dotted var(--accent-dim)
+    }
+
+    #byo>p:last-of-type a:hover {
+      border-bottom-style: solid
+    }
+
+    /* The "bring your own press" paragraph closing #why: callout register. */
+    #why>p:last-of-type {
+      margin-top: 8px;
+      padding: 16px 20px 16px 22px;
+      background: linear-gradient(135deg, rgba(168, 194, 216, .06), transparent 70%);
+      border: 1px solid var(--line);
+      border-left: 2px solid var(--accent);
+      border-radius: 0 8px 8px 0;
+      font-size: 14px;
+      color: var(--text);
+    }
+
+    #why>p:last-of-type b {
+      color: var(--accent);
+      font-weight: 500;
+      letter-spacing: .01em
+    }
+
+    #why>p:last-of-type code {
+      background: rgba(168, 194, 216, .08);
+      border: 1px solid rgba(168, 194, 216, .16);
+      color: var(--accent);
+      padding: 1px 5px;
+      border-radius: 3px;
+      font-size: .86em;
+    }
+
+    #why>p:last-of-type a {
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px solid var(--accent-dim);
+    }
+
+    #why>p:last-of-type a:hover {
+      border-bottom-color: var(--accent)
+    }
+
+    .panels {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin-top: 8px;
+      border-top: 1px solid var(--line)
+    }
+
+    .panel {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      gap: 32px;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    @media (max-width:680px) {
+      .panel {
+        grid-template-columns: 1fr;
+        gap: 8px;
+        padding: 18px 0
+      }
+    }
+
+    .panel-name {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: .14em;
+      padding-top: 2px;
+    }
+
+    .panel-name .jp {
+      display: block;
+      font-family: var(--jp);
+      font-size: 10.5px;
+      color: var(--faint);
+      letter-spacing: .04em;
+      margin-top: 4px;
+      text-transform: none;
+      font-weight: 300
+    }
+
+    .panel-body p {
+      font-size: 14px;
+      color: var(--text);
+      line-height: 1.6;
+      max-width: 58ch
+    }
+
+    .panel-body p+p {
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 6px
+    }
+
+    /* control rows inside a panel */
+    .ctrls {
+      display: flex;
+      flex-direction: column;
+      gap: 0
+    }
+
+    .ctrl {
+      display: grid;
+      grid-template-columns: 1fr minmax(140px, auto);
+      gap: 18px;
+      align-items: center;
+      padding: 10px 0;
+      border-top: 1px dashed var(--line);
+    }
+
+    .ctrl:first-child {
+      border-top: none;
+      padding-top: 2px
+    }
+
+    .ctrl .ctrl-text {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0
+    }
+
+    .ctrl .ctrl-name {
+      font-family: var(--display);
+      font-weight: 400;
+      font-size: 13.5px;
+      color: var(--text);
+      letter-spacing: -.003em
+    }
+
+    .ctrl .ctrl-desc {
+      font-size: 12.5px;
+      color: var(--muted);
+      line-height: 1.5;
+      max-width: 48ch
+    }
+
+    .ctrl .eg {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 6px;
+      flex-wrap: wrap;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted)
+    }
+
+    @media (max-width:680px) {
+      .ctrl {
+        grid-template-columns: 1fr;
+        gap: 8px
+      }
+
+      .ctrl .eg {
+        justify-content: flex-start
+      }
+    }
+
+    /* example bits: visual likenesses of the real control */
+    .eg-pill {
+      padding: 3px 9px;
+      font-size: 10.5px;
+      font-family: var(--mono);
+      border: 1px solid var(--line2);
+      border-radius: 999px;
+      color: var(--muted);
+      background: var(--bg);
+      text-transform: uppercase;
+      letter-spacing: .05em
+    }
+
+    .eg-pill.on {
+      background: var(--accent);
+      color: var(--bg);
+      border-color: var(--accent);
+      font-weight: 500
+    }
+
+    .eg-tile {
+      display: inline-block;
+      width: 18px;
+      height: 18px;
+      border-radius: 4px;
+      border: 1px solid var(--line2)
+    }
+
+    .eg-tile.lg {
+      width: 28px;
+      height: 28px
+    }
+
+    .eg-tile.sm {
+      width: 12px;
+      height: 12px;
+      border-radius: 3px
+    }
+
+    .eg-row {
+      display: inline-flex;
+      gap: 4px;
+      align-items: center
+    }
+
+    .eg-switch {
+      display: inline-flex;
+      border: 1px solid var(--line2);
+      border-radius: 999px;
+      padding: 2px;
+      background: var(--bg2);
+      gap: 2px
+    }
+
+    .eg-switch .seg {
+      padding: 3px 10px;
+      font-size: 10px;
+      font-family: var(--mono);
+      border-radius: 999px;
+      color: var(--muted);
+      background: transparent
+    }
+
+    .eg-switch .seg.on {
+      background: var(--accent);
+      color: var(--bg)
+    }
+
+    .eg-radio {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center
+    }
+
+    .eg-radio .o {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-family: var(--mono);
+      font-size: 10.5px;
+      color: var(--muted)
+    }
+
+    .eg-radio .o::before {
+      content: "";
+      width: 9px;
+      height: 9px;
+      border: 1px solid var(--line2);
+      border-radius: 50%;
+      display: inline-block;
+      background: var(--bg)
+    }
+
+    .eg-radio .o.on {
+      color: var(--text)
+    }
+
+    .eg-radio .o.on::before {
+      background: var(--accent);
+      border-color: var(--accent);
+      box-shadow: inset 0 0 0 2px var(--bg)
+    }
+
+    .eg-check {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap
+    }
+
+    .eg-check .o {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-family: var(--mono);
+      font-size: 10.5px;
+      color: var(--muted)
+    }
+
+    .eg-check .o::before {
+      content: "";
+      width: 11px;
+      height: 11px;
+      border: 1px solid var(--line2);
+      border-radius: 2px;
+      display: inline-block;
+      background: var(--bg)
+    }
+
+    .eg-check .o.on::before {
+      background: var(--accent);
+      border-color: var(--accent);
+      box-shadow: inset 0 0 0 2px var(--bg)
+    }
+
+    .eg-check .o.on {
+      color: var(--text)
+    }
+
+    .eg-bar {
+      width: 84px;
+      height: 4px;
+      background: var(--bg2);
+      border-radius: 2px;
+      position: relative;
+      overflow: hidden
+    }
+
+    .eg-bar::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      background: var(--accent);
+      width: var(--w, 40%)
+    }
+
+    .eg-input {
+      font-family: var(--mono);
+      font-size: 10.5px;
+      padding: 3px 8px;
+      background: var(--bg);
+      border: 1px solid var(--line2);
+      border-radius: 3px;
+      color: var(--muted);
+      min-width: 120px;
+      text-align: left
+    }
+
+    .eg-badge {
+      font-family: var(--mono);
+      font-size: 10px;
+      padding: 2px 6px;
+      border-radius: 3px;
+      color: #fff;
+      font-weight: 500
+    }
+
+    .eg-badge.aaa {
+      background: #0F6A1E
+    }
+
+    .eg-badge.aa {
+      background: #0E4FAA
+    }
+
+    .eg-tog {
+      display: inline-block;
+      width: 24px;
+      height: 13px;
+      background: var(--bg2);
+      border: 1px solid var(--line2);
+      border-radius: 7px;
+      position: relative
+    }
+
+    .eg-tog::after {
+      content: "";
+      position: absolute;
+      top: 1px;
+      left: 1px;
+      width: 9px;
+      height: 9px;
+      background: var(--muted);
+      border-radius: 50%;
+      transition: left .2s
+    }
+
+    .eg-tog.on {
+      background: var(--accent);
+      border-color: var(--accent)
+    }
+
+    .eg-tog.on::after {
+      left: 12px;
+      background: #fff
+    }
+
+    .eg-btn {
+      font-family: var(--mono);
+      font-size: 10.5px;
+      padding: 3px 10px;
+      border: 1px solid var(--line2);
+      border-radius: 3px;
+      color: var(--muted);
+      background: var(--bg)
+    }
+
+    .eg-btn.primary {
+      background: var(--accent);
+      color: var(--bg);
+      border-color: var(--accent)
+    }
+
+    /* Live interactive demo block */
+    .demo {
+      margin-top: 10px;
+      padding: 16px 18px;
+      background: var(--bg2);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      overflow: visible
+    }
+
+    .demo-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center
+    }
+
+    .demo-output {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      align-items: center;
+      min-height: 36px;
+      width: 100%;
+      padding: 6px 0
+    }
+
+    .demo-tile {
+      width: 28px;
+      height: 28px;
+      border-radius: 3px;
+      border: 1px solid var(--line2);
+      transition: width .18s ease, height .18s ease, opacity .18s ease, background .18s ease;
+      flex: none;
+      min-width: 22px;
+      min-height: 22px
+    }
+
+    .demo-tile.hide {
+      opacity: 0;
+      width: 0;
+      border-width: 0;
+      margin: 0 -2px
+    }
+
+    .demo-tile.fade {
+      opacity: .22
+    }
+
+    .demo-output {
+      overflow-x: auto
+    }
+
+    .demo-output::-webkit-scrollbar {
+      height: 4px
+    }
+
+    .demo-output::-webkit-scrollbar-thumb {
+      background: var(--line2);
+      border-radius: 2px
+    }
+
+    .demo-empty {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--faint);
+      padding: 4px 0
+    }
+
+    /* glossary term: first occurrence in any panel gets dotted underline + gloss */
+    .term {
+      border-bottom: 1px dotted var(--accent-dim);
+      cursor: help;
+      color: var(--text)
+    }
+
+    .term:hover {
+      border-bottom-color: var(--accent)
+    }
+
+    .gloss {
+      font-family: var(--mono);
+      font-size: 10.5px;
+      color: var(--faint);
+      font-style: normal;
+      letter-spacing: .04em;
+      display: block;
+      margin-top: 3px;
+      line-height: 1.5
+    }
+
+    /* language switch */
+    .lang-switch {
+      display: inline-flex;
+      gap: 0;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 2px;
+      background: var(--bg2)
+    }
+
+    .lang-switch button {
+      font-family: var(--mono);
+      font-size: 10.5px;
+      padding: 3px 9px;
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      border-radius: 999px;
+      cursor: pointer;
+      letter-spacing: .04em;
+      transition: all .15s ease
+    }
+
+    .lang-switch button:hover {
+      color: var(--text)
+    }
+
+    .lang-switch button.on {
+      background: var(--accent);
+      color: var(--bg);
+      font-weight: 500
+    }
+
+    /* hide other-language siblings */
+    html[lang="en"] [data-ja],
+    html[lang="en"] [data-zh] {
+      display: none
+    }
+
+    html[lang="ja"] [data-en],
+    html[lang="ja"] [data-zh] {
+      display: none
+    }
+
+    html[lang="zh"] [data-en],
+    html[lang="zh"] [data-ja] {
+      display: none
+    }
+
+    html[lang="ja"] body {
+      font-family: var(--jp)
+    }
+
+    html[lang="zh"] body {
+      font-family: var(--jp)
+    }
+
+    .demo-row {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      flex-wrap: wrap
+    }
+
+    .demo-label {
+      font-family: var(--mono);
+      font-size: 10.5px;
+      color: var(--muted);
+      letter-spacing: .04em
+    }
+
+    .demo-jp {
+      font-family: var(--jp);
+      font-size: 13px;
+      color: var(--text)
+    }
+
+    .demo-hint {
+      font-size: 11px;
+      color: var(--faint);
+      line-height: 1.5
+    }
+
+    .demo button {
+      font-family: var(--mono);
+      font-size: 10.5px;
+      padding: 4px 10px;
+      border: 1px solid var(--line2);
+      background: var(--bg);
+      color: var(--muted);
+      border-radius: 4px;
+      cursor: pointer;
+      letter-spacing: .04em;
+      transition: all .15s ease
+    }
+
+    .demo button:hover {
+      color: var(--text);
+      border-color: var(--accent-dim)
+    }
+
+    .demo button.on {
+      background: var(--accent);
+      color: var(--bg);
+      border-color: var(--accent)
+    }
+
+    .demo input[type=range] {
+      accent-color: var(--accent);
+      height: 4px;
+      flex: 1;
+      min-width: 140px;
+      max-width: 260px;
+      cursor: pointer
+    }
+
+    .demo input[type=text] {
+      font-family: var(--mono);
+      font-size: 11px;
+      padding: 5px 9px;
+      background: var(--bg);
+      border: 1px solid var(--line2);
+      border-radius: 4px;
+      color: var(--text);
+      min-width: 160px;
+      outline: none
+    }
+
+    .demo input[type=text]:focus {
+      border-color: var(--accent-dim)
+    }
+
+    .demo input[type=text]::placeholder {
+      color: var(--faint)
+    }
+
+    .demo select {
+      font-family: var(--mono);
+      font-size: 11px;
+      padding: 5px 28px 5px 10px;
+      background: var(--bg);
+      border: 1px solid var(--line2);
+      border-radius: 4px;
+      color: var(--text);
+      cursor: pointer;
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: linear-gradient(45deg, transparent 50%, var(--muted) 50%), linear-gradient(135deg, var(--muted) 50%, transparent 50%);
+      background-position: calc(100% - 16px) 50%, calc(100% - 11px) 50%;
+      background-size: 5px 5px;
+      background-repeat: no-repeat
+    }
+
+    .demo-check,
+    .demo-radio {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap
+    }
+
+    .demo-check label,
+    .demo-radio label {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-family: var(--mono);
+      font-size: 10.5px;
+      color: var(--muted);
+      cursor: pointer
+    }
+
+    .demo-check input,
+    .demo-radio input {
+      accent-color: var(--accent);
+      cursor: pointer;
+      margin: 0
+    }
+
+    .demo-check label:has(input:checked),
+    .demo-radio label:has(input:checked) {
+      color: var(--text)
+    }
+
+    .demo-swatch-big {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 10px 12px;
+      background: var(--bg);
+      border: 1px solid var(--line);
+      border-radius: 5px
+    }
+
+    .demo-swatch-big .tile {
+      width: 48px;
+      height: 48px;
+      border-radius: 4px;
+      flex: none;
+      border: 1px solid var(--line2)
+    }
+
+    .demo-swatch-big .labels {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      min-width: 0;
+      line-height: 1.3
+    }
+
+    .demo-swatch-big .labels .primary {
+      font-family: var(--jp);
+      font-size: 15px;
+      color: var(--text)
+    }
+
+    .demo-swatch-big .labels .mono {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted)
+    }
+
+    .demo-count {
+      font-family: var(--mono);
+      font-size: 10.5px;
+      color: var(--accent);
+      margin-left: auto;
+      letter-spacing: .04em
+    }
+
+    .demo-grid {
+      display: grid;
+      gap: 3px;
+      transition: grid-template-columns .18s ease
+    }
+
+    .callout {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding: 24px 26px;
+      background: var(--bg2);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      border-left: 2px solid var(--accent);
+      margin-top: 8px;
+    }
+
+    .callout .who {
+      font-family: var(--mono);
+      font-size: 10.5px;
+      color: var(--muted);
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+
+    .callout p {
+      font-size: 14.5px;
+      color: var(--text);
+      line-height: 1.7;
+      max-width: 58ch
+    }
+
+    footer {
+      border-top: 1px solid var(--line);
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--faint);
+      padding: 22px 28px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      align-items: center;
+    }
+
+    footer a {
+      color: var(--muted);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      padding-bottom: 1px
+    }
+
+    footer a:hover {
+      color: var(--text);
+      border-bottom-color: var(--line2)
+    }
+
+    footer .sep {
+      color: var(--faint);
+      opacity: .5
+    }
+
+    @media (prefers-reduced-motion:no-preference) {
+
+      .hero,
+      .tools,
+      .section {
+        opacity: 0;
+        transform: translateY(8px);
+        animation: rise .8s cubic-bezier(.16, 1, .3, 1) forwards
+      }
+
+      .hero {
+        animation-delay: .05s
+      }
+
+      .tools {
+        animation-delay: .18s
+      }
+
+      .section:nth-of-type(2) {
+        animation-delay: .26s
+      }
+
+      .section:nth-of-type(3) {
+        animation-delay: .32s
+      }
+
+      .section:nth-of-type(4) {
+        animation-delay: .38s
+      }
+
+      .section:nth-of-type(5) {
+        animation-delay: .44s
+      }
+    }
+
+    @keyframes rise {
+      to {
+        opacity: 1;
+        transform: translateY(0)
+      }
+    }
+
+    .rule {
+      height: 1px;
+      background: var(--line);
+      width: 100%;
+      margin: 0
+    }
+  </style>
 </head>
+
 <body>
 
-<main class="shell">
+  <main class="shell">
 
-  <div class="mark">cmyk · swatch tools</div>
-
-  <section class="hero">
-    <h1>Pick colors that <em>survive</em> the press.</h1>
-    <p>Two small browser tools for designing with CMYK against real ICC profiles. Explore live, or browse a curated library that has already passed a round-trip safety filter.</p>
-  </section>
-
-  <nav class="tools" aria-label="Choose a tool">
-    <a class="tool" href="app/cmyk-explorer.html">
-      <div>
-        <div class="label">01 · live</div>
-        <h2>CMYK Explorer</h2>
-        <p class="desc">A grid of every CMYK value at your chosen step, rendered through the ICC profile you pick. Compare presses, find named colors, build palettes.</p>
+    <header class="mark-row">
+      <div class="mark"><span class="dot"></span>mixoswatch<span class="mark-jp">墨色見本</span></div>
+      <div style="display:flex;gap:18px;align-items:center">
+        <nav class="nav-mini">
+          <a href="#why" data-en="why" data-ja="趣旨" data-zh="緣由">why</a>
+          <a href="#byo" data-en="byo-icc" data-ja="自前" data-zh="自帶">byo-icc</a>
+          <a href="#how" data-en="how" data-ja="使い方" data-zh="使用">how</a>
+          <a href="#glossary" data-en="terms" data-ja="用語" data-zh="術語">terms</a>
+          <a href="#panels" data-en="panels" data-ja="操作" data-zh="面板">panels</a>
+        </nav>
+        <div class="lang-switch" id="langSwitch" title="Language / 言語 / 語言">
+          <button data-lang="en" class="on">EN</button>
+          <button data-lang="ja">日本語</button>
+          <button data-lang="zh">繁中</button>
+        </div>
       </div>
-      <span class="go">open</span>
-    </a>
-    <a class="tool" href="app/3d-explorer.html">
-      <div>
-        <div class="label">02 · curated</div>
-        <h2>3D Swatch Explorer</h2>
-        <p class="desc">A pre-filtered library of print-safe colors per profile, generated offline with a round-trip ΔE gate. Sort by hue, lightness, or safety.</p>
+    </header>
+
+    <section class="hero">
+      <h1>
+        <span data-en>Screen × Flat Print × 3D Print <em><b>Balanced Cross-Media</b></em> Color Calibration</span>
+        <span data-ja>デジタル × 紙媒体 × 3Dプリント<em><b>クロスメディア</b></em> カラーマッチング</span>
+        <span data-zh>數位 × 紙本 × 3D列印中<em><b>平衡對照</b></em> 的色彩</span>
+      </h1>
+      <p class="lede">
+        <span data-en>One browser tool for designing with CMYK through real ICC profiles. Live exploration with a
+          ΔE max filter for round-trip safety. No upload. No telemetry.</span>
+        <span data-ja>実際のICCプロファイルを通してCMYK設計を行う、小さなブラウザツール。ライブ探索と、往復安全性のためのΔE上限フィルタ。アップロード不要、計測なし。</span>
+        <span data-zh>單一輕量瀏覽器工具，透過真實 ICC 描述檔處理 CMYK 設計。可即時探索並提供 ΔE 上限篩選確保往返色彩安全。不上傳、不追蹤。</span>
+      </p>
+      <nav class="tools" aria-label="Choose a tool">
+        <a class="tool" href="app/mixo-swatch.html">
+          <div>
+            <div class="micro">live</div>
+            <h2>Mixo Swatch</h2>
+            <h3 data-en> Digital-to-print swatches</h3>
+            <h3 data-zh>平面數位與紙品印刷用專用色票對照表</h3>
+            <h3 data-ja>デジタルからプリントへの專用色見本</h3>
+          </div>
+          <p class="desc">
+            <span data-en>Every CMYK value at your chosen step, rendered through the press profile you pick. Compare
+              FOGRA against Japan Color. Find named colors. Build palettes.</span>
+            <span data-ja>選択したステップごとの全CMYK値を、指定したプリントプロファイルで描画。FOGRAとJapan Colorを比較、命名色を探し、パレットを構築。</span>
+            <span data-zh>以你選定的步距產生全部 CMYK 值，並透過你挑選的印刷描述檔渲染。比較 FOGRA 與 Japan Color，找出命名色，建立色票組。</span>
+          </p>
+          </div>
+          <span class="go">open</span>
+        </a>
+      </nav>
+    </section>
+
+    <section class="section" id="why">
+      <div class="eyebrow"><span data-en>why this tool</span><span data-ja>このツールの理由</span><span data-zh>為何這個工具</span></div>
+      <h3>
+        <span data-en>What screens cannot promise, our workflow narrows.</span>
+        <span data-ja>画面が保証できない領域を、ワークフローで狭める。</span>
+        <span data-zh>螢幕色準無法保證，靠流程縮小落差。</span>
+      </h3>
+      <p>
+        <span data-en>Be honest: no monitor renders a print result exactly. Substrate, ink, lighting, and the human eye
+          are not in the browser. What we can do is close the gap with real ICC math instead of fake CMYK-to-RGB
+          shortcuts, surface the trade-offs a press has, and let you tune how close is close enough.</span>
+        <span
+          data-ja>正直に言いましょう。プリント結果を完全に再現できるモニターは存在しません。被プリント体（用紙）、インク、照明、そして人間の眼はブラウザの中にはないからです。私たちができるのは、嘘のCMYK-RGB簡易変換ショートカットを排し、本物のICC数学でそのギャップを埋めること。プリンターが抱えるトレードオフを可視化し、「どこまで近づければ十分か」をあなた自身が調整できるようにすることです。</span>
+        <span data-zh>真相：沒有任何螢幕能完全精確地呈現印刷結果。紙張材質、油墨、照明環境以及人眼的感知，都是瀏覽器無法模擬的。我們能做的是，捨棄虛假的 CMYK 轉 RGB 簡化公式，改用真實的 ICC
+          描述檔數學運算來縮小這層差距，忠實呈現列印機的物理限制，並讓你自行調整多接近才算「足夠接近」。</span>
+      </p>
+
+      <div class="split">
+        <div class="col">
+          <h4>
+            <span data-en>What this solves</span>
+            <span data-ja>解決する痛点</span>
+            <span data-zh>針對痛點</span>
+            <span class="tag">advantages</span>
+          </h4>
+          <p>
+            <span data-en>Compare presses side by side. Flip from FOGRA39 to Japan Color 2001 to SWOP to see how the
+              same CMYK shifts. The naïve picker cannot show this because it never knew what a press was.</span>
+            <span data-ja>プリント条件を並べて比較。FOGRA39からJapan Color
+              2001、SWOPへと切り替えて、同じCMYK値がどうシフトするかを確認できます。一般的なカラーピッカーはプリンターの仕組みを考慮していないため、この変化を表示できません。</span>
+            <span data-zh>並列對比不同的列印機條件。在 FOGRA39、Japan Color 2001 與 SWOP 之間自由切換，一目了然相同的 CMYK
+              數值會如何產生色偏。一般的簡易選色器根本無法呈現這點，因為它從未納入列印機的物理考量。</span>
+          </p><br />
+
+
+          <h4>
+            <span data-en>Real RIP math</span>
+            <span data-ja>実際のプリント用デジタルデータ</span>
+            <span data-zh>更貼近真實的轉換算式</span>
+            <span class="tag">real math</span>
+          </h4>
+          <p>
+            <span data-en><b>Real ICC math, not Photoshop guesses.</b> Our lookup tables sample sRGB → CMYK at LittleCMS, the open-source color engine inside GIMP, Scribus, Krita, and many prepress tools. The data layer matches what a LittleCMS prepress flow computes. What your monitor renders is still sRGB, and what your press lays down still depends on stock, ink, and lighting.</span>
+            <span data-ja>本物のICC演算、Photoshopの推測ではない。当ツールのLUTは、GIMP、Scribus、Krita、多くのプリプレスツールの内部で動いているオープンソースの色エンジン「LittleCMS」でsRGB → CMYKを標本化している。データ層はLittleCMSベースのプリプレスフローと同じ計算結果を返す。モニタに映る色はsRGBのレンダリング、プリンターに乗る色は依然として用紙・インク・照明に依存する。</span>
+            <span data-zh>真實的 ICC 演算，不是 Photoshop 的猜測。我們的查找表在 LittleCMS 取樣 sRGB → CMYK。LittleCMS 是 GIMP、Scribus、Krita 與許多印前工具內部使用的開源色彩引擎。資料層計算結果與 LittleCMS 印前流程一致。螢幕呈現的仍是 sRGB，印刷機落紙的顏色仍受紙張、油墨與光照影響。</span>
+          </p><br />
+          <h4>
+            <span data-en>You set the tolerance</span>
+            <span data-ja>許容差は自分で決める</span>
+            <span data-zh>容差由你定</span>
+            <span class="tag">real math</span>
+          </h4>
+          <p>
+            <span data-en>The ΔE slider decides how close a match has to be. 1.0 strict, 3 forgiving, 6 brand-only.
+              Honest about what "close enough" means instead of pretending one number fits everything.</span>
+            <span data-ja>ΔEスライダーで一致の厳しさを設定。1.0で厳格、3で寛容、6でブランド許容。「十分近い」を一つの数値で押し付けず、自分で決められる。</span>
+            <span data-zh>ΔE 滑桿決定匹配多嚴格。1.0 嚴格、3 寬鬆、6 僅限品牌可接受。不假裝一個數字適用於所有情境。</span>
+          </p>
+        </div>
+
+        <div class="col">
+          <h4>
+            <span data-en>Color name dictionary</span>
+            <span data-zh>顏色名稱對照</span>
+            <span data-ja>名前照合</span>
+            <span class="tag">exchange anchoring</span>
+          </h4>
+          <p>
+            <span data-en>Per-dictionary anchor for name matching. A swatch can match against a name corpus by its hex
+              value OR by routing the corpus's CMYK through the active profile first. Independent per library: keep HTML
+              CSS names anchored on hex, keep DIC Japanese / Chinese anchored on CMYK, plug in your own dictionary
+              anchored either way.</span>
+            <span
+              data-ja>名前照合のための辞書単位のアンカー設定。スウォッチは、そのHex値、またはコーパスのCMYKを有効なプロファイルに先に通す方法のいずれかで名前コーパスと一致させることができます。ライブラリごとに独立：HTML
+              CSS名はHexにアンカー、DIC（日本/伝統色）はCMYKにアンカーさせ、自作の辞書もどちらの方法でも接続可能です。</span>
+            <span data-zh>名稱比對支援獨立詞典錨點設定。色票可直接透過螢幕 Hex 值比對，或者將語料庫中的 CMYK 先經由當前選定的描述檔進行轉換。各詞典完全獨立運作：可讓 HTML CSS 名稱錨定在
+              Hex，而 DIC 日本/中國傳統色彩則錨定在 CMYK，你亦可插入自己的詞典並自由指定任一種錨定基準。</span>
+          </p>
+          <br />
+          <h4>
+            <span data-en>Batch export with multi-process compatibility</span>
+            <span data-ja>各種3Dプリント・製造プロセスに合わせた一括書き出し</span>
+            <span data-zh>支援各種製程的批次匯出</span>
+            <span class="tag">multi purpose</span>
+          </h4>
+          <p>
+            <span data-en><i>Direct:</i> ASE for Photoshop / Illustrator / Affinity / Substance, GPL for GIMP / Krita
+              / Inkscape / Blender (via the GPL Palette Importer add-on), PNG sheet for any visual reference.
+              <i>Indirect:</i> copy CMYK or hex values out of the JSON into Mimaki RasterLink spot tables, Stratasys
+              GrabCAD pickers, Cura material profiles, or your CAD's color manager. The swatch files target design apps;
+              the JSON is the bridge to 3D-print pipelines.</span>
+            <span data-ja>直接層：Photoshop / Illustrator / Affinity / SubstanceにASE、GIMP / Krita / Inkscape /
+              Blender（GPL Palette
+              Importerアドオン経由）にGPL、視覚参照用にPNGシート。間接層：JSONからCMYKまたはhex値をコピーし、Mimaki
+              RasterLinkのスポットテーブル、Stratasys GrabCADのピッカー、Curaのマテリアルプロファイル、CADのカラーマネージャに入れる。スウォッチファイルはデザインアプリ向け、JSONは3Dプリントパイプラインへの橋渡し。</span>
+            <span data-zh>直接層：ASE 給 Photoshop / Illustrator / Affinity / Substance，GPL 給 GIMP / Krita / Inkscape /
+              Blender（透過 GPL Palette Importer 外掛）、PNG 圖片做視覺參考。間接層：從 JSON 複製 CMYK 或 hex 數值，填入 Mimaki RasterLink 專色表、Stratasys GrabCAD
+              取色器、Cura 材料描述檔，或你 CAD 的色彩管理器。色票檔針對設計軟體，JSON 是進入 3D 列印流程的橋樑。</span>
+          </p>
+          <br />
+          <h4>
+            <span data-en>One swatch, two worlds</span>
+            <span data-ja>1スウォッチで2世界対応</span>
+            <span data-zh>一套色票，兩個世界</span>
+            <span class="tag">best of both worlds</span>
+          </h4>
+          <p>
+            <span data-en>One tool serves 2D print and 3D-print color matching. The colors are rough by physics but
+              tight by math: hex for screen and web mockups, CMYK + profile for the press or printer. Pick once, ship to
+              both.</span>
+            <span
+              data-ja>一つのツールで2Dプリントと3Dプリントのカラーマッチングを両方支えます。物理的には大まかでも、数学的には厳密。画面とウェブのモックアップにはHexを、プリンタにはCMYK＋プロファイルを使用。一度選べば、両方の環境へシームレスに出荷できます。</span>
+            <span data-zh>單一工具同時滿足 2D 傳統印刷與 3D 印刷的色彩整合。在物理表現上或許留有容差，但在數學計算上絕對嚴密：Hex 用於螢幕與網頁原型開發，CMYK
+              加上描述檔則直通列印機或印表機。一次選色，雙端同步。</span>
+          </p>
+        </div>
       </div>
-      <span class="go">open</span>
-    </a>
-  </nav>
 
-  <section class="section">
-    <h3>What the tools share</h3>
-    <p>Both run as static HTML. Both load the same per-profile lookup tables produced by the Python toolchain in <code style="font-family:var(--mono);font-size:13px;color:var(--muted)">scripts/</code>. Both export palettes as ASE, GPL, PNG, and JSON. Palettes saved in one tool import cleanly into the other.</p>
-    <p>No telemetry. No backend. The color math is real, the profile choices are explicit, the data is on disk.</p>
-  </section>
+      <div class="split">
+        <div class="col">
+          <h4>
+            <span data-en>CMYK Color Steps</span>
+            <span data-ja>CMYK着色ステップ（歩距）</span>
+            <span data-zh>CMYK 着色步距</span>
+            <span class="tag">for print</span>
+          </h4>
+          <p>
+            <span data-en>In commercial printing practices and material calibration, printing houses and plate-making
+              personnel explicitly require fixed step intervals (such as 5% or 10% jumps) because smooth, continuous
+              digital gradients easily mask physical deviations and dot gain anomalies on the press. Sampling colors
+              through fixed steps ensures that each ink coverage performance is completely predictable, verifiable, and
+              safe under physical limits. Our tool generates the full multi-dimensional grid of every CMYK value at step
+              10 or step 5, rendering them in real time based on your selected profile. Trying to switch from FOGRA39 to
+              Japan Color 2001 allows you to observe the hue shift of the exact same stepped swatch, making it ideal for
+              hand-picking highly reproducible swatches and deeply understanding the true behavior of a press under
+              strict manufacturing conditions.</span>
+            <span
+              data-ja>商業プリントの実務や材料の校正において、プリント会社や製版担当者は固定されたステップ（5%や10%刻みのジャンプなど）を明確に要求します。これは、デジタル画面上の滑らかで連続的なグラデーションが、プリンターの物理的な偏差やドットゲイン（網点拡大）の異常を容易に隠してしまうためです。固定されたステップを通じて取色（サンプリング）を行うことで、各油墨の物理的限界におけるパフォーマンスが完全に予測可能で検証可能、かつ安全なものになります。当ツールは、ステップ10またはステップ5における全CMYK値の完全な多次元グリッドを、選択されたプロファイルに基づいてリアルタイムにレンダリングします。FOGRA39からJapan
+              Color
+              2001に切り替えてみることで、まったく同じステップ色塊が引き起こす色相のズレ（色偏）を観察することができ、高い再現性を持つ色票を手動で選択し、厳格な製造プロセスにおけるプリンターの真の挙動を深く理解するのに最適です。</span>
+            <span data-zh>在商業印刷實務與材料校准中，印刷廠與開版人員往往明確要求固定步距（如 5% 或 10% 的跳階），這是因為數位螢幕上平滑的連續漸層容易掩蓋物理偏差與網點擴大（Dot
+              Gain）異常。透過固定步距取色確保每種油墨在物理極限下具備完全可預測、可驗證且安全的表現。本工具將步距 10 或 5 的完整 CMYK 全維度網格，依你選定的描述檔進行即時渲染。試著從 FOGRA39 切換到
+              Japan Color 2001，即可觀察同一個跳階色塊產生的色相偏移，最適合用來手選具高重現性的色票，並深入了解列印機在嚴格製程下的真實行為。</span>
+          </p>
+        </div>
+        <div class="col">
+          <h4>
+            <span data-zh>為 3D 建模 × 3D 彩色列印量身訂造</span>
+            <span data-ja>3Dモデリング×3Dカラープリント専用</span>
+            <span data-en>Curated for 3D Modeling × 3D Coloured Print</span>
+            <span class="tag">curated</span>
+          </h4>
+          <p>
+            <span data-en>Most 3D modeling tools render skin textures and product colors that look fine on screen but
+              clip violently out of gamut when the 3D color printer ingests them in prepress. To prevent these
+              industrial translation failures before they ever happen, load your printer's ICC profile (Mimaki 3DUJ,
+              your bureau's measured profile, anything Pillow recognises) and pull the ΔE max slider down. Every cell
+              still visible has already passed a round-trip safety check under that exact profile. The math runs live,
+              so swapping profiles instantly reshapes the safe set.</span>
+            <span
+              data-ja>一般的な3Dツールでは画面上では問題なく見える皮膚テクスチャや製品色が、3Dカラープリンタの印前処理（プリプレス）に入った瞬間に色域外で激しくクリップされがちです。本ツールはプリンタのICCプロファイル（Mimaki
+              3DUJ、ビューローで実測したプロファイル、Pillowが読み込める任意のCMYKプロファイル）を読み込み、ΔE上限スライダを下げるだけ。表示されている色塊はすべて、その特定プロファイルでの往復安全テスト合格済み。演算はライブで走るため、プロファイルを切り替えれば安全色の集合も即時に再構成されます。</span>
+            <span
+              data-zh>多數 3D 設計工具產生的皮膚貼圖與產品色彩在螢幕上看似正常，但在 3D
+              彩色列印機進入印前製程（Prepress）的瞬間，會發生劇烈的色域外裁切。為了在生產前就杜絕這類工業轉換失敗，載入你列印機的 ICC 描述檔（Mimaki 3DUJ、配合廠商實測的描述檔、任何
+              Pillow 可讀的描述檔皆可），把 ΔE 上限滑桿往下拉。所有仍然顯示的色塊都已通過該特定描述檔下的往返安全檢驗。運算即時執行，切換描述檔可即刻重塑安全色集。</span>
+          </p>
+        </div>
+      </div>
+      <div class="split">
+        <div class="col">
+          <h4>
+            <span data-en>Customizable Printer ICC Profile</span>
+            <span data-ja>カスタムプリンターICCプロファイル</span>
+            <span data-zh>自訂列印機ICC色彩I描述檔</span>
+            <span class="tag">for print</span>
+          </h4>
+          
+          <p>
+            <span data-en>If your printing ICC profile is not bundled here, drop the <code>.icc</code>
+              / <code>.icm</code> file in <code>icc/</code> and run the single Python script
+              (<code>scripts/gen_luts.py</code>). It uses the same Pillow + LittleCMS engine many prepress tools share,
+              samples the profile at a 17⁴ grid, and writes the lookup tables the browser reads. Full Python pipeline
+              rationale + binary format spec is in <a
+                href="https://github.com/mixocreative/mixoswatch/blob/main/ARCHITECTURE.md" target="_blank" rel="noopener">ARCHITECTURE.md</a>.</span>
+            <span data-ja>当ツールに同梱されていないICC プロファイルがあれば、<code>.icc</code> /
+              <code>.icm</code>を<code>icc/</code>に入れて、単一のPythonスクリプト（<code>scripts/gen_luts.py</code>）を実行するだけ。多くのプリプレスツールが共有するPillow
+              + LittleCMSエンジンを使い、17⁴グリッドでプロファイルを標本化し、ブラウザが読むLUTを書き出す。アルゴリズムの仕組み<a
+                href="https://github.com/mixocreative/mixoswatch/blob/main/ARCHITECTURE.md" target="_blank" rel="noopener">ARCHITECTURE.md</a>に詳述。</span>
+            <span data-zh>若本工具未內建你工廠的描述檔，把 <code>.icc</code> / <code>.icm</code> 放進 <code>icc/</code>，執行單支
+              Python 腳本（<code>scripts/gen_luts.py</code>）即可。它使用許多印前工具共用的 Pillow + LittleCMS
+              引擎，以 17⁴ 網格取樣描述檔，並輸出瀏覽器讀取的查找表。演算法原理詳述於 <a
+                href="https://github.com/mixocreative/mixoswatch/blob/main/ARCHITECTURE.md" target="_blank" rel="noopener">ARCHITECTURE.md</a>。</span>
+          </p>
+        </div>
 
-  <section class="section">
-    <h3>How it works</h3>
-    <p>Add CMYK ICC profiles to <code style="font-family:var(--mono);font-size:13px;color:var(--muted)">icc/</code>, run <code style="font-family:var(--mono);font-size:13px;color:var(--muted)">python scripts/gen_luts.py</code> to build the lookup tables and <code style="font-family:var(--mono);font-size:13px;color:var(--muted)">python scripts/gen_libraries.py</code> to produce the curated library. Open <code style="font-family:var(--mono);font-size:13px;color:var(--muted)">index.html</code> over a local HTTP server. ICCs are not committed to the repo; bring your own.</p>
-  </section>
+      </div>
+    </section>
 
-</main>
+
+
+    <div class="rule"></div>
+
+    <section class="section" id="how">
+      <div class="eyebrow"><span data-en>4-step workflow</span><span data-ja>4工程ワークフロー</span><span data-zh>四步驟流程</span>
+      </div>
+      <h3>
+        <span data-en>Four steps to a print-ready palette.</span>
+        <span data-ja>プリント可能なパレットへの4工程。</span>
+        <span data-zh>四步建立可印刷的色票組。</span>
+      </h3>
+      <p>
+        <span data-en>Open either tool and the workflow is the same: pick the press profile, narrow what you can see,
+          choose what you like, export. The whole thing runs in your browser, never sends data anywhere.</span>
+        <span data-ja>どちらのツールでも流れは同じ。プリントプロファイルを選び、表示を絞り、好みを選び、書き出す。全てブラウザ内で動き、データはどこにも送らない。</span>
+        <span data-zh>兩個工具流程相同：選印刷描述檔、縮窄可見範圍、挑你想要的、匯出。整個流程在你瀏覽器內進行，不傳輸任何資料到任何地方。</span>
+      </p>
+      <div class="steps">
+        <div class="step">
+          <span class="pythonstep">STEP 01</span>
+          <h5>
+            <span data-en>Pick a profile</span>
+            <span data-ja>プロファイルを選ぶ</span>
+            <span data-zh>選擇描述檔</span>
+          </h5>
+          <p>
+            <span data-en>Choose the press you are printing on: FOGRA39 for European coated, Japan Color for Japanese
+              coated, SWOP for US web.</span>
+            <span data-ja>使うプリンターを指定する。欧州コート紙ならFOGRA39、日本コート紙ならJapan Color、米国ウェブならSWOP。</span>
+            <span data-zh>挑你即將印刷的機台：歐洲塗佈紙選 FOGRA39，日本塗佈紙選 Japan Color，美國捲筒紙選 SWOP。</span>
+          </p>
+        </div>
+        <div class="step">
+          <span class="pythonstep">STEP 02</span>
+          <h5>
+            <span data-en>Narrow the set</span>
+            <span data-ja>表示を絞り込む</span>
+            <span data-zh>縮窄範圍</span>
+          </h5>
+          <p>
+            <span data-en>Use K-tier, TAC limit, and accessibility toggles to hide colors that will not behave on your
+              stock.</span>
+            <span data-ja>K段階・TAC上限・アクセシビリティ切替で、用紙に合わない色を隠す。</span>
+            <span data-zh>用 K 階層、TAC 上限與可讀性切換，把不適合你紙張的顏色隱藏起來。</span>
+          </p>
+        </div>
+        <div class="step">
+          <span class="pythonstep">STEP 03</span>
+          <h5>
+            <span data-en>Pick + name</span>
+            <span data-ja>選んで命名</span>
+            <span data-zh>選色與命名</span>
+          </h5>
+          <p>
+            <span data-en>Click swatches to add to a palette. Turn on Japanese, HTML, or DIC name labels so a color has
+              a vocabulary.</span>
+            <span data-ja>スウォッチを押してパレットに追加。日本伝統色・HTML・DICのラベルを有効にして、色に語彙を持たせる。</span>
+            <span data-zh>點選色塊加入色票組。開啟日本傳統色、HTML、DIC 命名標籤，給每個顏色一個詞彙。</span>
+          </p>
+        </div>
+        <div class="step">
+          <span class="pythonstep">STEP 04</span>
+          <h5>
+            <span data-en>Export</span>
+            <span data-ja>書き出し</span>
+            <span data-zh>匯出</span>
+          </h5>
+          <p>
+            <span data-en>Send the palette to Photoshop, Illustrator, Affinity, GIMP, or Krita as ASE, GPL, PNG, or
+              JSON.</span>
+            <span data-ja>Photoshop、Illustrator、Affinity、GIMP、KritaへASE / GPL / PNG / JSONで送る。</span>
+            <span data-zh>輸出 ASE / GPL / PNG / JSON 給 Photoshop、Illustrator、Affinity、GIMP 或 Krita。</span>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    
+
+    <div class="rule"></div>
+
+    <section class="section" id="glossary">
+      <div class="eyebrow"><span data-en>terms in plain language</span><span data-ja>用語の平易な解説</span><span
+          data-zh>術語白話解釋</span></div>
+      <h3>
+        <span data-en>Quick glossary before the panels.</span>
+        <span data-ja>パネルの前に、用語集。</span>
+        <span data-zh>進入面板前的詞彙須知。</span>
+      </h3>
+      <p>
+        <span data-en>The tools borrow terminology from standard commercial press houses and advanced colorimetry. Here
+          is what they actually mean:</span>
+        <span data-ja>本ツールは、商業プリントや色彩科学の標準的な用語を使用しています。それぞれの具体的な意味は以下の通りです：</span>
+        <span data-zh>此工具沿用了商業印刷與色彩科學的標準術語。以下是它們在實際操作中的具體含意：</span>
+      </p>
+
+      <div class="panels">
+
+        <div class="panel">
+          <div class="panel-name">TAC (Total Area Coverage)<span class="jp">総インク量 ／ 總油墨覆蓋率</span></div>
+          <div class="panel-body">
+            <p>
+              <span data-en>The sum of the four CMYK ink percentages on a swatch. Presses have physical ceilings; too
+                much wet ink will not dry, smears, or gets rejected by the operator. Commercial coated stock ≈ 300%,
+                newsprint ≈ 240%. Use the TAC slider to stay under your press's limit.</span>
+              <span
+                data-ja>スウォッチ上の四色CMYKインク％の合計。プリンターには物理限界があり、過多なインクは乾かない・滲む・機械で拒否される。コート紙商業プリント≈300%、新聞≈240%。TACスライダーでプリンターの上限に収める。</span>
+              <span data-zh>一個色塊上四色 CMYK 墨水百分比的總和。列印機有物理上限：墨太多會乾不了、暈開或被機器拒絕。商業塗佈紙約 300%，報紙約 240%。用 TAC
+                滑桿讓你保持在列印機上限以下。</span>
+            </p>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-name">ICC profile<span class="jp">プロファイル ／ 描述檔</span></div>
+          <div class="panel-body">
+            <p>
+              <span data-en>A small file that describes how one specific press, paper, and ink combination actually
+                prints. It maps abstract CMYK numbers to real measured color. Loading a profile = telling the tool what
+                press you target.</span>
+              <span
+                data-ja>特定のプリンター・用紙・インク組合せが実際にどう刷るかを記述する小さなファイル。抽象的なCMYK値を実測色にマッピングする。プロファイルを読み込む＝対象のプリンターを指定すること。</span>
+              <span data-zh>一個描述特定列印機、紙張與油墨組合實際印出來如何的小檔案。把抽象的 CMYK 數值對應到實測的顏色。載入描述檔＝告訴工具你目標的列印機是哪一台。</span>
+            </p>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-name">K-tier<span class="jp">黒の段階 ／ 黑階分層</span></div>
+          <div class="panel-body">
+            <p>
+              <span data-en>A three-step shortcut for how much black ink (K) you allow. Tier 1 = K under 25% (clean
+                brand). Tier 2 = K up to 50% (added depth). Tier 3 = K up to 100% (true charcoals). Why tier it? Because
+                too much K crushes mid-tones and makes brand colors look muddy on press.</span>
+              <span data-ja>許容する黒（K）インク量の三段階ショートカット。Tier 1＝K 25%未満（クリーンなブランド）、Tier 2＝K 50%まで（深み追加）、Tier 3＝K
+                100%まで（真の墨色）。なぜ段階化？K過多は中間調を潰し、ブランド色を濁らせるから。</span>
+              <span data-zh>允許多少黑墨（K）的三段捷徑。第一階＝K 低於 25%（乾淨品牌）。第二階＝K 至 50%（增加深度）。第三階＝K 至 100%（真正炭黑）。為何分層？因為 K
+                太多會壓垮中間調，讓品牌色在印刷上看起來髒。</span>
+            </p>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-name">WCAG AA / AAA<span class="jp">可読性等級 ／ 可讀性等級</span></div>
+          <div class="panel-body">
+            <p>
+              <span data-en>The W3C accessibility grades for text contrast. AA = contrast ratio 4.5:1 or higher (legal
+                minimum for most public sites). AAA = 7:1 or higher (gold standard). The tools score every swatch
+                against white and black text and let you filter. Useful when a swatch will also carry a label on
+                top.</span>
+              <span
+                data-ja>W3CのアクセシビリティテキストコントラストグレードAA＝比率4.5:1以上（公共サイトの法的最低値）。AAA＝7:1以上（最高基準）。各スウォッチが白文字・黒文字とどれだけ対照を取れるかを計測してフィルタ可能。ラベルをスウォッチ上に置く時に有効。</span>
+              <span data-zh>W3C 文字對比的無障礙等級。AA＝對比 4.5:1 以上（多數公共網站的法定下限）。AAA＝7:1
+                以上（最高標準）。工具會把每個色塊與白字、黑字評分並可篩選。當色塊上要疊文字時很有用。</span>
+            </p>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-name">ΔE (Delta E)<span class="jp">色差 ／ Delta E 色差</span></div>
+          <div class="panel-body">
+            <p>
+              <span data-en>The standard scientific measure of color variance. ΔE 1.0 is the smallest shift a trained
+                eye can perceive. ΔE 2 to 3 is typical commercial press tolerance. ΔE over 6 is a totally different
+                color. The 3D Swatch library uses this to throw out any sRGB entry that shifts too far during its
+                conversion into CMYK.</span>
+              <span data-ja>色彩の差異を科学的に測定する標準規格。ΔE 1.0は訓練された眼が識別できる最小のズレ。ΔE 2〜3は一般的な商業プリントの許容誤差。ΔE
+                6を超えると完全に別の色になります。3Dスウォッチライブラリはこれを使用し、CMYK変換時に色ズレが大きすぎるsRGBデータを排除しています。</span>
+              <span data-zh>測量色彩差異的標準科學指標。ΔE 1.0 是經過訓練的人眼所能察覺的最小偏移。ΔE 2 到 3 是典型商業印刷的容差範圍。ΔE 超過 6 則被視為完全不同的顏色。3D
+                色票庫利用此指標，直接剔除那些在轉換為 CMYK 時色偏過大的 sRGB 項目。</span>
+            </p>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-name">Matching Anchor<span class="jp">照合のアンカー ／ 比對錨點</span></div>
+          <div class="panel-body">
+            <p>
+              <span data-en>Determines how a named dictionary matches a grid color. Hex Anchor checks raw display code
+                (best for CSS/web names). CMYK Anchor passes the dictionary's CMYK through your active ICC profile first
+                before checking the match; this is a more honest reflection of real press output.</span>
+              <span
+                data-ja>命名辞書がグリッドの色とどのように一致するかを決定します。Hexアンカーは生の表示コードをチェックします（CSS/ウェブ名に最適）。CMYKアンカーは、一致をチェックする前に、まず有効なICCプロファイルに辞書のCMYKを通します。これは実際のプリント出力をより正確に反映します。</span>
+              <span data-zh>決定命名詞典如何與網格色彩進行比對。Hex 錨點比對原始螢幕顯示代碼（最適合 CSS / 網頁名稱）。CMYK 錨點則會在比對前，先將詞典中的 CMYK 經由當前選定的 ICC
+                描述檔轉換，這能更真實地反映列印機的實際產出。</span>
+            </p>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-name">Naming libraries shipped<span class="jp">同梱辞書 ／ 內建詞典</span></div>
+          <div class="panel-body">
+            <p>
+              <span data-en>The tools ship with three name corpora out of the box. Add more by editing
+                <code>data/corpora/name_corpora.json</code> and refreshing.</span>
+              <span data-ja>同梱辞書は三つ。<code>data/corpora/name_corpora.json</code>を編集して再読込すれば追加可能。</span>
+              <span data-zh>內建三個命名色詞典。編輯 <code>data/corpora/name_corpora.json</code> 後重新整理可加入更多。</span>
+            </p>
+            <ul style="margin-top:6px;padding-left:0;list-style:none;display:flex;flex-direction:column;gap:8px">
+              <li>
+                <span style="font-family:var(--mono);font-size:11px;color:var(--accent)">jp-trad</span> &nbsp;
+                <span style="font-family:var(--jp);font-size:12.5px;color:var(--text)">日本の伝統色 (NipponColors) · 250色</span>
+                <span class="gloss"
+                  data-en="250 traditional Japanese colors from nipponcolors.com. Each entry carries kanji, romaji, and CMYK from the source.">250 traditional Japanese colors from nipponcolors.com. Each entry carries kanji, romaji, and CMYK from the source.</span>
+                <span class="gloss"
+                  data-ja="nipponcolors.com 由来の日本の伝統色 250 色。各エントリは漢字・ローマ字・CMYK を保持。">nipponcolors.com 由来の日本の伝統色 250 色。各エントリは漢字・ローマ字・CMYK を保持。</span>
+                <span class="gloss"
+                  data-zh="來自 nipponcolors.com 的 250 個日本傳統色。每筆包含漢字、羅馬拼音與 CMYK。">來自 nipponcolors.com 的 250 個日本傳統色。每筆包含漢字、羅馬拼音與 CMYK。</span>
+              </li>
+              <li>
+                <span style="font-family:var(--mono);font-size:11px;color:var(--accent)">html</span> &nbsp;
+                <span style="font-family:var(--jp);font-size:12.5px;color:var(--text)">W3C CSS Color Module Level 4 · 148色</span>
+                <span class="gloss"
+                  data-en="The 148 W3C-canonical named CSS colors every browser ships. sRGB-native; useful when you need a web-friendly name alongside the ink-friendly one.">The 148 W3C-canonical named CSS colors every browser ships. sRGB-native; useful when you need a web-friendly name alongside the ink-friendly one.</span>
+                <span class="gloss"
+                  data-ja="全ブラウザ標準搭載の W3C 公認 CSS 命名色 148 色。sRGB ネイティブ。プリント向け名とウェブ向け名を併記したい時に有効。">全ブラウザ標準搭載の W3C 公認 CSS 命名色 148 色。sRGB ネイティブ。プリント向け名とウェブ向け名を併記したい時に有効。</span>
+                <span class="gloss"
+                  data-zh="所有瀏覽器都內建的 W3C 公認 148 個 CSS 命名色，sRGB 原生。當你需要在油墨色名旁附上網頁色名時很有用。">所有瀏覽器都內建的 W3C 公認 148 個 CSS 命名色，sRGB 原生。當你需要在油墨色名旁附上網頁色名時很有用。</span>
+              </li>
+              <li>
+                <span style="font-family:var(--mono);font-size:11px;color:var(--accent)">zh-trad</span> &nbsp;
+                <span style="font-family:var(--jp);font-size:12.5px;color:var(--text)">中国の伝統色 · 526色</span>
+                <span class="gloss"
+                  data-en="526 traditional Chinese colors sourced from the 1957 Chinese Academy of Science color dictionary (mirrored on color-term.com). Each entry has hanzi, pinyin, hex, and derived CMYK.">526 traditional Chinese colors sourced from the 1957 Chinese Academy of Science color dictionary (mirrored on color-term.com). Each entry has hanzi, pinyin, hex, and derived CMYK.</span>
+                <span class="gloss"
+                  data-ja="1957 年中国科学院色名辞典に由来する中国の伝統色 526 色 (color-term.com にミラー)。各エントリは漢字・拼音・hex・派生 CMYK を保持。">1957 年中国科学院色名辞典に由来する中国の伝統色 526 色 (color-term.com にミラー)。各エントリは漢字・拼音・hex・派生 CMYK を保持。</span>
+                <span class="gloss"
+                  data-zh="源自 1957 年中國科學院色名辭典的中國傳統色 526 種，鏡像於 color-term.com。每筆包含漢字、拼音、hex 與推導出的 CMYK。">源自 1957 年中國科學院色名辭典的中國傳統色 526 種，鏡像於 color-term.com。每筆包含漢字、拼音、hex 與推導出的 CMYK。</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <div class="rule"></div>
+
+    <section class="section" id="panels">
+      <div class="eyebrow"><span data-en>sidebar panels</span><span data-ja>サイドバー操作</span><span data-zh>側欄面板</span>
+      </div>
+      <h3>
+        <span data-en>UI documentation</span>
+        <span data-ja>UI 解説</span>
+        <span data-zh>UI 說明</span>
+      </h3>
+      <p>
+        <span data-en>Both tools share the same sidebar grammar. Each panel below is a working mini-demo. Drag sliders,
+          flip switches, click buttons. See what changes.</span>
+        <span data-ja>両ツールは同じサイドバー構文を共有。下記の各パネルは動作する小デモ。スライダーを動かし、スイッチを切り替え、ボタンを押し、変化を確かめてほしい。</span>
+        <span data-zh>兩個工具共享相同的側欄文法。下方每個面板都是可運作的小型示範。拖曳滑桿、切換開關、點按按鈕，觀察變化。</span>
+      </p>
+      <div class="panels">
+
+        <div class="panel">
+          <div class="panel-name">Profile<span class="jp">プロファイル</span></div>
+          <div class="panel-body">
+            <p>Every color is routed through one ICC profile. Switching profile re-renders every tile in the grid
+              against a different press condition.</p>
+            <div class="demo" data-demo="profile">
+              <div class="demo-controls">
+                <span class="demo-label">profile:</span>
+                <select id="d-profile">
+                  <option value="fogra39">Coated FOGRA39 (EU)</option>
+                  <option value="japan">Japan Color 2001 Coated</option>
+                  <option value="swop">US Web Coated SWOP</option>
+                  <option value="newspaper">Japan Color Newspaper</option>
+                </select>
+              </div>
+              <div class="demo-output" id="d-profile-out"></div>
+              <div class="demo-hint">Same CMYK input. Different press. Different color on screen, different color on
+                paper.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-name">Step / cell size<span class="jp">解像度</span></div>
+          <div class="panel-body">
+            <p>Step controls how dense the lattice is. Cell size controls how big each tile is drawn. Both work live, no
+              rebuild needed.</p>
+            <div class="demo" data-demo="step-cell">
+              <div class="demo-controls">
+                <span class="demo-label">step:</span>
+                <button data-step="10" class="on">10%</button>
+                <button data-step="5">5%</button>
+                <span class="demo-label" style="margin-left:18px">cell:</span>
+                <input type="range" id="d-cell" min="22" max="48" value="28">
+                <span class="demo-label" id="d-cell-val">24 px</span>
+                <span class="demo-count" id="d-step-count">8 tiles</span>
+              </div>
+              <div class="demo-output" id="d-step-out"></div>
+              <div class="demo-hint">Step 5 packs in more colors but takes longer to derive. Drag the cell slider to see
+                tiles grow live.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-name">CMYK range + TAC<span class="jp">範囲</span></div>
+          <div class="panel-body">
+            <p>Drag the slider to enforce a press limit. Tiles that exceed total ink coverage fade out of the visible
+              set.</p>
+            <div class="demo" data-demo="tac">
+              <div class="demo-controls">
+                <span class="demo-label">TAC ≤</span>
+                <input type="range" id="d-tac" min="100" max="400" step="10" value="300">
+                <span class="demo-label" id="d-tac-val">300%</span>
+                <span class="demo-count" id="d-tac-count">5 / 8 pass</span>
+              </div>
+              <div class="demo-output" id="d-tac-out"></div>
+              <div class="demo-hint">Newspaper ≈ 240%, sheetfed coated ≈ 300%, generous ≈ 350%. Faded tiles are over the
+                cap.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-name">K-tier<span class="jp">黒の段階</span></div>
+          <div class="panel-body">
+            <p>Three buttons that progressively unlock darker colors. Click higher tiers to reveal deeper swatches.</p>
+            <div class="demo" data-demo="ktier">
+              <div class="demo-controls">
+                <button data-tier="1">Tier 1 · Brand</button>
+                <button data-tier="2">+ Tier 2 · Support</button>
+                <button data-tier="3" class="on">+ Tier 3 · Deep</button>
+                <span class="demo-count" id="d-tier-count">8 / 8 visible</span>
+              </div>
+              <div class="demo-output" id="d-tier-out"></div>
+              <div class="demo-hint">Tier 1 = K under 25% (clean brand). Tier 2 adds K 25 to 50%. Tier 3 unlocks true
+                blacks.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-name">Named filter<span class="jp">名前で絞る</span></div>
+          <div class="panel-body">
+            <p>Tick which corpora the "Any named" filter considers. Only swatches matching at least one checked library
+              survive.</p>
+            <div class="demo" data-demo="namefilter">
+              <div class="demo-controls demo-check">
+                <label><input type="checkbox" value="jp-trad" checked> jp-trad</label>
+                <label><input type="checkbox" value="html" checked> html</label>
+                <label><input type="checkbox" value="zh-trad"> zh-trad</label>
+                <span class="demo-count" id="d-nf-count">5 / 8 named</span>
+              </div>
+              <div class="demo-output" id="d-nf-out"></div>
+              <div class="demo-hint">Each tile carries match data from each corpus. The filter is independent of which
+                name you actually display.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-name">Naming · per library<span class="jp">命名 ・ 各辞書</span></div>
+          <div class="panel-body">
+            <p>Per corpus: pick which field appears on the swatch label, and pick whether matching anchors against hex
+              or CMYK.</p>
+            <div class="demo" data-demo="naming">
+              <div class="demo-controls demo-radio">
+                <span class="demo-label">show:</span>
+                <label><input type="radio" name="d-name-field" value="name" checked> kanji</label>
+                <label><input type="radio" name="d-name-field" value="romaji"> romaji</label>
+                <label><input type="radio" name="d-name-field" value="english"> english</label>
+                <label><input type="radio" name="d-name-field" value="dic"> DIC code</label>
+                <label><input type="radio" name="d-name-field" value="hide"> hide</label>
+              </div>
+              <div class="demo-controls">
+                <span class="demo-label">anchor:</span>
+                <button data-anchor="hex">hex</button>
+                <button data-anchor="cmyk" class="on">cmyk</button>
+                <span class="demo-hint" style="margin-left:auto">hex anchors against #RRGGBB. cmyk routes through the
+                  active profile first.</span>
+              </div>
+              <div class="demo-output">
+                <div class="demo-swatch-big">
+                  <div class="tile" id="d-name-tile" style="background:#FDC600"></div>
+                  <div class="labels">
+                    <span class="primary" id="d-name-primary">苅安色</span>
+                    <span class="mono" id="d-name-meta">DIC-N804 · ΔE 0.4 [cmyk]</span>
+                  </div>
+                </div>
+              </div>
+              <div class="demo-hint">Flip the anchor: the matched DIC entry can change, because the CMYK route lands at
+                a slightly different Lab than the raw hex.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-name">Accessibility<span class="jp">可読性</span></div>
+          <div class="panel-body">
+            <p>Toggle contrast filters and watch the set narrow. Each tile here is annotated with the WCAG grade earned
+              against white text.</p>
+            <div class="demo" data-demo="a11y">
+              <div class="demo-controls demo-check">
+                <label><input type="checkbox" id="d-a11y-aa"> WCAG AA only</label>
+                <label><input type="checkbox" id="d-a11y-aaa"> WCAG AAA only</label>
+                <label><input type="checkbox" id="d-a11y-wt"> White text only</label>
+                <span class="demo-count" id="d-a11y-count">8 / 8 pass</span>
+              </div>
+              <div class="demo-output" id="d-a11y-out"></div>
+              <div class="demo-hint">AA = 4.5:1 contrast minimum. AAA = 7:1. Combine toggles to narrow further.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-name">Search + sort<span class="jp">検索・並び替え</span></div>
+          <div class="panel-body">
+            <p>Type into the search to filter across all corpus fields (kanji, romaji, hex, DIC code). Click sort
+              buttons to reorder live.</p>
+            <div class="demo" data-demo="searchsort">
+              <div class="demo-controls">
+                <input type="text" id="d-search" placeholder="桜 · coral · #FDC · N804">
+                <span class="demo-label" style="margin-left:14px">sort:</span>
+                <button data-sort="hue" class="on">Hue</button>
+                <button data-sort="light">Light</button>
+                <button data-sort="safety">Safety</button>
+                <span class="demo-count" id="d-ss-count">8 visible</span>
+              </div>
+              <div class="demo-output" id="d-ss-out"></div>
+              <div class="demo-hint">Try typing "桜", "N804", or "#FCC". Sorting reorders without re-filtering.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-name">Palettes<span class="jp">パレット</span></div>
+          <div class="panel-body">
+            <p>Click tiles below to build a 4-color palette, then download as a real GPL or JSON file. These are the
+              same formats the explorers export.</p>
+            <div class="demo" data-demo="palette">
+              <div class="demo-controls">
+                <span class="demo-label">click to add / remove:</span>
+              </div>
+              <div class="demo-output" id="d-pal-bank"></div>
+              <div class="demo-controls">
+                <span class="demo-label">your palette:</span>
+                <span id="d-pal-strip" style="display:inline-flex;gap:3px;min-height:18px"></span>
+                <span class="demo-count" id="d-pal-count">0 swatches</span>
+              </div>
+              <div class="demo-controls">
+                <button data-export="gpl">↓ GPL</button>
+                <button data-export="json">↓ JSON</button>
+                <button data-export="clear">Clear</button>
+              </div>
+              <div class="demo-hint">GPL imports into GIMP, Krita, Inkscape. JSON is the lossless interchange format
+                used between the two explorers.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-name">Reset to defaults<span class="jp">初期化</span></div>
+          <div class="panel-body">
+            <p>Click below to restore every demo above to its factory state. In the real explorers this clears the
+              localStorage UI keys; saved palettes are untouched.</p>
+            <div class="demo" data-demo="reset">
+              <div class="demo-controls">
+                <button id="d-reset" class="on">↺ Reset every demo on this page</button>
+                <span class="demo-hint" id="d-reset-msg" style="margin-left:auto"></span>
+              </div>
+              <div class="demo-hint">Reads <code>data/ui_defaults.json</code> in the real tools. Palettes survive
+                because they live under a separate localStorage key.</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+        <div class="rule"></div>
+
+    <section class="section" id="byo">
+      <div class="eyebrow"><span data-en>Zero Guesswork, Zero Lag</span><span data-ja>画面は軽快に、精度はプロ仕様。</span><span
+          data-zh>後端預先演算，零轉換時間</span></div>
+      <h3>
+        <span data-en>Turns any ICC into a browser-ready lookup table.</span>
+        <span data-ja>任意のICCプロファイルからブラウザ用LUTへの変換機能。</span>
+        <span data-zh>把任何 ICC 轉成瀏覽器可用的查找表。</span>
+      </h3>
+      <p>
+        <span data-en>The browser tool never touches the ICC binary. One Python script does the heavy color math
+          offline and emits small data files the HTML page fetches. Same color engine many prepress tools and FOSS RIPs
+          share (Pillow's LittleCMS binding), same intent (Relative Colorimetric). Interpolation between LUT nodes adds
+          about ΔE 0.3 of drift, well below the threshold of human perception.</span>
+        <span
+          data-ja>ブラウザ側では、面倒なカラーデータの計算を一切行いません。1つのPythonスクリプトが裏側であらかじめ全てのカラー計算を済ませておき、ウェブ画面が読み込むための軽くて小さなデータファイルだけを用意します。多くのプリプレスツールやFOSS
+          RIPが共有する色エンジン（PillowのLittleCMSバインディング）と同じ、同じインテント（相対比色）。LUTノード間の補間で約 ΔE 0.3
+          の誤差が生じますが、人間の知覚閾値を十分下回ります。</span>
+        <span data-zh>前端不直接處理複雜的 ICC 二進位運算。本工具透過單支 Python 腳本在離線時完成所有色彩轉換，僅產出輕量化的前端資料檔。與許多印前工具及 FOSS RIP 共用的色彩引擎（Pillow 內建
+          LittleCMS）與相對色度渲染目的。LUT 節點之間的內插帶來約 ΔE 0.3 的偏差，遠低於人眼可察覺的閾值。</span>
+      </p>
+
+      <div class="steps">
+        <div class="step">
+          <span class="pythonstep">STEP 01</span>
+          <h5>
+            <span data-en>Install Pillow</span>
+            <span data-ja>Pillowをインストール</span>
+            <span data-zh>安裝 Pillow</span>
+          </h5>
+          <p>
+            <span data-en>Run <code>python -m pip install Pillow</code>. That is the only dependency. Pillow ships LittleCMS
+              under the hood.</span>
+            <span data-ja><code>python -m pip install Pillow</code> を実行して Pillow パッケージをインストールします。Pillow には最初から LittleCMS が組み込まれています。</span>
+            <span data-zh>執行 <code>python -m pip install Pillow</code> 安裝 Pillow 套件。Pillow 內部已綁定 LittleCMS。</span>
+          </p>
+        </div>
+        <div class="step">
+          <span class="pythonstep">STEP 02</span>
+          <h5>
+            <span data-en>Drop ICC files</span>
+            <span data-ja>ICCを配置</span>
+            <span data-zh>載入 ICC 檔</span>
+          </h5>
+          <p>
+            <span data-en>Copy any <code>.icc</code> or <code>.icm</code> CMYK profile into <code>icc/</code>. Mimaki
+              3DUJ, FOGRA39, Japan Color, your own measured profile, anything Pillow recognises as a CMYK
+              destination.</span>
+            <span data-ja><code>.icc</code>/<code>.icm</code>CMYKプロファイルを<code>icc/</code>へコピー。Mimaki 3DUJ、FOGRA39、Japan Color、あるいはご自身で測色したプロファイルなど、Pillowが読み込めるCMYK出力形式のファイルであれば、どれでもそのまま使えます。</span>
+            <span data-zh>把任何 <code>.icc</code> 或 <code>.icm</code> CMYK 描述檔複製到 <code>icc/</code>。Mimaki
+              3DUJ、FOGRA39、Japan Color、你自己量測的描述檔，只要是 Pillow 可讀的 CMYK 輸出格式檔皆可。</span>
+          </p>
+        </div>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <span class="pythonstep">STEP 03</span> 
+          <h5>
+            <span data-en>Build the LUTs</span>
+            <span data-ja>LUTを生成</span>
+            <span data-zh>生成查找表</span>
+          </h5>
+          <p>
+            <span data-en><code>python scripts/gen_luts.py</code>. Samples a 17⁴ grid (83,521 points) per profile,
+              writes <code>data/luts/&lt;profile&gt;.lut</code> (~250 KB forward) and <code>.rcmyk.lut</code> (~20 KB
+              reverse). RGB-only profiles are skipped automatically.</span>
+            <span data-ja><code>python scripts/gen_luts.py</code>。プロファイルごとに17⁴ グリッド（83,521
+              点）を標本化し、<code>data/luts/&lt;profile&gt;.lut</code>（順方向 ≈250 KB）と<code>.rcmyk.lut</code>（逆方向 ≈20
+              KB）を出力。RGB専用プロファイルは自動的に除外。</span>
+            <span data-zh><code>python scripts/gen_luts.py</code>。每個描述檔以 17⁴ 網格（83,521 點）取樣，輸出
+              <code>data/luts/&lt;profile&gt;.lut</code>（正向約 250 KB）與 <code>.rcmyk.lut</code>（逆向約 20 KB）。僅 RGB
+              的描述檔會自動跳過。</span>
+          </p>
+        </div>
+      </div>
+
+      <p>
+        <span data-en>That's it. Refresh the browser, Mixo Swatch now sees your new profile in its dropdown. Every
+          CMYK value renders through it live; the ΔE max slider hides anything that drifts too far on the round-trip,
+          giving you the same print-safe set the curated library used to ship offline. Full breakdown of every Python
+          flag, the LUT binary format, and the round-trip safety gate: see <a
+            href="https://github.com/mixocreative/mixoswatch/blob/main/ARCHITECTURE.md" target="_blank" rel="noopener">ARCHITECTURE.md</a> sections 4 through 6.</span>
+        <span data-ja>最後に、ブラウザをリロード（再読み込み）すると、Mixo Swatchのドロップダウンメニューに新しいプロファイルが表示されます。すべてのCMYK値がリアルタイムでレンダリングされ、ΔE上限スライダが往復で誤差の大きい色塊を隠してくれるため、以前のキュレーションライブラリが提供していた印刷安全色集合と同じものが得られます。Pythonパイプライン、LUT形式、往復安全ゲートなどの詳細については、<a
+            href="https://github.com/mixocreative/mixoswatch/blob/main/ARCHITECTURE.md" target="_blank" rel="noopener">ARCHITECTURE.md</a> の第4章から第6章をご参照ください。</span>
+        <span data-zh>最後，重新整理瀏覽器，Mixo Swatch 的下拉選單就會出現你的新描述檔。所有 CMYK 值即時渲染；ΔE 上限滑桿會隱藏往返誤差過大的色塊，提供與離線匯出的精選色庫相同的印刷安全色集合。所有 Python、LUT
+          格式、往返安全閾值的詳細內容請參考：<a href="https://github.com/mixocreative/mixoswatch/blob/main/ARCHITECTURE.md" target="_blank" rel="noopener">ARCHITECTURE.md</a> 第 4 至 6 章。</span>
+      </p>
+    </section>
+
+    <div class="rule"></div>
+
+    <section class="section">
+      <div class="eyebrow">a quiet promise</div>
+      <h3>Local only. No accounts. No tracking.</h3>
+      <p>Everything runs in your browser. ICC profiles and lookup tables sit on your disk. Palettes save to local
+        storage. There is no server to call, no account to make, no analytics. If you close the tab the only state that
+        survives is what your browser saved for you.</p>
+      <div class="callout">
+        <div class="who">honest framing</div>
+        <p>
+          <span data-zh>色差 ΔE 小於 1.0 僅代表「低於肉眼辨識度」，並不等於「完全精準」。列印機終究是列印機。這些工具的作用是在「你所選的顏色」與「數位、紙本印刷、立體3D列印呈現出來的顏色」之間的取得平衡。面對關鍵作品，請務必在最終的實體紙材/材質上進行打樣。</span>
+          <span data-en>A ΔE under 1.0 just means it's "below the limit of human perception". It doesn't mean it's a 100% perfect match. A printer is still a printer. The whole point of these tools is simply to help you find a beautiful balance between the colors you choose on screen and how they actually turn out in digital, flat print, and 3D print formats. For critical work, always do a test print on your final material.</span>
+          <span data-ja>ΔE が1.0未満というのは、あくまで「肉眼での識別限界以下」という意味であり、「100%完全に精密」というわけではありません。プリンターはどこまでいってもプリンターです。このツールの目的は、「あなたが選んだ色」と「デジタル、平面印刷、3Dプリントで実際に表現される色」のバランスをうまく調整することにあります。妥協の許されない重要な作品では、必ず最終の実際の材質（本紙や造形素材）でテスト出力を行ってください。</span>
+        </p>
+          
+      </div>
+    </section>
+
+  </main>
 
 <footer>
-  <a href="README.md">README</a>
-  <a href="ARCHITECTURE.md">Architecture</a>
-  <a href="https://github.com/">Repository</a>
-</footer>
+  <a href="https://github.com/mixocreative/mixoswatch/blob/main/README.md" target="_blank" rel="noopener">README</a>
+  <span class="sep">·</span>
+  <a href="https://github.com/mixocreative/mixoswatch/blob/main/ARCHITECTURE.md" target="_blank" rel="noopener">Architecture</a>
+  <span class="sep">·</span>
+  <a href="https://github.com/mixocreative/mixoswatch" target="_blank" rel="noopener">Repository</a>
+</footer> 
+
+  <script>
+    (() => {
+      // ── Sample dataset (illustrative; not a real ICC round-trip) ────────────
+      // Each swatch carries the fields the real explorers track per cell.
+      const S = [
+        { k: '桜色', r: 'sakura', e: 'Cherry Blossom', d: 'DIC-N915', hex: '#FCC9D2', cmyk: [0, 25, 10, 0], tac: 35, kink: 0, hue: 340, lum: .78, ww: false },
+        { k: '苅安色', r: 'kariyasu', e: 'Kariyasu Yellow', d: 'DIC-N804', hex: '#FDC600', cmyk: [0, 19, 100, 0], tac: 119, kink: 0, hue: 48, lum: .76, ww: false },
+        { k: '山吹色', r: 'yamabuki', e: 'Yamabuki Gold', d: 'DIC-N914', hex: '#FFA631', cmyk: [0, 40, 90, 0], tac: 130, kink: 0, hue: 32, lum: .61, ww: false },
+        { k: '萌黄', r: 'moegi', e: 'Spring Green', d: 'DIC-N913', hex: '#5B8930', cmyk: [60, 15, 90, 0], tac: 165, kink: 0, hue: 90, lum: .36, ww: true },
+        { k: '浅葱色', r: 'asagi', e: 'Pale Cyan', d: 'DIC-N902', hex: '#0093C8', cmyk: [100, 0, 0, 0], tac: 100, kink: 0, hue: 200, lum: .42, ww: true },
+        { k: '臙脂色', r: 'enji', e: 'Crimson', d: 'DIC-N905', hex: '#9D2933', cmyk: [20, 90, 75, 15], tac: 200, kink: 15, hue: 355, lum: .18, ww: true },
+        { k: '藍色', r: 'ai', e: 'Indigo', d: 'DIC-N901', hex: '#264348', cmyk: [80, 40, 30, 70], tac: 220, kink: 70, hue: 190, lum: .06, ww: true },
+        { k: '墨色', r: 'sumi', e: 'Sumi Ink', d: 'DIC-N909', hex: '#27221F', cmyk: [60, 50, 50, 85], tac: 245, kink: 85, hue: 25, lum: .02, ww: true },
+      ];
+      // WCAG contrast vs white
+      S.forEach(s => {
+        s.cr = (1.05) / (s.lum + 0.05);
+        s.aa = s.cr >= 4.5;
+        s.aaa = s.cr >= 7.0;
+      });
+
+      // CMYK pure-channel (100,0,0,0), (0,100,0,0), (0,0,100,0), (0,0,0,100)
+      // approximated under four different press profiles.
+      const PROFILES = {
+        fogra39: ['#0093C8', '#E5004B', '#FFEC00', '#1D1D1B'],
+        japan: ['#009DD9', '#E60039', '#F4E81F', '#100F0F'],
+        swop: ['#008CBE', '#D71C29', '#F2DD00', '#222222'],
+        newspaper: ['#469DBE', '#C24D58', '#D9C940', '#3A3633'],
+      };
+
+      const mkTile = (color, sizePx) => {
+        const t = document.createElement('div');
+        t.className = 'demo-tile';
+        if (sizePx) { t.style.width = t.style.height = sizePx + 'px'; }
+        t.style.background = color;
+        return t;
+      };
+
+      const D = {};
+
+      // ── Profile ──────────────────────────────────────────────────────────────
+      D.profile = root => {
+        const sel = root.querySelector('#d-profile');
+        const out = root.querySelector('#d-profile-out');
+        const paint = () => {
+          out.innerHTML = '';
+          PROFILES[sel.value].forEach((c, i) => {
+            const t = mkTile(c, 28);
+            t.title = ['C 100%', 'M 100%', 'Y 100%', 'K 100%'][i];
+            out.appendChild(t);
+          });
+          const lbl = document.createElement('span');
+          lbl.className = 'demo-label';
+          lbl.style.marginLeft = '12px';
+          lbl.textContent = 'CMYK pure C / M / Y / K';
+          out.appendChild(lbl);
+        };
+        sel.onchange = paint;
+        paint();
+      };
+
+      // ── Step + cell size ─────────────────────────────────────────────────────
+      D['step-cell'] = root => {
+        const out = root.querySelector('#d-step-out');
+        const sl = root.querySelector('#d-cell');
+        const sv = root.querySelector('#d-cell-val');
+        const ct = root.querySelector('#d-step-count');
+        let step = 10;
+        const pal10 = ['#FFEC00', '#FFA631', '#E5004B', '#9C275A', '#3B4DA6', '#0093C8', '#5B8930', '#A85A55'];
+        const pal5 = pal10.concat(['#FCC9D2', '#FDC600', '#5B5D32', '#264348', '#A5BA93', '#9D2933', '#C8BFB2', '#27221F']);
+        const paint = () => {
+          const pal = step === 10 ? pal10 : pal5;
+          const cs = +sl.value;
+          sv.textContent = cs + ' px';
+          ct.textContent = pal.length + ' tiles';
+          out.innerHTML = '';
+          pal.forEach(c => {
+            const t = mkTile(c, cs);
+            t.style.minWidth = t.style.minHeight = cs + 'px';   // override .demo-tile min so every tile renders even at small cs
+            out.appendChild(t);
+          });
+        };
+        root.querySelectorAll('button[data-step]').forEach(b => {
+          b.onclick = () => {
+            step = +b.dataset.step;
+            root.querySelectorAll('button[data-step]').forEach(x => x.classList.toggle('on', x === b));
+            paint();
+          };
+        });
+        sl.oninput = paint;
+        paint();
+      };
+
+      // ── CMYK / TAC ───────────────────────────────────────────────────────────
+      D.tac = root => {
+        const sl = root.querySelector('#d-tac');
+        const sv = root.querySelector('#d-tac-val');
+        const ct = root.querySelector('#d-tac-count');
+        const out = root.querySelector('#d-tac-out');
+        out.innerHTML = '';
+        const tiles = S.map(s => {
+          const t = mkTile(s.hex, 28);
+          t.title = `${s.r} · TAC ${s.tac}%`;
+          out.appendChild(t);
+          return [t, s];
+        });
+        const paint = () => {
+          const max = +sl.value;
+          sv.textContent = max + '%';
+          let pass = 0;
+          tiles.forEach(([t, s]) => {
+            const ok = s.tac <= max;
+            t.classList.toggle('fade', !ok);
+            if (ok) pass++;
+          });
+          ct.textContent = pass + ' / ' + S.length + ' pass';
+        };
+        sl.oninput = paint;
+        paint();
+      };
+
+      // ── K-tier ───────────────────────────────────────────────────────────────
+      D.ktier = root => {
+        const out = root.querySelector('#d-tier-out');
+        const ct = root.querySelector('#d-tier-count');
+        out.innerHTML = '';
+        const tiles = S.map(s => {
+          const t = mkTile(s.hex, 28);
+          t.title = `${s.r} · K ${s.kink}%`;
+          out.appendChild(t);
+          return [t, s];
+        });
+        let tier = 3;
+        const cap = t => t === 1 ? 25 : (t === 2 ? 50 : 100);
+        const paint = () => {
+          const k = cap(tier);
+          let pass = 0;
+          tiles.forEach(([t, s]) => {
+            const ok = s.kink <= k;
+            t.classList.toggle('hide', !ok);
+            if (ok) pass++;
+          });
+          ct.textContent = pass + ' / ' + S.length + ' visible';
+        };
+        root.querySelectorAll('button[data-tier]').forEach(b => {
+          b.onclick = () => {
+            tier = +b.dataset.tier;
+            root.querySelectorAll('button[data-tier]').forEach(x => x.classList.toggle('on', +x.dataset.tier === tier));
+            paint();
+          };
+        });
+        paint();
+      };
+
+      // ── Named filter ─────────────────────────────────────────────────────────
+      D.namefilter = root => {
+        const out = root.querySelector('#d-nf-out');
+        const ct = root.querySelector('#d-nf-count');
+        const named = {
+          sakura: ['jp-trad', 'html'], kariyasu: ['jp-trad'], yamabuki: ['jp-trad'],
+          moegi: ['jp-trad'], asagi: ['jp-trad', 'html'], enji: ['jp-trad'],
+          ai: ['jp-trad', 'zh-trad'], sumi: ['jp-trad'],
+        };
+        out.innerHTML = '';
+        const tiles = S.map(s => {
+          const t = mkTile(s.hex, 28);
+          t.title = s.r + ' · in: ' + named[s.r].join(', ');
+          out.appendChild(t);
+          return [t, s];
+        });
+        const checks = root.querySelectorAll('input[type=checkbox]');
+        const paint = () => {
+          const on = new Set([...checks].filter(c => c.checked).map(c => c.value));
+          let pass = 0;
+          tiles.forEach(([t, s]) => {
+            const ok = named[s.r].some(lib => on.has(lib));
+            t.classList.toggle('hide', !ok);
+            if (ok) pass++;
+          });
+          ct.textContent = pass + ' / ' + S.length + ' named';
+        };
+        checks.forEach(c => c.onchange = paint);
+        paint();
+      };
+
+      // ── Naming · anchor + field radio ────────────────────────────────────────
+      // Illustrates how the matched corpus entry can flip when you change
+      // anchor from hex to cmyk (the LUT route lands at a slightly different
+      // Lab than the raw hex Lab).
+      D.naming = root => {
+        const primary = root.querySelector('#d-name-primary');
+        const meta = root.querySelector('#d-name-meta');
+        const ENTRIES = {
+          hex: { kanji: '山吹色', romaji: 'yamabuki-iro', english: 'Yamabuki Gold', dic: 'DIC-N914', de: 1.8 },
+          cmyk: { kanji: '苅安色', romaji: 'kariyasu-iro', english: 'Kariyasu Yellow', dic: 'DIC-N804', de: 0.4 },
+        };
+        const FIELDMAP = {
+          name: e => [e.kanji, 'var(--jp)'],
+          romaji: e => [e.romaji, 'var(--display)'],
+          english: e => [e.english, 'var(--display)'],
+          dic: e => [e.dic, 'var(--mono)'],
+          hide: () => ['', 'var(--display)'],
+        };
+        let anchor = 'cmyk';
+        let field = 'name';
+        const paint = () => {
+          const e = ENTRIES[anchor];
+          const [text, fam] = FIELDMAP[field](e);
+          primary.textContent = text;
+          primary.style.display = (field === 'hide') ? 'none' : '';
+          primary.style.fontFamily = fam;
+          meta.textContent = `${e.dic} · ΔE ${e.de.toFixed(1)} [${anchor}]`;
+        };
+        root.querySelectorAll('input[name=d-name-field]').forEach(r => {
+          r.onchange = () => { field = r.value; paint(); };
+        });
+        root.querySelectorAll('button[data-anchor]').forEach(b => {
+          b.onclick = () => {
+            anchor = b.dataset.anchor;
+            root.querySelectorAll('button[data-anchor]').forEach(x => x.classList.toggle('on', x === b));
+            paint();
+          };
+        });
+        paint();
+      };
+
+      // ── Accessibility (WCAG AA / AAA / white text) ───────────────────────────
+      D.a11y = root => {
+        const out = root.querySelector('#d-a11y-out');
+        const ct = root.querySelector('#d-a11y-count');
+        out.innerHTML = '';
+        const tiles = S.map(s => {
+          const t = mkTile(s.hex, 38);
+          t.style.display = 'inline-flex';
+          t.style.alignItems = 'center';
+          t.style.justifyContent = 'center';
+          t.style.color = s.ww ? '#fff' : '#111';
+          t.style.fontFamily = 'IBM Plex Mono, monospace';
+          t.style.fontSize = '11px';
+          t.style.fontWeight = '500';
+          t.textContent = s.cr.toFixed(1);
+          t.title = `${s.r} · CR ${s.cr.toFixed(2)} · ${s.aaa ? 'AAA' : s.aa ? 'AA' : 'fail'}`;
+          out.appendChild(t);
+          return [t, s];
+        });
+        const aa = root.querySelector('#d-a11y-aa');
+        const aaa = root.querySelector('#d-a11y-aaa');
+        const wt = root.querySelector('#d-a11y-wt');
+        const paint = () => {
+          let pass = 0;
+          tiles.forEach(([t, s]) => {
+            let ok = true;
+            if (aa.checked && !s.aa) ok = false;
+            if (aaa.checked && !s.aaa) ok = false;
+            if (wt.checked && !s.ww) ok = false;
+            t.classList.toggle('hide', !ok);
+            if (ok) pass++;
+          });
+          ct.textContent = pass + ' / ' + S.length + ' pass';
+        };
+        [aa, aaa, wt].forEach(c => c.onchange = paint);
+        paint();
+      };
+
+      // ── Search + sort ────────────────────────────────────────────────────────
+      D.searchsort = root => {
+        const inp = root.querySelector('#d-search');
+        const out = root.querySelector('#d-ss-out');
+        const ct = root.querySelector('#d-ss-count');
+        let sort = 'hue';
+        const paint = () => {
+          const q = inp.value.toLowerCase().trim();
+          let list = S.filter(s => !q || [s.k, s.r, s.e, s.d, s.hex].join(' ').toLowerCase().includes(q));
+          if (sort === 'hue') list.sort((a, b) => a.hue - b.hue);
+          else if (sort === 'light') list.sort((a, b) => a.lum - b.lum);
+          else if (sort === 'safety') list.sort((a, b) => a.tac - b.tac);
+          out.innerHTML = '';
+          if (list.length === 0) {
+            const em = document.createElement('div');
+            em.className = 'demo-empty';
+            em.textContent = 'no match · try 桜 · coral · N804 · #FCC';
+            out.appendChild(em);
+          } else {
+            list.forEach(s => {
+              const t = mkTile(s.hex, 28);
+              t.title = s.r;
+              out.appendChild(t);
+            });
+          }
+          ct.textContent = list.length + ' visible';
+        };
+        inp.oninput = paint;
+        root.querySelectorAll('button[data-sort]').forEach(b => {
+          b.onclick = () => {
+            sort = b.dataset.sort;
+            root.querySelectorAll('button[data-sort]').forEach(x => x.classList.toggle('on', x === b));
+            paint();
+          };
+        });
+        paint();
+      };
+
+      // ── Palette (real GPL / JSON download) ───────────────────────────────────
+      D.palette = root => {
+        const bank = root.querySelector('#d-pal-bank');
+        const strip = root.querySelector('#d-pal-strip');
+        const ct = root.querySelector('#d-pal-count');
+        let active = [];
+        const paintBank = () => {
+          bank.innerHTML = '';
+          S.forEach(s => {
+            const t = mkTile(s.hex, 28);
+            t.style.cursor = 'pointer';
+            t.title = `${s.k} · ${s.hex} · click to ${active.includes(s) ? 'remove' : 'add'}`;
+            if (active.includes(s)) {
+              t.style.boxShadow = 'inset 0 0 0 2px var(--bg2), inset 0 0 0 4px var(--accent)';
+            }
+            t.onclick = () => {
+              if (active.includes(s)) active = active.filter(x => x !== s);
+              else if (active.length < 6) active.push(s);
+              paintBank(); paintStrip();
+            };
+            bank.appendChild(t);
+          });
+        };
+        const paintStrip = () => {
+          strip.innerHTML = '';
+          active.forEach(s => {
+            const chip = document.createElement('span');
+            chip.style.cssText = `display:inline-block;width:18px;height:18px;border-radius:3px;border:1px solid var(--line2);background:${s.hex}`;
+            strip.appendChild(chip);
+          });
+          ct.textContent = active.length + (active.length === 1 ? ' swatch' : ' swatches');
+        };
+        const download = (name, body, mime) => {
+          const blob = new Blob([body], { type: mime || 'text/plain' });
+          const a = Object.assign(document.createElement('a'), { href: URL.createObjectURL(blob), download: name });
+          a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+        };
+        root.querySelectorAll('button[data-export]').forEach(b => {
+          b.onclick = () => {
+            const act = b.dataset.export;
+            if (act === 'clear') { active = []; paintBank(); paintStrip(); return; }
+            if (!active.length) { alert('Pick at least one swatch first.'); return; }
+            if (act === 'gpl') {
+              let body = 'GIMP Palette\nName: mixoswatch demo\nColumns: 8\n# Generated by mixoswatch landing demo\n';
+              active.forEach(s => {
+                const r = parseInt(s.hex.slice(1, 3), 16),
+                  g = parseInt(s.hex.slice(3, 5), 16),
+                  bl = parseInt(s.hex.slice(5, 7), 16);
+                body += `${String(r).padStart(3)} ${String(g).padStart(3)} ${String(bl).padStart(3)}\t${s.r}\n`;
+              });
+              download('mixoswatch-demo.gpl', body);
+            }
+            if (act === 'json') {
+              const payload = {
+                format: 'cmyk.palettes/v1',
+                exported: new Date().toISOString(),
+                palettes: [{
+                  id: 'demo-' + Date.now().toString(36),
+                  name: 'mixoswatch demo',
+                  swatches: active.map(s => ({
+                    C: s.cmyk[0], M: s.cmyk[1], Y: s.cmyk[2], K: s.cmyk[3],
+                    hex: s.hex,
+                    name_ja: s.k, romaji: s.r,
+                    dic_code: s.d,
+                  })),
+                }],
+              };
+              download('mixoswatch-demo.palettes.json', JSON.stringify(payload, null, 2), 'application/json');
+            }
+          };
+        });
+        paintBank(); paintStrip();
+      };
+
+      // ── Reset every demo above ──────────────────────────────────────────────
+      D.reset = root => {
+        const btn = root.querySelector('#d-reset');
+        const msg = root.querySelector('#d-reset-msg');
+        btn.onclick = () => {
+          // Restore form-control defaults declared in HTML.
+          document.querySelectorAll('.demo input[type=range]').forEach(el => el.value = el.defaultValue);
+          document.querySelectorAll('.demo input[type=text]').forEach(el => el.value = '');
+          document.querySelectorAll('.demo input[type=checkbox]').forEach(el => el.checked = el.defaultChecked);
+          document.querySelectorAll('.demo input[type=radio]').forEach(el => el.checked = el.defaultChecked);
+          document.querySelectorAll('.demo select').forEach(el => el.selectedIndex = 0);
+          document.querySelectorAll('.demo button[data-step]').forEach(el => el.classList.toggle('on', el.dataset.step === '10'));
+          document.querySelectorAll('.demo button[data-tier]').forEach(el => el.classList.toggle('on', el.dataset.tier === '3'));
+          document.querySelectorAll('.demo button[data-anchor]').forEach(el => el.classList.toggle('on', el.dataset.anchor === 'cmyk'));
+          document.querySelectorAll('.demo button[data-sort]').forEach(el => el.classList.toggle('on', el.dataset.sort === 'hue'));
+          // Re-init every demo so its internal state matches the reset DOM.
+          document.querySelectorAll('.demo').forEach(d => {
+            if (d.dataset.demo === 'reset') return;
+            D[d.dataset.demo]?.(d);
+          });
+          msg.textContent = 'reset · ' + new Date().toLocaleTimeString();
+          setTimeout(() => { msg.textContent = ''; }, 2500);
+        };
+      };
+
+      // Boot.
+      document.querySelectorAll('.demo').forEach(d => D[d.dataset.demo]?.(d));
+    })();
+
+    // ── Tri-lingual switch ────────────────────────────────────────────────────
+    (() => {
+      const KEY = 'mixoLang_v1';
+      const html = document.documentElement;
+      const sw = document.getElementById('langSwitch');
+      const valid = new Set(['en', 'ja', 'zh']);
+      const apply = (lang) => {
+        if (!valid.has(lang)) lang = 'en';
+        html.setAttribute('lang', lang);
+        sw.querySelectorAll('button').forEach(b =>
+          b.classList.toggle('on', b.dataset.lang === lang));
+        try { localStorage.setItem(KEY, lang); } catch { }
+      };
+      sw.querySelectorAll('button').forEach(b => {
+        b.onclick = () => apply(b.dataset.lang);
+      });
+      // Detect initial language from the browser. Explicit user choice via the
+      // switch wins on subsequent visits via localStorage. Fall back to English.
+      let initial = null;
+      try { initial = localStorage.getItem(KEY); } catch { }
+      if (!valid.has(initial)) {
+        const langs = (navigator.languages && navigator.languages.length)
+          ? navigator.languages : [navigator.language || 'en'];
+        initial = 'en';
+        for (const raw of langs) {
+          const tag = String(raw).toLowerCase();
+          if (tag.startsWith('ja')) { initial = 'ja'; break; }
+          // Treat all Chinese locales as Traditional since that is what we ship.
+          if (tag.startsWith('zh')) { initial = 'zh'; break; }
+          if (tag.startsWith('en')) { initial = 'en'; break; }
+        }
+      }
+      apply(initial);
+    })();
+  </script>
 
 </body>
+
 </html>
