@@ -903,7 +903,7 @@ async function resetUIToDefaults() {
   await rebuildAll();   // re-derive everything against current profile
 }
 
-// -- sRGB ↔ Lab math --------------------------------------------------------
+// -- sRGB <-> Lab math --------------------------------------------------------
 function srgb2lin(u) { u/=255; return u<=0.04045? u/12.92 : Math.pow((u+0.055)/1.055, 2.4); }
 function rgb2xyz(r,g,b){
   const R=srgb2lin(r), G=srgb2lin(g), B=srgb2lin(b);
@@ -911,12 +911,36 @@ function rgb2xyz(r,g,b){
           0.2126729*R + 0.7151522*G + 0.0721750*B,
           0.0193339*R + 0.1191920*G + 0.9503041*B];
 }
-const Xn=0.95047, Yn=1.0, Zn=1.08883;
+// Whitepoints
+const WP_D65 = { Xn: 0.95047,  Yn: 1.0, Zn: 1.08883 };
+const WP_D50 = { Xn: 0.96422,  Yn: 1.0, Zn: 0.82521 };
+// ICC linear Bradford CAT D65 -> D50 (ISO 15076-1 Annex E.3)
+const M_BRAD_D65_D50 = [
+  [ 1.0478112,  0.0228866, -0.0501270],
+  [ 0.0295424,  0.9904844, -0.0170491],
+  [-0.0092345,  0.0150436,  0.7521316]
+];
 function f_(t){ return t > 0.008856 ? Math.cbrt(t) : (7.787*t + 16/116); }
-function rgb2lab(r,g,b){
-  const [X,Y,Z]=rgb2xyz(r,g,b);
-  const fx=f_(X/Xn), fy=f_(Y/Yn), fz=f_(Z/Zn);
+function _xyzToLab(X,Y,Z,wp){
+  const fx=f_(X/wp.Xn), fy=f_(Y/wp.Yn), fz=f_(Z/wp.Zn);
   return [116*fy - 16, 500*(fx-fy), 200*(fy-fz)];
+}
+function rgb2lab_d65(r,g,b){
+  const [X,Y,Z]=rgb2xyz(r,g,b);
+  return _xyzToLab(X,Y,Z,WP_D65);
+}
+function rgb2lab_d50(r,g,b){
+  const [X,Y,Z]=rgb2xyz(r,g,b);
+  const M=M_BRAD_D65_D50;
+  const X2 = M[0][0]*X + M[0][1]*Y + M[0][2]*Z;
+  const Y2 = M[1][0]*X + M[1][1]*Y + M[1][2]*Z;
+  const Z2 = M[2][0]*X + M[2][1]*Y + M[2][2]*Z;
+  return _xyzToLab(X2,Y2,Z2,WP_D50);
+}
+// Active-mode dispatcher: reads LAB_MODE global. Default = d50 (print-first).
+let LAB_MODE = 'd50';
+function rgb2lab(r,g,b){
+  return LAB_MODE === 'd50' ? rgb2lab_d50(r,g,b) : rgb2lab_d65(r,g,b);
 }
 function luminance(r,g,b){
   // WCAG relative luminance - same coefficients as Y in XYZ
