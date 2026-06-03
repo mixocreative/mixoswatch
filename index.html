@@ -1429,9 +1429,10 @@
       </h1>
       <p class="lede">
         <span data-en>One browser tool for designing with CMYK through real ICC profiles. Live exploration with a
-          ΔE max filter for round-trip safety. No upload. No telemetry.</span>
-        <span data-ja>実際のICCプロファイルを通してCMYK設計を行う、小さなブラウザツール。ライブ探索と、往復安全性のためのΔE上限フィルタ。アップロード不要、計測なし。</span>
-        <span data-zh>單一輕量瀏覽器工具，透過真實 ICC 描述檔處理 CMYK 設計。可即時探索並提供 ΔE 上限篩選確保往返色彩安全。不上傳、不追蹤。</span>
+          dE max filter for round-trip safety. Interface in English / 日本語 / 繁體中文 (auto-detected, switchable in
+          the top-right). No upload. No telemetry.</span>
+        <span data-ja>実際のICCプロファイルを通してCMYK設計を行う、小さなブラウザツール。ライブ探索と、往復安全性のためのΔE上限フィルタ。UIはEnglish / 日本語 / 繁體中文に対応（自動判定、右上で切替）。アップロード不要、計測なし。</span>
+        <span data-zh>單一輕量瀏覽器工具，透過真實 ICC 描述檔處理 CMYK 設計。可即時探索並提供 dE 上限篩選確保往返色彩安全。介面支援 English / 日本語 / 繁體中文（自動偵測，可於右上切換）。不上傳、不追蹤。</span>
       </p>
       <nav class="tools" aria-label="Choose a tool">
         <a class="tool" href="app/mixo-swatch.html">
@@ -1877,7 +1878,7 @@
                 <span style="font-family:var(--mono);font-size:11px;color:var(--accent)">zh-trad</span> &nbsp;
                 <span style="font-family:var(--jp);font-size:12.5px;color:var(--text)">中国の伝統色 · 526色</span>
                 <span class="gloss"
-                  data-en="526 traditional Chinese colors sourced from the 1957 Chinese Academy of Science color dictionary (mirrored on color-term.com). Each entry has hanzi, pinyin, hex, and derived CMYK.">526 traditional Chinese colors sourced from the 1957 Chinese Academy of Science color dictionary (mirrored on color-term.com). Each entry has hanzi, pinyin, hex, and derived CMYK.</span>
+                  data-en="526 traditional Chinese colors sourced from the 1957 Chinese Academy of Science color dictionary (mirrored on color-term.com). Each entry carries the Chinese character form (name_zh, Traditional), pinyin, hex, and derived CMYK.">526 traditional Chinese colors sourced from the 1957 Chinese Academy of Science color dictionary (mirrored on color-term.com). Each entry carries the Chinese character form (name_zh, Traditional), pinyin, hex, and derived CMYK.</span>
                 <span class="gloss"
                   data-ja="1957 年中国科学院色名辞典に由来する中国の伝統色 526 色 (color-term.com にミラー)。各エントリは漢字・拼音・hex・派生 CMYK を保持。">1957 年中国科学院色名辞典に由来する中国の伝統色 526 色 (color-term.com にミラー)。各エントリは漢字・拼音・hex・派生 CMYK を保持。</span>
                 <span class="gloss"
@@ -1901,10 +1902,11 @@
         <span data-zh>UI 說明</span>
       </h3>
       <p>
-        <span data-en>Both tools share the same sidebar grammar. Each panel below is a working mini-demo. Drag sliders,
-          flip switches, click buttons. See what changes.</span>
-        <span data-ja>両ツールは同じサイドバー構文を共有。下記の各パネルは動作する小デモ。スライダーを動かし、スイッチを切り替え、ボタンを押し、変化を確かめてほしい。</span>
-        <span data-zh>兩個工具共享相同的側欄文法。下方每個面板都是可運作的小型示範。拖曳滑桿、切換開關、點按按鈕，觀察變化。</span>
+        <span data-en>Mixo Swatch's sidebar is grouped into four steps (profile, narrow the set, pick + name, sort +
+          view). Each panel below is a working mini-demo of one control. Drag sliders, flip switches, click buttons.
+          See what changes.</span>
+        <span data-ja>Mixo Swatchのサイドバーは4ステップ（プロファイル、絞り込み、選択と命名、並び替えと表示）で構成。下記の各パネルは動作する小デモ。スライダーを動かし、スイッチを切り替え、ボタンを押し、変化を確かめてほしい。</span>
+        <span data-zh>Mixo Swatch 側欄分為四步驟（描述檔、縮小範圍、挑選與命名、排序與檢視）。下方每個面板都是一個控件的可運作小型示範。拖曳滑桿、切換開關、點按按鈕，觀察變化。</span>
       </p>
       <div class="panels">
 
@@ -1934,7 +1936,8 @@
           <div class="panel-name">Step / cell size<span class="jp">解像度</span></div>
           <div class="panel-body">
             <p>Step controls how dense the lattice is. Cell size controls how big each tile is drawn. Both work live, no
-              rebuild needed.</p>
+              rebuild needed. Ships with <b>step 20 / cell 80 px</b> so the first paint is fast and every label is
+              legible; drop to step 10 or 5 when you want to explore denser samples.</p>
             <div class="demo" data-demo="step-cell">
               <div class="demo-controls">
                 <span class="demo-label">step:</span>
@@ -1956,7 +1959,8 @@
           <div class="panel-name">CMYK range + TAC<span class="jp">範囲</span></div>
           <div class="panel-body">
             <p>Drag the slider to enforce a press limit. Tiles that exceed total ink coverage fade out of the visible
-              set.</p>
+              set. Ships with <b>TAC 240% + K range 0-80%</b> for a conservative coated baseline; the preset row
+              jumps to 260 / 300 / 330 / 350 / 220 for newsprint, SWOP, FOGRA39, Japan Color, and Mimaki 3DUJ.</p>
             <div class="demo" data-demo="tac">
               <div class="demo-controls">
                 <span class="demo-label">TAC ≤</span>
@@ -1998,7 +2002,7 @@
               <div class="demo-controls demo-check">
                 <label><input type="checkbox" value="jp-trad" checked> jp-trad</label>
                 <label><input type="checkbox" value="html" checked> html</label>
-                <label><input type="checkbox" value="zh-trad"> zh-trad</label>
+                <label><input type="checkbox" value="zh-trad" checked> zh-trad</label>
                 <span class="demo-count" id="d-nf-count">5 / 8 named</span>
               </div>
               <div class="demo-output" id="d-nf-out"></div>
@@ -2083,10 +2087,19 @@
         </div>
 
         <div class="panel">
-          <div class="panel-name">Palettes<span class="jp">パレット</span></div>
+          <div class="panel-name">Palettes panel + Hue x Light<span class="jp">パレット枠</span></div>
+          <div class="panel-body">
+            <p>The Palettes panel sits between the top bar and the swatch grid as a collapsable button row (no chevron
+              - a clear "Open palettes" / "Close palettes" accent button). The Hue x Light sort option renders the 18
+              x 10 hue-by-light bucket map inside the same panel; selecting it auto-opens the panel.</p>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-name">Palette export<span class="jp">書き出し</span></div>
           <div class="panel-body">
             <p>Click tiles below to build a 4-color palette, then download as a real GPL or JSON file. These are the
-              same formats the explorers export.</p>
+              same formats Mixo Swatch exports (alongside ASE, PNG labelled, PNG pure, and a per-swatch ZIP).</p>
             <div class="demo" data-demo="palette">
               <div class="demo-controls">
                 <span class="demo-label">click to add / remove:</span>
@@ -2103,7 +2116,7 @@
                 <button data-export="clear">Clear</button>
               </div>
               <div class="demo-hint">GPL imports into GIMP, Krita, Inkscape. JSON is the lossless interchange format
-                used between the two explorers.</div>
+                Mixo Swatch reads back via "Import .json".</div>
             </div>
           </div>
         </div>

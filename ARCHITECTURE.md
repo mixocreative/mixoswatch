@@ -534,24 +534,55 @@ opening individual library dialogs.
 ### 6.5 UI defaults + reset (`data/ui_defaults.json`)
 
 The HTML ships with a single `data/ui_defaults.json` that controls
-the factory defaults applied on first run:
+the factory defaults applied on first run. Current shipped values:
 
 ```json
 {
   "cmyk_explorer": {
-    "step": 10, "cell_size": 48, "view_mode": "grid",
-    "sort_mode": "hue", "k_tier": 3, "named_filter": "all",
-    "name_tolerance": 0,
+    "step": 20, "cell_size": 80, "view_mode": "grid",
+    "sort_mode": "hue", "k_tier": 3, "named_filter": "any",
+    "wcag_aa": false, "wcag_aaa": false,
+    "white_text_only": false, "black_text_only": false,
+    "search": "",
+    "cmyk_range": { "c": [0,100], "m": [0,100], "y": [0,100], "k": [0,80] },
+    "tac_max": 240,
+    "delta_e_max": 0.6,
     "default_profile_match": "FOGRA39",
     "active_palette_id": null,
+    "lab_mode": "d50",
+    "gamut_safe_only": false,
+    "palette_panel_open": false,
+    "ui_lang": "auto",
     "corpora_prefs": {
-      "jp-trad": { "display": "name_ja", "anchor": "hex" },
-      "html":    { "display": "name_en", "anchor": "hex" },
-      "zh-trad": { "display": "name_zh", "anchor": "hex" }
+      "_global": { "anchor": "cmyk", "tolerance": 5.5 },
+      "jp-trad": { "display": "name_ja" },
+      "html":    { "display": "name_en" },
+      "zh-trad": { "display": "name_zh" }
     }
   }
 }
 ```
+
+**Default-state intent.** Factory defaults are tuned for the print-first
+workflow on a coated press:
+
+- `step: 20` and `cell_size: 80` keep the first paint fast (<1300 swatches)
+  and labels legible.
+- `tac_max: 240` snaps to a conservative coated-uncoated bracket; the
+  per-profile presets (260 / 300 / 330 / 350) override.
+- `delta_e_max: 0.6` hides any swatch the active profile cannot round-trip
+  within 0.6 dE - tight by intent, so the user immediately sees only
+  press-safe swatches and widens the slider as needed.
+- `cmyk_range.k: [0,80]` discards K=85-100 which are functionally identical
+  to pure black on most coated presses and rarely useful for brand work.
+- `named_filter: "any"` plus the per-library checkboxes (all on by default)
+  surface only swatches that hit a named entry in at least one corpus -
+  paired with `tolerance: 5.5` this keeps the grid useful out of the box.
+- `lab_mode: "d50"` mirrors the ICC Profile Connection Space whitepoint
+  used by Photoshop / InDesign Info panel readings.
+- `ui_lang: "auto"` reads `navigator.language` on first run: `ja*` -> ja,
+  `zh*` -> zh-Hant, anything else -> en. Persisted under
+  `localStorage['ui_lang']` once the user picks from the topbar menu.
 
 **localStorage key: `cmykUIState_v2`.** The tool writes all UI state
 to this key. On first load (key absent), defaults from `ui_defaults.json`
@@ -582,7 +613,42 @@ The **"Reset UI to defaults"** sidebar button:
 Palette localStorage keys (`cmykPalettes_v1`) are **never** touched by
 the reset.
 
-### 6.6 Null-active palette
+### 6.6 UI internationalisation (en / ja / zh-Hant)
+
+The tool ships a built-in i18n layer covering every sidebar label,
+top-bar button, palette-panel string, and dynamic mode badge.
+
+**Languages supported:** English (`en`), Japanese (`ja`), Traditional
+Chinese (`zh`, rendered with `<html lang="zh-Hant">`).
+
+**Auto-detect rule.** On first run the page reads
+`navigator.languages` (falls back to `navigator.language`) and matches
+the prefix: `ja*` -> `ja`, `zh*` (any variant) -> `zh`, anything else ->
+`en`. The detected value is what the UI displays; the user's explicit
+choice in the top-right dropdown (`#langPickerBtn`) overrides and
+persists under `localStorage['ui_lang']`. Selecting "Auto" restores the
+detection.
+
+**Markup contract.** Every translatable element carries a
+`data-i18n="<key>"` attribute. `applyI18n()` walks every such element on
+language switch and replaces its `textContent` with `t(key)`. Elements
+with state-dependent text (the Lab mode badge, the palette open/close
+button) are updated by hand inside `applyI18n` after the walk.
+
+**Translation table.** `I18N` is an in-script object keyed by lang code,
+with one entry per `data-i18n` key. Adding a translation = adding the
+key + string to all three languages. Keys are namespaced
+(`sec.tac`, `sort.huelight`, `tier.t1.name`, etc.). Untranslated keys
+fall back to the `en` value, then to the original `textContent` -
+nothing ever renders blank.
+
+**Re-render on switch.** `applyI18n` calls `buildNamingUI()` and
+`buildFilterUI()` so dynamically-built corpus rows (which bake corpus
+`label.{en|ja|zh}` into strings at build time) refresh in the new
+language. The currently-active language is read from `UI_LANG` whenever
+those builders run.
+
+### 6.7 Null-active palette
 
 `activeId === null` is a first-class state in the HTML. The palette
 dropdown carries a "no palette selected" placeholder. Select-mode
@@ -657,33 +723,67 @@ Below the main grid. See §5 for the renderer details.
 
 **Hue x Light** is not a separate view mode. It is a sort option in the
 **Sort by** row: selecting "Hue x Light" renders the 18 hue x 10 light
-bucket map inline within the grid area. Cells are responsive, shrink-to-fit
-when viewport narrow. Consolidating it into Sort by removes the mode-switch
-split and lets the user combine Hue x Light layout with any active filter
-set.
+bucket map inline into the Palettes panel body (`#pmWrap`). Both
+non-grid views (Palettes + Hue x Light) auto-open the Palettes panel via
+`_ensurePalettePanelOpen()` so the rendered content is visible. Cells are
+responsive and shrink-to-fit when the viewport is narrow.
 
 **Palettes panel.** The Palettes block and the palette-manager (`pm-wrap`)
 are merged into a single collapsable panel that sits above the grid. The
-panel is collapsed by default; clicking the palette header or a disclosure
-triangle expands it.
+panel is collapsed by default. The header is a clear button row: title on
+the left, a high-contrast accent button (`#ppAction`) on the right
+labelled "Open palettes" / "Close palettes" - the legacy disclosure
+triangle (`.chev`) was removed because the affordance was too subtle.
+
+**Hue x Light lives inside the Palettes panel body.** The Hue x Light sort
+option renders into `#pmWrap`, which sits inside `palettePanelBody`.
+Selecting the "Hue x Light" sort button (or the Palettes view) auto-opens
+the palette panel via `_ensurePalettePanelOpen()` so the rendered map is
+visible. The grid swatch area + greyscale strips are hidden while
+viewMode is `huelight` or `palettes`.
 
 ### 7.5 Filters
 
 Applied in `filtered()`:
-- CMYK range sliders (4 channels x min/max)
-- TAC limit slider (default 240%)
-- K-tier (default Tier 3 = all)
-- **ΔE max** slider: hides swatches whose round-trip `delta_e_print`
-  exceeds the threshold. This is the surviving round-trip safety
-  mechanism for any selected profile, including Mimaki 3DUJ.
-- Named source pills (All / Any named / per-library checkboxes)
-- Name tolerance slider (ΔE allowance for non-closest swatches to also
-  display the name)
-- WCAG AA / AAA toggles
-- White-text-only / Black-text-only toggles
-- Search box (case-insensitive substring against all name fields + hex)
+- CMYK range sliders (4 channels x min/max). K factory default
+  `[0, 80]`; the other three default `[0, 100]`.
+- TAC limit slider (factory default 240%; per-profile presets snap)
+- K-tier (factory default Tier 3 = all)
+- **dE max** slider: hides swatches whose round-trip `delta_e_print`
+  exceeds the threshold. Factory default 0.6 dE (tight, surfaces only
+  press-safe swatches on the active profile - including Mimaki 3DUJ).
+  This is the surviving round-trip safety mechanism.
+- Named source pills (factory default `Any named`; per-library checkboxes
+  all on by default)
+- Name tolerance slider (dE allowance for non-closest swatches to also
+  display the name; factory default 5.5)
+- WCAG AA / AAA toggles (all OFF by default)
+- White-text-only / Black-text-only toggles (all OFF by default)
+- Search box (case-insensitive substring against all name fields + hex;
+  140 ms debounced to avoid per-keystroke render churn)
 
-Sort: hue, light, TAC, cyan-only, chroma, safety (round-trip ΔE).
+Sort: hue (default), light, TAC, cyan-only, chroma, safety (round-trip
+dE), Hue x Light.
+
+**Panel-input lag mitigation.**
+- `_debouncedSearch()` collapses keystroke bursts (140 ms).
+- `_scheduleRender()` rAF-coalesces multiple `onFilter`/sort/checkbox
+  events into one paint per frame.
+- `_schedulePersist()` rAF-coalesces sidebar `input`+`change` events
+  into one `localStorage` write per frame.
+- Heavy rematch on anchor / Lab-mode flip is chunked at 1500
+  swatches/batch with a progress overlay (`_showProgress`).
+- `setStep` debounces `rebuildAll` (180 ms) so rapid step-pill clicks
+  collapse to a single rebuild on the final value.
+- The window `resize` listener debounces `render` (120 ms) so a single
+  drag never queues N renders.
+- `_clampDual(id, movedEl)` only snaps the moved thumb against the
+  stationary thumb (passes `this` from the `oninput` attribute) -
+  previously both thumbs collapsed to a single value when the user
+  crossed them.
+- `togglePaletteMode` cycles `grid <-> palettes` only; the obsolete
+  `huelight` token (a sort option, not a view mode) was removed from
+  the cycle.
 
 ### 7.6 Palettes
 

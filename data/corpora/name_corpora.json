@@ -8,7 +8,7 @@
       "label": {
         "en": "Japanese traditional (NipponColors 250)",
         "ja": "日本の伝統色",
-        "zh": "日本传统色"
+        "zh": "日本傳統色"
       },
       "fields": [
         {
@@ -16,7 +16,7 @@
           "label": {
             "en": "kanji",
             "ja": "漢字",
-            "zh": "汉字"
+            "zh": "漢字"
           }
         },
         {
@@ -24,7 +24,7 @@
           "label": {
             "en": "romaji",
             "ja": "ローマ字",
-            "zh": "罗马字"
+            "zh": "羅馬字"
           }
         },
         {
@@ -52,7 +52,7 @@
           "name_ja": "撫子",
           "romaji": "nadeshiko",
           "name_en": "pink dianthus",
-          "name_zh": "瞿麦红",
+          "name_zh": "瞿麥紅",
           "hex": "#DC9FB4",
           "cmyk": [
             2,
@@ -65,7 +65,7 @@
           "name_ja": "紅梅",
           "romaji": "kohbai",
           "name_en": "red plum",
-          "name_zh": "红梅色",
+          "name_zh": "紅梅色",
           "hex": "#E16B8C",
           "cmyk": [
             0,
@@ -78,7 +78,7 @@
           "name_ja": "蘇芳",
           "romaji": "suoh",
           "name_en": "sappanwood",
-          "name_zh": "苏芳木",
+          "name_zh": "蘇芳木",
           "hex": "#8E354A",
           "cmyk": [
             51,
@@ -143,7 +143,7 @@
           "name_ja": "苺",
           "romaji": "ichigo",
           "name_en": "strawberry",
-          "name_zh": "草莓红",
+          "name_zh": "草莓紅",
           "hex": "#B5495B",
           "cmyk": [
             2,
@@ -156,7 +156,7 @@
           "name_ja": "薄紅",
           "romaji": "usubeni",
           "name_en": "pale crimson",
-          "name_zh": "淡红",
+          "name_zh": "淡紅",
           "hex": "#E87A90",
           "cmyk": [
             0,
@@ -195,7 +195,7 @@
           "name_ja": "桜",
           "romaji": "sakura",
           "name_en": "cherry blossom",
-          "name_zh": "樱花色",
+          "name_zh": "櫻花色",
           "hex": "#FEDFE1",
           "cmyk": [
             0,
@@ -221,7 +221,7 @@
           "name_ja": "韓紅花",
           "romaji": "karakurenai",
           "name_en": "deep safflower",
-          "name_zh": "韩国红花",
+          "name_zh": "韓國紅花",
           "hex": "#D0104C",
           "cmyk": [
             15,
@@ -247,7 +247,7 @@
           "name_ja": "紅",
           "romaji": "kurenai",
           "name_en": "crimson red",
-          "name_zh": "红色",
+          "name_zh": "紅色",
           "hex": "#CB1B45",
           "cmyk": [
             0,
@@ -260,7 +260,7 @@
           "name_ja": "鴇",
           "romaji": "toki",
           "name_en": "crested ibis pink",
-          "name_zh": "朱鹮色",
+          "name_zh": "朱䴉色",
           "hex": "#EEA9A9",
           "cmyk": [
             2,
@@ -325,7 +325,7 @@
           "name_ja": "小豆",
           "romaji": "azuki",
           "name_en": "adzuki red",
-          "name_zh": "红豆色",
+          "name_zh": "紅豆色",
           "hex": "#954A45",
           "cmyk": [
             48,
@@ -2366,7 +2366,7 @@
           "name_ja": "藍",
           "romaji": "ai",
           "name_en": "indigo",
-          "name_zh": "靛蓝",
+          "name_zh": "靛藍",
           "hex": "#0D5661",
           "cmyk": [
             95,
@@ -3340,7 +3340,7 @@
         {
           "name_en": "aliceblue",
           "name_ja": "アリスブルー",
-          "name_zh": "爱丽丝蓝",
+          "name_zh": "愛麗絲藍",
           "hex": "#F0F8FF",
           "cmyk": [
             7,
@@ -3376,7 +3376,7 @@
         {
           "name_en": "aquamarine",
           "name_ja": "アクアマリン",
-          "name_zh": "海蓝宝石",
+          "name_zh": "海藍寶石",
           "hex": "#7FFFD4",
           "cmyk": [
             47,
@@ -3388,7 +3388,7 @@
         {
           "name_en": "azure",
           "name_ja": "アジュール",
-          "name_zh": "天蓝",
+          "name_zh": "天藍",
           "hex": "#F0FFFF",
           "cmyk": [
             7,
@@ -3448,7 +3448,7 @@
         {
           "name_en": "blue",
           "name_ja": "ブルー",
-          "name_zh": "蓝色",
+          "name_zh": "藍色",
           "hex": "#0000FF",
           "cmyk": [
             95,
@@ -3460,7 +3460,7 @@
         {
           "name_en": "blueviolet",
           "name_ja": "ブルーバイオレット",
-          "name_zh": "蓝紫",
+          "name_zh": "藍紫",
           "hex": "#8A2BE2",
           "cmyk": [
             74,
@@ -3484,7 +3484,7 @@
         {
           "name_en": "burlywood",
           "name_ja": "バーリーウッド",
-          "name_zh": "实木色",
+          "name_zh": "實木色",
           "hex": "#DEB887",
           "cmyk": [
             15,
@@ -3496,7 +3496,7 @@
         {
           "name_en": "cadetblue",
           "name_ja": "カデットブルー",
-          "name_zh": "军蓝",
+          "name_zh": "軍藍",
           "hex": "#5F9EA0",
           "cmyk": [
             65,
@@ -3508,7 +3508,7 @@
         {
           "name_en": "chartreuse",
           "name_ja": "シャルトリューズ",
-          "name_zh": "黄绿",
+          "name_zh": "黃綠",
           "hex": "#7FFF00",
           "cmyk": [
             53,
@@ -3544,7 +3544,7 @@
         {
           "name_en": "cornflowerblue",
           "name_ja": "コーンフラワーブルー",
-          "name_zh": "矢车菊蓝",
+          "name_zh": "矢車菊藍",
           "hex": "#6495ED",
           "cmyk": [
             64,
@@ -3568,7 +3568,7 @@
         {
           "name_en": "crimson",
           "name_ja": "クリムゾン",
-          "name_zh": "深红",
+          "name_zh": "深紅",
           "hex": "#DC143C",
           "cmyk": [
             12,
@@ -3592,7 +3592,7 @@
         {
           "name_en": "darkblue",
           "name_ja": "ダークブルー",
-          "name_zh": "暗蓝",
+          "name_zh": "暗藍",
           "hex": "#00008B",
           "cmyk": [
             100,
@@ -3640,7 +3640,7 @@
         {
           "name_en": "darkgreen",
           "name_ja": "ダークグリーン",
-          "name_zh": "深绿",
+          "name_zh": "深綠",
           "hex": "#006400",
           "cmyk": [
             89,
@@ -3676,7 +3676,7 @@
         {
           "name_en": "darkmagenta",
           "name_ja": "ダークマゼンタ",
-          "name_zh": "暗品红",
+          "name_zh": "暗品紅",
           "hex": "#8B008B",
           "cmyk": [
             62,
@@ -3688,7 +3688,7 @@
         {
           "name_en": "darkolivegreen",
           "name_ja": "ダークオリーブグリーン",
-          "name_zh": "暗橄榄绿",
+          "name_zh": "暗橄欖綠",
           "hex": "#556B2F",
           "cmyk": [
             67,
@@ -3712,7 +3712,7 @@
         {
           "name_en": "darkorchid",
           "name_ja": "ダークオーキッド",
-          "name_zh": "暗兰",
+          "name_zh": "暗蘭",
           "hex": "#9932CC",
           "cmyk": [
             66,
@@ -3724,7 +3724,7 @@
         {
           "name_en": "darkred",
           "name_ja": "ダークレッド",
-          "name_zh": "暗红",
+          "name_zh": "暗紅",
           "hex": "#8B0000",
           "cmyk": [
             28,
@@ -3736,7 +3736,7 @@
         {
           "name_en": "darksalmon",
           "name_ja": "ダークサーモン",
-          "name_zh": "暗鲑",
+          "name_zh": "暗鮭",
           "hex": "#E9967A",
           "cmyk": [
             10,
@@ -3748,7 +3748,7 @@
         {
           "name_en": "darkseagreen",
           "name_ja": "ダークシーグリーン",
-          "name_zh": "暗海绿",
+          "name_zh": "暗海綠",
           "hex": "#8FBC8F",
           "cmyk": [
             51,
@@ -3760,7 +3760,7 @@
         {
           "name_en": "darkslateblue",
           "name_ja": "ダークスレートブルー",
-          "name_zh": "暗板岩蓝",
+          "name_zh": "暗板岩藍",
           "hex": "#483D8B",
           "cmyk": [
             87,
@@ -3796,7 +3796,7 @@
         {
           "name_en": "darkturquoise",
           "name_ja": "ダークターコイズ",
-          "name_zh": "暗青绿",
+          "name_zh": "暗青綠",
           "hex": "#00CED1",
           "cmyk": [
             69,
@@ -3832,7 +3832,7 @@
         {
           "name_en": "deepskyblue",
           "name_ja": "ディープスカイブルー",
-          "name_zh": "深天蓝",
+          "name_zh": "深天藍",
           "hex": "#00BFFF",
           "cmyk": [
             69,
@@ -3868,7 +3868,7 @@
         {
           "name_en": "dodgerblue",
           "name_ja": "ドジャーブルー",
-          "name_zh": "道奇蓝",
+          "name_zh": "道奇藍",
           "hex": "#1E90FF",
           "cmyk": [
             76,
@@ -3880,7 +3880,7 @@
         {
           "name_en": "firebrick",
           "name_ja": "ファイアブリック",
-          "name_zh": "火砖红",
+          "name_zh": "火磚紅",
           "hex": "#B22222",
           "cmyk": [
             23,
@@ -3904,7 +3904,7 @@
         {
           "name_en": "forestgreen",
           "name_ja": "フォレストグリーン",
-          "name_zh": "森林绿",
+          "name_zh": "森林綠",
           "hex": "#228B22",
           "cmyk": [
             82,
@@ -3916,7 +3916,7 @@
         {
           "name_en": "fuchsia",
           "name_ja": "フクシア",
-          "name_zh": "紫红",
+          "name_zh": "紫紅",
           "hex": "#FF00FF",
           "cmyk": [
             43,
@@ -3928,7 +3928,7 @@
         {
           "name_en": "gainsboro",
           "name_ja": "ゲインズボロ",
-          "name_zh": "银灰",
+          "name_zh": "銀灰",
           "hex": "#DCDCDC",
           "cmyk": [
             16,
@@ -3940,7 +3940,7 @@
         {
           "name_en": "ghostwhite",
           "name_ja": "ゴーストホワイト",
-          "name_zh": "幽灵白",
+          "name_zh": "幽靈白",
           "hex": "#F8F8FF",
           "cmyk": [
             3,
@@ -3988,7 +3988,7 @@
         {
           "name_en": "green",
           "name_ja": "グリーン",
-          "name_zh": "绿色",
+          "name_zh": "綠色",
           "hex": "#008000",
           "cmyk": [
             86,
@@ -4000,7 +4000,7 @@
         {
           "name_en": "greenyellow",
           "name_ja": "グリーンイエロー",
-          "name_zh": "黄绿色",
+          "name_zh": "黃綠色",
           "hex": "#ADFF2F",
           "cmyk": [
             42,
@@ -4036,7 +4036,7 @@
         {
           "name_en": "hotpink",
           "name_ja": "ホットピンク",
-          "name_zh": "热粉",
+          "name_zh": "熱粉",
           "hex": "#FF69B4",
           "cmyk": [
             2,
@@ -4048,7 +4048,7 @@
         {
           "name_en": "indianred",
           "name_ja": "インディアンレッド",
-          "name_zh": "印度红",
+          "name_zh": "印度紅",
           "hex": "#CD5C5C",
           "cmyk": [
             18,
@@ -4060,7 +4060,7 @@
         {
           "name_en": "indigo",
           "name_ja": "インディゴ",
-          "name_zh": "靛蓝",
+          "name_zh": "靛藍",
           "hex": "#4B0082",
           "cmyk": [
             91,
@@ -4108,7 +4108,7 @@
         {
           "name_en": "lavenderblush",
           "name_ja": "ラベンダーブラッシュ",
-          "name_zh": "薰衣草红",
+          "name_zh": "薰衣草紅",
           "hex": "#FFF0F5",
           "cmyk": [
             0,
@@ -4120,7 +4120,7 @@
         {
           "name_en": "lawngreen",
           "name_ja": "ローングリーン",
-          "name_zh": "草坪绿",
+          "name_zh": "草坪綠",
           "hex": "#7CFC00",
           "cmyk": [
             54,
@@ -4132,7 +4132,7 @@
         {
           "name_en": "lemonchiffon",
           "name_ja": "レモンシフォン",
-          "name_zh": "柠檬薄纱",
+          "name_zh": "檸檬薄紗",
           "hex": "#FFFACD",
           "cmyk": [
             3,
@@ -4144,7 +4144,7 @@
         {
           "name_en": "lightblue",
           "name_ja": "ライトブルー",
-          "name_zh": "浅蓝",
+          "name_zh": "淺藍",
           "hex": "#ADD8E6",
           "cmyk": [
             37,
@@ -4156,7 +4156,7 @@
         {
           "name_en": "lightcoral",
           "name_ja": "ライトコーラル",
-          "name_zh": "浅珊瑚",
+          "name_zh": "淺珊瑚",
           "hex": "#F08080",
           "cmyk": [
             6,
@@ -4168,7 +4168,7 @@
         {
           "name_en": "lightcyan",
           "name_ja": "ライトシアン",
-          "name_zh": "浅青",
+          "name_zh": "淺青",
           "hex": "#E0FFFF",
           "cmyk": [
             15,
@@ -4180,7 +4180,7 @@
         {
           "name_en": "lightgoldenrodyellow",
           "name_ja": "ライトゴールデンロッドイエロー",
-          "name_zh": "浅金菊黄",
+          "name_zh": "淺金菊黃",
           "hex": "#FAFAD2",
           "cmyk": [
             5,
@@ -4192,7 +4192,7 @@
         {
           "name_en": "lightgray",
           "name_ja": "ライトグレー",
-          "name_zh": "浅灰",
+          "name_zh": "淺灰",
           "hex": "#D3D3D3",
           "cmyk": [
             20,
@@ -4204,7 +4204,7 @@
         {
           "name_en": "lightgreen",
           "name_ja": "ライトグリーン",
-          "name_zh": "浅绿",
+          "name_zh": "淺綠",
           "hex": "#90EE90",
           "cmyk": [
             48,
@@ -4216,7 +4216,7 @@
         {
           "name_en": "lightgrey",
           "name_ja": "ライトグレイ",
-          "name_zh": "浅灰色",
+          "name_zh": "淺灰色",
           "hex": "#D3D3D3",
           "cmyk": [
             20,
@@ -4228,7 +4228,7 @@
         {
           "name_en": "lightpink",
           "name_ja": "ライトピンク",
-          "name_zh": "浅粉",
+          "name_zh": "淺粉",
           "hex": "#FFB6C1",
           "cmyk": [
             0,
@@ -4240,7 +4240,7 @@
         {
           "name_en": "lightsalmon",
           "name_ja": "ライトサーモン",
-          "name_zh": "浅鲑",
+          "name_zh": "淺鮭",
           "hex": "#FFA07A",
           "cmyk": [
             0,
@@ -4252,7 +4252,7 @@
         {
           "name_en": "lightseagreen",
           "name_ja": "ライトシーグリーン",
-          "name_zh": "浅海绿",
+          "name_zh": "淺海綠",
           "hex": "#20B2AA",
           "cmyk": [
             74,
@@ -4264,7 +4264,7 @@
         {
           "name_en": "lightskyblue",
           "name_ja": "ライトスカイブルー",
-          "name_zh": "浅天蓝",
+          "name_zh": "淺天藍",
           "hex": "#87CEFA",
           "cmyk": [
             49,
@@ -4276,7 +4276,7 @@
         {
           "name_en": "lightslategray",
           "name_ja": "ライトスレートグレー",
-          "name_zh": "浅板岩灰",
+          "name_zh": "淺板岩灰",
           "hex": "#778899",
           "cmyk": [
             56,
@@ -4288,7 +4288,7 @@
         {
           "name_en": "lightslategrey",
           "name_ja": "ライトスレートグレイ",
-          "name_zh": "浅板岩灰色",
+          "name_zh": "淺板岩灰色",
           "hex": "#778899",
           "cmyk": [
             56,
@@ -4300,7 +4300,7 @@
         {
           "name_en": "lightsteelblue",
           "name_ja": "ライトスチールブルー",
-          "name_zh": "浅钢蓝",
+          "name_zh": "淺鋼藍",
           "hex": "#B0C4DE",
           "cmyk": [
             36,
@@ -4312,7 +4312,7 @@
         {
           "name_en": "lightyellow",
           "name_ja": "ライトイエロー",
-          "name_zh": "浅黄",
+          "name_zh": "淺黃",
           "hex": "#FFFFE0",
           "cmyk": [
             2,
@@ -4324,7 +4324,7 @@
         {
           "name_en": "lime",
           "name_ja": "ライム",
-          "name_zh": "石灰绿",
+          "name_zh": "石灰綠",
           "hex": "#00FF00",
           "cmyk": [
             64,
@@ -4336,7 +4336,7 @@
         {
           "name_en": "limegreen",
           "name_ja": "ライムグリーン",
-          "name_zh": "酸橙绿",
+          "name_zh": "酸橙綠",
           "hex": "#32CD32",
           "cmyk": [
             69,
@@ -4348,7 +4348,7 @@
         {
           "name_en": "linen",
           "name_ja": "リネン",
-          "name_zh": "亚麻",
+          "name_zh": "亞麻",
           "hex": "#FAF0E6",
           "cmyk": [
             2,
@@ -4360,7 +4360,7 @@
         {
           "name_en": "magenta",
           "name_ja": "マゼンタ",
-          "name_zh": "品红",
+          "name_zh": "品紅",
           "hex": "#FF00FF",
           "cmyk": [
             43,
@@ -4372,7 +4372,7 @@
         {
           "name_en": "maroon",
           "name_ja": "マルーン",
-          "name_zh": "栗红",
+          "name_zh": "慄紅",
           "hex": "#800000",
           "cmyk": [
             30,
@@ -4384,7 +4384,7 @@
         {
           "name_en": "mediumaquamarine",
           "name_ja": "ミディアムアクアマリン",
-          "name_zh": "中海蓝",
+          "name_zh": "中海藍",
           "hex": "#66CDAA",
           "cmyk": [
             60,
@@ -4396,7 +4396,7 @@
         {
           "name_en": "mediumblue",
           "name_ja": "ミディアムブルー",
-          "name_zh": "中蓝",
+          "name_zh": "中藍",
           "hex": "#0000CD",
           "cmyk": [
             100,
@@ -4408,7 +4408,7 @@
         {
           "name_en": "mediumorchid",
           "name_ja": "ミディアムオーキッド",
-          "name_zh": "中兰",
+          "name_zh": "中蘭",
           "hex": "#BA55D3",
           "cmyk": [
             51,
@@ -4432,7 +4432,7 @@
         {
           "name_en": "mediumseagreen",
           "name_ja": "ミディアムシーグリーン",
-          "name_zh": "中海绿",
+          "name_zh": "中海綠",
           "hex": "#3CB371",
           "cmyk": [
             73,
@@ -4444,7 +4444,7 @@
         {
           "name_en": "mediumslateblue",
           "name_ja": "ミディアムスレートブルー",
-          "name_zh": "中板岩蓝",
+          "name_zh": "中板巖藍",
           "hex": "#7B68EE",
           "cmyk": [
             71,
@@ -4456,7 +4456,7 @@
         {
           "name_en": "mediumspringgreen",
           "name_ja": "ミディアムスプリンググリーン",
-          "name_zh": "中春绿",
+          "name_zh": "中春綠",
           "hex": "#00FA9A",
           "cmyk": [
             62,
@@ -4468,7 +4468,7 @@
         {
           "name_en": "mediumturquoise",
           "name_ja": "ミディアムターコイズ",
-          "name_zh": "中青绿",
+          "name_zh": "中青綠",
           "hex": "#48D1CC",
           "cmyk": [
             64,
@@ -4480,7 +4480,7 @@
         {
           "name_en": "mediumvioletred",
           "name_ja": "ミディアムバイオレットレッド",
-          "name_zh": "中紫红",
+          "name_zh": "中紫紅",
           "hex": "#C71585",
           "cmyk": [
             29,
@@ -4492,7 +4492,7 @@
         {
           "name_en": "midnightblue",
           "name_ja": "ミッドナイトブルー",
-          "name_zh": "午夜蓝",
+          "name_zh": "午夜藍",
           "hex": "#191970",
           "cmyk": [
             100,
@@ -4516,7 +4516,7 @@
         {
           "name_en": "mistyrose",
           "name_ja": "ミスティローズ",
-          "name_zh": "薄雾玫瑰",
+          "name_zh": "薄霧玫瑰",
           "hex": "#FFE4E1",
           "cmyk": [
             0,
@@ -4540,7 +4540,7 @@
         {
           "name_en": "navajowhite",
           "name_ja": "ナバホホワイト",
-          "name_zh": "纳瓦白",
+          "name_zh": "納瓦白",
           "hex": "#FFDEAD",
           "cmyk": [
             1,
@@ -4552,7 +4552,7 @@
         {
           "name_en": "navy",
           "name_ja": "ネイビー",
-          "name_zh": "海军蓝",
+          "name_zh": "海軍藍",
           "hex": "#000080",
           "cmyk": [
             100,
@@ -4564,7 +4564,7 @@
         {
           "name_en": "oldlace",
           "name_ja": "オールドレース",
-          "name_zh": "旧蕾丝",
+          "name_zh": "舊蕾絲",
           "hex": "#FDF5E6",
           "cmyk": [
             1,
@@ -4576,7 +4576,7 @@
         {
           "name_en": "olive",
           "name_ja": "オリーブ",
-          "name_zh": "橄榄",
+          "name_zh": "橄欖",
           "hex": "#808000",
           "cmyk": [
             51,
@@ -4588,7 +4588,7 @@
         {
           "name_en": "olivedrab",
           "name_ja": "オリーブドラブ",
-          "name_zh": "橄榄褐",
+          "name_zh": "橄欖褐",
           "hex": "#6B8E23",
           "cmyk": [
             64,
@@ -4612,7 +4612,7 @@
         {
           "name_en": "orangered",
           "name_ja": "オレンジレッド",
-          "name_zh": "橙红",
+          "name_zh": "橙紅",
           "hex": "#FF4500",
           "cmyk": [
             0,
@@ -4624,7 +4624,7 @@
         {
           "name_en": "orchid",
           "name_ja": "オーキッド",
-          "name_zh": "兰花",
+          "name_zh": "蘭花",
           "hex": "#DA70D6",
           "cmyk": [
             32,
@@ -4648,7 +4648,7 @@
         {
           "name_en": "palegreen",
           "name_ja": "ペールグリーン",
-          "name_zh": "淡绿",
+          "name_zh": "淡綠",
           "hex": "#98FB98",
           "cmyk": [
             44,
@@ -4660,7 +4660,7 @@
         {
           "name_en": "paleturquoise",
           "name_ja": "ペールターコイズ",
-          "name_zh": "淡青绿",
+          "name_zh": "淡青綠",
           "hex": "#AFEEEE",
           "cmyk": [
             35,
@@ -4672,7 +4672,7 @@
         {
           "name_en": "palevioletred",
           "name_ja": "ペールバイオレットレッド",
-          "name_zh": "淡紫红",
+          "name_zh": "淡紫紅",
           "hex": "#DB7093",
           "cmyk": [
             16,
@@ -4708,7 +4708,7 @@
         {
           "name_en": "peru",
           "name_ja": "ペルー",
-          "name_zh": "秘鲁色",
+          "name_zh": "祕魯色",
           "hex": "#CD853F",
           "cmyk": [
             19,
@@ -4720,7 +4720,7 @@
         {
           "name_en": "pink",
           "name_ja": "ピンク",
-          "name_zh": "粉红",
+          "name_zh": "粉紅",
           "hex": "#FFC0CB",
           "cmyk": [
             0,
@@ -4744,7 +4744,7 @@
         {
           "name_en": "powderblue",
           "name_ja": "パウダーブルー",
-          "name_zh": "粉蓝",
+          "name_zh": "粉藍",
           "hex": "#B0E0E6",
           "cmyk": [
             36,
@@ -4768,7 +4768,7 @@
         {
           "name_en": "rebeccapurple",
           "name_ja": "レベッカパープル",
-          "name_zh": "丽贝卡紫",
+          "name_zh": "麗貝卡紫",
           "hex": "#663399",
           "cmyk": [
             77,
@@ -4780,7 +4780,7 @@
         {
           "name_en": "red",
           "name_ja": "レッド",
-          "name_zh": "红色",
+          "name_zh": "紅色",
           "hex": "#FF0000",
           "cmyk": [
             0,
@@ -4804,7 +4804,7 @@
         {
           "name_en": "royalblue",
           "name_ja": "ロイヤルブルー",
-          "name_zh": "皇家蓝",
+          "name_zh": "皇家藍",
           "hex": "#4169E1",
           "cmyk": [
             82,
@@ -4828,7 +4828,7 @@
         {
           "name_en": "salmon",
           "name_ja": "サーモン",
-          "name_zh": "鲑肉色",
+          "name_zh": "鮭肉色",
           "hex": "#FA8072",
           "cmyk": [
             1,
@@ -4852,7 +4852,7 @@
         {
           "name_en": "seagreen",
           "name_ja": "シーグリーン",
-          "name_zh": "海绿",
+          "name_zh": "海綠",
           "hex": "#2E8B57",
           "cmyk": [
             80,
@@ -4864,7 +4864,7 @@
         {
           "name_en": "seashell",
           "name_ja": "シーシェル",
-          "name_zh": "贝壳",
+          "name_zh": "貝殼",
           "hex": "#FFF5EE",
           "cmyk": [
             0,
@@ -4888,7 +4888,7 @@
         {
           "name_en": "silver",
           "name_ja": "シルバー",
-          "name_zh": "银色",
+          "name_zh": "銀色",
           "hex": "#C0C0C0",
           "cmyk": [
             27,
@@ -4900,7 +4900,7 @@
         {
           "name_en": "skyblue",
           "name_ja": "スカイブルー",
-          "name_zh": "天蓝色",
+          "name_zh": "天藍色",
           "hex": "#87CEEB",
           "cmyk": [
             50,
@@ -4912,7 +4912,7 @@
         {
           "name_en": "slateblue",
           "name_ja": "スレートブルー",
-          "name_zh": "板岩蓝",
+          "name_zh": "板岩藍",
           "hex": "#6A5ACD",
           "cmyk": [
             75,
@@ -4960,7 +4960,7 @@
         {
           "name_en": "springgreen",
           "name_ja": "スプリンググリーン",
-          "name_zh": "春绿",
+          "name_zh": "春綠",
           "hex": "#00FF7F",
           "cmyk": [
             62,
@@ -4972,7 +4972,7 @@
         {
           "name_en": "steelblue",
           "name_ja": "スチールブルー",
-          "name_zh": "钢蓝",
+          "name_zh": "鋼藍",
           "hex": "#4682B4",
           "cmyk": [
             75,
@@ -4996,7 +4996,7 @@
         {
           "name_en": "teal",
           "name_ja": "ティール",
-          "name_zh": "水鸭色",
+          "name_zh": "水鴨色",
           "hex": "#008080",
           "cmyk": [
             84,
@@ -5008,7 +5008,7 @@
         {
           "name_en": "thistle",
           "name_ja": "シスル",
-          "name_zh": "蓟色",
+          "name_zh": "薊色",
           "hex": "#D8BFD8",
           "cmyk": [
             18,
@@ -5032,7 +5032,7 @@
         {
           "name_en": "turquoise",
           "name_ja": "ターコイズ",
-          "name_zh": "青绿",
+          "name_zh": "青綠",
           "hex": "#40E0D0",
           "cmyk": [
             62,
@@ -5044,7 +5044,7 @@
         {
           "name_en": "violet",
           "name_ja": "バイオレット",
-          "name_zh": "紫罗兰",
+          "name_zh": "紫羅蘭",
           "hex": "#EE82EE",
           "cmyk": [
             27,
@@ -5056,7 +5056,7 @@
         {
           "name_en": "wheat",
           "name_ja": "ウィート",
-          "name_zh": "麦色",
+          "name_zh": "麥色",
           "hex": "#F5DEB3",
           "cmyk": [
             6,
@@ -5080,7 +5080,7 @@
         {
           "name_en": "whitesmoke",
           "name_ja": "ホワイトスモーク",
-          "name_zh": "白烟",
+          "name_zh": "白煙",
           "hex": "#F5F5F5",
           "cmyk": [
             4,
@@ -5092,7 +5092,7 @@
         {
           "name_en": "yellow",
           "name_ja": "イエロー",
-          "name_zh": "黄色",
+          "name_zh": "黃色",
           "hex": "#FFFF00",
           "cmyk": [
             12,
@@ -5104,7 +5104,7 @@
         {
           "name_en": "yellowgreen",
           "name_ja": "イエローグリーン",
-          "name_zh": "绿黄色",
+          "name_zh": "綠黃色",
           "hex": "#9ACD32",
           "cmyk": [
             50,
@@ -5120,15 +5120,15 @@
       "label": {
         "en": "Chinese traditional",
         "ja": "中国の伝統色",
-        "zh": "中国传统色"
+        "zh": "中國傳統色"
       },
       "fields": [
         {
           "id": "name_zh",
           "label": {
-            "en": "hanzi",
+            "en": "Chinese",
             "ja": "漢字",
-            "zh": "汉字"
+            "zh": "漢字"
           }
         },
         {
@@ -5174,7 +5174,7 @@
           ]
         },
         {
-          "name_zh": "牡丹粉红",
+          "name_zh": "牡丹粉紅",
           "pinyin": "mudanfenhong",
           "name_en": "mudanfenhong",
           "name_ja": "mudanfenhong",
@@ -5187,7 +5187,7 @@
           ]
         },
         {
-          "name_zh": "栗紫",
+          "name_zh": "慄紫",
           "pinyin": "lizi",
           "name_en": "lizi",
           "name_ja": "lizi",
@@ -5200,7 +5200,7 @@
           ]
         },
         {
-          "name_zh": "香叶红",
+          "name_zh": "香葉紅",
           "pinyin": "xiangyehong",
           "name_en": "xiangyehong",
           "name_ja": "xiangyehong",
@@ -5213,7 +5213,7 @@
           ]
         },
         {
-          "name_zh": "葡萄酱紫",
+          "name_zh": "葡萄醬紫",
           "pinyin": "putaojiangzi",
           "name_en": "putaojiangzi",
           "name_ja": "putaojiangzi",
@@ -5226,7 +5226,7 @@
           ]
         },
         {
-          "name_zh": "艳红",
+          "name_zh": "豔紅",
           "pinyin": "yanhong",
           "name_en": "yanhong",
           "name_ja": "yanhong",
@@ -5239,7 +5239,7 @@
           ]
         },
         {
-          "name_zh": "玉红",
+          "name_zh": "玉紅",
           "pinyin": "yuhong",
           "name_en": "yuhong",
           "name_ja": "yuhong",
@@ -5252,7 +5252,7 @@
           ]
         },
         {
-          "name_zh": "茶花红",
+          "name_zh": "茶花紅",
           "pinyin": "chahuahong",
           "name_en": "chahuahong",
           "name_ja": "chahuahong",
@@ -5265,7 +5265,7 @@
           ]
         },
         {
-          "name_zh": "高粱红",
+          "name_zh": "高粱紅",
           "pinyin": "gaolianghong",
           "name_en": "gaolianghong",
           "name_ja": "gaolianghong",
@@ -5278,7 +5278,7 @@
           ]
         },
         {
-          "name_zh": "满江红",
+          "name_zh": "滿江紅",
           "pinyin": "manjianghong",
           "name_en": "manjianghong",
           "name_ja": "manjianghong",
@@ -5291,7 +5291,7 @@
           ]
         },
         {
-          "name_zh": "鼠鼻红",
+          "name_zh": "鼠鼻紅",
           "pinyin": "shubihong",
           "name_en": "shubihong",
           "name_ja": "shubihong",
@@ -5304,7 +5304,7 @@
           ]
         },
         {
-          "name_zh": "合欢红",
+          "name_zh": "合歡紅",
           "pinyin": "hehuanhong",
           "name_en": "hehuanhong",
           "name_ja": "hehuanhong",
@@ -5317,7 +5317,7 @@
           ]
         },
         {
-          "name_zh": "春梅红",
+          "name_zh": "春梅紅",
           "pinyin": "chunmeihong",
           "name_en": "chunmeihong",
           "name_ja": "chunmeihong",
@@ -5330,7 +5330,7 @@
           ]
         },
         {
-          "name_zh": "苋菜红",
+          "name_zh": "莧菜紅",
           "pinyin": "xiancaihong",
           "name_en": "xiancaihong",
           "name_ja": "xiancaihong",
@@ -5343,7 +5343,7 @@
           ]
         },
         {
-          "name_zh": "烟红",
+          "name_zh": "煙紅",
           "pinyin": "yanhong_2",
           "name_en": "yanhong_2",
           "name_ja": "yanhong_2",
@@ -5356,7 +5356,7 @@
           ]
         },
         {
-          "name_zh": "莓红",
+          "name_zh": "莓紅",
           "pinyin": "meihong",
           "name_en": "meihong",
           "name_ja": "meihong",
@@ -5369,7 +5369,7 @@
           ]
         },
         {
-          "name_zh": "鹅冠红",
+          "name_zh": "鵝冠紅",
           "pinyin": "eguanhong",
           "name_en": "eguanhong",
           "name_ja": "eguanhong",
@@ -5382,7 +5382,7 @@
           ]
         },
         {
-          "name_zh": "枫叶红",
+          "name_zh": "楓葉紅",
           "pinyin": "fengyehong",
           "name_en": "fengyehong",
           "name_ja": "fengyehong",
@@ -5395,7 +5395,7 @@
           ]
         },
         {
-          "name_zh": "唐菖蒲红",
+          "name_zh": "唐菖蒲紅",
           "pinyin": "tangchangpuhong",
           "name_en": "tangchangpuhong",
           "name_ja": "tangchangpuhong",
@@ -5408,7 +5408,7 @@
           ]
         },
         {
-          "name_zh": "枣红",
+          "name_zh": "棗紅",
           "pinyin": "zaohong",
           "name_en": "zaohong",
           "name_ja": "zaohong",
@@ -5421,7 +5421,7 @@
           ]
         },
         {
-          "name_zh": "猪肝紫",
+          "name_zh": "豬肝紫",
           "pinyin": "zhuganzi",
           "name_en": "zhuganzi",
           "name_ja": "zhuganzi",
@@ -5447,7 +5447,7 @@
           ]
         },
         {
-          "name_zh": "暗紫苑红",
+          "name_zh": "暗紫苑紅",
           "pinyin": "anziyuanhong",
           "name_en": "anziyuanhong",
           "name_ja": "anziyuanhong",
@@ -5460,7 +5460,7 @@
           ]
         },
         {
-          "name_zh": "殷红",
+          "name_zh": "殷紅",
           "pinyin": "yinhong",
           "name_en": "yinhong",
           "name_ja": "yinhong",
@@ -5473,7 +5473,7 @@
           ]
         },
         {
-          "name_zh": "草茉莉红",
+          "name_zh": "草茉莉紅",
           "pinyin": "caomolihong",
           "name_en": "caomolihong",
           "name_ja": "caomolihong",
@@ -5486,7 +5486,7 @@
           ]
         },
         {
-          "name_zh": "酱紫",
+          "name_zh": "醬紫",
           "pinyin": "jiangzi",
           "name_en": "jiangzi",
           "name_ja": "jiangzi",
@@ -5499,7 +5499,7 @@
           ]
         },
         {
-          "name_zh": "山茶红",
+          "name_zh": "山茶紅",
           "pinyin": "shanchahong",
           "name_en": "shanchahong",
           "name_ja": "shanchahong",
@@ -5512,7 +5512,7 @@
           ]
         },
         {
-          "name_zh": "锌灰",
+          "name_zh": "鋅灰",
           "pinyin": "xinhui",
           "name_en": "xinhui",
           "name_ja": "xinhui",
@@ -5525,7 +5525,7 @@
           ]
         },
         {
-          "name_zh": "海棠红",
+          "name_zh": "海棠紅",
           "pinyin": "haitanghong",
           "name_en": "crabapple red",
           "name_ja": "海棠紅",
@@ -5538,7 +5538,7 @@
           ]
         },
         {
-          "name_zh": "蓟粉红",
+          "name_zh": "薊粉紅",
           "pinyin": "jifenhong",
           "name_en": "jifenhong",
           "name_ja": "jifenhong",
@@ -5551,7 +5551,7 @@
           ]
         },
         {
-          "name_zh": "石蕊红",
+          "name_zh": "石蕊紅",
           "pinyin": "shiruihong",
           "name_en": "shiruihong",
           "name_ja": "shiruihong",
@@ -5564,7 +5564,7 @@
           ]
         },
         {
-          "name_zh": "淡曙红",
+          "name_zh": "淡曙紅",
           "pinyin": "danshuhong",
           "name_en": "danshuhong",
           "name_ja": "danshuhong",
@@ -5590,7 +5590,7 @@
           ]
         },
         {
-          "name_zh": "石竹红",
+          "name_zh": "石竹紅",
           "pinyin": "shizhuhong",
           "name_en": "shizhuhong",
           "name_ja": "shizhuhong",
@@ -5603,7 +5603,7 @@
           ]
         },
         {
-          "name_zh": "淡茜红",
+          "name_zh": "淡茜紅",
           "pinyin": "danqianhong",
           "name_en": "danqianhong",
           "name_ja": "danqianhong",
@@ -5616,7 +5616,7 @@
           ]
         },
         {
-          "name_zh": "金鱼紫",
+          "name_zh": "金魚紫",
           "pinyin": "jinyuzi",
           "name_en": "jinyuzi",
           "name_ja": "jinyuzi",
@@ -5629,7 +5629,7 @@
           ]
         },
         {
-          "name_zh": "山黎豆红",
+          "name_zh": "山黎豆紅",
           "pinyin": "shanlidouhong",
           "name_en": "shanlidouhong",
           "name_ja": "shanlidouhong",
@@ -5655,7 +5655,7 @@
           ]
         },
         {
-          "name_zh": "淡蕊香红",
+          "name_zh": "淡蕊香紅",
           "pinyin": "danruixianghong",
           "name_en": "danruixianghong",
           "name_ja": "danruixianghong",
@@ -5681,7 +5681,7 @@
           ]
         },
         {
-          "name_zh": "月季红",
+          "name_zh": "月季紅",
           "pinyin": "yuejihong",
           "name_en": "yuejihong",
           "name_ja": "yuejihong",
@@ -5694,7 +5694,7 @@
           ]
         },
         {
-          "name_zh": "尖晶玉红",
+          "name_zh": "尖晶玉紅",
           "pinyin": "jianjingyuhong",
           "name_en": "jianjingyuhong",
           "name_ja": "jianjingyuhong",
@@ -5707,7 +5707,7 @@
           ]
         },
         {
-          "name_zh": "水红",
+          "name_zh": "水紅",
           "pinyin": "shuihong",
           "name_en": "shuihong",
           "name_ja": "shuihong",
@@ -5720,7 +5720,7 @@
           ]
         },
         {
-          "name_zh": "姜红",
+          "name_zh": "姜紅",
           "pinyin": "jianghong",
           "name_en": "jianghong",
           "name_ja": "jianghong",
@@ -5733,7 +5733,7 @@
           ]
         },
         {
-          "name_zh": "芦灰",
+          "name_zh": "蘆灰",
           "pinyin": "luhui",
           "name_en": "luhui",
           "name_ja": "luhui",
@@ -5759,7 +5759,7 @@
           ]
         },
         {
-          "name_zh": "吊钟花红",
+          "name_zh": "吊鐘花紅",
           "pinyin": "diaozhonghuahong",
           "name_en": "diaozhonghuahong",
           "name_ja": "diaozhonghuahong",
@@ -5772,7 +5772,7 @@
           ]
         },
         {
-          "name_zh": "苍蝇灰",
+          "name_zh": "蒼蠅灰",
           "pinyin": "cangyinghui",
           "name_en": "cangyinghui",
           "name_ja": "cangyinghui",
@@ -5785,7 +5785,7 @@
           ]
         },
         {
-          "name_zh": "锦葵红",
+          "name_zh": "錦葵紅",
           "pinyin": "jinkuihong",
           "name_en": "jinkuihong",
           "name_ja": "jinkuihong",
@@ -5798,7 +5798,7 @@
           ]
         },
         {
-          "name_zh": "粉团花红",
+          "name_zh": "粉團花紅",
           "pinyin": "fentuanhuahong",
           "name_en": "fentuanhuahong",
           "name_ja": "fentuanhuahong",
@@ -5837,7 +5837,7 @@
           ]
         },
         {
-          "name_zh": "晶红",
+          "name_zh": "晶紅",
           "pinyin": "jinghong",
           "name_en": "jinghong",
           "name_ja": "jinghong",
@@ -5850,7 +5850,7 @@
           ]
         },
         {
-          "name_zh": "芍药耕红",
+          "name_zh": "芍藥耕紅",
           "pinyin": "shaoyaogenghong",
           "name_en": "shaoyaogenghong",
           "name_ja": "shaoyaogenghong",
@@ -5863,7 +5863,7 @@
           ]
         },
         {
-          "name_zh": "暮云灰",
+          "name_zh": "暮雲灰",
           "pinyin": "muyunhui",
           "name_en": "muyunhui",
           "name_ja": "muyunhui",
@@ -5876,7 +5876,7 @@
           ]
         },
         {
-          "name_zh": "豇豆红",
+          "name_zh": "豇豆紅",
           "pinyin": "jiangdouhong",
           "name_en": "jiangdouhong",
           "name_ja": "jiangdouhong",
@@ -5889,7 +5889,7 @@
           ]
         },
         {
-          "name_zh": "报春红",
+          "name_zh": "報春紅",
           "pinyin": "baochunhong",
           "name_en": "baochunhong",
           "name_ja": "baochunhong",
@@ -5902,7 +5902,7 @@
           ]
         },
         {
-          "name_zh": "淡绛红",
+          "name_zh": "淡絳紅",
           "pinyin": "danjianghong",
           "name_en": "danjianghong",
           "name_ja": "danjianghong",
@@ -5915,7 +5915,7 @@
           ]
         },
         {
-          "name_zh": "凤仙花红",
+          "name_zh": "鳳仙花紅",
           "pinyin": "fengxianhuahong",
           "name_en": "fengxianhuahong",
           "name_ja": "fengxianhuahong",
@@ -5928,7 +5928,7 @@
           ]
         },
         {
-          "name_zh": "霞光红",
+          "name_zh": "霞光紅",
           "pinyin": "xiaguanghong",
           "name_en": "xiaguanghong",
           "name_ja": "xiaguanghong",
@@ -5941,7 +5941,7 @@
           ]
         },
         {
-          "name_zh": "喜蛋红",
+          "name_zh": "喜蛋紅",
           "pinyin": "xidanhong",
           "name_en": "xidanhong",
           "name_ja": "xidanhong",
@@ -5954,7 +5954,7 @@
           ]
         },
         {
-          "name_zh": "夹竹桃红",
+          "name_zh": "夾竹桃紅",
           "pinyin": "jiazhutaohong",
           "name_en": "jiazhutaohong",
           "name_ja": "jiazhutaohong",
@@ -5967,7 +5967,7 @@
           ]
         },
         {
-          "name_zh": "松叶牡丹红",
+          "name_zh": "松葉牡丹紅",
           "pinyin": "songyemudanhong",
           "name_en": "songyemudanhong",
           "name_ja": "songyemudanhong",
@@ -5980,7 +5980,7 @@
           ]
         },
         {
-          "name_zh": "莲瓣红",
+          "name_zh": "蓮瓣紅",
           "pinyin": "lianbanhong",
           "name_en": "lianbanhong",
           "name_ja": "lianbanhong",
@@ -5993,7 +5993,7 @@
           ]
         },
         {
-          "name_zh": "白芨红",
+          "name_zh": "白芨紅",
           "pinyin": "baijihong",
           "name_en": "baijihong",
           "name_ja": "baijihong",
@@ -6006,7 +6006,7 @@
           ]
         },
         {
-          "name_zh": "隐红灰",
+          "name_zh": "隱紅灰",
           "pinyin": "yinhonghui",
           "name_en": "yinhonghui",
           "name_ja": "yinhonghui",
@@ -6019,7 +6019,7 @@
           ]
         },
         {
-          "name_zh": "榲桲红",
+          "name_zh": "榲桲紅",
           "pinyin": "wenpohong",
           "name_en": "wenpohong",
           "name_ja": "wenpohong",
@@ -6032,7 +6032,7 @@
           ]
         },
         {
-          "name_zh": "酢酱草红",
+          "name_zh": "酢醬草紅",
           "pinyin": "cujiangcaohong",
           "name_en": "cujiangcaohong",
           "name_ja": "cujiangcaohong",
@@ -6045,7 +6045,7 @@
           ]
         },
         {
-          "name_zh": "火鹅紫",
+          "name_zh": "火鵝紫",
           "pinyin": "huoezi",
           "name_en": "huoezi",
           "name_ja": "huoezi",
@@ -6058,7 +6058,7 @@
           ]
         },
         {
-          "name_zh": "鹞冠紫",
+          "name_zh": "鷂冠紫",
           "pinyin": "yaoguanzi",
           "name_en": "yaoguanzi",
           "name_ja": "yaoguanzi",
@@ -6071,7 +6071,7 @@
           ]
         },
         {
-          "name_zh": "品红",
+          "name_zh": "品紅",
           "pinyin": "pinhong",
           "name_en": "pinhong",
           "name_ja": "pinhong",
@@ -6123,7 +6123,7 @@
           ]
         },
         {
-          "name_zh": "初荷红",
+          "name_zh": "初荷紅",
           "pinyin": "chuhehong",
           "name_en": "chuhehong",
           "name_ja": "chuhehong",
@@ -6136,7 +6136,7 @@
           ]
         },
         {
-          "name_zh": "菜头紫",
+          "name_zh": "菜頭紫",
           "pinyin": "caitouzi",
           "name_en": "caitouzi",
           "name_ja": "caitouzi",
@@ -6149,7 +6149,7 @@
           ]
         },
         {
-          "name_zh": "葡萄酒红",
+          "name_zh": "葡萄酒紅",
           "pinyin": "putaojiuhong",
           "name_en": "putaojiuhong",
           "name_ja": "putaojiuhong",
@@ -6175,7 +6175,7 @@
           ]
         },
         {
-          "name_zh": "菠根红",
+          "name_zh": "菠根紅",
           "pinyin": "bogenhong",
           "name_en": "bogenhong",
           "name_ja": "bogenhong",
@@ -6201,7 +6201,7 @@
           ]
         },
         {
-          "name_zh": "兔眼红",
+          "name_zh": "兔眼紅",
           "pinyin": "tuyanhong",
           "name_en": "tuyanhong",
           "name_ja": "tuyanhong",
@@ -6214,7 +6214,7 @@
           ]
         },
         {
-          "name_zh": "嫩菱红",
+          "name_zh": "嫩菱紅",
           "pinyin": "nenlinghong",
           "name_en": "nenlinghong",
           "name_ja": "nenlinghong",
@@ -6227,7 +6227,7 @@
           ]
         },
         {
-          "name_zh": "洋葱紫",
+          "name_zh": "洋蔥紫",
           "pinyin": "yangcongzi",
           "name_en": "yangcongzi",
           "name_ja": "yangcongzi",
@@ -6240,7 +6240,7 @@
           ]
         },
         {
-          "name_zh": "绀紫",
+          "name_zh": "紺紫",
           "pinyin": "ganzi",
           "name_en": "ganzi",
           "name_ja": "ganzi",
@@ -6253,7 +6253,7 @@
           ]
         },
         {
-          "name_zh": "紫荆红",
+          "name_zh": "紫荊紅",
           "pinyin": "zijinghong",
           "name_en": "zijinghong",
           "name_ja": "zijinghong",
@@ -6266,7 +6266,7 @@
           ]
         },
         {
-          "name_zh": "扁豆花红",
+          "name_zh": "扁豆花紅",
           "pinyin": "biandouhuahong",
           "name_en": "biandouhuahong",
           "name_ja": "biandouhuahong",
@@ -6279,7 +6279,7 @@
           ]
         },
         {
-          "name_zh": "马鞭草紫",
+          "name_zh": "馬鞭草紫",
           "pinyin": "mabiancaozi",
           "name_en": "mabiancaozi",
           "name_ja": "mabiancaozi",
@@ -6292,7 +6292,7 @@
           ]
         },
         {
-          "name_zh": "藏花红",
+          "name_zh": "藏花紅",
           "pinyin": "canghuahong",
           "name_en": "canghuahong",
           "name_ja": "canghuahong",
@@ -6305,7 +6305,7 @@
           ]
         },
         {
-          "name_zh": "斑鸠灰",
+          "name_zh": "斑鳩灰",
           "pinyin": "banjiuhui",
           "name_en": "banjiuhui",
           "name_ja": "banjiuhui",
@@ -6318,7 +6318,7 @@
           ]
         },
         {
-          "name_zh": "古铜紫",
+          "name_zh": "古銅紫",
           "pinyin": "gutongzi",
           "name_en": "gutongzi",
           "name_ja": "gutongzi",
@@ -6331,7 +6331,7 @@
           ]
         },
         {
-          "name_zh": "丹紫红",
+          "name_zh": "丹紫紅",
           "pinyin": "danzihong",
           "name_en": "danzihong",
           "name_ja": "danzihong",
@@ -6357,7 +6357,7 @@
           ]
         },
         {
-          "name_zh": "玫瑰红",
+          "name_zh": "玫瑰紅",
           "pinyin": "meiguihong",
           "name_en": "rose red",
           "name_ja": "薔薇色",
@@ -6383,7 +6383,7 @@
           ]
         },
         {
-          "name_zh": "菱锰红",
+          "name_zh": "菱錳紅",
           "pinyin": "lingmenghong",
           "name_en": "lingmenghong",
           "name_ja": "lingmenghong",
@@ -6396,7 +6396,7 @@
           ]
         },
         {
-          "name_zh": "樱草紫",
+          "name_zh": "櫻草紫",
           "pinyin": "yingcaozi",
           "name_en": "yingcaozi",
           "name_ja": "yingcaozi",
@@ -6409,7 +6409,7 @@
           ]
         },
         {
-          "name_zh": "龙须红",
+          "name_zh": "龍鬚紅",
           "pinyin": "longxuhong",
           "name_en": "longxuhong",
           "name_ja": "longxuhong",
@@ -6422,7 +6422,7 @@
           ]
         },
         {
-          "name_zh": "电气石红",
+          "name_zh": "電氣石紅",
           "pinyin": "dianqishihong",
           "name_en": "dianqishihong",
           "name_ja": "dianqishihong",
@@ -6448,7 +6448,7 @@
           ]
         },
         {
-          "name_zh": "苋菜紫",
+          "name_zh": "莧菜紫",
           "pinyin": "xiancaizi",
           "name_en": "xiancaizi",
           "name_ja": "xiancaizi",
@@ -6474,7 +6474,7 @@
           ]
         },
         {
-          "name_zh": "龙睛鱼紫",
+          "name_zh": "龍睛魚紫",
           "pinyin": "longjingyuzi",
           "name_en": "longjingyuzi",
           "name_ja": "longjingyuzi",
@@ -6487,7 +6487,7 @@
           ]
         },
         {
-          "name_zh": "青蛤壳紫",
+          "name_zh": "青蛤殼紫",
           "pinyin": "qinghakezi",
           "name_en": "qinghakezi",
           "name_ja": "qinghakezi",
@@ -6500,7 +6500,7 @@
           ]
         },
         {
-          "name_zh": "萝兰紫",
+          "name_zh": "蘿蘭紫",
           "pinyin": "luolanzi",
           "name_en": "luolanzi",
           "name_ja": "luolanzi",
@@ -6513,7 +6513,7 @@
           ]
         },
         {
-          "name_zh": "荸荠紫",
+          "name_zh": "荸薺紫",
           "pinyin": "biqizi",
           "name_en": "biqizi",
           "name_ja": "biqizi",
@@ -6552,7 +6552,7 @@
           ]
         },
         {
-          "name_zh": "牵牛紫",
+          "name_zh": "牽牛紫",
           "pinyin": "qianniuzi",
           "name_en": "qianniuzi",
           "name_ja": "qianniuzi",
@@ -6591,7 +6591,7 @@
           ]
         },
         {
-          "name_zh": "青莲",
+          "name_zh": "青蓮",
           "pinyin": "qinglian",
           "name_en": "qinglian",
           "name_ja": "qinglian",
@@ -6617,7 +6617,7 @@
           ]
         },
         {
-          "name_zh": "凤信紫",
+          "name_zh": "鳳信紫",
           "pinyin": "fengxinzi",
           "name_en": "fengxinzi",
           "name_ja": "fengxinzi",
@@ -6630,7 +6630,7 @@
           ]
         },
         {
-          "name_zh": "深牵牛紫",
+          "name_zh": "深牽牛紫",
           "pinyin": "shenqianniuzi",
           "name_en": "shenqianniuzi",
           "name_ja": "shenqianniuzi",
@@ -6656,7 +6656,7 @@
           ]
         },
         {
-          "name_zh": "芝兰紫",
+          "name_zh": "芝蘭紫",
           "pinyin": "zhilanzi",
           "name_en": "zhilanzi",
           "name_ja": "zhilanzi",
@@ -6669,7 +6669,7 @@
           ]
         },
         {
-          "name_zh": "鸟梅紫",
+          "name_zh": "鳥梅紫",
           "pinyin": "niaomeizi",
           "name_en": "niaomeizi",
           "name_ja": "niaomeizi",
@@ -6695,7 +6695,7 @@
           ]
         },
         {
-          "name_zh": "淡牵牛紫",
+          "name_zh": "淡牽牛紫",
           "pinyin": "danqianniuzi",
           "name_en": "danqianniuzi",
           "name_ja": "danqianniuzi",
@@ -6708,7 +6708,7 @@
           ]
         },
         {
-          "name_zh": "剑锋紫",
+          "name_zh": "劍鋒紫",
           "pinyin": "jianfengzi",
           "name_en": "jianfengzi",
           "name_ja": "jianfengzi",
@@ -6760,7 +6760,7 @@
           ]
         },
         {
-          "name_zh": "龙葵紫",
+          "name_zh": "龍葵紫",
           "pinyin": "longkuizi",
           "name_en": "longkuizi",
           "name_ja": "longkuizi",
@@ -6773,7 +6773,7 @@
           ]
         },
         {
-          "name_zh": "藤萝紫",
+          "name_zh": "藤蘿紫",
           "pinyin": "tengluozi",
           "name_en": "tengluozi",
           "name_ja": "tengluozi",
@@ -6786,7 +6786,7 @@
           ]
         },
         {
-          "name_zh": "沙鱼灰",
+          "name_zh": "沙魚灰",
           "pinyin": "shayuhui",
           "name_en": "shayuhui",
           "name_ja": "shayuhui",
@@ -6799,7 +6799,7 @@
           ]
         },
         {
-          "name_zh": "暗龙胆紫",
+          "name_zh": "暗龍膽紫",
           "pinyin": "anlongdanzi",
           "name_en": "anlongdanzi",
           "name_ja": "anlongdanzi",
@@ -6812,7 +6812,7 @@
           ]
         },
         {
-          "name_zh": "暗蓝紫",
+          "name_zh": "暗藍紫",
           "pinyin": "anlanzi",
           "name_en": "anlanzi",
           "name_ja": "anlanzi",
@@ -6864,7 +6864,7 @@
           ]
         },
         {
-          "name_zh": "远山紫",
+          "name_zh": "遠山紫",
           "pinyin": "yuanshanzi",
           "name_en": "yuanshanzi",
           "name_ja": "yuanshanzi",
@@ -6903,7 +6903,7 @@
           ]
         },
         {
-          "name_zh": "满天星紫",
+          "name_zh": "滿天星紫",
           "pinyin": "mantianxingzi",
           "name_en": "mantianxingzi",
           "name_ja": "mantianxingzi",
@@ -6916,7 +6916,7 @@
           ]
         },
         {
-          "name_zh": "淡蓝紫",
+          "name_zh": "淡藍紫",
           "pinyin": "danlanzi",
           "name_en": "danlanzi",
           "name_ja": "danlanzi",
@@ -6955,7 +6955,7 @@
           ]
         },
         {
-          "name_zh": "鱼尾灰",
+          "name_zh": "魚尾灰",
           "pinyin": "yuweihui",
           "name_en": "yuweihui",
           "name_ja": "yuweihui",
@@ -6981,7 +6981,7 @@
           ]
         },
         {
-          "name_zh": "钢蓝",
+          "name_zh": "鋼藍",
           "pinyin": "ganglan",
           "name_en": "ganglan",
           "name_ja": "ganglan",
@@ -6994,7 +6994,7 @@
           ]
         },
         {
-          "name_zh": "燕颔蓝",
+          "name_zh": "燕頷藍",
           "pinyin": "yanhanlan",
           "name_en": "yanhanlan",
           "name_ja": "yanhanlan",
@@ -7007,7 +7007,7 @@
           ]
         },
         {
-          "name_zh": "鲸鱼灰",
+          "name_zh": "鯨魚灰",
           "pinyin": "jingyuhui",
           "name_en": "jingyuhui",
           "name_ja": "jingyuhui",
@@ -7033,7 +7033,7 @@
           ]
         },
         {
-          "name_zh": "鸽蓝",
+          "name_zh": "鴿藍",
           "pinyin": "gelan",
           "name_en": "gelan",
           "name_ja": "gelan",
@@ -7046,7 +7046,7 @@
           ]
         },
         {
-          "name_zh": "暗蓝",
+          "name_zh": "暗藍",
           "pinyin": "anlan",
           "name_en": "anlan",
           "name_ja": "anlan",
@@ -7059,7 +7059,7 @@
           ]
         },
         {
-          "name_zh": "钢青",
+          "name_zh": "鋼青",
           "pinyin": "gangqing",
           "name_en": "gangqing",
           "name_ja": "gangqing",
@@ -7072,7 +7072,7 @@
           ]
         },
         {
-          "name_zh": "海涛蓝",
+          "name_zh": "海濤藍",
           "pinyin": "haitaolan",
           "name_en": "haitaolan",
           "name_ja": "haitaolan",
@@ -7085,7 +7085,7 @@
           ]
         },
         {
-          "name_zh": "飞燕草蓝",
+          "name_zh": "飛燕草藍",
           "pinyin": "feiyancaolan",
           "name_en": "feiyancaolan",
           "name_ja": "feiyancaolan",
@@ -7111,7 +7111,7 @@
           ]
         },
         {
-          "name_zh": "安安蓝",
+          "name_zh": "安安藍",
           "pinyin": "ananlan",
           "name_en": "ananlan",
           "name_ja": "ananlan",
@@ -7124,7 +7124,7 @@
           ]
         },
         {
-          "name_zh": "海军蓝",
+          "name_zh": "海軍藍",
           "pinyin": "haijunlan",
           "name_en": "haijunlan",
           "name_ja": "haijunlan",
@@ -7137,7 +7137,7 @@
           ]
         },
         {
-          "name_zh": "景泰蓝",
+          "name_zh": "景泰藍",
           "pinyin": "jingtailan",
           "name_en": "jingtailan",
           "name_ja": "jingtailan",
@@ -7150,7 +7150,7 @@
           ]
         },
         {
-          "name_zh": "品蓝",
+          "name_zh": "品藍",
           "pinyin": "pinlan",
           "name_en": "pinlan",
           "name_ja": "pinlan",
@@ -7163,7 +7163,7 @@
           ]
         },
         {
-          "name_zh": "尼罗蓝",
+          "name_zh": "尼羅藍",
           "pinyin": "niluolan",
           "name_en": "niluolan",
           "name_ja": "niluolan",
@@ -7176,7 +7176,7 @@
           ]
         },
         {
-          "name_zh": "蝶翅蓝",
+          "name_zh": "蝶翅藍",
           "pinyin": "diechilan",
           "name_en": "diechilan",
           "name_ja": "diechilan",
@@ -7202,7 +7202,7 @@
           ]
         },
         {
-          "name_zh": "鷃蓝",
+          "name_zh": "鷃藍",
           "pinyin": "yanlan",
           "name_en": "yanlan",
           "name_ja": "yanlan",
@@ -7215,7 +7215,7 @@
           ]
         },
         {
-          "name_zh": "星蓝",
+          "name_zh": "星藍",
           "pinyin": "xinglan",
           "name_en": "xinglan",
           "name_ja": "xinglan",
@@ -7228,7 +7228,7 @@
           ]
         },
         {
-          "name_zh": "虹蓝",
+          "name_zh": "虹藍",
           "pinyin": "honglan",
           "name_en": "honglan",
           "name_ja": "honglan",
@@ -7241,7 +7241,7 @@
           ]
         },
         {
-          "name_zh": "柏林蓝",
+          "name_zh": "柏林藍",
           "pinyin": "bolinlan",
           "name_en": "bolinlan",
           "name_ja": "bolinlan",
@@ -7254,7 +7254,7 @@
           ]
         },
         {
-          "name_zh": "群青",
+          "name_zh": "羣青",
           "pinyin": "qunqing",
           "name_en": "ultramarine",
           "name_ja": "群青",
@@ -7267,7 +7267,7 @@
           ]
         },
         {
-          "name_zh": "云水蓝",
+          "name_zh": "雲水藍",
           "pinyin": "yunshuilan",
           "name_en": "yunshuilan",
           "name_ja": "yunshuilan",
@@ -7280,7 +7280,7 @@
           ]
         },
         {
-          "name_zh": "羽扇豆蓝",
+          "name_zh": "羽扇豆藍",
           "pinyin": "yushandoulan",
           "name_en": "yushandoulan",
           "name_ja": "yushandoulan",
@@ -7293,7 +7293,7 @@
           ]
         },
         {
-          "name_zh": "战舰灰",
+          "name_zh": "戰艦灰",
           "pinyin": "zhanjianhui",
           "name_en": "zhanjianhui",
           "name_ja": "zhanjianhui",
@@ -7306,7 +7306,7 @@
           ]
         },
         {
-          "name_zh": "晴山蓝",
+          "name_zh": "晴山藍",
           "pinyin": "qingshanlan",
           "name_en": "qingshanlan",
           "name_ja": "qingshanlan",
@@ -7319,7 +7319,7 @@
           ]
         },
         {
-          "name_zh": "睛蓝",
+          "name_zh": "睛藍",
           "pinyin": "jinglan",
           "name_en": "jinglan",
           "name_ja": "jinglan",
@@ -7332,7 +7332,7 @@
           ]
         },
         {
-          "name_zh": "搪磁蓝",
+          "name_zh": "搪磁藍",
           "pinyin": "tangcilan",
           "name_en": "tangcilan",
           "name_ja": "tangcilan",
@@ -7345,7 +7345,7 @@
           ]
         },
         {
-          "name_zh": "潮蓝",
+          "name_zh": "潮藍",
           "pinyin": "chaolan",
           "name_en": "chaolan",
           "name_ja": "chaolan",
@@ -7358,7 +7358,7 @@
           ]
         },
         {
-          "name_zh": "天蓝",
+          "name_zh": "天藍",
           "pinyin": "tianlan",
           "name_en": "tianlan",
           "name_ja": "tianlan",
@@ -7384,7 +7384,7 @@
           ]
         },
         {
-          "name_zh": "牵牛花蓝",
+          "name_zh": "牽牛花藍",
           "pinyin": "qianniuhualan",
           "name_en": "qianniuhualan",
           "name_ja": "qianniuhualan",
@@ -7397,7 +7397,7 @@
           ]
         },
         {
-          "name_zh": "宝石蓝",
+          "name_zh": "寶石藍",
           "pinyin": "baoshilan",
           "name_en": "baoshilan",
           "name_ja": "baoshilan",
@@ -7410,7 +7410,7 @@
           ]
         },
         {
-          "name_zh": "淡蓝灰",
+          "name_zh": "淡藍灰",
           "pinyin": "danlanhui",
           "name_en": "danlanhui",
           "name_ja": "danlanhui",
@@ -7436,7 +7436,7 @@
           ]
         },
         {
-          "name_zh": "银鱼白",
+          "name_zh": "銀魚白",
           "pinyin": "yinyubai",
           "name_en": "yinyubai",
           "name_ja": "yinyubai",
@@ -7449,7 +7449,7 @@
           ]
         },
         {
-          "name_zh": "釉蓝",
+          "name_zh": "釉藍",
           "pinyin": "youlan",
           "name_en": "youlan",
           "name_ja": "youlan",
@@ -7462,7 +7462,7 @@
           ]
         },
         {
-          "name_zh": "涧石蓝",
+          "name_zh": "澗石藍",
           "pinyin": "jianshilan",
           "name_en": "jianshilan",
           "name_ja": "jianshilan",
@@ -7475,7 +7475,7 @@
           ]
         },
         {
-          "name_zh": "远天蓝",
+          "name_zh": "遠天藍",
           "pinyin": "yuantianlan",
           "name_en": "yuantianlan",
           "name_ja": "yuantianlan",
@@ -7488,7 +7488,7 @@
           ]
         },
         {
-          "name_zh": "云山蓝",
+          "name_zh": "雲山藍",
           "pinyin": "yunshanlan",
           "name_en": "yunshanlan",
           "name_ja": "yunshanlan",
@@ -7501,7 +7501,7 @@
           ]
         },
         {
-          "name_zh": "秋波蓝",
+          "name_zh": "秋波藍",
           "pinyin": "qiubolan",
           "name_en": "qiubolan",
           "name_ja": "qiubolan",
@@ -7514,7 +7514,7 @@
           ]
         },
         {
-          "name_zh": "井天蓝",
+          "name_zh": "井天藍",
           "pinyin": "jingtianlan",
           "name_en": "jingtianlan",
           "name_ja": "jingtianlan",
@@ -7527,7 +7527,7 @@
           ]
         },
         {
-          "name_zh": "鸢尾蓝",
+          "name_zh": "鳶尾藍",
           "pinyin": "yuanweilan",
           "name_en": "yuanweilan",
           "name_ja": "yuanweilan",
@@ -7540,7 +7540,7 @@
           ]
         },
         {
-          "name_zh": "云峰白",
+          "name_zh": "雲峯白",
           "pinyin": "yunfengbai",
           "name_en": "yunfengbai",
           "name_ja": "yunfengbai",
@@ -7566,7 +7566,7 @@
           ]
         },
         {
-          "name_zh": "钴蓝",
+          "name_zh": "鈷藍",
           "pinyin": "gulan",
           "name_en": "gulan",
           "name_ja": "gulan",
@@ -7592,7 +7592,7 @@
           ]
         },
         {
-          "name_zh": "苍蓝",
+          "name_zh": "蒼藍",
           "pinyin": "canglan",
           "name_en": "canglan",
           "name_ja": "canglan",
@@ -7605,7 +7605,7 @@
           ]
         },
         {
-          "name_zh": "深灰蓝",
+          "name_zh": "深灰藍",
           "pinyin": "shenhuilan",
           "name_en": "shenhuilan",
           "name_ja": "shenhuilan",
@@ -7618,7 +7618,7 @@
           ]
         },
         {
-          "name_zh": "灰蓝",
+          "name_zh": "灰藍",
           "pinyin": "huilan",
           "name_en": "huilan",
           "name_ja": "huilan",
@@ -7631,7 +7631,7 @@
           ]
         },
         {
-          "name_zh": "湖水蓝",
+          "name_zh": "湖水藍",
           "pinyin": "hushuilan",
           "name_en": "hushuilan",
           "name_ja": "hushuilan",
@@ -7657,7 +7657,7 @@
           ]
         },
         {
-          "name_zh": "黄昏灰",
+          "name_zh": "黃昏灰",
           "pinyin": "huanghunhui",
           "name_en": "huanghunhui",
           "name_ja": "huanghunhui",
@@ -7670,7 +7670,7 @@
           ]
         },
         {
-          "name_zh": "霁青",
+          "name_zh": "霽青",
           "pinyin": "jiqing",
           "name_en": "jiqing",
           "name_ja": "jiqing",
@@ -7683,7 +7683,7 @@
           ]
         },
         {
-          "name_zh": "玉钅兰蓝",
+          "name_zh": "玉釒蘭藍",
           "pinyin": "yuqinlan",
           "name_en": "yuqinlan",
           "name_ja": "yuqinlan",
@@ -7696,7 +7696,7 @@
           ]
         },
         {
-          "name_zh": "胆矾蓝",
+          "name_zh": "膽礬藍",
           "pinyin": "danfanlan",
           "name_en": "danfanlan",
           "name_ja": "danfanlan",
@@ -7709,7 +7709,7 @@
           ]
         },
         {
-          "name_zh": "樫鸟蓝",
+          "name_zh": "樫鳥藍",
           "pinyin": "jianniaolan",
           "name_en": "jianniaolan",
           "name_ja": "jianniaolan",
@@ -7722,7 +7722,7 @@
           ]
         },
         {
-          "name_zh": "鸥蓝",
+          "name_zh": "鷗藍",
           "pinyin": "oulan",
           "name_en": "oulan",
           "name_ja": "oulan",
@@ -7735,7 +7735,7 @@
           ]
         },
         {
-          "name_zh": "翠蓝",
+          "name_zh": "翠藍",
           "pinyin": "cuilan",
           "name_en": "cuilan",
           "name_ja": "cuilan",
@@ -7748,7 +7748,7 @@
           ]
         },
         {
-          "name_zh": "蜻蜓蓝",
+          "name_zh": "蜻蜓藍",
           "pinyin": "qingtinglan",
           "name_en": "qingtinglan",
           "name_ja": "qingtinglan",
@@ -7761,7 +7761,7 @@
           ]
         },
         {
-          "name_zh": "孔雀蓝",
+          "name_zh": "孔雀藍",
           "pinyin": "kongquelan",
           "name_en": "peacock blue",
           "name_ja": "孔雀藍",
@@ -7774,7 +7774,7 @@
           ]
         },
         {
-          "name_zh": "蔚蓝",
+          "name_zh": "蔚藍",
           "pinyin": "weilan",
           "name_en": "weilan",
           "name_ja": "weilan",
@@ -7787,7 +7787,7 @@
           ]
         },
         {
-          "name_zh": "瀑布蓝",
+          "name_zh": "瀑布藍",
           "pinyin": "pubulan",
           "name_en": "pubulan",
           "name_ja": "pubulan",
@@ -7800,7 +7800,7 @@
           ]
         },
         {
-          "name_zh": "闪蓝",
+          "name_zh": "閃藍",
           "pinyin": "shanlan",
           "name_en": "shanlan",
           "name_ja": "shanlan",
@@ -7813,7 +7813,7 @@
           ]
         },
         {
-          "name_zh": "甸子蓝",
+          "name_zh": "甸子藍",
           "pinyin": "dianzilan",
           "name_en": "dianzilan",
           "name_ja": "dianzilan",
@@ -7826,7 +7826,7 @@
           ]
         },
         {
-          "name_zh": "晚波蓝",
+          "name_zh": "晚波藍",
           "pinyin": "wanbolan",
           "name_en": "wanbolan",
           "name_ja": "wanbolan",
@@ -7839,7 +7839,7 @@
           ]
         },
         {
-          "name_zh": "清水蓝",
+          "name_zh": "清水藍",
           "pinyin": "qingshuilan",
           "name_en": "qingshuilan",
           "name_ja": "qingshuilan",
@@ -7852,7 +7852,7 @@
           ]
         },
         {
-          "name_zh": "夏云灰",
+          "name_zh": "夏雲灰",
           "pinyin": "xiayunhui",
           "name_en": "xiayunhui",
           "name_ja": "xiayunhui",
@@ -7865,7 +7865,7 @@
           ]
         },
         {
-          "name_zh": "海天蓝",
+          "name_zh": "海天藍",
           "pinyin": "haitianlan",
           "name_en": "haitianlan",
           "name_ja": "haitianlan",
@@ -7878,7 +7878,7 @@
           ]
         },
         {
-          "name_zh": "虾壳青",
+          "name_zh": "蝦殼青",
           "pinyin": "xiakeqing",
           "name_en": "xiakeqing",
           "name_ja": "xiakeqing",
@@ -7891,7 +7891,7 @@
           ]
         },
         {
-          "name_zh": "石绿",
+          "name_zh": "石綠",
           "pinyin": "shilv",
           "name_en": "shilv",
           "name_ja": "shilv",
@@ -7917,7 +7917,7 @@
           ]
         },
         {
-          "name_zh": "美蝶绿",
+          "name_zh": "美蝶綠",
           "pinyin": "meidielv",
           "name_en": "meidielv",
           "name_ja": "meidielv",
@@ -7930,7 +7930,7 @@
           ]
         },
         {
-          "name_zh": "垩灰",
+          "name_zh": "堊灰",
           "pinyin": "ehui",
           "name_en": "ehui",
           "name_ja": "ehui",
@@ -7943,7 +7943,7 @@
           ]
         },
         {
-          "name_zh": "蓝绿",
+          "name_zh": "藍綠",
           "pinyin": "lanlv",
           "name_en": "lanlv",
           "name_ja": "lanlv",
@@ -7956,7 +7956,7 @@
           ]
         },
         {
-          "name_zh": "竹绿",
+          "name_zh": "竹綠",
           "pinyin": "zhulv",
           "name_en": "bamboo green",
           "name_ja": "竹緑",
@@ -7969,7 +7969,7 @@
           ]
         },
         {
-          "name_zh": "亚丁绿",
+          "name_zh": "亞丁綠",
           "pinyin": "yadinglv",
           "name_en": "yadinglv",
           "name_ja": "yadinglv",
@@ -7995,7 +7995,7 @@
           ]
         },
         {
-          "name_zh": "海王绿",
+          "name_zh": "海王綠",
           "pinyin": "haiwanglv",
           "name_en": "haiwanglv",
           "name_ja": "haiwanglv",
@@ -8008,7 +8008,7 @@
           ]
         },
         {
-          "name_zh": "深海绿",
+          "name_zh": "深海綠",
           "pinyin": "shenhailv",
           "name_en": "shenhailv",
           "name_ja": "shenhailv",
@@ -8021,7 +8021,7 @@
           ]
         },
         {
-          "name_zh": "绿灰",
+          "name_zh": "綠灰",
           "pinyin": "lvhui",
           "name_en": "lvhui",
           "name_ja": "lvhui",
@@ -8034,7 +8034,7 @@
           ]
         },
         {
-          "name_zh": "青矾绿",
+          "name_zh": "青礬綠",
           "pinyin": "qingfanlv",
           "name_en": "qingfanlv",
           "name_ja": "qingfanlv",
@@ -8047,7 +8047,7 @@
           ]
         },
         {
-          "name_zh": "苍绿",
+          "name_zh": "蒼綠",
           "pinyin": "canglv",
           "name_en": "canglv",
           "name_ja": "canglv",
@@ -8060,7 +8060,7 @@
           ]
         },
         {
-          "name_zh": "飞泉绿",
+          "name_zh": "飛泉綠",
           "pinyin": "feiquanlv",
           "name_en": "feiquanlv",
           "name_ja": "feiquanlv",
@@ -8073,7 +8073,7 @@
           ]
         },
         {
-          "name_zh": "莽丛绿",
+          "name_zh": "莽叢綠",
           "pinyin": "mangconglv",
           "name_en": "mangconglv",
           "name_ja": "mangconglv",
@@ -8086,7 +8086,7 @@
           ]
         },
         {
-          "name_zh": "梧枝绿",
+          "name_zh": "梧枝綠",
           "pinyin": "wuzhilv",
           "name_en": "wuzhilv",
           "name_ja": "wuzhilv",
@@ -8099,7 +8099,7 @@
           ]
         },
         {
-          "name_zh": "铜绿",
+          "name_zh": "銅綠",
           "pinyin": "tonglv",
           "name_en": "tonglv",
           "name_ja": "tonglv",
@@ -8112,7 +8112,7 @@
           ]
         },
         {
-          "name_zh": "草原远绿",
+          "name_zh": "草原遠綠",
           "pinyin": "caoyuanyuanlv",
           "name_en": "caoyuanyuanlv",
           "name_ja": "caoyuanyuanlv",
@@ -8125,7 +8125,7 @@
           ]
         },
         {
-          "name_zh": "蛙绿",
+          "name_zh": "蛙綠",
           "pinyin": "walv",
           "name_en": "walv",
           "name_ja": "walv",
@@ -8138,7 +8138,7 @@
           ]
         },
         {
-          "name_zh": "浪花绿",
+          "name_zh": "浪花綠",
           "pinyin": "langhualv",
           "name_en": "langhualv",
           "name_ja": "langhualv",
@@ -8151,7 +8151,7 @@
           ]
         },
         {
-          "name_zh": "苷蓝绿",
+          "name_zh": "苷藍綠",
           "pinyin": "ganlanlv",
           "name_en": "ganlanlv",
           "name_ja": "ganlanlv",
@@ -8164,7 +8164,7 @@
           ]
         },
         {
-          "name_zh": "粉绿",
+          "name_zh": "粉綠",
           "pinyin": "fenlv",
           "name_en": "fenlv",
           "name_ja": "fenlv",
@@ -8177,7 +8177,7 @@
           ]
         },
         {
-          "name_zh": "淡绿灰",
+          "name_zh": "淡綠灰",
           "pinyin": "danlvhui",
           "name_en": "danlvhui",
           "name_ja": "danlvhui",
@@ -8190,7 +8190,7 @@
           ]
         },
         {
-          "name_zh": "麦苗绿",
+          "name_zh": "麥苗綠",
           "pinyin": "maimiaolv",
           "name_en": "maimiaolv",
           "name_ja": "maimiaolv",
@@ -8203,7 +8203,7 @@
           ]
         },
         {
-          "name_zh": "翠绿",
+          "name_zh": "翠綠",
           "pinyin": "cuilv",
           "name_en": "emerald green",
           "name_ja": "翠緑",
@@ -8216,7 +8216,7 @@
           ]
         },
         {
-          "name_zh": "葱绿",
+          "name_zh": "蔥綠",
           "pinyin": "conglv",
           "name_en": "conglv",
           "name_ja": "conglv",
@@ -8229,7 +8229,7 @@
           ]
         },
         {
-          "name_zh": "荷叶绿",
+          "name_zh": "荷葉綠",
           "pinyin": "heyelv",
           "name_en": "heyelv",
           "name_ja": "heyelv",
@@ -8242,7 +8242,7 @@
           ]
         },
         {
-          "name_zh": "淡绿",
+          "name_zh": "淡綠",
           "pinyin": "danlv",
           "name_en": "danlv",
           "name_ja": "danlv",
@@ -8255,7 +8255,7 @@
           ]
         },
         {
-          "name_zh": "田园绿",
+          "name_zh": "田園綠",
           "pinyin": "tianyuanlv",
           "name_en": "tianyuanlv",
           "name_ja": "tianyuanlv",
@@ -8268,7 +8268,7 @@
           ]
         },
         {
-          "name_zh": "玉簪绿",
+          "name_zh": "玉簪綠",
           "pinyin": "yuzanlv",
           "name_en": "yuzanlv",
           "name_ja": "yuzanlv",
@@ -8281,7 +8281,7 @@
           ]
         },
         {
-          "name_zh": "蟾绿",
+          "name_zh": "蟾綠",
           "pinyin": "chanlv",
           "name_en": "chanlv",
           "name_ja": "chanlv",
@@ -8294,7 +8294,7 @@
           ]
         },
         {
-          "name_zh": "蔻梢绿",
+          "name_zh": "蔻梢綠",
           "pinyin": "koushaolv",
           "name_en": "koushaolv",
           "name_ja": "koushaolv",
@@ -8307,7 +8307,7 @@
           ]
         },
         {
-          "name_zh": "薄荷绿",
+          "name_zh": "薄荷綠",
           "pinyin": "bohelv",
           "name_en": "bohelv",
           "name_ja": "bohelv",
@@ -8333,7 +8333,7 @@
           ]
         },
         {
-          "name_zh": "蛋白石绿",
+          "name_zh": "蛋白石綠",
           "pinyin": "danbaishilv",
           "name_en": "danbaishilv",
           "name_ja": "danbaishilv",
@@ -8346,7 +8346,7 @@
           ]
         },
         {
-          "name_zh": "竹篁绿",
+          "name_zh": "竹篁綠",
           "pinyin": "zhuhuanglv",
           "name_en": "zhuhuanglv",
           "name_ja": "zhuhuanglv",
@@ -8359,7 +8359,7 @@
           ]
         },
         {
-          "name_zh": "孔雀绿",
+          "name_zh": "孔雀綠",
           "pinyin": "kongquelv",
           "name_en": "peacock green",
           "name_ja": "孔雀緑",
@@ -8372,7 +8372,7 @@
           ]
         },
         {
-          "name_zh": "宫殿绿",
+          "name_zh": "宮殿綠",
           "pinyin": "gongdianlv",
           "name_en": "gongdianlv",
           "name_ja": "gongdianlv",
@@ -8385,7 +8385,7 @@
           ]
         },
         {
-          "name_zh": "云杉绿",
+          "name_zh": "雲杉綠",
           "pinyin": "yunshanlv",
           "name_en": "yunshanlv",
           "name_ja": "yunshanlv",
@@ -8398,7 +8398,7 @@
           ]
         },
         {
-          "name_zh": "毛绿",
+          "name_zh": "毛綠",
           "pinyin": "maolv",
           "name_en": "maolv",
           "name_ja": "maolv",
@@ -8411,7 +8411,7 @@
           ]
         },
         {
-          "name_zh": "冰山蓝",
+          "name_zh": "冰山藍",
           "pinyin": "bingshanlan",
           "name_en": "bingshanlan",
           "name_ja": "bingshanlan",
@@ -8437,7 +8437,7 @@
           ]
         },
         {
-          "name_zh": "明绿",
+          "name_zh": "明綠",
           "pinyin": "minglv",
           "name_en": "minglv",
           "name_ja": "minglv",
@@ -8450,7 +8450,7 @@
           ]
         },
         {
-          "name_zh": "松霜绿",
+          "name_zh": "松霜綠",
           "pinyin": "songshuanglv",
           "name_en": "songshuanglv",
           "name_ja": "songshuanglv",
@@ -8463,7 +8463,7 @@
           ]
         },
         {
-          "name_zh": "白屈菜绿",
+          "name_zh": "白屈菜綠",
           "pinyin": "baiqucailv",
           "name_en": "baiqucailv",
           "name_ja": "baiqucailv",
@@ -8476,7 +8476,7 @@
           ]
         },
         {
-          "name_zh": "狼烟灰",
+          "name_zh": "狼煙灰",
           "pinyin": "langyanhui",
           "name_en": "langyanhui",
           "name_ja": "langyanhui",
@@ -8489,7 +8489,7 @@
           ]
         },
         {
-          "name_zh": "瓦松绿",
+          "name_zh": "瓦松綠",
           "pinyin": "wasonglv",
           "name_en": "wasonglv",
           "name_ja": "wasonglv",
@@ -8502,7 +8502,7 @@
           ]
         },
         {
-          "name_zh": "槲寄生绿",
+          "name_zh": "槲寄生綠",
           "pinyin": "hujishenglv",
           "name_en": "hujishenglv",
           "name_ja": "hujishenglv",
@@ -8515,7 +8515,7 @@
           ]
         },
         {
-          "name_zh": "淡翠绿",
+          "name_zh": "淡翠綠",
           "pinyin": "dancuilv",
           "name_en": "dancuilv",
           "name_ja": "dancuilv",
@@ -8528,7 +8528,7 @@
           ]
         },
         {
-          "name_zh": "玉髓绿",
+          "name_zh": "玉髓綠",
           "pinyin": "yusuilv",
           "name_en": "yusuilv",
           "name_ja": "yusuilv",
@@ -8541,7 +8541,7 @@
           ]
         },
         {
-          "name_zh": "鲜绿",
+          "name_zh": "鮮綠",
           "pinyin": "xianlv",
           "name_en": "xianlv",
           "name_ja": "xianlv",
@@ -8554,7 +8554,7 @@
           ]
         },
         {
-          "name_zh": "油绿",
+          "name_zh": "油綠",
           "pinyin": "youlv",
           "name_en": "youlv",
           "name_ja": "youlv",
@@ -8567,7 +8567,7 @@
           ]
         },
         {
-          "name_zh": "宝石绿",
+          "name_zh": "寶石綠",
           "pinyin": "baoshilv",
           "name_en": "baoshilv",
           "name_ja": "baoshilv",
@@ -8580,7 +8580,7 @@
           ]
         },
         {
-          "name_zh": "嘉陵水绿",
+          "name_zh": "嘉陵水綠",
           "pinyin": "jialingshuilv",
           "name_en": "jialingshuilv",
           "name_ja": "jialingshuilv",
@@ -8593,7 +8593,7 @@
           ]
         },
         {
-          "name_zh": "田螺绿",
+          "name_zh": "田螺綠",
           "pinyin": "tianluolv",
           "name_en": "tianluolv",
           "name_ja": "tianluolv",
@@ -8606,7 +8606,7 @@
           ]
         },
         {
-          "name_zh": "水绿",
+          "name_zh": "水綠",
           "pinyin": "shuilv",
           "name_en": "shuilv",
           "name_ja": "shuilv",
@@ -8619,7 +8619,7 @@
           ]
         },
         {
-          "name_zh": "鹦鹉绿",
+          "name_zh": "鸚鵡綠",
           "pinyin": "yingwulv",
           "name_en": "yingwulv",
           "name_ja": "yingwulv",
@@ -8632,7 +8632,7 @@
           ]
         },
         {
-          "name_zh": "艾背绿",
+          "name_zh": "艾背綠",
           "pinyin": "aibeilv",
           "name_en": "aibeilv",
           "name_ja": "aibeilv",
@@ -8645,7 +8645,7 @@
           ]
         },
         {
-          "name_zh": "艾绿",
+          "name_zh": "艾綠",
           "pinyin": "ailv",
           "name_en": "ailv",
           "name_ja": "ailv",
@@ -8658,7 +8658,7 @@
           ]
         },
         {
-          "name_zh": "镍灰",
+          "name_zh": "鎳灰",
           "pinyin": "niehui",
           "name_en": "niehui",
           "name_ja": "niehui",
@@ -8671,7 +8671,7 @@
           ]
         },
         {
-          "name_zh": "橄榄石绿",
+          "name_zh": "橄欖石綠",
           "pinyin": "ganlanshilv",
           "name_en": "ganlanshilv",
           "name_ja": "ganlanshilv",
@@ -8684,7 +8684,7 @@
           ]
         },
         {
-          "name_zh": "芽绿",
+          "name_zh": "芽綠",
           "pinyin": "yalv",
           "name_en": "yalv",
           "name_ja": "yalv",
@@ -8697,7 +8697,7 @@
           ]
         },
         {
-          "name_zh": "嫩菊绿",
+          "name_zh": "嫩菊綠",
           "pinyin": "nenjulv",
           "name_en": "nenjulv",
           "name_ja": "nenjulv",
@@ -8710,7 +8710,7 @@
           ]
         },
         {
-          "name_zh": "芦苇绿",
+          "name_zh": "蘆葦綠",
           "pinyin": "luweilv",
           "name_en": "luweilv",
           "name_ja": "luweilv",
@@ -8723,7 +8723,7 @@
           ]
         },
         {
-          "name_zh": "姚黄",
+          "name_zh": "姚黃",
           "pinyin": "yaohuang",
           "name_en": "yaohuang",
           "name_ja": "yaohuang",
@@ -8736,7 +8736,7 @@
           ]
         },
         {
-          "name_zh": "蒽油绿",
+          "name_zh": "蒽油綠",
           "pinyin": "enyoulv",
           "name_en": "enyoulv",
           "name_ja": "enyoulv",
@@ -8749,7 +8749,7 @@
           ]
         },
         {
-          "name_zh": "苹果绿",
+          "name_zh": "蘋果綠",
           "pinyin": "pingguolv",
           "name_en": "pingguolv",
           "name_ja": "pingguolv",
@@ -8762,7 +8762,7 @@
           ]
         },
         {
-          "name_zh": "海沬绿",
+          "name_zh": "海沬綠",
           "pinyin": "haimeilv",
           "name_en": "haimeilv",
           "name_ja": "haimeilv",
@@ -8775,7 +8775,7 @@
           ]
         },
         {
-          "name_zh": "橄榄黄绿",
+          "name_zh": "橄欖黃綠",
           "pinyin": "ganlanhuanglv",
           "name_en": "ganlanhuanglv",
           "name_ja": "ganlanhuanglv",
@@ -8788,7 +8788,7 @@
           ]
         },
         {
-          "name_zh": "槐花黄绿",
+          "name_zh": "槐花黃綠",
           "pinyin": "huaihuahuanglv",
           "name_en": "huaihuahuanglv",
           "name_ja": "huaihuahuanglv",
@@ -8801,7 +8801,7 @@
           ]
         },
         {
-          "name_zh": "蝶黄",
+          "name_zh": "蝶黃",
           "pinyin": "diehuang",
           "name_en": "diehuang",
           "name_ja": "diehuang",
@@ -8827,7 +8827,7 @@
           ]
         },
         {
-          "name_zh": "橄榄绿",
+          "name_zh": "橄欖綠",
           "pinyin": "ganlanlv_2",
           "name_en": "ganlanlv_2",
           "name_ja": "ganlanlv_2",
@@ -8853,7 +8853,7 @@
           ]
         },
         {
-          "name_zh": "淡灰绿",
+          "name_zh": "淡灰綠",
           "pinyin": "danhuilv",
           "name_en": "danhuilv",
           "name_ja": "danhuilv",
@@ -8866,7 +8866,7 @@
           ]
         },
         {
-          "name_zh": "佛手黄",
+          "name_zh": "佛手黃",
           "pinyin": "foshouhuang",
           "name_en": "foshouhuang",
           "name_ja": "foshouhuang",
@@ -8892,7 +8892,7 @@
           ]
         },
         {
-          "name_zh": "香蕉黄",
+          "name_zh": "香蕉黃",
           "pinyin": "xiangjiaohuang",
           "name_en": "xiangjiaohuang",
           "name_ja": "xiangjiaohuang",
@@ -8905,7 +8905,7 @@
           ]
         },
         {
-          "name_zh": "新禾绿",
+          "name_zh": "新禾綠",
           "pinyin": "xinhelv",
           "name_en": "xinhelv",
           "name_ja": "xinhelv",
@@ -8918,7 +8918,7 @@
           ]
         },
         {
-          "name_zh": "油菜花黄",
+          "name_zh": "油菜花黃",
           "pinyin": "youcaihuahuang",
           "name_en": "youcaihuahuang",
           "name_ja": "youcaihuahuang",
@@ -8931,7 +8931,7 @@
           ]
         },
         {
-          "name_zh": "秋葵黄",
+          "name_zh": "秋葵黃",
           "pinyin": "qiukuihuang",
           "name_en": "qiukuihuang",
           "name_ja": "qiukuihuang",
@@ -8944,7 +8944,7 @@
           ]
         },
         {
-          "name_zh": "柚黄",
+          "name_zh": "柚黃",
           "pinyin": "youhuang",
           "name_en": "youhuang",
           "name_ja": "youhuang",
@@ -8957,7 +8957,7 @@
           ]
         },
         {
-          "name_zh": "草黄",
+          "name_zh": "草黃",
           "pinyin": "caohuang",
           "name_en": "caohuang",
           "name_ja": "caohuang",
@@ -8970,7 +8970,7 @@
           ]
         },
         {
-          "name_zh": "硫华黄",
+          "name_zh": "硫華黃",
           "pinyin": "liuhuahuang",
           "name_en": "liuhuahuang",
           "name_ja": "liuhuahuang",
@@ -8983,7 +8983,7 @@
           ]
         },
         {
-          "name_zh": "姜黄",
+          "name_zh": "薑黃",
           "pinyin": "jianghuang",
           "name_en": "jianghuang",
           "name_ja": "jianghuang",
@@ -8996,7 +8996,7 @@
           ]
         },
         {
-          "name_zh": "潭水绿",
+          "name_zh": "潭水綠",
           "pinyin": "tanshuilv",
           "name_en": "tanshuilv",
           "name_ja": "tanshuilv",
@@ -9009,7 +9009,7 @@
           ]
         },
         {
-          "name_zh": "金瓜黄",
+          "name_zh": "金瓜黃",
           "pinyin": "jinguahuang",
           "name_en": "jinguahuang",
           "name_ja": "jinguahuang",
@@ -9022,7 +9022,7 @@
           ]
         },
         {
-          "name_zh": "麦秆黄",
+          "name_zh": "麥稈黃",
           "pinyin": "maiganhuang",
           "name_en": "maiganhuang",
           "name_ja": "maiganhuang",
@@ -9035,7 +9035,7 @@
           ]
         },
         {
-          "name_zh": "蒿黄",
+          "name_zh": "蒿黃",
           "pinyin": "haohuang",
           "name_en": "haohuang",
           "name_ja": "haohuang",
@@ -9048,7 +9048,7 @@
           ]
         },
         {
-          "name_zh": "茉莉黄",
+          "name_zh": "茉莉黃",
           "pinyin": "molihuang",
           "name_en": "molihuang",
           "name_ja": "molihuang",
@@ -9061,7 +9061,7 @@
           ]
         },
         {
-          "name_zh": "藤黄",
+          "name_zh": "藤黃",
           "pinyin": "tenghuang",
           "name_en": "gamboge yellow",
           "name_ja": "藤黄",
@@ -9074,7 +9074,7 @@
           ]
         },
         {
-          "name_zh": "芒果黄",
+          "name_zh": "芒果黃",
           "pinyin": "mangguohuang",
           "name_en": "mangguohuang",
           "name_ja": "mangguohuang",
@@ -9087,7 +9087,7 @@
           ]
         },
         {
-          "name_zh": "海参灰",
+          "name_zh": "海蔘灰",
           "pinyin": "haishenhui",
           "name_en": "haishenhui",
           "name_ja": "haishenhui",
@@ -9100,7 +9100,7 @@
           ]
         },
         {
-          "name_zh": "碧螺春绿",
+          "name_zh": "碧螺春綠",
           "pinyin": "biluochunlv",
           "name_en": "biluochunlv",
           "name_ja": "biluochunlv",
@@ -9113,7 +9113,7 @@
           ]
         },
         {
-          "name_zh": "苔绿",
+          "name_zh": "苔綠",
           "pinyin": "tailv",
           "name_en": "tailv",
           "name_ja": "tailv",
@@ -9126,7 +9126,7 @@
           ]
         },
         {
-          "name_zh": "柠檬黄",
+          "name_zh": "檸檬黃",
           "pinyin": "ningmenghuang",
           "name_en": "ningmenghuang",
           "name_ja": "ningmenghuang",
@@ -9139,7 +9139,7 @@
           ]
         },
         {
-          "name_zh": "草灰绿",
+          "name_zh": "草灰綠",
           "pinyin": "caohuilv",
           "name_en": "caohuilv",
           "name_ja": "caohuilv",
@@ -9152,7 +9152,7 @@
           ]
         },
         {
-          "name_zh": "向日葵黄",
+          "name_zh": "向日葵黃",
           "pinyin": "xiangrikuihuang",
           "name_en": "xiangrikuihuang",
           "name_ja": "xiangrikuihuang",
@@ -9165,7 +9165,7 @@
           ]
         },
         {
-          "name_zh": "素馨黄",
+          "name_zh": "素馨黃",
           "pinyin": "suxinhuang",
           "name_en": "suxinhuang",
           "name_ja": "suxinhuang",
@@ -9178,7 +9178,7 @@
           ]
         },
         {
-          "name_zh": "乳鸭黄",
+          "name_zh": "乳鴨黃",
           "pinyin": "ruyahuang",
           "name_en": "ruyahuang",
           "name_ja": "ruyahuang",
@@ -9204,7 +9204,7 @@
           ]
         },
         {
-          "name_zh": "葵扇黄",
+          "name_zh": "葵扇黃",
           "pinyin": "kuishanhuang",
           "name_en": "kuishanhuang",
           "name_ja": "kuishanhuang",
@@ -9217,7 +9217,7 @@
           ]
         },
         {
-          "name_zh": "大豆黄",
+          "name_zh": "大豆黃",
           "pinyin": "dadouhuang",
           "name_en": "dadouhuang",
           "name_ja": "dadouhuang",
@@ -9230,7 +9230,7 @@
           ]
         },
         {
-          "name_zh": "金盏黄",
+          "name_zh": "金盞黃",
           "pinyin": "jinzhanhuang",
           "name_en": "jinzhanhuang",
           "name_ja": "jinzhanhuang",
@@ -9256,7 +9256,7 @@
           ]
         },
         {
-          "name_zh": "黄连黄",
+          "name_zh": "黃連黃",
           "pinyin": "huanglianhuang",
           "name_en": "huanglianhuang",
           "name_ja": "huanglianhuang",
@@ -9269,7 +9269,7 @@
           ]
         },
         {
-          "name_zh": "杏仁黄",
+          "name_zh": "杏仁黃",
           "pinyin": "xingrenhuang",
           "name_en": "xingrenhuang",
           "name_ja": "xingrenhuang",
@@ -9282,7 +9282,7 @@
           ]
         },
         {
-          "name_zh": "谷黄",
+          "name_zh": "谷黃",
           "pinyin": "guhuang",
           "name_en": "guhuang",
           "name_ja": "guhuang",
@@ -9295,7 +9295,7 @@
           ]
         },
         {
-          "name_zh": "木瓜黄",
+          "name_zh": "木瓜黃",
           "pinyin": "muguahuang",
           "name_en": "muguahuang",
           "name_ja": "muguahuang",
@@ -9308,7 +9308,7 @@
           ]
         },
         {
-          "name_zh": "淡茧黄",
+          "name_zh": "淡繭黃",
           "pinyin": "danjianhuang",
           "name_en": "danjianhuang",
           "name_ja": "danjianhuang",
@@ -9321,7 +9321,7 @@
           ]
         },
         {
-          "name_zh": "雅梨黄",
+          "name_zh": "雅梨黃",
           "pinyin": "yalihuang",
           "name_en": "yalihuang",
           "name_ja": "yalihuang",
@@ -9334,7 +9334,7 @@
           ]
         },
         {
-          "name_zh": "银白",
+          "name_zh": "銀白",
           "pinyin": "yinbai",
           "name_en": "yinbai",
           "name_ja": "yinbai",
@@ -9347,7 +9347,7 @@
           ]
         },
         {
-          "name_zh": "棕榈绿",
+          "name_zh": "棕櫚綠",
           "pinyin": "zonglvlv",
           "name_en": "zonglvlv",
           "name_ja": "zonglvlv",
@@ -9360,7 +9360,7 @@
           ]
         },
         {
-          "name_zh": "鹦鹉冠黄",
+          "name_zh": "鸚鵡冠黃",
           "pinyin": "yingwuguanhuang",
           "name_en": "yingwuguanhuang",
           "name_ja": "yingwuguanhuang",
@@ -9373,7 +9373,7 @@
           ]
         },
         {
-          "name_zh": "枯绿",
+          "name_zh": "枯綠",
           "pinyin": "kulv",
           "name_en": "kulv",
           "name_ja": "kulv",
@@ -9386,7 +9386,7 @@
           ]
         },
         {
-          "name_zh": "浅烙黄",
+          "name_zh": "淺烙黃",
           "pinyin": "qianlaohuang",
           "name_en": "qianlaohuang",
           "name_ja": "qianlaohuang",
@@ -9399,7 +9399,7 @@
           ]
         },
         {
-          "name_zh": "淡密黄",
+          "name_zh": "淡密黃",
           "pinyin": "danmihuang",
           "name_en": "danmihuang",
           "name_ja": "danmihuang",
@@ -9412,7 +9412,7 @@
           ]
         },
         {
-          "name_zh": "芥黄",
+          "name_zh": "芥黃",
           "pinyin": "jiehuang",
           "name_en": "jiehuang",
           "name_ja": "jiehuang",
@@ -9425,7 +9425,7 @@
           ]
         },
         {
-          "name_zh": "栀子黄",
+          "name_zh": "梔子黃",
           "pinyin": "zhizihuang",
           "name_en": "zhizihuang",
           "name_ja": "zhizihuang",
@@ -9438,7 +9438,7 @@
           ]
         },
         {
-          "name_zh": "暗海水绿",
+          "name_zh": "暗海水綠",
           "pinyin": "anhaishuilv",
           "name_en": "anhaishuilv",
           "name_ja": "anhaishuilv",
@@ -9451,7 +9451,7 @@
           ]
         },
         {
-          "name_zh": "篾黄",
+          "name_zh": "篾黃",
           "pinyin": "miehuang",
           "name_en": "miehuang",
           "name_ja": "miehuang",
@@ -9477,7 +9477,7 @@
           ]
         },
         {
-          "name_zh": "炒米黄",
+          "name_zh": "炒米黃",
           "pinyin": "chaomihuang",
           "name_en": "chaomihuang",
           "name_ja": "chaomihuang",
@@ -9490,7 +9490,7 @@
           ]
         },
         {
-          "name_zh": "琥珀黄",
+          "name_zh": "琥珀黃",
           "pinyin": "hupohuang",
           "name_en": "hupohuang",
           "name_ja": "hupohuang",
@@ -9503,7 +9503,7 @@
           ]
         },
         {
-          "name_zh": "灰绿",
+          "name_zh": "灰綠",
           "pinyin": "huilv",
           "name_en": "huilv",
           "name_ja": "huilv",
@@ -9516,7 +9516,7 @@
           ]
         },
         {
-          "name_zh": "粽叶绿",
+          "name_zh": "糉葉綠",
           "pinyin": "zongyelv",
           "name_en": "zongyelv",
           "name_ja": "zongyelv",
@@ -9529,7 +9529,7 @@
           ]
         },
         {
-          "name_zh": "尘灰",
+          "name_zh": "塵灰",
           "pinyin": "chenhui",
           "name_en": "chenhui",
           "name_ja": "chenhui",
@@ -9542,7 +9542,7 @@
           ]
         },
         {
-          "name_zh": "鼬黄",
+          "name_zh": "鼬黃",
           "pinyin": "youhuang_2",
           "name_en": "youhuang_2",
           "name_ja": "youhuang_2",
@@ -9555,7 +9555,7 @@
           ]
         },
         {
-          "name_zh": "象牙黄",
+          "name_zh": "象牙黃",
           "pinyin": "xiangyahuang",
           "name_en": "xiangyahuang",
           "name_ja": "xiangyahuang",
@@ -9568,7 +9568,7 @@
           ]
         },
         {
-          "name_zh": "鲛青",
+          "name_zh": "鮫青",
           "pinyin": "jiaoqing",
           "name_en": "jiaoqing",
           "name_ja": "jiaoqing",
@@ -9581,7 +9581,7 @@
           ]
         },
         {
-          "name_zh": "豆汁黄",
+          "name_zh": "豆汁黃",
           "pinyin": "douzhihuang",
           "name_en": "douzhihuang",
           "name_ja": "douzhihuang",
@@ -9594,7 +9594,7 @@
           ]
         },
         {
-          "name_zh": "土黄",
+          "name_zh": "土黃",
           "pinyin": "tuhuang",
           "name_en": "tuhuang",
           "name_ja": "tuhuang",
@@ -9607,7 +9607,7 @@
           ]
         },
         {
-          "name_zh": "香水玫瑰黄",
+          "name_zh": "香水玫瑰黃",
           "pinyin": "xiangshuimeiguihuang",
           "name_en": "xiangshuimeiguihuang",
           "name_ja": "xiangshuimeiguihuang",
@@ -9620,7 +9620,7 @@
           ]
         },
         {
-          "name_zh": "虎皮黄",
+          "name_zh": "虎皮黃",
           "pinyin": "hupihuang",
           "name_en": "hupihuang",
           "name_ja": "hupihuang",
@@ -9633,7 +9633,7 @@
           ]
         },
         {
-          "name_zh": "鸡蛋黄",
+          "name_zh": "雞蛋黃",
           "pinyin": "jidanhuang",
           "name_en": "jidanhuang",
           "name_ja": "jidanhuang",
@@ -9646,7 +9646,7 @@
           ]
         },
         {
-          "name_zh": "银鼠灰",
+          "name_zh": "銀鼠灰",
           "pinyin": "yinshuhui",
           "name_en": "yinshuhui",
           "name_ja": "yinshuhui",
@@ -9659,7 +9659,7 @@
           ]
         },
         {
-          "name_zh": "鱼肚白",
+          "name_zh": "魚肚白",
           "pinyin": "yudubai",
           "name_en": "yudubai",
           "name_ja": "yudubai",
@@ -9672,7 +9672,7 @@
           ]
         },
         {
-          "name_zh": "初熟杏黄",
+          "name_zh": "初熟杏黃",
           "pinyin": "chushuxinghuang",
           "name_en": "chushuxinghuang",
           "name_ja": "chushuxinghuang",
@@ -9685,7 +9685,7 @@
           ]
         },
         {
-          "name_zh": "山鸡黄",
+          "name_zh": "山雞黃",
           "pinyin": "shanjihuang",
           "name_en": "shanjihuang",
           "name_ja": "shanjihuang",
@@ -9698,7 +9698,7 @@
           ]
         },
         {
-          "name_zh": "莲子白",
+          "name_zh": "蓮子白",
           "pinyin": "lianzibai",
           "name_en": "lianzibai",
           "name_ja": "lianzibai",
@@ -9711,7 +9711,7 @@
           ]
         },
         {
-          "name_zh": "蟹壳灰",
+          "name_zh": "蟹殼灰",
           "pinyin": "xiekehui",
           "name_en": "xiekehui",
           "name_ja": "xiekehui",
@@ -9724,7 +9724,7 @@
           ]
         },
         {
-          "name_zh": "沙石黄",
+          "name_zh": "沙石黃",
           "pinyin": "shashihuang",
           "name_en": "shashihuang",
           "name_ja": "shashihuang",
@@ -9737,7 +9737,7 @@
           ]
         },
         {
-          "name_zh": "甘草黄",
+          "name_zh": "甘草黃",
           "pinyin": "gancaohuang",
           "name_en": "gancaohuang",
           "name_ja": "gancaohuang",
@@ -9763,7 +9763,7 @@
           ]
         },
         {
-          "name_zh": "鹅掌黄",
+          "name_zh": "鵝掌黃",
           "pinyin": "ezhanghuang",
           "name_en": "ezhanghuang",
           "name_ja": "ezhanghuang",
@@ -9776,7 +9776,7 @@
           ]
         },
         {
-          "name_zh": "麦芽糖黄",
+          "name_zh": "麥芽糖黃",
           "pinyin": "maiyatanghuang",
           "name_en": "maiyatanghuang",
           "name_ja": "maiyatanghuang",
@@ -9789,7 +9789,7 @@
           ]
         },
         {
-          "name_zh": "浅驼色",
+          "name_zh": "淺駝色",
           "pinyin": "qiantuose",
           "name_en": "qiantuose",
           "name_ja": "qiantuose",
@@ -9802,7 +9802,7 @@
           ]
         },
         {
-          "name_zh": "百灵鸟灰",
+          "name_zh": "百靈鳥灰",
           "pinyin": "bailingniaohui",
           "name_en": "bailingniaohui",
           "name_ja": "bailingniaohui",
@@ -9815,7 +9815,7 @@
           ]
         },
         {
-          "name_zh": "酪黄",
+          "name_zh": "酪黃",
           "pinyin": "laohuang",
           "name_en": "laohuang",
           "name_ja": "laohuang",
@@ -9867,7 +9867,7 @@
           ]
         },
         {
-          "name_zh": "蜴蜊绿",
+          "name_zh": "蜴蜊綠",
           "pinyin": "yililv",
           "name_en": "yililv",
           "name_ja": "yililv",
@@ -9880,7 +9880,7 @@
           ]
         },
         {
-          "name_zh": "汉白玉",
+          "name_zh": "漢白玉",
           "pinyin": "hanbaiyu",
           "name_en": "hanbaiyu",
           "name_ja": "hanbaiyu",
@@ -9893,7 +9893,7 @@
           ]
         },
         {
-          "name_zh": "橙皮黄",
+          "name_zh": "橙皮黃",
           "pinyin": "chengpihuang",
           "name_en": "chengpihuang",
           "name_ja": "chengpihuang",
@@ -9906,7 +9906,7 @@
           ]
         },
         {
-          "name_zh": "莱阳梨黄",
+          "name_zh": "萊陽梨黃",
           "pinyin": "laiyanglihuang",
           "name_en": "laiyanglihuang",
           "name_ja": "laiyanglihuang",
@@ -9919,7 +9919,7 @@
           ]
         },
         {
-          "name_zh": "枇杷黄",
+          "name_zh": "枇杷黃",
           "pinyin": "pipahuang",
           "name_en": "pipahuang",
           "name_ja": "pipahuang",
@@ -9932,7 +9932,7 @@
           ]
         },
         {
-          "name_zh": "金叶黄",
+          "name_zh": "金葉黃",
           "pinyin": "jinyehuang",
           "name_en": "jinyehuang",
           "name_ja": "jinyehuang",
@@ -9945,7 +9945,7 @@
           ]
         },
         {
-          "name_zh": "苍黄",
+          "name_zh": "蒼黃",
           "pinyin": "canghuang",
           "name_en": "canghuang",
           "name_ja": "canghuang",
@@ -9997,7 +9997,7 @@
           ]
         },
         {
-          "name_zh": "龟背黄",
+          "name_zh": "龜背黃",
           "pinyin": "guibeihuang",
           "name_en": "guibeihuang",
           "name_ja": "guibeihuang",
@@ -10010,7 +10010,7 @@
           ]
         },
         {
-          "name_zh": "浅灰",
+          "name_zh": "淺灰",
           "pinyin": "qianhui",
           "name_en": "qianhui",
           "name_ja": "qianhui",
@@ -10023,7 +10023,7 @@
           ]
         },
         {
-          "name_zh": "铅灰",
+          "name_zh": "鉛灰",
           "pinyin": "qianhui_2",
           "name_en": "qianhui_2",
           "name_ja": "qianhui_2",
@@ -10049,7 +10049,7 @@
           ]
         },
         {
-          "name_zh": "雄黄",
+          "name_zh": "雄黃",
           "pinyin": "xionghuang",
           "name_en": "xionghuang",
           "name_ja": "xionghuang",
@@ -10062,7 +10062,7 @@
           ]
         },
         {
-          "name_zh": "蜜黄",
+          "name_zh": "蜜黃",
           "pinyin": "mihuang",
           "name_en": "mihuang",
           "name_ja": "mihuang",
@@ -10075,7 +10075,7 @@
           ]
         },
         {
-          "name_zh": "风帆黄",
+          "name_zh": "風帆黃",
           "pinyin": "fengfanhuang",
           "name_en": "fengfanhuang",
           "name_ja": "fengfanhuang",
@@ -10101,7 +10101,7 @@
           ]
         },
         {
-          "name_zh": "金莺黄",
+          "name_zh": "金鶯黃",
           "pinyin": "jinyinghuang",
           "name_en": "jinyinghuang",
           "name_ja": "jinyinghuang",
@@ -10127,7 +10127,7 @@
           ]
         },
         {
-          "name_zh": "凋叶棕",
+          "name_zh": "凋葉棕",
           "pinyin": "diaoyezong",
           "name_en": "diaoyezong",
           "name_ja": "diaoyezong",
@@ -10140,7 +10140,7 @@
           ]
         },
         {
-          "name_zh": "古铜绿",
+          "name_zh": "古銅綠",
           "pinyin": "gutonglv",
           "name_en": "gutonglv",
           "name_ja": "gutonglv",
@@ -10166,7 +10166,7 @@
           ]
         },
         {
-          "name_zh": "软木黄",
+          "name_zh": "軟木黃",
           "pinyin": "ruanmuhuang",
           "name_en": "ruanmuhuang",
           "name_ja": "ruanmuhuang",
@@ -10192,7 +10192,7 @@
           ]
         },
         {
-          "name_zh": "榴萼黄",
+          "name_zh": "榴萼黃",
           "pinyin": "liuehuang",
           "name_en": "liuehuang",
           "name_ja": "liuehuang",
@@ -10205,7 +10205,7 @@
           ]
         },
         {
-          "name_zh": "玳瑁黄",
+          "name_zh": "玳瑁黃",
           "pinyin": "daimaohuang",
           "name_en": "daimaohuang",
           "name_ja": "daimaohuang",
@@ -10218,7 +10218,7 @@
           ]
         },
         {
-          "name_zh": "焦茶绿",
+          "name_zh": "焦茶綠",
           "pinyin": "jiaochalv",
           "name_en": "jiaochalv",
           "name_ja": "jiaochalv",
@@ -10231,7 +10231,7 @@
           ]
         },
         {
-          "name_zh": "蟹壳绿",
+          "name_zh": "蟹殼綠",
           "pinyin": "xiekelv",
           "name_en": "xiekelv",
           "name_ja": "xiekelv",
@@ -10244,7 +10244,7 @@
           ]
         },
         {
-          "name_zh": "山鸡褐",
+          "name_zh": "山雞褐",
           "pinyin": "shanjihe",
           "name_en": "shanjihe",
           "name_ja": "shanjihe",
@@ -10283,7 +10283,7 @@
           ]
         },
         {
-          "name_zh": "淡松烟",
+          "name_zh": "淡松煙",
           "pinyin": "dansongyan",
           "name_en": "dansongyan",
           "name_ja": "dansongyan",
@@ -10296,7 +10296,7 @@
           ]
         },
         {
-          "name_zh": "万寿菊黄",
+          "name_zh": "萬壽菊黃",
           "pinyin": "wanshoujuhuang",
           "name_en": "wanshoujuhuang",
           "name_ja": "wanshoujuhuang",
@@ -10309,7 +10309,7 @@
           ]
         },
         {
-          "name_zh": "蛋壳黄",
+          "name_zh": "蛋殼黃",
           "pinyin": "dankehuang",
           "name_en": "dankehuang",
           "name_ja": "dankehuang",
@@ -10322,7 +10322,7 @@
           ]
         },
         {
-          "name_zh": "杏黄",
+          "name_zh": "杏黃",
           "pinyin": "xinghuang",
           "name_en": "xinghuang",
           "name_ja": "xinghuang",
@@ -10335,7 +10335,7 @@
           ]
         },
         {
-          "name_zh": "橄榄灰",
+          "name_zh": "橄欖灰",
           "pinyin": "ganlanhui",
           "name_en": "ganlanhui",
           "name_ja": "ganlanhui",
@@ -10348,7 +10348,7 @@
           ]
         },
         {
-          "name_zh": "鹤灰",
+          "name_zh": "鶴灰",
           "pinyin": "hehui",
           "name_en": "hehui",
           "name_ja": "hehui",
@@ -10361,7 +10361,7 @@
           ]
         },
         {
-          "name_zh": "玛瑙灰",
+          "name_zh": "瑪瑙灰",
           "pinyin": "manaohui",
           "name_en": "manaohui",
           "name_ja": "manaohui",
@@ -10374,7 +10374,7 @@
           ]
         },
         {
-          "name_zh": "淡银灰",
+          "name_zh": "淡銀灰",
           "pinyin": "danyinhui",
           "name_en": "danyinhui",
           "name_ja": "danyinhui",
@@ -10413,7 +10413,7 @@
           ]
         },
         {
-          "name_zh": "北瓜黄",
+          "name_zh": "北瓜黃",
           "pinyin": "beiguahuang",
           "name_en": "beiguahuang",
           "name_ja": "beiguahuang",
@@ -10478,7 +10478,7 @@
           ]
         },
         {
-          "name_zh": "海鸥灰",
+          "name_zh": "海鷗灰",
           "pinyin": "haiouhui",
           "name_en": "haiouhui",
           "name_ja": "haiouhui",
@@ -10504,7 +10504,7 @@
           ]
         },
         {
-          "name_zh": "驼色",
+          "name_zh": "駝色",
           "pinyin": "tuose",
           "name_en": "tuose",
           "name_ja": "tuose",
@@ -10517,7 +10517,7 @@
           ]
         },
         {
-          "name_zh": "银灰",
+          "name_zh": "銀灰",
           "pinyin": "yinhui",
           "name_en": "yinhui",
           "name_ja": "yinhui",
@@ -10543,7 +10543,7 @@
           ]
         },
         {
-          "name_zh": "槟榔棕",
+          "name_zh": "檳榔棕",
           "pinyin": "binglangzong",
           "name_en": "binglangzong",
           "name_ja": "binglangzong",
@@ -10556,7 +10556,7 @@
           ]
         },
         {
-          "name_zh": "晓灰",
+          "name_zh": "曉灰",
           "pinyin": "xiaohui",
           "name_en": "xiaohui",
           "name_ja": "xiaohui",
@@ -10582,7 +10582,7 @@
           ]
         },
         {
-          "name_zh": "古铜褐",
+          "name_zh": "古銅褐",
           "pinyin": "gutonghe",
           "name_en": "gutonghe",
           "name_ja": "gutonghe",
@@ -10634,7 +10634,7 @@
           ]
         },
         {
-          "name_zh": "鲑鱼红",
+          "name_zh": "鮭魚紅",
           "pinyin": "guiyuhong",
           "name_en": "guiyuhong",
           "name_ja": "guiyuhong",
@@ -10660,7 +10660,7 @@
           ]
         },
         {
-          "name_zh": "金黄",
+          "name_zh": "金黃",
           "pinyin": "jinhuang",
           "name_en": "golden yellow",
           "name_ja": "金黄",
@@ -10712,7 +10712,7 @@
           ]
         },
         {
-          "name_zh": "蛛网灰",
+          "name_zh": "蛛網灰",
           "pinyin": "zhuwanghui",
           "name_en": "zhuwanghui",
           "name_ja": "zhuwanghui",
@@ -10777,7 +10777,7 @@
           ]
         },
         {
-          "name_zh": "陶瓷红",
+          "name_zh": "陶瓷紅",
           "pinyin": "taocihong",
           "name_en": "taocihong",
           "name_ja": "taocihong",
@@ -10790,7 +10790,7 @@
           ]
         },
         {
-          "name_zh": "菠萝红",
+          "name_zh": "菠蘿紅",
           "pinyin": "boluohong",
           "name_en": "boluohong",
           "name_ja": "boluohong",
@@ -10803,7 +10803,7 @@
           ]
         },
         {
-          "name_zh": "余烬红",
+          "name_zh": "餘燼紅",
           "pinyin": "yujinhong",
           "name_en": "yujinhong",
           "name_ja": "yujinhong",
@@ -10816,7 +10816,7 @@
           ]
         },
         {
-          "name_zh": "金莲花橙",
+          "name_zh": "金蓮花橙",
           "pinyin": "jinlianhuacheng",
           "name_en": "jinlianhuacheng",
           "name_ja": "jinlianhuacheng",
@@ -10829,7 +10829,7 @@
           ]
         },
         {
-          "name_zh": "火砖红",
+          "name_zh": "火磚紅",
           "pinyin": "huozhuanhong",
           "name_en": "huozhuanhong",
           "name_ja": "huozhuanhong",
@@ -10842,7 +10842,7 @@
           ]
         },
         {
-          "name_zh": "初桃粉红",
+          "name_zh": "初桃粉紅",
           "pinyin": "chutaofenhong",
           "name_en": "chutaofenhong",
           "name_ja": "chutaofenhong",
@@ -10855,7 +10855,7 @@
           ]
         },
         {
-          "name_zh": "铁棕",
+          "name_zh": "鐵棕",
           "pinyin": "tiezong",
           "name_en": "tiezong",
           "name_ja": "tiezong",
@@ -10868,7 +10868,7 @@
           ]
         },
         {
-          "name_zh": "介壳淡粉红",
+          "name_zh": "介殼淡粉紅",
           "pinyin": "jieqiaodanfenhong",
           "name_en": "jieqiaodanfenhong",
           "name_ja": "jieqiaodanfenhong",
@@ -10881,7 +10881,7 @@
           ]
         },
         {
-          "name_zh": "蟹壳红",
+          "name_zh": "蟹殼紅",
           "pinyin": "xiekehong",
           "name_en": "xiekehong",
           "name_ja": "xiekehong",
@@ -10894,7 +10894,7 @@
           ]
         },
         {
-          "name_zh": "金驼",
+          "name_zh": "金駝",
           "pinyin": "jintuo",
           "name_en": "jintuo",
           "name_ja": "jintuo",
@@ -10907,7 +10907,7 @@
           ]
         },
         {
-          "name_zh": "燕颔红",
+          "name_zh": "燕頷紅",
           "pinyin": "yanhanhong",
           "name_en": "yanhanhong",
           "name_ja": "yanhanhong",
@@ -10933,7 +10933,7 @@
           ]
         },
         {
-          "name_zh": "晨曦红",
+          "name_zh": "晨曦紅",
           "pinyin": "chenxihong",
           "name_en": "chenxihong",
           "name_ja": "chenxihong",
@@ -10946,7 +10946,7 @@
           ]
         },
         {
-          "name_zh": "玉粉红",
+          "name_zh": "玉粉紅",
           "pinyin": "yufenhong",
           "name_en": "yufenhong",
           "name_ja": "yufenhong",
@@ -10959,7 +10959,7 @@
           ]
         },
         {
-          "name_zh": "野蔷薇红",
+          "name_zh": "野薔薇紅",
           "pinyin": "yeqiangweihong",
           "name_en": "yeqiangweihong",
           "name_ja": "yeqiangweihong",
@@ -10985,7 +10985,7 @@
           ]
         },
         {
-          "name_zh": "长石灰",
+          "name_zh": "長石灰",
           "pinyin": "changshihui",
           "name_en": "changshihui",
           "name_ja": "changshihui",
@@ -10998,7 +10998,7 @@
           ]
         },
         {
-          "name_zh": "中红灰",
+          "name_zh": "中紅灰",
           "pinyin": "zhonghonghui",
           "name_en": "zhonghonghui",
           "name_ja": "zhonghonghui",
@@ -11024,7 +11024,7 @@
           ]
         },
         {
-          "name_zh": "绀红",
+          "name_zh": "紺紅",
           "pinyin": "ganhong",
           "name_en": "ganhong",
           "name_ja": "ganhong",
@@ -11037,7 +11037,7 @@
           ]
         },
         {
-          "name_zh": "莓酱红",
+          "name_zh": "莓醬紅",
           "pinyin": "meijianghong",
           "name_en": "meijianghong",
           "name_ja": "meijianghong",
@@ -11076,7 +11076,7 @@
           ]
         },
         {
-          "name_zh": "瓜瓤红",
+          "name_zh": "瓜瓤紅",
           "pinyin": "guaranghong",
           "name_en": "guaranghong",
           "name_ja": "guaranghong",
@@ -11089,7 +11089,7 @@
           ]
         },
         {
-          "name_zh": "淡藏花红",
+          "name_zh": "淡藏花紅",
           "pinyin": "dancanghuahong",
           "name_en": "dancanghuahong",
           "name_ja": "dancanghuahong",
@@ -11102,7 +11102,7 @@
           ]
         },
         {
-          "name_zh": "笋皮棕",
+          "name_zh": "筍皮棕",
           "pinyin": "sunpizong",
           "name_en": "sunpizong",
           "name_ja": "sunpizong",
@@ -11115,7 +11115,7 @@
           ]
         },
         {
-          "name_zh": "润红",
+          "name_zh": "潤紅",
           "pinyin": "runhong",
           "name_en": "runhong",
           "name_ja": "runhong",
@@ -11128,7 +11128,7 @@
           ]
         },
         {
-          "name_zh": "龙睛鱼红",
+          "name_zh": "龍睛魚紅",
           "pinyin": "longjingyuhong",
           "name_en": "longjingyuhong",
           "name_ja": "longjingyuhong",
@@ -11141,7 +11141,7 @@
           ]
         },
         {
-          "name_zh": "淡土黄",
+          "name_zh": "淡土黃",
           "pinyin": "dantuhuang",
           "name_en": "dantuhuang",
           "name_ja": "dantuhuang",
@@ -11167,7 +11167,7 @@
           ]
         },
         {
-          "name_zh": "芙蓉红",
+          "name_zh": "芙蓉紅",
           "pinyin": "furonghong",
           "name_en": "furonghong",
           "name_ja": "furonghong",
@@ -11180,7 +11180,7 @@
           ]
         },
         {
-          "name_zh": "落霞红",
+          "name_zh": "落霞紅",
           "pinyin": "luoxiahong",
           "name_en": "luoxiahong",
           "name_ja": "luoxiahong",
@@ -11193,7 +11193,7 @@
           ]
         },
         {
-          "name_zh": "法螺红",
+          "name_zh": "法螺紅",
           "pinyin": "faluohong",
           "name_en": "faluohong",
           "name_ja": "faluohong",
@@ -11206,7 +11206,7 @@
           ]
         },
         {
-          "name_zh": "草珠红",
+          "name_zh": "草珠紅",
           "pinyin": "caozhuhong",
           "name_en": "caozhuhong",
           "name_ja": "caozhuhong",
@@ -11232,7 +11232,7 @@
           ]
         },
         {
-          "name_zh": "中灰驼",
+          "name_zh": "中灰駝",
           "pinyin": "zhonghuituo",
           "name_en": "zhonghuituo",
           "name_ja": "zhonghuituo",
@@ -11245,7 +11245,7 @@
           ]
         },
         {
-          "name_zh": "椰壳棕",
+          "name_zh": "椰殼棕",
           "pinyin": "yekezong",
           "name_en": "yekezong",
           "name_ja": "yekezong",
@@ -11258,7 +11258,7 @@
           ]
         },
         {
-          "name_zh": "蟹蝥红",
+          "name_zh": "蟹蝥紅",
           "pinyin": "xiemaohong",
           "name_en": "xiemaohong",
           "name_ja": "xiemaohong",
@@ -11284,7 +11284,7 @@
           ]
         },
         {
-          "name_zh": "淡桃红",
+          "name_zh": "淡桃紅",
           "pinyin": "dantaohong",
           "name_en": "dantaohong",
           "name_ja": "dantaohong",
@@ -11297,7 +11297,7 @@
           ]
         },
         {
-          "name_zh": "淡铁灰",
+          "name_zh": "淡鐵灰",
           "pinyin": "dantiehui",
           "name_en": "dantiehui",
           "name_ja": "dantiehui",
@@ -11323,7 +11323,7 @@
           ]
         },
         {
-          "name_zh": "淡栗棕",
+          "name_zh": "淡慄棕",
           "pinyin": "danlizong",
           "name_en": "danlizong",
           "name_ja": "danlizong",
@@ -11336,7 +11336,7 @@
           ]
         },
         {
-          "name_zh": "银朱",
+          "name_zh": "銀硃",
           "pinyin": "yinzhu",
           "name_en": "yinzhu",
           "name_ja": "yinzhu",
@@ -11349,7 +11349,7 @@
           ]
         },
         {
-          "name_zh": "草莓红",
+          "name_zh": "草莓紅",
           "pinyin": "caomeihong",
           "name_en": "caomeihong",
           "name_ja": "caomeihong",
@@ -11362,7 +11362,7 @@
           ]
         },
         {
-          "name_zh": "洋水仙红",
+          "name_zh": "洋水仙紅",
           "pinyin": "yangshuixianhong",
           "name_en": "yangshuixianhong",
           "name_ja": "yangshuixianhong",
@@ -11375,7 +11375,7 @@
           ]
         },
         {
-          "name_zh": "朱红",
+          "name_zh": "硃紅",
           "pinyin": "zhuhong",
           "name_en": "vermilion red",
           "name_ja": "朱紅",
@@ -11388,7 +11388,7 @@
           ]
         },
         {
-          "name_zh": "榴花红",
+          "name_zh": "榴花紅",
           "pinyin": "liuhuahong",
           "name_en": "liuhuahong",
           "name_ja": "liuhuahong",
@@ -11401,7 +11401,7 @@
           ]
         },
         {
-          "name_zh": "柿红",
+          "name_zh": "柿紅",
           "pinyin": "shihong",
           "name_en": "shihong",
           "name_ja": "shihong",
@@ -11427,7 +11427,7 @@
           ]
         },
         {
-          "name_zh": "淡罂粟红",
+          "name_zh": "淡罌粟紅",
           "pinyin": "danyingsuhong",
           "name_en": "danyingsuhong",
           "name_ja": "danyingsuhong",
@@ -11440,7 +11440,7 @@
           ]
         },
         {
-          "name_zh": "大红",
+          "name_zh": "大紅",
           "pinyin": "dahong",
           "name_en": "crimson red",
           "name_ja": "大紅",
@@ -11453,7 +11453,7 @@
           ]
         },
         {
-          "name_zh": "柞叶棕",
+          "name_zh": "柞葉棕",
           "pinyin": "zhayezong",
           "name_en": "zhayezong",
           "name_ja": "zhayezong",
@@ -11466,7 +11466,7 @@
           ]
         },
         {
-          "name_zh": "蜻蜓红",
+          "name_zh": "蜻蜓紅",
           "pinyin": "qingtinghong",
           "name_en": "qingtinghong",
           "name_ja": "qingtinghong",
@@ -11479,7 +11479,7 @@
           ]
         },
         {
-          "name_zh": "橡树棕",
+          "name_zh": "橡樹棕",
           "pinyin": "xiangshuzong",
           "name_en": "xiangshuzong",
           "name_ja": "xiangshuzong",
@@ -11492,7 +11492,7 @@
           ]
         },
         {
-          "name_zh": "颊红",
+          "name_zh": "頰紅",
           "pinyin": "jiahong",
           "name_en": "jiahong",
           "name_ja": "jiahong",
@@ -11505,7 +11505,7 @@
           ]
         },
         {
-          "name_zh": "桃红",
+          "name_zh": "桃紅",
           "pinyin": "taohong",
           "name_en": "peach blossom",
           "name_ja": "桃紅",
@@ -11518,7 +11518,7 @@
           ]
         },
         {
-          "name_zh": "火岩棕",
+          "name_zh": "火巖棕",
           "pinyin": "huoyanzong",
           "name_en": "huoyanzong",
           "name_ja": "huoyanzong",
@@ -11531,7 +11531,7 @@
           ]
         },
         {
-          "name_zh": "淡藤萝紫",
+          "name_zh": "淡藤蘿紫",
           "pinyin": "dantengluozi",
           "name_en": "dantengluozi",
           "name_ja": "dantengluozi",
@@ -11557,7 +11557,7 @@
           ]
         },
         {
-          "name_zh": "铁水红",
+          "name_zh": "鐵水紅",
           "pinyin": "tieshuihong",
           "name_en": "tieshuihong",
           "name_ja": "tieshuihong",
@@ -11570,7 +11570,7 @@
           ]
         },
         {
-          "name_zh": "胭脂红",
+          "name_zh": "胭脂紅",
           "pinyin": "yanzhihong",
           "name_en": "carmine",
           "name_ja": "臙脂紅",
@@ -11583,7 +11583,7 @@
           ]
         },
         {
-          "name_zh": "极光红",
+          "name_zh": "極光紅",
           "pinyin": "jiguanghong",
           "name_en": "jiguanghong",
           "name_ja": "jiguanghong",
@@ -11596,7 +11596,7 @@
           ]
         },
         {
-          "name_zh": "红汞红",
+          "name_zh": "紅汞紅",
           "pinyin": "honggonghong",
           "name_en": "honggonghong",
           "name_ja": "honggonghong",
@@ -11609,7 +11609,7 @@
           ]
         },
         {
-          "name_zh": "萝卜红",
+          "name_zh": "蘿蔔紅",
           "pinyin": "luobohong",
           "name_en": "luobohong",
           "name_ja": "luobohong",
@@ -11622,7 +11622,7 @@
           ]
         },
         {
-          "name_zh": "曲红",
+          "name_zh": "曲紅",
           "pinyin": "quhong",
           "name_en": "quhong",
           "name_ja": "quhong",
@@ -11635,7 +11635,7 @@
           ]
         },
         {
-          "name_zh": "谷鞘红",
+          "name_zh": "谷鞘紅",
           "pinyin": "guqiaohong",
           "name_en": "guqiaohong",
           "name_ja": "guqiaohong",
@@ -11648,7 +11648,7 @@
           ]
         },
         {
-          "name_zh": "苹果红",
+          "name_zh": "蘋果紅",
           "pinyin": "pingguohong",
           "name_en": "pingguohong",
           "name_ja": "pingguohong",
@@ -11661,7 +11661,7 @@
           ]
         },
         {
-          "name_zh": "桂红",
+          "name_zh": "桂紅",
           "pinyin": "guihong",
           "name_en": "guihong",
           "name_ja": "guihong",
@@ -11674,7 +11674,7 @@
           ]
         },
         {
-          "name_zh": "粉红",
+          "name_zh": "粉紅",
           "pinyin": "fenhong",
           "name_en": "fenhong",
           "name_ja": "fenhong",
@@ -11687,7 +11687,7 @@
           ]
         },
         {
-          "name_zh": "暗驼棕",
+          "name_zh": "暗駝棕",
           "pinyin": "antuozong",
           "name_en": "antuozong",
           "name_ja": "antuozong",
@@ -11700,7 +11700,7 @@
           ]
         },
         {
-          "name_zh": "夕阳红",
+          "name_zh": "夕陽紅",
           "pinyin": "xiyanghong",
           "name_en": "xiyanghong",
           "name_ja": "xiyanghong",
@@ -11713,7 +11713,7 @@
           ]
         },
         {
-          "name_zh": "樱桃红",
+          "name_zh": "櫻桃紅",
           "pinyin": "yingtaohong",
           "name_en": "yingtaohong",
           "name_ja": "yingtaohong",
@@ -11726,7 +11726,7 @@
           ]
         },
         {
-          "name_zh": "珊瑚红",
+          "name_zh": "珊瑚紅",
           "pinyin": "shanhuhong",
           "name_en": "shanhuhong",
           "name_ja": "shanhuhong",
@@ -11752,7 +11752,7 @@
           ]
         },
         {
-          "name_zh": "栗棕",
+          "name_zh": "慄棕",
           "pinyin": "lizong",
           "name_en": "lizong",
           "name_ja": "lizong",
@@ -11765,7 +11765,7 @@
           ]
         },
         {
-          "name_zh": "鹤顶红",
+          "name_zh": "鶴頂紅",
           "pinyin": "hedinghong",
           "name_en": "hedinghong",
           "name_ja": "hedinghong",
@@ -11778,7 +11778,7 @@
           ]
         },
         {
-          "name_zh": "舌红",
+          "name_zh": "舌紅",
           "pinyin": "shehong",
           "name_en": "shehong",
           "name_ja": "shehong",
@@ -11791,7 +11791,7 @@
           ]
         },
         {
-          "name_zh": "鹅血石红",
+          "name_zh": "鵝血石紅",
           "pinyin": "exueshihong",
           "name_en": "exueshihong",
           "name_ja": "exueshihong",
@@ -11804,7 +11804,7 @@
           ]
         },
         {
-          "name_zh": "酱棕",
+          "name_zh": "醬棕",
           "pinyin": "jiangzong",
           "name_en": "jiangzong",
           "name_ja": "jiangzong",
@@ -11817,7 +11817,7 @@
           ]
         },
         {
-          "name_zh": "鱼鳃红",
+          "name_zh": "魚鰓紅",
           "pinyin": "yusaihong",
           "name_en": "yusaihong",
           "name_ja": "yusaihong",
@@ -11830,7 +11830,7 @@
           ]
         },
         {
-          "name_zh": "芦穗灰",
+          "name_zh": "蘆穗灰",
           "pinyin": "lusuihui",
           "name_en": "lusuihui",
           "name_ja": "lusuihui",
@@ -11843,7 +11843,7 @@
           ]
         },
         {
-          "name_zh": "丽春红",
+          "name_zh": "麗春紅",
           "pinyin": "lichunhong",
           "name_en": "lichunhong",
           "name_ja": "lichunhong",
@@ -11856,7 +11856,7 @@
           ]
         },
         {
-          "name_zh": "覆盆子红",
+          "name_zh": "覆盆子紅",
           "pinyin": "fupenzihong",
           "name_en": "fupenzihong",
           "name_ja": "fupenzihong",
@@ -11869,7 +11869,7 @@
           ]
         },
         {
-          "name_zh": "海报灰",
+          "name_zh": "海報灰",
           "pinyin": "haibaohui",
           "name_en": "haibaohui",
           "name_ja": "haibaohui",
@@ -11895,7 +11895,7 @@
           ]
         },
         {
-          "name_zh": "榴子红",
+          "name_zh": "榴子紅",
           "pinyin": "liuzihong",
           "name_en": "liuzihong",
           "name_ja": "liuzihong",
@@ -11908,7 +11908,7 @@
           ]
         },
         {
-          "name_zh": "秋海棠红",
+          "name_zh": "秋海棠紅",
           "pinyin": "qiuhaitanghong",
           "name_en": "qiuhaitanghong",
           "name_ja": "qiuhaitanghong",
@@ -11921,7 +11921,7 @@
           ]
         },
         {
-          "name_zh": "无花果红",
+          "name_zh": "無花果紅",
           "pinyin": "wuhuaguohong",
           "name_en": "wuhuaguohong",
           "name_ja": "wuhuaguohong",
@@ -11934,7 +11934,7 @@
           ]
         },
         {
-          "name_zh": "淡绯",
+          "name_zh": "淡緋",
           "pinyin": "danfei",
           "name_en": "danfei",
           "name_ja": "danfei",
@@ -11960,7 +11960,7 @@
           ]
         },
         {
-          "name_zh": "淡菽红",
+          "name_zh": "淡菽紅",
           "pinyin": "danshuhong_2",
           "name_en": "danshuhong_2",
           "name_ja": "danshuhong_2",
@@ -11973,7 +11973,7 @@
           ]
         },
         {
-          "name_zh": "枸枢红",
+          "name_zh": "枸樞紅",
           "pinyin": "goushuhong",
           "name_en": "goushuhong",
           "name_ja": "goushuhong",

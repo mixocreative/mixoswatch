@@ -2,7 +2,7 @@
 
 One browser tool for designing print-safe colors against real ICC profiles, plus a small Python script that prepares the lookup tables it consumes. Built for designers who work across **2D commercial print** and **3D color printing** (Mimaki 3DUJ, Stratasys J55, Cura material libraries, etc.).
 
-- **`app/mixo-swatch.html`** (Mixo Swatch) · live grid of every CMYK value at a chosen step, rendered through a CMYK ICC profile of your choice. Filter by total area coverage, by named-color closeness (Japanese traditional + Chinese traditional + W3C CSS), by **ΔE max** for round-trip safety, build palettes, export ASE / GPL / PNG / JSON / ZIP.
+- **`app/mixo-swatch.html`** (Mixo Swatch) · live grid of every CMYK value at a chosen step, rendered through a CMYK ICC profile of your choice. Filter by total area coverage, by named-color closeness (Japanese traditional + Chinese traditional + W3C CSS), by **dE max** for round-trip safety, build palettes, export ASE / GPL / PNG / JSON / ZIP. Interface localised to **English / 日本語 / 繁體中文** with browser-language auto-detect + an in-app language picker.
 - **`index.html`** · zen landing with live interactive demos for every sidebar control, tri-lingual (EN / 日本語 / 繁中).
 
 ## Why
@@ -175,9 +175,26 @@ Each entry carries `name_en`, `name_ja`, and `name_zh`. Empty slots fall back gr
 
 First-run UI state lives in this JSON. The tool reads it on load and on "Reset to defaults". User session state layers on top via `localStorage` (key: `cmykUIState_v2`), so the reset restores the JSON values while leaving saved palettes intact.
 
-Edit this file when you want your team to start with non-default values (default profile, default cell size, default sort, default ΔE max, per-corpus display + anchor, etc.). Full key reference in `ARCHITECTURE.md §6.5`.
+The shipped defaults are tuned for the print-first workflow on a coated press:
 
-**v1 migration.** If a browser has a `cmykUIState_v1` key from a pre-Spec-6 session, the tool migrates it to v2 on first load (reshaping `corpora_prefs` keys from `jpn`/`html` to `jp-trad`/`html`/`zh-trad`). The v1 key is preserved for downgrade.
+| Setting | Default | Why |
+|---|---|---|
+| Step | 20 | First paint stays under ~1300 swatches |
+| Cell size | 80 px | Labels (CMYK + hex + corpus name) all legible |
+| Lab mode | `d50` (Print) | Matches ICC PCS whitepoint + Photoshop Info panel |
+| Profile | FOGRA39 | Most common European coated baseline |
+| TAC max | 240 % | Conservative coated-uncoated bracket |
+| Round-trip dE max | 0.6 | Tight - only press-safe swatches show by default |
+| K range | `[0, 80]` | K 85-100 collapses to pure black on most presses |
+| Named-swatch filter | `Any named` (all libraries on) | Useful grid out of the box |
+| Naming accuracy (dE) | 5.5 | Permissive enough to surface names but still meaningful |
+| Sort | Hue | Best general overview |
+| Accessibility toggles | All OFF | No hidden filters at first run |
+| UI language | `auto` | `navigator.language` → `ja` / `zh` (-Hant) / `en` |
+
+Edit this file when you want your team to start with non-default values (default profile, default cell size, default sort, default dE max, per-corpus display + anchor, default UI language, etc.). Full key reference in `ARCHITECTURE.md §6.5`.
+
+**v1 migration.** If a browser has a `cmykUIState_v1` key from a pre-Spec-6 session, the tool migrates it to v2 on first load (reshaping `corpora_prefs` keys from `jpn`/`html` to `jp-trad`/`html`/`zh-trad`, bumping default tolerance from 3.0 to 5.5). The v1 key is preserved for downgrade.
 
 ---
 
@@ -225,7 +242,7 @@ Detailed budget + the lag-prevention rationale (rAF-coalesced render scheduler, 
 
 ## Architecture
 
-`ARCHITECTURE.md` is the full pipeline contract: color theory (CMYK / Lab / LCh, ΔE variants, GCR / UCR, K-tier philosophy, gamut, Bradford D50/D65 CAT), the LUT binary format (magic header, quadrilinear interpolation pseudocode), the round-trip safety gate, the corpora schema v3 (tri-lingual fields, dynamic library IDs, per-(lib,entry) tiebreak), the HTML pipeline (lifecycle, virtualization, two greyscale strips, view modes, palette format), per-profile TAC defaults, and a step-by-step rebuild guide. Read it if you want to reproduce, extend, or audit the toolchain.
+`ARCHITECTURE.md` is the full pipeline contract: color theory (CMYK / Lab / LCh, dE variants, GCR / UCR, K-tier philosophy, gamut, Bradford D50/D65 CAT), the LUT binary format (magic header, quadrilinear interpolation pseudocode), the round-trip safety gate, the corpora schema v3 (tri-lingual fields, dynamic library IDs, per-(lib,entry) tiebreak), the HTML pipeline (lifecycle, virtualization, two greyscale strips, view modes, palette panel + Hue x Light placement, palette format), per-profile TAC defaults, the i18n contract (en / ja / zh-Hant, `data-i18n` keys, auto-detect rule), and a step-by-step rebuild guide. Read it if you want to reproduce, extend, or audit the toolchain.
 
 ## License
 

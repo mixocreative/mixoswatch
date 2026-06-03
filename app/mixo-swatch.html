@@ -211,13 +211,56 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
 
 /* ── Palette panel (collapsible, sits between topbar and grid-scroll) ── */
 .palette-panel{border-bottom:1px solid var(--border);background:var(--surface);display:flex;flex-direction:column}
-.palette-panel-header{display:flex;align-items:center;justify-content:space-between;padding:8px 16px;cursor:pointer;font-size:12px;color:var(--text);user-select:none;border-bottom:1px solid transparent}
-.palette-panel-header:hover{background:var(--bg2)}
-.palette-panel-header .chev{transition:transform .15s;display:inline-block;margin-right:6px}
+.palette-panel-header{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:10px 16px;cursor:pointer;user-select:none;
+  background:var(--bg2);border-bottom:1px solid transparent;
+  transition:background .15s;
+}
+.palette-panel-header:hover{background:rgb(var(--accent-rgb) / .12)}
+.palette-panel-header .pp-title{
+  font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--text);display:inline-flex;align-items:center;gap:8px;
+}
+.palette-panel-header .pp-action{
+  font-size:11px;font-family:var(--font-mono);font-weight:600;
+  padding:5px 14px;border-radius:var(--r);
+  background:var(--accent);color:#fff;
+  letter-spacing:.06em;text-transform:uppercase;
+  transition:filter .12s;
+}
+.palette-panel-header:hover .pp-action{filter:brightness(1.12)}
 .palette-panel.open .palette-panel-header{border-bottom-color:var(--border)}
-.palette-panel.open .palette-panel-header .chev{transform:rotate(90deg)}
-.palette-panel-body{display:none;padding:6px 10px 8px;gap:0;flex-direction:column;max-height:50vh;overflow:visible}
+.palette-panel.open .palette-panel-header .pp-action{background:var(--bg);color:var(--muted);border:1px solid var(--border)}
+.palette-panel-body{display:none;padding:6px 10px 8px;gap:0;flex-direction:column;max-height:60vh;overflow:auto}
 .palette-panel.open .palette-panel-body{display:flex}
+
+/* ── Language picker (topbar) ── */
+.lang-picker{
+  position:relative;display:inline-flex;align-items:center;
+}
+.lang-picker-btn{
+  font-size:11px;padding:5px 9px;border:1px solid var(--border);border-radius:var(--r);
+  background:transparent;color:var(--text);cursor:pointer;
+  font-family:var(--font-mono);letter-spacing:.06em;
+  display:inline-flex;align-items:center;gap:5px;
+}
+.lang-picker-btn:hover{background:var(--bg2)}
+.lang-picker-menu{
+  position:absolute;right:0;top:calc(100% + 4px);
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--r);
+  box-shadow:0 4px 16px rgba(0,0,0,.4);
+  min-width:140px;z-index:50;padding:4px;
+  display:flex;flex-direction:column;
+}
+.lang-picker-menu[hidden]{display:none}
+.lang-picker-menu button{
+  background:transparent;border:0;text-align:left;
+  padding:6px 10px;color:var(--text);cursor:pointer;
+  font-size:11px;border-radius:3px;font-family:var(--font-sans);
+}
+.lang-picker-menu button:hover{background:var(--bg2)}
+.lang-picker-menu button.active{color:var(--accent);font-weight:600}
 .swatch-grid{display:grid;padding:12px;gap:var(--gap,3px);align-content:start}
 
 .swatch-cell{
@@ -584,14 +627,24 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
 <header class="topbar">
   <button class="hamburger-btn" id="hamburger" onclick="toggleSidebar()" aria-label="Toggle sidebar" title="Show / hide sidebar (mobile)">&#8801;</button>
   <span class="topbar-title">Mixo Swatch</span>
-  <span class="lab-mode-badge" id="labModeBadge" title="Active Lab whitepoint. Switch in sidebar under 'Color mode'.">Mode: Print (D50)</span>
+  <span class="lab-mode-badge" id="labModeBadge" data-i18n="badge.mode_d50" title="Active Lab whitepoint. Switch in sidebar under 'Color mode'.">Mode: Print (D50)</span>
   <div class="topbar-sep"></div>
   <span class="count-tag" id="countLabel" title="How many swatches the filters currently allow.">- swatches</span>
-  <button class="btn" onclick="resetUIToDefaults()" title="Reset all UI controls (cell size, sort, filters, naming) to the values in data/ui_defaults.json. Saved palettes are kept.">↺ Reset UI to defaults</button>
-  <div class="mode-group" id="modeGroup" role="tablist" aria-label="View mode"><button class="btn mode-btn active" id="mode-grid"     onclick="setViewMode('grid')" title="Regular swatch grid - every filtered swatch as a cell.">Grid</button><button class="btn mode-btn"        id="mode-palettes" onclick="setViewMode('palettes')" title="Palettes mode - manage all saved palettes with per-palette actions.">Palettes</button></div>
-  <button class="btn" onclick="exportCSV()" title="Save the currently filtered swatches as a UTF-8 CSV (Excel-ready, keeps kanji).">↓ CSV</button>
-  <button class="btn" onclick="exportPNG()" title="Save the currently filtered swatches as a square PNG board with title band.">↓ PNG</button>
-  <button class="btn" onclick="exportFilteredSwatchZIP()" title="Download a .zip with one 128x128 pure-color PNG per currently-filtered swatch plus manifest.csv/json.">↓ ZIP (per-swatch)</button>
+  <button class="btn" onclick="resetUIToDefaults()" data-i18n="topbar.reset" title="Reset all UI controls (cell size, sort, filters, naming) to the values in data/ui_defaults.json. Saved palettes are kept.">&#x21BA; Reset UI to defaults</button>
+  <div class="mode-group" id="modeGroup" role="tablist" aria-label="View mode"><button class="btn mode-btn active" id="mode-grid"     onclick="setViewMode('grid')" data-i18n="topbar.grid" title="Regular swatch grid - every filtered swatch as a cell.">Grid</button><button class="btn mode-btn"        id="mode-palettes" onclick="setViewMode('palettes')" data-i18n="topbar.palettes" title="Palettes mode - manage all saved palettes with per-palette actions.">Palettes</button></div>
+  <button class="btn" onclick="exportCSV()" data-i18n="topbar.csv" title="Save the currently filtered swatches as a UTF-8 CSV (Excel-ready, keeps kanji).">&#x2193; CSV</button>
+  <button class="btn" onclick="exportPNG()" data-i18n="topbar.png" title="Save the currently filtered swatches as a square PNG board with title band.">&#x2193; PNG</button>
+  <button class="btn" onclick="exportFilteredSwatchZIP()" data-i18n="topbar.zip" title="Download a .zip with one 128x128 pure-color PNG per currently-filtered swatch plus manifest.csv/json.">&#x2193; ZIP (per-swatch)</button>
+  <div class="lang-picker">
+    <button type="button" class="lang-picker-btn" id="langPickerBtn" onclick="toggleLangMenu()" title="Change interface language">
+      <span id="langCurrent">EN</span><span aria-hidden="true">&#9662;</span>
+    </button>
+    <div class="lang-picker-menu" id="langPickerMenu" hidden>
+      <button type="button" data-lang="en" onclick="setUILang('en')">English</button>
+      <button type="button" data-lang="ja" onclick="setUILang('ja')">&#26085;&#26412;&#35486;</button>
+      <button type="button" data-lang="zh" onclick="setUILang('zh')">&#32321;&#39636;&#20013;&#25991;</button>
+    </div>
+  </div>
 </header>
 
 <div class="main">
@@ -600,12 +653,12 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
   <aside class="sidebar">
 
     <div class="step-group-header">
-      <span class="num">01</span><span class="lbl">Pick a profile</span><span class="sub">press + size</span>
+      <span class="num">01</span><span class="lbl" data-i18n="group.01">Pick a profile</span><span class="sub" data-i18n="group.01.sub">press + size</span>
     </div>
 
     <!-- Color mode (Lab whitepoint) -->
     <div class="sec">
-      <div class="sec-label" title="Color mode picks the Lab whitepoint used for corpus matching. Print mode (D50) aligns with ICC-standard swatch books. Screen mode (D65) is pure sRGB-native.">Color mode</div>
+      <div class="sec-label" data-i18n="sec.color_mode" title="Color mode picks the Lab whitepoint used for corpus matching. Print mode (D50) aligns with ICC-standard swatch books. Screen mode (D65) is pure sRGB-native.">Color mode</div>
       <div class="mode-group lab-mode-group" id="labModeGroup">
         <button type="button" class="mode-btn active" data-lab="d50" onclick="setLabMode('d50')">Print (D50)</button>
         <button type="button" class="mode-btn" data-lab="d65" onclick="setLabMode('d65')">Screen (D65)</button>
@@ -614,7 +667,7 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
 
     <!-- ICC Profile -->
     <div class="sec">
-      <div class="sec-label">ICC profile (CMYK output)</div>
+      <div class="sec-label" data-i18n="sec.icc_profile">ICC profile (CMYK output)</div>
       <select class="pal-sel" id="iccSel" onchange="onProfileChange()" title="Choose how to render the colors. Each profile (FOGRA39, Japan Color, SWOP…) is a real-world press behavior. Switch to see how the SAME CMYK values look on different print conditions."></select>
       <div id="iccStatus" style="font-size:10px;color:var(--muted);font-family:var(--font-mono);margin-top:2px" title="Active profile + how many colors it has.">-</div>
       <div style="font-size:10px;color:var(--faint);line-height:1.45;margin-top:6px">
@@ -622,21 +675,21 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
         run <code>python scripts/gen_luts.py</code>, refresh.
       </div>
       <!-- Round-trip safety slider - lives here so it's tied to the active profile -->
-      <div class="sec-label" style="margin-top:8px">Round-trip safety &middot; <span id="vDEmax">dE &lt;= 2.0</span></div>
-      <input type="range" min="0" max="20" value="20" step="1" id="slDEmax"
+      <div class="sec-label" style="margin-top:8px"><span data-i18n="sec.round_trip">Round-trip safety</span> &middot; <span id="vDEmax">dE &lt;= 2.0</span></div>
+      <input type="range" min="0" max="20" value="6" step="1" id="slDEmax"
              oninput="onFilter()"
-             title="Hide swatches whose round-trip color drift exceeds this dE on the active profile. Max 2.0 dE (industry print tolerance). Lower = safer; higher = more swatches shown.">
+             title="Hide swatches whose round-trip color drift exceeds this dE on the active profile. Max 2.0 dE (industry print tolerance). Lower = safer; higher = more swatches shown. Default 0.6.">
     </div>
 
     <div class="divider"></div>
 
 
     <div class="sec">
-      <div class="sec-label">Step interval</div>
+      <div class="sec-label" data-i18n="sec.step">Step interval</div>
       <div class="pill-row">
-        <button class="pill" id="pill20" onclick="setStep(20)" title="20-step interval. Coarser sampling, ~1000 colors total. Fastest.">20</button>
+        <button class="pill active" id="pill20" onclick="setStep(20)" title="20-step interval. Coarser sampling, ~1000 colors total. Fastest. Default.">20</button>
         <button class="pill" id="pill15" onclick="setStep(15)" title="15-step interval. ~2400 colors total.">15</button>
-        <button class="pill active" id="pill10" onclick="setStep(10)" title="10-step interval. ~14k colors. Default.">10</button>
+        <button class="pill" id="pill10" onclick="setStep(10)" title="10-step interval. ~14k colors.">10</button>
         <button class="pill" id="pill5"  onclick="setStep(5)" title="5-step interval. ~130k colors. Slower; for dense explore.">5</button>
       </div>
     </div>
@@ -645,21 +698,21 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
 
     <!-- Grid size -->
     <div class="sec">
-      <div class="sec-label">Cell size</div>
+      <div class="sec-label" data-i18n="sec.cell">Cell size</div>
       <div class="grid-size-presets" id="presetBtns">
         <button class="preset-btn" data-size="20" onclick="setCell(20)" title="Tiny cells - 20px. Overview at a glance.">20</button>
         <button class="preset-btn" data-size="32" onclick="setCell(32)" title="Small cells - 32px.">32</button>
-        <button class="preset-btn active" data-size="48" onclick="setCell(48)" title="Default cell size - 48px.">48</button>
+        <button class="preset-btn" data-size="48" onclick="setCell(48)" title="Default cell size - 48px.">48</button>
         <button class="preset-btn" data-size="64" onclick="setCell(64)" title="Medium cells - 64px.">64</button>
-        <button class="preset-btn" data-size="80" onclick="setCell(80)" title="Large cells - 80px.">80</button>
+        <button class="preset-btn active" data-size="80" onclick="setCell(80)" title="Large cells - 80px. Default.">80</button>
         <button class="preset-btn" data-size="100" onclick="setCell(100)" title="Big cells - 100px. CMYK + hex visible.">100</button>
         <button class="preset-btn" data-size="120" onclick="setCell(120)" title="Very big - 120px. Names start to fit.">120</button>
         <button class="preset-btn" data-size="160" onclick="setCell(160)" title="Huge cells - 160px. Full label set readable.">160</button>
       </div>
       <div class="grid-size-row">
-        <input type="range" id="cellSlider" min="16" max="200" step="4" value="48"
+        <input type="range" id="cellSlider" min="16" max="200" step="4" value="80"
                oninput="setCellSlider(this.value)" title="Drag to resize every swatch in pixels. Bigger swatches show more labels (CMYK, hex, name); smaller ones fit more on screen.">
-        <span class="grid-size-val" id="cellVal" title="Current cell size in pixels.">48 px</span>
+        <span class="grid-size-val" id="cellVal" title="Current cell size in pixels.">80 px</span>
       </div>
     </div>
 
@@ -677,6 +730,7 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
     <input type="hidden" id="slMmx" value="100">
     <input type="hidden" id="slYmn" value="0">
     <input type="hidden" id="slYmx" value="100">
+    <!-- K range factory default: 0-80 (defined here so first paint reflects it before applyUIState fires) -->
     <!-- Display labels kept as hidden spans so onFilter() .textContent writes don't throw -->
     <span id="vCmn" style="display:none">0</span><span id="vCmx" style="display:none">100</span>
     <span id="vMmn" style="display:none">0</span><span id="vMmx" style="display:none">100</span>
@@ -686,7 +740,7 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
 
     <div class="sec">
       <div class="sec-label">
-        TAC limit &middot; <span id="vTAC">240</span>% / max <span id="vTACMax">400</span>%
+        <span data-i18n="sec.tac">TAC limit</span> &middot; <span id="vTAC">240</span>% / max <span id="vTACMax">400</span>%
         <span class="user-override-badge" id="tacOverride" style="display:none" title="You manually set TAC. Click a preset to reset.">user override</span>
       </div>
       <input type="range" min="0" max="400" value="240" step="10" id="slTAC" oninput="onTACInput()" title="Total ink limit (C+M+Y+K %). Real presses usually handle 240-330 depending on paper.">
@@ -713,27 +767,27 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
 
     <!-- K-tier (black-channel) filter -->
     <div class="sec">
-      <div class="sec-label">Black (K) tier</div>
+      <div class="sec-label" data-i18n="sec.k_tier">Black (K) tier</div>
       <div class="pill-row" style="flex-direction:column;border-radius:var(--r)">
         <button class="ktier-pill" id="kt1" onclick="setKTier(1)" title="Brand zone: K (black ink) under 25%. Clean, premium, easy to reproduce. Where most logo + brand colors should live.">
-          <span class="kt-name">Tier 1 · Brand</span><span class="kt-range">K 0-25</span></button>
+          <span class="kt-name" data-i18n="tier.t1.name">Tier 1 · Brand</span><span class="kt-range">K 0-25</span></button>
         <button class="ktier-pill" id="kt2" onclick="setKTier(2)" title="Adds Tier 2 (K up to 50%). Secondary darks for added depth.">
-          <span class="kt-name">+ Tier 2 · Support</span><span class="kt-range">K 0-50</span></button>
+          <span class="kt-name" data-i18n="tier.t2.name">+ Tier 2 · Support</span><span class="kt-range">K 0-50</span></button>
         <button class="ktier-pill active" id="kt3" onclick="setKTier(3)" title="Adds Tier 3 (K up to 100%). True charcoals, espresso, deep wine - use only when you need that depth.">
-          <span class="kt-name">+ Tier 3 · Deep</span><span class="kt-range">K 0-100</span></button>
+          <span class="kt-name" data-i18n="tier.t3.name">+ Tier 3 · Deep</span><span class="kt-range">K 0-100</span></button>
       </div>
-      <!-- K range fine-tune slider (complements the tier pills above) -->
+      <!-- K range fine-tune slider (complements the tier pills above). Default max 80. -->
       <div class="rd-label-row" style="margin-top:6px">
-        <span class="sk k" style="font-size:11px;font-family:var(--font-mono);font-weight:500">K range</span>
-        <span class="rd-vals"><span id="vKmn">0</span><span style="color:var(--faint)">-</span><span id="vKmx">100</span></span>
+        <span class="sk k" style="font-size:11px;font-family:var(--font-mono);font-weight:500" data-i18n="sec.k_range">K range</span>
+        <span class="rd-vals"><span id="vKmn">0</span><span style="color:var(--faint)">-</span><span id="vKmx">80</span></span>
       </div>
       <div class="range-dual" id="rng-k">
         <div class="rd-track"></div>
         <div class="rd-fill" id="rfK"></div>
         <input type="range" min="0" max="100" value="0"   step="5" id="slKmn"
-               oninput="_clampDual('rng-k');_syncKTierFromRange();onFilter()" title="Black min (%)">
-        <input type="range" min="0" max="100" value="100" step="5" id="slKmx"
-               oninput="_clampDual('rng-k');_syncKTierFromRange();onFilter()" title="Black max (%)">
+               oninput="_clampDual('rng-k', this);_syncKTierFromRange();onFilter()" title="Black min (%)">
+        <input type="range" min="0" max="100" value="80" step="5" id="slKmx"
+               oninput="_clampDual('rng-k', this);_syncKTierFromRange();onFilter()" title="Black max (%). Default 80.">
       </div>
       <div style="font-size:10px;color:var(--faint);line-height:1.5;margin-top:2px">
         Low K by default; deep darks only when needed.
@@ -743,24 +797,24 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
     <div class="divider"></div>
 
     <div class="step-group-header">
-      <span class="num">03</span><span class="lbl">Pick + name</span><span class="sub">corpora + match</span>
+      <span class="num">03</span><span class="lbl" data-i18n="group.03">Pick + name</span><span class="sub" data-i18n="group.03.sub">corpora + match</span>
     </div>
 
     <div class="sec">
-      <div class="sec-label">Named swatches · filter</div>
+      <div class="sec-label" data-i18n="sec.named">Named swatches &middot; filter</div>
       <div class="pill-row" style="flex-direction:column;border-radius:var(--r)">
-        <button class="ktier-pill active" id="nm-all"  onclick="setNamed('all')" title="Show every swatch - no name filter.">
-          <span class="kt-name">All swatches</span><span class="kt-range">no filter</span></button>
-        <button class="ktier-pill"        id="nm-any"  onclick="setNamed('any')" title="Show only swatches that match a name in at least one checked library below.">
-          <span class="kt-name">Any named</span><span class="kt-range">checked libs</span></button>
+        <button class="ktier-pill" id="nm-all"  onclick="setNamed('all')" title="Show every swatch - no name filter.">
+          <span class="kt-name" data-i18n="pill.all">All swatches</span><span class="kt-range" data-i18n="pill.no_filter">no filter</span></button>
+        <button class="ktier-pill active" id="nm-any"  onclick="setNamed('any')" title="Show only swatches that match a name in at least one checked library below. Default.">
+          <span class="kt-name" data-i18n="pill.any">Any named</span><span class="kt-range" data-i18n="pill.checked">checked libs</span></button>
       </div>
       <div id="filterCheckboxes" style="margin-top:6px" title="When 'Any named' is on, only swatches that match a name in at least one of these checked libraries pass the filter. Independent of which name each library is set to display."></div>
       <div class="sec">
         <div class="sec-label">
-          <span class="link-badge" title="These controls apply to all libraries.">&#x1F517; Match settings (all libraries)</span>
+          <span class="link-badge" data-i18n="sec.match" title="These controls apply to all libraries.">&#x1F517; Match settings (all libraries)</span>
         </div>
         <div class="match-row">
-          <div class="match-label">Anchor</div>
+          <div class="match-label" data-i18n="sec.anchor">Anchor</div>
           <div class="mode-group anchor-group" id="anchorGroup">
             <button type="button" class="mode-btn active" data-anchor="cmyk" onclick="setGlobalAnchor('cmyk')">CMYK</button>
             <button type="button" class="mode-btn" data-anchor="hex" onclick="setGlobalAnchor('hex')">hex</button>
@@ -768,8 +822,8 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
         </div>
         <div class="match-help">Match by CMYK-Lab (print) or hex-Lab (screen). html corpus falls back to hex when anchor=cmyk.</div>
         <div class="match-row" style="margin-top:6px">
-          <div class="match-label">Naming Accuracy &middot; <span id="vTol">3.0</span></div>
-          <input type="range" min="0" max="20" step="0.5" value="3" id="slTol" oninput="onTol(this.value)" title="Show a corpus name when swatch is within this dE of a named entry. Smaller value = stricter name match (only exact closest). Larger = more permissive (more swatches show names).">
+          <div class="match-label"><span data-i18n="sec.accuracy">Naming Accuracy</span> &middot; <span id="vTol">5.5</span></div>
+          <input type="range" min="0" max="20" step="0.5" value="5.5" id="slTol" oninput="onTol(this.value)" title="Show a corpus name when swatch is within this dE of a named entry. Smaller value = stricter name match (only exact closest). Larger = more permissive (more swatches show names). Default 5.5.">
         </div>
         <div class="match-help">Higher = more swatches show names. Set to 0 to show only literal closest matches per library.</div>
       </div>
@@ -778,7 +832,7 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
     <div class="divider"></div>
 
     <div class="sec">
-      <div class="sec-label">Naming · per library</div>
+      <div class="sec-label" data-i18n="sec.naming">Naming &middot; per library</div>
       <div id="namingRows" title="Each library loaded from data/corpora/name_corpora.json appears here. Pick which field to show on swatch labels (primary, secondary, or hide), and which attribute (hex or cmyk) drives the match."></div>
       <div style="font-size:10px;color:var(--faint);line-height:1.5;margin-top:6px">
         Add a corpus by editing <code>data/corpora/name_corpora.json</code> and refreshing. Per-corpus prefs are stored in your browser.
@@ -789,21 +843,21 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
     <div class="divider"></div>
 
     <div class="sec">
-      <div class="sec-label">Accessibility</div>
-      <div class="tog-row"><span class="tog-lbl">WCAG AA only</span>
-        <label class="tog"><input type="checkbox" id="togAA" onchange="onFilter()" title="Only show swatches whose text contrast passes WCAG AA (4.5:1).">
+      <div class="sec-label" data-i18n="sec.a11y">Accessibility</div>
+      <div class="tog-row"><span class="tog-lbl" data-i18n="tog.aa">WCAG AA only</span>
+        <label class="tog"><input type="checkbox" id="togAA" onchange="onFilter()" title="Only show swatches whose text contrast passes WCAG AA (4.5:1). Default OFF.">
         <span class="tog-track"></span><span class="tog-thumb"></span></label>
       </div>
-      <div class="tog-row"><span class="tog-lbl">WCAG AAA only</span>
-        <label class="tog"><input type="checkbox" id="togAAA" onchange="onFilter()" title="Only show swatches whose text contrast passes WCAG AAA (7:1).">
+      <div class="tog-row"><span class="tog-lbl" data-i18n="tog.aaa">WCAG AAA only</span>
+        <label class="tog"><input type="checkbox" id="togAAA" onchange="onFilter()" title="Only show swatches whose text contrast passes WCAG AAA (7:1). Default OFF.">
         <span class="tog-track"></span><span class="tog-thumb"></span></label>
       </div>
-      <div class="tog-row"><span class="tog-lbl">White text only</span>
-        <label class="tog"><input type="checkbox" id="togWt" onchange="onFilter()" title="Only show swatches where white text reads best (i.e. dark-ish swatches).">
+      <div class="tog-row"><span class="tog-lbl" data-i18n="tog.wt">White text only</span>
+        <label class="tog"><input type="checkbox" id="togWt" onchange="onFilter()" title="Only show swatches where white text reads best (i.e. dark-ish swatches). Default OFF.">
         <span class="tog-track"></span><span class="tog-thumb"></span></label>
       </div>
-      <div class="tog-row"><span class="tog-lbl">Black text only</span>
-        <label class="tog"><input type="checkbox" id="togBt" onchange="onFilter()" title="Only show swatches where black text reads best (i.e. light-ish swatches).">
+      <div class="tog-row"><span class="tog-lbl" data-i18n="tog.bt">Black text only</span>
+        <label class="tog"><input type="checkbox" id="togBt" onchange="onFilter()" title="Only show swatches where black text reads best (i.e. light-ish swatches). Default OFF.">
         <span class="tog-track"></span><span class="tog-thumb"></span></label>
       </div>
     </div>
@@ -811,33 +865,33 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
     <div class="divider"></div>
 
     <div class="sec">
-      <div class="sec-label">Search</div>
-      <input class="search-inp" id="searchQ" placeholder="mizuiro, coral, 桜, #A9CBE8…"
-             oninput="onFilter()" title="Type to filter by name (英: coral, 日: 桜色), romaji, or hex (#3B...).">
+      <div class="sec-label" data-i18n="search.label">Search</div>
+      <input class="search-inp" id="searchQ" placeholder="mizuiro, coral, &#26716;, #A9CBE8&#8230;"
+             oninput="_debouncedSearch()" title="Type to filter by name (en: coral, ja: &#26716;&#33394;), romaji, or hex (#3B...).">
     </div>
 
     <div class="divider"></div>
 
     <div class="step-group-header">
-      <span class="num">04</span><span class="lbl">Sort + view</span><span class="sub">order + reset</span>
+      <span class="num">04</span><span class="lbl" data-i18n="group.04">Sort + view</span><span class="sub" data-i18n="group.04.sub">order + reset</span>
     </div>
 
     <div class="sec">
-      <div class="sec-label">Sort by</div>
+      <div class="sec-label" data-i18n="sec.sort">Sort by</div>
       <div class="sort-btns">
-        <button class="btn sort-btn active" id="sort-hue"  onclick="setSort('hue')" title="Order by color hue: reds → oranges → yellows → greens → blues → purples.">Hue</button>
-        <button class="btn sort-btn" id="sort-L"    onclick="setSort('L')" title="Order by lightness, dark → light.">Light</button>
-        <button class="btn sort-btn" id="sort-tac"  onclick="setSort('tac')" title="Order by total ink load (C+M+Y+K %). Low ink first.">TAC</button>
-        <button class="btn sort-btn" id="sort-C"      onclick="setSort('C')" title="Order by Cyan ink % only.">Cyan</button>
-        <button class="btn sort-btn" id="sort-chroma" onclick="setSort('chroma')" title="Order by saturation. Dull/neutral colors first, vivid last.">Chroma</button>
-        <button class="btn sort-btn" id="sort-safety" onclick="setSort('safety')" title="Order by round-trip reliability. Most-reliable first; riskier (near gamut boundary) last.">Safety</button>
-        <button class="btn sort-btn" id="sort-huelight" onclick="setSort('huelight')" title="2D map: one representative cell per (hue, lightness) bucket.">Hue x Light</button>
+        <button class="btn sort-btn active" id="sort-hue"  onclick="setSort('hue')" data-i18n="sort.hue"      title="Order by color hue: reds &#8594; oranges &#8594; yellows &#8594; greens &#8594; blues &#8594; purples. Default.">Hue</button>
+        <button class="btn sort-btn" id="sort-L"    onclick="setSort('L')"          data-i18n="sort.light"    title="Order by lightness, dark &#8594; light.">Light</button>
+        <button class="btn sort-btn" id="sort-tac"  onclick="setSort('tac')"        data-i18n="sort.tac"      title="Order by total ink load (C+M+Y+K %). Low ink first.">TAC</button>
+        <button class="btn sort-btn" id="sort-C"      onclick="setSort('C')"        data-i18n="sort.cyan"     title="Order by Cyan ink % only.">Cyan</button>
+        <button class="btn sort-btn" id="sort-chroma" onclick="setSort('chroma')"   data-i18n="sort.chroma"   title="Order by saturation. Dull/neutral colors first, vivid last.">Chroma</button>
+        <button class="btn sort-btn" id="sort-safety" onclick="setSort('safety')"   data-i18n="sort.safety"   title="Order by round-trip reliability. Most-reliable first; riskier (near gamut boundary) last.">Safety</button>
+        <button class="btn sort-btn" id="sort-huelight" onclick="setSort('huelight')" data-i18n="sort.huelight" title="2D map (renders inside the Palettes panel): one representative cell per (hue, lightness) bucket.">Hue x Light</button>
       </div>
     </div>
 
       <div class="divider"></div>
     <div class="sec">
-      <div class="sec-label">Adding profiles / names (manual)</div>
+      <div class="sec-label" data-i18n="sec.add">Adding profiles / names (manual)</div>
       <div style="font-size:10.5px;color:var(--text);line-height:1.55">
         <b>New ICC profile?</b> Drop the <code>.icc</code> / <code>.icm</code>
         into <code>icc/</code> then run
@@ -856,8 +910,9 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
   <!-- ── Grid ── -->
   <div class="grid-area">
     <div class="palette-panel" id="palettePanel">
-      <div class="palette-panel-header" onclick="togglePalettePanel()">
-        <span><span class="chev">&#9658;</span> Palettes</span>
+      <div class="palette-panel-header" onclick="togglePalettePanel()" role="button" tabindex="0" aria-label="Toggle palettes panel">
+        <span class="pp-title"><span data-i18n="palette.title">Palettes</span> <span class="pal-count-inline" id="palCountHdr">&middot;</span></span>
+        <span class="pp-action" id="ppAction" data-i18n="palette.open">Open palettes</span>
       </div>
       <div class="palette-panel-body" id="palettePanelBody">
         <!-- Compact toolbar -->
@@ -1003,10 +1058,10 @@ function _migrate_v1_to_v2(v1) {
   if (typeof out.lab_mode !== 'string') out.lab_mode = 'd50';
   if (typeof out.gamut_safe_only !== 'boolean') out.gamut_safe_only = false;
   if (typeof out.palette_panel_open !== 'boolean') out.palette_panel_open = false;
-  // Rewrite corpora_prefs to v3 shape
+  // Rewrite corpora_prefs to v3 shape (default tolerance now 5.5 to match ui_defaults.json)
   const oldPrefs = out.corpora_prefs || {};
   const newPrefs = {
-    _global: { anchor: 'cmyk', tolerance: 3.0 },
+    _global: { anchor: 'cmyk', tolerance: 5.5 },
     'jp-trad': { display: (oldPrefs.jpn && oldPrefs.jpn.display) || 'name_ja' },
     'html':    { display: (oldPrefs.html && oldPrefs.html.display) || 'name_en' },
     'zh-trad': { display: 'name_zh' },
@@ -1014,7 +1069,6 @@ function _migrate_v1_to_v2(v1) {
   if (oldPrefs.jpn && oldPrefs.jpn.anchor) newPrefs._global.anchor = oldPrefs.jpn.anchor;
   if (typeof out.name_tolerance === 'number') newPrefs._global.tolerance = out.name_tolerance;
   out.corpora_prefs = newPrefs;
-  // Discard fields no longer used
   delete out.name_tolerance;
   return out;
 }
@@ -1046,6 +1100,7 @@ function _resolvedUI() {
 // Snapshot live state (vars + DOM) for persistence.
 function _snapshotUI() {
   const $ = id => document.getElementById(id);
+  const numv = (id, dflt) => { const el = $(id); return el ? +el.value : dflt; };
   return {
     step: curStep, cell_size: curCell, view_mode: viewMode,
     sort_mode: sortMode, k_tier: curKTier,
@@ -1055,9 +1110,18 @@ function _snapshotUI() {
     white_text_only: $('togWt')?.checked || false,
     black_text_only: $('togBt')?.checked || false,
     search: $('searchQ')?.value || '',
+    cmyk_range: {
+      c: [numv('slCmn',0), numv('slCmx',100)],
+      m: [numv('slMmn',0), numv('slMmx',100)],
+      y: [numv('slYmn',0), numv('slYmx',100)],
+      k: [numv('slKmn',0), numv('slKmx',100)],
+    },
+    tac_max: numv('slTAC', 240),
+    delta_e_max: +(numv('slDEmax', 20) / 10).toFixed(1),
     active_palette_id: typeof activeId !== 'undefined' ? (activeId || null) : null,
     corpora_prefs: CORPORA_PREFS,
     lab_mode: LAB_MODE,
+    ui_lang: typeof UI_LANG !== 'undefined' ? UI_LANG : 'auto',
   };
 }
 function persistUI() { _writeUIState(_snapshotUI()); }
@@ -1079,6 +1143,31 @@ function applyUIState(s) {
   if ($('togWt'))  $('togWt').checked  = !!s.white_text_only;
   if ($('togBt'))  $('togBt').checked  = !!s.black_text_only;
   if ($('searchQ')) $('searchQ').value = s.search || '';
+  // CMYK / K range sliders (cmyk_range.c|m|y|k = [min,max])
+  if (s.cmyk_range && typeof s.cmyk_range === 'object') {
+    const r = s.cmyk_range;
+    const pairs = [['c','slCmn','slCmx'],['m','slMmn','slMmx'],['y','slYmn','slYmx'],['k','slKmn','slKmx']];
+    for (const [ch, mn, mx] of pairs) {
+      if (Array.isArray(r[ch]) && r[ch].length === 2) {
+        if ($(mn)) $(mn).value = r[ch][0];
+        if ($(mx)) $(mx).value = r[ch][1];
+      }
+    }
+  }
+  // TAC slider + readout
+  if (typeof s.tac_max === 'number' && $('slTAC')) {
+    $('slTAC').value = s.tac_max;
+    if ($('vTAC')) $('vTAC').textContent = String(s.tac_max);
+  }
+  // Round-trip dE slider (stored as 0.0-2.0, slider stores tenths 0-20)
+  if (typeof s.delta_e_max === 'number' && $('slDEmax')) {
+    const tenths = Math.round(Math.max(0, Math.min(2.0, s.delta_e_max)) * 10);
+    $('slDEmax').value = tenths;
+    if ($('vDEmax')) $('vDEmax').textContent = 'dE <= ' + (tenths/10).toFixed(1);
+  }
+  // Named-filter pill
+  ['all','any'].forEach(v =>
+    $('nm-'+v)?.classList.toggle('active', curNamed === v));
   // step pills
   ['pill5','pill10','pill15','pill20'].forEach(id => {
     const n = +id.replace('pill','');
@@ -1915,12 +2004,12 @@ function _markClosest(lib) {
 
 
 // ── state ────────────────────────────────────────────────────────────────────
-let curStep  = 10;
-let curCell  = 48;   // px - user-controlled
+let curStep  = 20;   // factory default = 20 (see data/ui_defaults.json)
+let curCell  = 80;   // px - user-controlled; factory default = 80
 let sortMode = 'hue';
 let curKTier = 3;   // default: show all K tiers - user narrows via the Tier 1/2/3 pills
-let curNamed = 'all'; // all|any|jpn|html|dic|pantone
-let curTol   = 3.0;   // dE tolerance for name display/filter (3.0 default; 0 = closest only)
+let curNamed = 'any'; // all|any - factory default = any (matches a named swatch in >=1 enabled corpus)
+let curTol   = 5.5;   // dE tolerance for name display/filter (factory default 5.5; 0 = closest only)
 let paletteMode = false;
 let viewMode = 'grid';   // 'grid' | 'huelight' | 'palettes' 
 
@@ -2093,6 +2182,9 @@ function setViewMode(m) {
     document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
     document.getElementById('sort-huelight')?.classList.add('active');
   }
+  // Non-grid views (palettes + huelight) render INSIDE the palette panel body.
+  // Auto-open the panel so the rendered content is visible.
+  if (m !== 'grid' && typeof _ensurePalettePanelOpen === 'function') _ensurePalettePanelOpen();
   // Update topbar count: palette mode swaps to palette-count, else clear
   if (m === 'palettes')
     document.getElementById('countLabel').textContent =
@@ -2102,11 +2194,11 @@ function setViewMode(m) {
   _scheduleRender();
 }
 
-// Backwards-compat: any caller using togglePaletteMode falls through cleanly
+// Backwards-compat: any caller using togglePaletteMode toggles between the
+// two top-level view modes only (grid <-> palettes). Hue x Light is a sort
+// option, not a view mode, so it does not appear in this cycle.
 function togglePaletteMode() {
-  const next = viewMode === 'grid' ? 'huelight'
-             : viewMode === 'huelight' ? 'palettes' : 'grid';
-  setViewMode(next);
+  setViewMode(viewMode === 'grid' ? 'palettes' : 'grid');
 }
 
 function duplicatePalette(id) {
@@ -2278,7 +2370,7 @@ function renderPaletteMode() {
             if (!corpusVisible(lib.id, sw)) continue;
             const text = corpusCellText(lib.id, sw);
             if (!text) continue;
-            const isJpn = (lib.id === 'jpn');
+            const isJpn = (lib.id === 'jp-trad');
             if (!isJpn && !showHtml) continue;
             const fz = isJpn ? fzJpn : fzHtml;
             const e = document.createElement('div');
@@ -2556,7 +2648,7 @@ function _makeSwatchCell(sw, ctx) {
       const text = corpusCellText(lib.id, sw);
       if (!text) continue;
       // Size threshold: jpn uses fzJpn, others use fzHtml-class.
-      const isJpn = (lib.id === 'jpn');
+      const isJpn = (lib.id === 'jp-trad');
       if (!isJpn && !ctx.showHtml) continue;
       const fz = isJpn ? ctx.fzJpn : ctx.fzHtml;
       const e  = document.createElement('div');
@@ -2909,7 +3001,7 @@ function openDetail(sw) {
   for (const lib of CORPORA.libraries) {
     const m = sw.matches?.[lib.id];
     if (!m || !m.entry) continue;
-    const klass = lib.id === 'jpn' ? 'chip jpn' : 'chip';
+    const klass = lib.id === 'jp-trad' ? 'chip jpn' : 'chip';
     // v2.1: render every declared field of the matched entry, separated by " · "
     const fieldTxt = lib.fields
       .map(f => m.entry[f.id])
@@ -3076,20 +3168,23 @@ function _updateRangeFill(id) {
   fill.style.right = (100 - mx) + '%';
 }
 
-// Clamp min <= max on a dual-handle slider and refresh its fill bar.
-function _clampDual(id) {
+// Clamp the thumb that was just moved against the other thumb, and refresh
+// the fill bar. `movedEl` is the input element that fired the event
+// (pass `event.target` from the oninput call). When omitted, fall back to
+// a non-destructive read.
+function _clampDual(id, movedEl) {
   const root = document.getElementById(id);
   if (!root) return;
   const inputs = root.querySelectorAll('input[type=range]');
   if (inputs.length < 2) return;
-  let mn = +inputs[0].value;
-  let mx = +inputs[1].value;
+  const mnEl = inputs[0], mxEl = inputs[1];
+  const mn = +mnEl.value, mx = +mxEl.value;
   if (mn > mx) {
-    // Figure out which thumb was just moved by checking event target context;
-    // simplest safe fallback: pin both to the value that changed.
-    // We snap by setting both to the boundary that was crossed.
-    inputs[0].value = Math.min(mn, mx);
-    inputs[1].value = Math.max(mn, mx);
+    // Only the moved thumb gets snapped against the other thumb's value -
+    // the stationary thumb keeps its position, matching native dual-range UX.
+    if (movedEl === mnEl)       mnEl.value = mx;
+    else if (movedEl === mxEl)  mxEl.value = mn;
+    else { mnEl.value = mx; }   // unknown caller: park min at max
   }
   _updateRangeFill(id);
 }
@@ -3175,13 +3270,18 @@ function anyCorpusVisible(s){
   });
 }
 
+// rebuildAll is heavy (lattice + LUT derive + corpus match). Rapid pill
+// clicks used to queue one rebuild per click; we collapse bursts so only
+// the final value triggers an actual rebuild.
+let _stepRebuildId = 0;
 function setStep(s) {
   curStep = s;
   ['pill5','pill10','pill15','pill20'].forEach(id => {
     const n = +id.replace('pill','');
     document.getElementById(id)?.classList.toggle('active', s === n);
   });
-  rebuildAll();
+  if (_stepRebuildId) clearTimeout(_stepRebuildId);
+  _stepRebuildId = setTimeout(() => { _stepRebuildId = 0; rebuildAll(); }, 180);
 }
 
 function setSort(m) {
@@ -3375,10 +3475,10 @@ function _renderSwatchPNG(data, filename, opts = {}) {
     if (showJpn) {
       let yCursor = cy + topJpn;
       for (const ent of _renderSwatchNames(sw)) {
-        const fz = ent.libId === 'jpn' ? fzJpn : fzHtml;
-        if (ent.libId === 'jpn' && !showJpn) continue;
-        if (ent.libId !== 'jpn' && !showHtml) continue;
-        ctx.font = (ent.libId === 'jpn' ? `600 ${fz}px ${sans}` : `${fz}px ${sans}`);
+        const fz = ent.libId === 'jp-trad' ? fzJpn : fzHtml;
+        if (ent.libId === 'jp-trad' && !showJpn) continue;
+        if (ent.libId !== 'jp-trad' && !showHtml) continue;
+        ctx.font = (ent.libId === 'jp-trad' ? `600 ${fz}px ${sans}` : `${fz}px ${sans}`);
         ctx.fillText(ent.name, cx+pad, yCursor); yCursor += fz + 2;
       }
     }
@@ -3798,9 +3898,9 @@ function _renderPaletteLabelledPNG(swatches, filename, canvasSize, title) {
     ctx.font = `${fzHex}px "IBM Plex Mono", ui-monospace, monospace`;
     ctx.fillText(sw.hex, cx + pad, y); y += fzHex + 2;
     for (const ent of _renderSwatchNames(sw)) {
-      const fz = ent.libId === 'jpn' ? fzJpn : fzHtml;
+      const fz = ent.libId === 'jp-trad' ? fzJpn : fzHtml;
       const fontFace = '"Noto Sans JP", system-ui, sans-serif';
-      ctx.font = (ent.libId === 'jpn' ? `600 ${fz}px ${fontFace}` : `${fz}px ${fontFace}`);
+      ctx.font = (ent.libId === 'jp-trad' ? `600 ${fz}px ${fontFace}` : `${fz}px ${fontFace}`);
       ctx.fillText(ent.name, cx + pad, y); y += fz + 2;
     }
   });
@@ -4026,6 +4126,15 @@ window.addEventListener('load', async () => {
     populateProfileSelect();
     // Apply defaults < user-saved state before first render.
     applyUIState(_resolvedUI());
+    // ── Language: read persisted choice, fall back to defaults (auto)
+    {
+      let saved = null;
+      try { saved = localStorage.getItem('ui_lang'); } catch {}
+      const fromDefaults = (UI_DEFAULTS && UI_DEFAULTS[UI_TOOL_KEY] && UI_DEFAULTS[UI_TOOL_KEY].ui_lang) || 'auto';
+      const choice = saved || fromDefaults;
+      UI_LANG = (choice === 'auto') ? _detectBrowserLang() : choice;
+      applyI18n();
+    }
     restorePalettePanelState();
     // Reflect persisted lab_mode onto badge + button groups (applyUIState sets
     // LAB_MODE but cannot touch DOM elements added after HTML parse).
@@ -4062,18 +4171,283 @@ window.addEventListener('load', async () => {
           'data/luts/index.json and data/corpora/name_corpora.json present?');
   }
 });
-window.addEventListener('resize', render);
+// Debounce resize: native resize event fires many times per drag; coalesce.
+let _resizeDebounceId = 0;
+window.addEventListener('resize', () => {
+  if (_resizeDebounceId) clearTimeout(_resizeDebounceId);
+  _resizeDebounceId = setTimeout(() => { _resizeDebounceId = 0; render(); }, 120);
+});
 
-function togglePalettePanel() {
+function togglePalettePanel(force) {
   const panel = document.getElementById('palettePanel');
-  const open = panel.classList.toggle('open');
+  const open = typeof force === 'boolean'
+    ? (panel.classList.toggle('open', force), force)
+    : panel.classList.toggle('open');
   try { localStorage.setItem('palette_panel_open', open ? '1' : '0'); } catch {}
+  const act = document.getElementById('ppAction');
+  if (act) act.textContent = open ? t('palette.close', 'Close palettes')
+                                  : t('palette.open',  'Open palettes');
 }
 function restorePalettePanelState() {
   try {
     const v = localStorage.getItem('palette_panel_open');
     if (v === '1') document.getElementById('palettePanel').classList.add('open');
   } catch {}
+  const act = document.getElementById('ppAction');
+  const panel = document.getElementById('palettePanel');
+  if (act && panel) act.textContent = panel.classList.contains('open')
+    ? t('palette.close', 'Close palettes')
+    : t('palette.open',  'Open palettes');
+}
+
+/* ── Search debounce (panel-input lag fix) ─────────────────────────────── */
+let _searchDebounceId = 0;
+function _debouncedSearch() {
+  if (_searchDebounceId) clearTimeout(_searchDebounceId);
+  _searchDebounceId = setTimeout(() => { _searchDebounceId = 0; onFilter(); }, 140);
+}
+
+/* ── i18n (en / ja / zh-Hant) ──────────────────────────────────────────── */
+const I18N = {
+  en: {
+    'badge.mode_d50': 'Mode: Print (D50)',
+    'badge.mode_d65': 'Mode: Screen (D65)',
+    'topbar.reset':  '↺ Reset UI to defaults',
+    'topbar.grid':   'Grid',
+    'topbar.palettes': 'Palettes',
+    'topbar.csv':    '↓ CSV',
+    'topbar.png':    '↓ PNG',
+    'topbar.zip':    '↓ ZIP (per-swatch)',
+    'palette.title': 'Palettes',
+    'palette.open':  'Open palettes',
+    'palette.close': 'Close palettes',
+    'sec.color_mode': 'Color mode',
+    'sec.icc_profile': 'ICC profile (CMYK output)',
+    'sec.round_trip':  'Round-trip safety',
+    'sec.step':      'Step interval',
+    'sec.cell':      'Cell size',
+    'sec.tac':       'TAC limit',
+    'sec.k_tier':    'Black (K) tier',
+    'sec.k_range':   'K range',
+    'sec.named':     'Named swatches · filter',
+    'sec.match':     '🔗 Match settings (all libraries)',
+    'sec.anchor':    'Anchor',
+    'sec.accuracy':  'Naming Accuracy',
+    'sec.naming':    'Naming · per library',
+    'sec.a11y':      'Accessibility',
+    'search.label':  'Search',
+    'sec.sort':      'Sort by',
+    'sec.add':       'Adding profiles / names (manual)',
+    'pill.all':      'All swatches',
+    'pill.any':      'Any named',
+    'pill.no_filter':'no filter',
+    'pill.checked':  'checked libs',
+    'tog.aa':        'WCAG AA only',
+    'tog.aaa':       'WCAG AAA only',
+    'tog.wt':        'White text only',
+    'tog.bt':        'Black text only',
+    'sort.hue':      'Hue',
+    'sort.light':    'Light',
+    'sort.tac':      'TAC',
+    'sort.cyan':     'Cyan',
+    'sort.chroma':   'Chroma',
+    'sort.safety':   'Safety',
+    'sort.huelight': 'Hue x Light',
+    'group.01': 'Pick a profile',
+    'group.01.sub': 'press + size',
+    'group.02': 'Narrow the set',
+    'group.02.sub': 'filters + limits',
+    'group.03': 'Pick + name',
+    'group.03.sub': 'corpora + match',
+    'group.04': 'Sort + view',
+    'group.04.sub': 'order + reset',
+    'tier.t1.name': 'Tier 1 · Brand',
+    'tier.t2.name': '+ Tier 2 · Support',
+    'tier.t3.name': '+ Tier 3 · Deep',
+  },
+  ja: {
+    'badge.mode_d50': 'モード: 印刷 (D50)',
+    'badge.mode_d65': 'モード: 画面 (D65)',
+    'topbar.reset':  '↺ 初期値にリセット',
+    'topbar.grid':   'グリッド',
+    'topbar.palettes': 'パレット',
+    'topbar.csv':    '↓ CSV',
+    'topbar.png':    '↓ PNG',
+    'topbar.zip':    '↓ ZIP (1色ずつ)',
+    'palette.title': 'パレット',
+    'palette.open':  'パレットを開く',
+    'palette.close': 'パレットを閉じる',
+    'sec.color_mode': 'カラーモード',
+    'sec.icc_profile': 'ICCプロファイル (CMYK)',
+    'sec.round_trip':  '往復安全度',
+    'sec.step':      'ステップ間隔',
+    'sec.cell':      'セルサイズ',
+    'sec.tac':       'TAC 上限',
+    'sec.k_tier':    'ブラック(K)階層',
+    'sec.k_range':   'K 範囲',
+    'sec.named':     '名前つき　フィルター',
+    'sec.match':     '🔗 マッチ設定（全ライブラリ）',
+    'sec.anchor':    'アンカー',
+    'sec.accuracy':  '名前一致精度',
+    'sec.naming':    '名前　ライブラリごと',
+    'sec.a11y':      'アクセシビリティ',
+    'search.label':  '検索',
+    'sec.sort':      'ソート',
+    'sec.add':       'プロファイル / 名前追加（手動）',
+    'pill.all':      'すべて表示',
+    'pill.any':      '名前ありのみ',
+    'pill.no_filter':'フィルターなし',
+    'pill.checked':  '選択したライブラリ',
+    'tog.aa':        'WCAG AA のみ',
+    'tog.aaa':       'WCAG AAA のみ',
+    'tog.wt':        '白テキストのみ',
+    'tog.bt':        '黒テキストのみ',
+    'sort.hue':      '色相',
+    'sort.light':    '明度',
+    'sort.tac':      'TAC',
+    'sort.cyan':     'シアン',
+    'sort.chroma':   '彩度',
+    'sort.safety':   '安全度',
+    'sort.huelight': '色相×明度',
+    'group.01': 'プロファイルを選ぶ',
+    'group.01.sub': '印刷 + サイズ',
+    'group.02': '範囲を絞る',
+    'group.02.sub': 'フィルター + 上限',
+    'group.03': '選んで名付け',
+    'group.03.sub': 'コーパス + マッチ',
+    'group.04': 'ソート + 表示',
+    'group.04.sub': '並び順 + リセット',
+    'tier.t1.name': '階層1 · ブランド',
+    'tier.t2.name': '+ 階層2 · サポート',
+    'tier.t3.name': '+ 階層3 · 深色',
+  },
+  zh: {
+    'badge.mode_d50': '模式：印刷 (D50)',
+    'badge.mode_d65': '模式：螢幕 (D65)',
+    'topbar.reset':  '↺ 重設介面',
+    'topbar.grid':   '色垊',
+    'topbar.palettes': '調色盤',
+    'topbar.csv':    '↓ CSV',
+    'topbar.png':    '↓ PNG',
+    'topbar.zip':    '↓ ZIP（逐色）',
+    'palette.title': '調色盤',
+    'palette.open':  '展開調色盤',
+    'palette.close': '收起調色盤',
+    'sec.color_mode': '色彩模式',
+    'sec.icc_profile': 'ICC 色彩設定檔 (CMYK)',
+    'sec.round_trip':  '循環安全門\u6АB1',
+    'sec.step':      '步長',
+    'sec.cell':      '色垊尺寸',
+    'sec.tac':       'TAC 上限',
+    'sec.k_tier':    '黑（K）階',
+    'sec.k_range':   'K 範圍',
+    'sec.named':     '名稱·篩選',
+    'sec.match':     '🔗 配對設定（全部）',
+    'sec.anchor':    '錄錢',
+    'sec.accuracy':  '命名精準度',
+    'sec.naming':    '命名·各資料庫',
+    'sec.a11y':      '無障礙',
+    'search.label':  '搜尋',
+    'sec.sort':      '排序依據',
+    'sec.add':       '手動新增設定檔 / 名稱',
+    'pill.all':      '全部顯示',
+    'pill.any':      '只看有名稱',
+    'pill.no_filter':'不篩選',
+    'pill.checked':  '勾選的資料庫',
+    'tog.aa':        '只顯 WCAG AA',
+    'tog.aaa':       '只顯 WCAG AAA',
+    'tog.wt':        '只顯白字色垊',
+    'tog.bt':        '只顯黑字色垊',
+    'sort.hue':      '色相',
+    'sort.light':    '明度',
+    'sort.tac':      'TAC',
+    'sort.cyan':     '青',
+    'sort.chroma':   '彩度',
+    'sort.safety':   '安全度',
+    'sort.huelight': '色相×明度',
+    'group.01': '選擇設定檔',
+    'group.01.sub': '印刷 + 尺寸',
+    'group.02': '縮小範圍',
+    'group.02.sub': '篩選 + 上限',
+    'group.03': '挑選並命名',
+    'group.03.sub': '資料庫 + 配對',
+    'group.04': '排序 + 視圖',
+    'group.04.sub': '順序 + 重設',
+    'tier.t1.name': '階1 · 品牌',
+    'tier.t2.name': '+ 階2 · 輔助',
+    'tier.t3.name': '+ 階3 · 深暗',
+  }
+};
+let UI_LANG = 'en';
+function _detectBrowserLang() {
+  const list = (navigator.languages && navigator.languages.length)
+    ? navigator.languages : [navigator.language || 'en'];
+  for (const raw of list) {
+    const l = String(raw).toLowerCase();
+    if (l.startsWith('ja'))     return 'ja';
+    if (l.startsWith('zh'))     return 'zh';   // any Chinese variant -> zh-Hant UI
+    if (l.startsWith('en'))     return 'en';
+  }
+  return 'en';
+}
+function t(key, fallback) {
+  return (I18N[UI_LANG] && I18N[UI_LANG][key])
+      || (I18N.en && I18N.en[key])
+      || (fallback != null ? fallback : key);
+}
+function applyI18n() {
+  document.documentElement.lang = UI_LANG === 'zh' ? 'zh-Hant'
+                                : UI_LANG === 'ja' ? 'ja' : 'en';
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    const txt = t(key, null);
+    if (txt) el.textContent = txt;
+  });
+  // Lab mode badge has a state-dependent key
+  const badge = document.getElementById('labModeBadge');
+  if (badge) badge.textContent = t(LAB_MODE === 'd50' ? 'badge.mode_d50' : 'badge.mode_d65');
+  // Palette panel action label
+  const act = document.getElementById('ppAction');
+  const panel = document.getElementById('palettePanel');
+  if (act && panel) act.textContent = panel.classList.contains('open')
+    ? t('palette.close') : t('palette.open');
+  // Lang-picker current label
+  const cur = document.getElementById('langCurrent');
+  if (cur) cur.textContent = UI_LANG === 'ja' ? '日本語'
+                          : UI_LANG === 'zh' ? '中文'
+                          : 'EN';
+  // Active-menu highlight
+  document.querySelectorAll('#langPickerMenu button').forEach(b =>
+    b.classList.toggle('active', b.dataset.lang === UI_LANG));
+  // Re-render dynamic UI rows that bake strings at build time
+  if (typeof buildNamingUI === 'function') buildNamingUI();
+  if (typeof buildFilterUI === 'function') buildFilterUI();
+}
+function setUILang(lang) {
+  if (!['en','ja','zh','auto'].includes(lang)) return;
+  UI_LANG = (lang === 'auto') ? _detectBrowserLang() : lang;
+  try { localStorage.setItem('ui_lang', lang); } catch {}
+  applyI18n();
+  _closeLangMenu();
+  if (typeof _scheduleRender === 'function') _scheduleRender();
+}
+function toggleLangMenu() {
+  const m = document.getElementById('langPickerMenu');
+  if (!m) return;
+  m.hidden = !m.hidden;
+}
+function _closeLangMenu() {
+  const m = document.getElementById('langPickerMenu');
+  if (m) m.hidden = true;
+}
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('.lang-picker')) _closeLangMenu();
+});
+
+/* ── Hue x Light + Palettes views auto-open the palette panel ─────────── */
+function _ensurePalettePanelOpen() {
+  const p = document.getElementById('palettePanel');
+  if (p && !p.classList.contains('open')) togglePalettePanel(true);
 }
 /* ── Sidebar drawer (mobile) ── */
 function toggleSidebar() {

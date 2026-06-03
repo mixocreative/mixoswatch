@@ -115,10 +115,10 @@ def main() -> None:
         "label": {
             "en": "Chinese traditional",
             "ja": "中国の伝統色",
-            "zh": "中国传统色",
+            "zh": "中國傳統色",
         },
         "fields": [
-            {"id": "name_zh", "label": {"en": "hanzi",    "ja": "漢字",       "zh": "汉字"}},
+            {"id": "name_zh", "label": {"en": "Chinese",  "ja": "漢字",       "zh": "漢字"}},
             {"id": "pinyin",  "label": {"en": "pinyin",   "ja": "ピンイン",   "zh": "拼音"}},
             {"id": "name_en", "label": {"en": "English",  "ja": "英語",       "zh": "英文"}},
             {"id": "name_ja", "label": {"en": "Japanese", "ja": "日本語",     "zh": "日文"}},
