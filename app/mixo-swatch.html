@@ -11,7 +11,7 @@
   --bg:#1A1918; --bg2:#222120; --surface:#2A2928;
   --border:rgba(255,255,255,0.12); --border2:rgba(255,255,255,0.06);
   --text:#E8E6E0; --muted:#9B9A94; --faint:#6B6A64;
-  --accent:#5A9FE0;
+  --accent:#5A9FE0; --accent-rgb:90 159 224;
   --font-mono:'IBM Plex Mono','Fira Mono',monospace;
   --font-sans:'Noto Sans JP',system-ui,sans-serif;
   --r:6px; --rl:10px;
@@ -20,7 +20,7 @@
 @media (prefers-color-scheme:light){:root{
   --bg:#F5F4F0; --bg2:#EEEDEA; --surface:#FFFFFF;
   --border:rgba(0,0,0,0.12); --border2:rgba(0,0,0,0.06);
-  --text:#1C1B18; --muted:#6B6A65; --faint:#9B9A95; --accent:#2867AE;
+  --text:#1C1B18; --muted:#6B6A65; --faint:#9B9A95; --accent:#2867AE; --accent-rgb:40 103 174;
   color-scheme:light;
 }}
 *{box-sizing:border-box;margin:0;padding:0}
@@ -36,8 +36,8 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
 .topbar-sep{flex:1}
 .count-tag{font-size:11px;color:var(--muted);font-family:var(--font-mono);white-space:nowrap}
 .lab-mode-badge{
-  font-size:11px;color:var(--accent);background:rgba(91,163,255,.10);
-  border:1px solid rgba(91,163,255,.30);border-radius:var(--r);
+  font-size:11px;color:var(--accent);background:rgb(var(--accent-rgb) / .10);
+  border:1px solid rgb(var(--accent-rgb) / .30);border-radius:var(--r);
   padding:3px 8px;font-family:var(--font-mono);white-space:nowrap;
 }
 .lab-mode-row{display:flex;gap:10px;font-size:12px}
