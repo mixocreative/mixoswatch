@@ -1444,6 +1444,7 @@
           <a href="#why" data-en="why" data-ja="趣旨" data-zh="緣由">why</a>
           <a href="#byo" data-en="byo-icc" data-ja="自前" data-zh="自帶">byo-icc</a>
           <a href="#how" data-en="how" data-ja="使い方" data-zh="使用">how</a>
+          <a href="#mimaki" data-en="mimaki" data-ja="Mimaki" data-zh="Mimaki">mimaki</a>
           <a href="#glossary" data-en="terms" data-ja="用語" data-zh="術語">terms</a>
           <a href="#panels" data-en="panels" data-ja="操作" data-zh="面板">panels</a>
         </nav>
@@ -1767,6 +1768,107 @@
     </section>
 
     
+
+    <div class="rule"></div>
+
+    <section class="section" id="mimaki">
+      <div class="eyebrow"><span data-en>3D-print + Mimaki</span><span data-ja>3Dプリントと Mimaki</span><span data-zh>3D 列印與 Mimaki</span></div>
+      <h3>
+        <span data-en>Why print-first beats "give Mimaki a CMYK number" or "let the RIP decide from RGB".</span>
+        <span data-ja>なぜ「印刷ファースト」が、生のCMYK指定や、RGBをRIPに任せる方式より優れているのか。</span>
+        <span data-zh>為什麼「印刷優先」勝過直接給 Mimaki 一組 CMYK 數值或交給 RIP 自行從 RGB 決定。</span>
+      </h3>
+      <p>
+        <span data-en>Raw CMYK numbers mean nothing without an ICC. Hand RGB to the 3DUJ RIP and it silently compresses the gamut. Mixo routes every swatch through the Mimaki ICC on screen first, so what you pick is what cures on the build plate.</span>
+        <span data-ja>生のCMYK数値はICCなしでは意味を持たない。RGBを3DUJ RIPに渡せば、ガモットは静かに圧縮される。Mixoは全スウォッチをMimaki ICC経由で先に画面に描画する。選んだ色がそのまま造形プラテンで硬化する。</span>
+        <span data-zh>沒有 ICC，原始 CMYK 數值毫無意義。把 RGB 丟給 3DUJ RIP，色域會被靜默壓縮。Mixo 先把每個色塊透過 Mimaki ICC 渲染到螢幕上，挑到的就是固化在造型平台上的顏色。</span>
+      </p>
+      <div class="steps">
+        <div class="step">
+          <span class="pythonstep">01</span>
+          <h5>
+            <span data-en>Forward ICC routing on screen</span>
+            <span data-ja>画面上のICC順方向ルーティング</span>
+            <span data-zh>螢幕上的 ICC 正向路由</span>
+          </h5>
+          <p>
+            <span data-en>Every cell is rendered through the Mimaki ICC's A2B0 table, so the displayed sRGB equals what the RIP will emit.</span>
+            <span data-ja>各セルをMimaki ICCのA2B0テーブル経由で描画。画面のsRGBはRIPが出力する色そのもの。</span>
+            <span data-zh>每個色塊都經由 Mimaki ICC 的 A2B0 表渲染，螢幕 sRGB 就等於 RIP 將要輸出的顏色。</span>
+          </p>
+        </div>
+        <div class="step">
+          <span class="pythonstep">02</span>
+          <h5>
+            <span data-en>D50 Lab matches the PCS</span>
+            <span data-ja>D50 LabはPCSと一致</span>
+            <span data-zh>D50 Lab 與 PCS 對齊</span>
+          </h5>
+          <p>
+            <span data-en>L*a*b* numbers match Photoshop's Info panel on a Mimaki-tagged file. Same numbers, same expectations across tools.</span>
+            <span data-ja>L*a*b*はMimakiタグ付きファイルでPhotoshop情報パネルと一致。ツール間で同じ数値、同じ期待値。</span>
+            <span data-zh>L*a*b* 數值與 Photoshop 在 Mimaki 標籤檔案上的資訊面板一致。跨工具同數值、同預期。</span>
+          </p>
+        </div>
+        <div class="step">
+          <span class="pythonstep">03</span>
+          <h5>
+            <span data-en>Round-trip dE gate</span>
+            <span data-ja>往復ΔEゲート</span>
+            <span data-zh>往返 dE 門檻</span>
+          </h5>
+          <p>
+            <span data-en>The 0.6 dE filter hides swatches the profile cannot hold. Unprintable colors never appear in the picker.</span>
+            <span data-ja>0.6 dEフィルタが、プロファイルで保持できない色を非表示にする。プリント不能な色はピッカーに現れない。</span>
+            <span data-zh>0.6 dE 篩選會隱藏描述檔無法保留的色塊。不可印的顏色根本不會出現在挑色器中。</span>
+          </p>
+        </div>
+        <div class="step">
+          <span class="pythonstep">04</span>
+          <h5>
+            <span data-en>TAC tuned for resin droplets</span>
+            <span data-ja>樹脂液滴向けTAC調整</span>
+            <span data-zh>針對樹脂液滴的 TAC</span>
+          </h5>
+          <p>
+            <span data-en>240% default + a 3D-print preset protect 3DUJ from pooling and cracking that offset presets (300-350%) would cause.</span>
+            <span data-ja>240%デフォルト＋3Dプリントプリセットが、オフセット用プリセット（300-350%）で起こる液溜まりや割れから3DUJを守る。</span>
+            <span data-zh>240% 預設值加上 3D 列印預設組，避免膠著與龜裂。套用平印預設（300-350%）才會引發那些問題。</span>
+          </p>
+        </div>
+        <div class="step">
+          <span class="pythonstep">05</span>
+          <h5>
+            <span data-en>Two greyscale strips</span>
+            <span data-ja>2本のグレースケールストリップ</span>
+            <span data-zh>兩條灰階條帶</span>
+          </h5>
+          <p>
+            <span data-en>The GCR-routed neutral ramp and the pure-K-only sweep diverge visibly on 3DUJ. See the difference before committing ink.</span>
+            <span data-ja>GCR経由のニュートラルランプと、純Kのみのスイープは3DUJ上で目に見えて乖離する。インクを決める前に違いを確認できる。</span>
+            <span data-zh>GCR 路徑的中性灰階與純 K 掃描在 3DUJ 上明顯分歧。下墨前先看清差異。</span>
+          </p>
+        </div>
+        <div class="step">
+          <span class="pythonstep">06</span>
+          <h5>
+            <span data-en>Corpus names anchored on Mimaki</span>
+            <span data-ja>Mimakiに固定された名前辞書</span>
+            <span data-zh>命名以 Mimaki 為錨</span>
+          </h5>
+          <p>
+            <span data-en>With anchor=cmyk on the 3DUJ profile, "苅安色" is the closest entry Mimaki can actually print, not the closest entry on a coated offset press.</span>
+            <span data-ja>3DUJプロファイル＋anchor=cmykでは、「苅安色」はMimakiが実際にプリント可能な最近接エントリ。コートオフセットの最近接ではない。</span>
+            <span data-zh>在 3DUJ 描述檔上 anchor=cmyk 時，「苅安色」是 Mimaki 實際可印的最接近項，不是塗佈平印機上的最接近項。</span>
+          </p>
+        </div>
+      </div>
+      <p style="margin-top:18px">
+        <span data-en><b>The headline.</b> Raw CMYK is a device-dependent number with no meaning. RGB-let-RIP-decide is silent perceptual compression with no visibility. Print-first Mixo runs the Mimaki LUT on screen so the color you pick is the color Mimaki prints, gated by round-trip dE so unprintable colors never appear.</span>
+        <span data-ja><b>要点。</b> 生のCMYKはデバイス依存の意味のない数値。RGBをRIPに任せれば静かなパーセプチュアル圧縮で可視性ゼロ。印刷ファーストのMixoは画面上でMimaki LUTを走らせ、選んだ色がMimakiの出力色になり、往復ΔEで非プリント色を排除する。</span>
+        <span data-zh><b>核心。</b> 原始 CMYK 是裝置相依、無意義的數值。把 RGB 丟給 RIP 等於靜默感知壓縮，毫無可視性。印刷優先的 Mixo 在螢幕上跑 Mimaki LUT，挑到的就是 Mimaki 印出的色，再由往返 dE 攔下不可印的色。</span>
+      </p>
+    </section>
 
     <div class="rule"></div>
 

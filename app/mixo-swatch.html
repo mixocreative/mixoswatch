@@ -1879,9 +1879,21 @@ function populateProfileSelect() {
     o.textContent = p.label + ' - ' + p.filename;
     sel.appendChild(o);
   });
-  // default = FOGRA39 if available
-  const fogra = ICC_INDEX.profiles.find(p => /FOGRA39/i.test(p.filename));
-  if (fogra) sel.value = fogra.filename;
+  // Default selection priority:
+  //   1. The factory-default substring from data/ui_defaults.json
+  //      (default_profile_match). Tuned to the closest available
+  //      Mimaki 3DUJ proxy when no genuine 3DUJ ICC is supplied:
+  //      JapanColor2002Newspaper (small gamut, TAC 240) tracks resin
+  //      pooling + droplet limits better than any coated offset profile.
+  //   2. FOGRA39 as a generic coated fallback.
+  //   3. The first profile in the manifest.
+  const wanted = (UI_DEFAULTS && UI_DEFAULTS[UI_TOOL_KEY] && UI_DEFAULTS[UI_TOOL_KEY].default_profile_match) || '';
+  const matchByDefault = wanted
+    ? ICC_INDEX.profiles.find(p => new RegExp(wanted, 'i').test(p.filename))
+    : null;
+  const fallback = ICC_INDEX.profiles.find(p => /FOGRA39/i.test(p.filename));
+  const chosen = matchByDefault || fallback || ICC_INDEX.profiles[0];
+  if (chosen) sel.value = chosen.filename;
   ACTIVE_PROFILE = ICC_INDEX.profiles.find(p => p.filename === sel.value);
   // Sync ACTIVE_LUT_META so snapTACToProfile works on initial load
   ACTIVE_LUT_META = ACTIVE_PROFILE || null;

@@ -182,7 +182,7 @@ The shipped defaults are tuned for the print-first workflow on a coated press:
 | Step | 20 | First paint stays under ~1300 swatches |
 | Cell size | 80 px | Labels (CMYK + hex + corpus name) all legible |
 | Lab mode | `d50` (Print) | Matches ICC PCS whitepoint + Photoshop Info panel |
-| Profile | FOGRA39 | Most common European coated baseline |
+| Profile | JapanColor2002Newspaper | Closest bundled proxy for Mimaki 3DUJ - small gamut, TAC 240 = matches resin droplet limits. Falls back to FOGRA39 then the first profile if the match string is missing. |
 | TAC max | 240 % | Conservative coated-uncoated bracket |
 | Round-trip dE max | 0.6 | Tight - only press-safe swatches show by default |
 | K range | `[0, 80]` | K 85-100 collapses to pure black on most presses |
