@@ -1202,27 +1202,24 @@ async function loadCorpora() {
   let libs;
   if (Array.isArray(json.corpora))        libs = json.corpora;
   else if (Array.isArray(json.libraries)) libs = json.libraries;
-  else                                    libs = [
-    { id:'jpn',  label:'Japanese traditional',
-      fields:[{id:'name',label:'kanji'},{id:'romaji',label:'romaji'}],
-      anchor:'hex', entries: json.jpn  || [] },
-    { id:'html', label:'W3C named colors',
-      fields:[{id:'name',label:'name'}],
-      anchor:'hex', entries: json.html || [] },
-  ];
-  // v2.1: fields[] is the source of truth. v2 fallback: synthesize from
-  // primary/secondary so older corpora JSON keeps working.
+  else                                    libs = [];
+  // Promote v2 -> v3 in memory: label string -> {en,ja,zh}, primary/secondary -> fields[]
   for (const lib of libs) {
+    if (typeof lib.label === 'string') {
+      lib.label = { en: lib.label, ja: lib.label, zh: lib.label };
+    }
     if (!Array.isArray(lib.fields)) {
       const f = [];
-      if (lib.primary)   f.push({id: lib.primary.field,   label: lib.primary.label   || lib.primary.field});
-      if (lib.secondary) f.push({id: lib.secondary.field, label: lib.secondary.label || lib.secondary.field});
-      lib.fields = f.length ? f : [{id:'name', label:'name'}];
+      if (lib.primary)   f.push({id: lib.primary.field,   label: {en: lib.primary.label   || lib.primary.field, ja: lib.primary.label   || lib.primary.field, zh: lib.primary.label   || lib.primary.field}});
+      if (lib.secondary) f.push({id: lib.secondary.field, label: {en: lib.secondary.label || lib.secondary.field, ja: lib.secondary.label || lib.secondary.field, zh: lib.secondary.label || lib.secondary.field}});
+      lib.fields = f.length ? f : [{id:'name', label:{en:'name',ja:'name',zh:'name'}}];
     }
-    lib._fieldIds = lib.fields.map(f => f.id);
-    lib._hasCmyk = lib.entries.some(e => Array.isArray(e.cmyk) && e.cmyk.length === 4);
-    lib._hasHex  = lib.entries.some(e => typeof e.hex === 'string');
+    // Tri-lingual fallback fill: no empty strings in display slots
     for (const e of lib.entries) {
+      const fallback = e.romaji || e.pinyin || e.name_ja || e.name_zh || e.name_en || e.name || '?';
+      for (const f of ['name_en','name_ja','name_zh']) {
+        if (!e[f] || !String(e[f]).trim()) e[f] = fallback;
+      }
       _cacheEntryLabs(e);
     }
   }
