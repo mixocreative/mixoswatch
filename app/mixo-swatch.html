@@ -897,7 +897,8 @@ const CORPORA_PREFS_KEY = 'cmykCorporaPrefs_v1';
 // Palettes use a separate localStorage key (cmykPalettes_v1) and survive resets.
 const UI_DEFAULTS_URL = '../data/ui_defaults.json';
 const UI_TOOL_KEY     = 'cmyk_explorer';
-const UI_STATE_KEY    = 'cmykUIState_v1';
+const UI_STATE_KEY_V1 = 'cmykUIState_v1';
+const UI_STATE_KEY    = 'cmykUIState_v2';
 let UI_DEFAULTS = null;
 
 async function loadUIDefaults() {
@@ -906,9 +907,40 @@ async function loadUIDefaults() {
     UI_DEFAULTS = await r.json();
   } catch { UI_DEFAULTS = {}; }
 }
-function _readUIState() {
-  try { return JSON.parse(localStorage.getItem(UI_STATE_KEY) || 'null'); }
-  catch { return null; }
+function _migrate_v1_to_v2(v1) {
+  const out = { ...v1 };
+  if (typeof out.lab_mode !== 'string') out.lab_mode = 'd50';
+  if (typeof out.gamut_safe_only !== 'boolean') out.gamut_safe_only = false;
+  if (typeof out.palette_panel_open !== 'boolean') out.palette_panel_open = false;
+  // Rewrite corpora_prefs to v3 shape
+  const oldPrefs = out.corpora_prefs || {};
+  const newPrefs = {
+    _global: { anchor: 'cmyk', tolerance: 3.0 },
+    'jp-trad': { display: (oldPrefs.jpn && oldPrefs.jpn.display) || 'name_ja' },
+    'html':    { display: (oldPrefs.html && oldPrefs.html.display) || 'name_en' },
+    'zh-trad': { display: 'name_zh' },
+  };
+  if (oldPrefs.jpn && oldPrefs.jpn.anchor) newPrefs._global.anchor = oldPrefs.jpn.anchor;
+  if (typeof out.name_tolerance === 'number') newPrefs._global.tolerance = out.name_tolerance;
+  out.corpora_prefs = newPrefs;
+  // Discard fields no longer used
+  delete out.name_tolerance;
+  return out;
+}
+function _loadUIState() {
+  try {
+    const v2 = localStorage.getItem(UI_STATE_KEY);
+    if (v2) return JSON.parse(v2);
+  } catch {}
+  try {
+    const v1 = localStorage.getItem(UI_STATE_KEY_V1);
+    if (v1) {
+      const migrated = _migrate_v1_to_v2(JSON.parse(v1));
+      try { localStorage.setItem(UI_STATE_KEY, JSON.stringify(migrated)); } catch {}
+      return migrated;
+    }
+  } catch {}
+  return null;
 }
 function _writeUIState(o) {
   try { localStorage.setItem(UI_STATE_KEY, JSON.stringify(o)); } catch {}
@@ -916,7 +948,7 @@ function _writeUIState(o) {
 function _resolvedUI() {
   // Merge: factory defaults < user-saved state. User state wins per-key.
   const d = (UI_DEFAULTS && UI_DEFAULTS[UI_TOOL_KEY]) || {};
-  const s = _readUIState() || {};
+  const s = _loadUIState() || {};
   return Object.assign({}, d, s,
     { corpora_prefs: Object.assign({}, d.corpora_prefs || {}, s.corpora_prefs || {}) });
 }
@@ -1008,6 +1040,7 @@ function applyUIState(s) {
 async function resetUIToDefaults() {
   if (!confirm('Reset all UI controls to defaults (saved palettes are kept). Continue?')) return;
   try { localStorage.removeItem(UI_STATE_KEY); } catch {}
+  try { localStorage.removeItem(UI_STATE_KEY_V1); } catch {}
   try { localStorage.removeItem(CORPORA_PREFS_KEY); } catch {}
   CORPORA_PREFS = {};
   const fresh = (UI_DEFAULTS && UI_DEFAULTS[UI_TOOL_KEY]) || {};
