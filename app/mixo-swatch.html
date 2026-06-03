@@ -634,6 +634,7 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
   <div class="mode-group" id="modeGroup" role="tablist" aria-label="View mode"><button class="btn mode-btn active" id="mode-grid"     onclick="setViewMode('grid')" data-i18n="topbar.grid" title="Regular swatch grid - every filtered swatch as a cell.">Grid</button><button class="btn mode-btn"        id="mode-palettes" onclick="setViewMode('palettes')" data-i18n="topbar.palettes" title="Palettes mode - manage all saved palettes with per-palette actions.">Palettes</button></div>
   <button class="btn" onclick="exportCSV()" data-i18n="topbar.csv" title="Save the currently filtered swatches as a UTF-8 CSV (Excel-ready, keeps kanji).">&#x2193; CSV</button>
   <button class="btn" onclick="exportPNG()" data-i18n="topbar.png" title="Save the currently filtered swatches as a square PNG board with title band.">&#x2193; PNG</button>
+  <button class="btn" onclick="exportFilteredPurePNG()" data-i18n="topbar.png_pure" title="Save the currently filtered swatches as a 4096x4096 pure-color PNG. No title band, no labels, no borders, no gap between cells.">&#x2193; PNG pure</button>
   <button class="btn" onclick="exportFilteredSwatchZIP()" data-i18n="topbar.zip" title="Download a .zip with one 128x128 pure-color PNG per currently-filtered swatch plus manifest.csv/json.">&#x2193; ZIP (per-swatch)</button>
   <div class="lang-picker">
     <button type="button" class="lang-picker-btn" id="langPickerBtn" onclick="toggleLangMenu()" title="Change interface language">
@@ -3397,6 +3398,20 @@ function exportPNG() {
                    { title: 'Mixo Swatch - filtered view' });
 }
 
+// Pure-color filtered export: no title band, no labels, no borders, no gap
+// between cells. Tiles abut edge-to-edge inside a 4096 x 4096 square canvas.
+// Cell size = floor(4096 / max(cols, rows)); any remainder leaves whitespace
+// at the bottom / right of the square (background filled white).
+function exportFilteredPurePNG() {
+  const data = sorted(filtered());
+  if (!data.length) { alert('No swatches to export.'); return; }
+  _renderPalettePurePNG(
+    data,
+    `cmyk_swatches_pure_${data.length}_step${curStep}_4096.png`,
+    4096
+  );
+}
+
 function _renderSwatchPNG(data, filename, opts = {}) {
   const cs   = curCell;
   const n    = data.length;
@@ -4217,6 +4232,7 @@ const I18N = {
     'topbar.palettes': 'Palettes',
     'topbar.csv':    '↓ CSV',
     'topbar.png':    '↓ PNG',
+    'topbar.png_pure':'↓ PNG pure',
     'topbar.zip':    '↓ ZIP (per-swatch)',
     'palette.title': 'Palettes',
     'palette.open':  'Open palettes',
@@ -4273,6 +4289,7 @@ const I18N = {
     'topbar.palettes': 'パレット',
     'topbar.csv':    '↓ CSV',
     'topbar.png':    '↓ PNG',
+    'topbar.png_pure':'↓ PNG (色のみ)',
     'topbar.zip':    '↓ ZIP (1色ずつ)',
     'palette.title': 'パレット',
     'palette.open':  'パレットを開く',
@@ -4329,6 +4346,7 @@ const I18N = {
     'topbar.palettes': '調色盤',
     'topbar.csv':    '↓ CSV',
     'topbar.png':    '↓ PNG',
+    'topbar.png_pure':'↓ PNG 純色',
     'topbar.zip':    '↓ ZIP（逐色）',
     'palette.title': '調色盤',
     'palette.open':  '展開調色盤',

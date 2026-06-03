@@ -818,7 +818,8 @@ palette overwritten).
 | Button | Function | Output |
 |---|---|---|
 | CSV | `exportCSV()` | UTF-8 BOM CSV of filtered swatches |
-| PNG (topbar) | `exportPNG()` | Square fit-square PNG of filtered set with title band |
+| PNG (topbar) | `exportPNG()` | Square fit-square PNG of filtered set with title band + per-cell labels |
+| PNG pure (topbar) | `exportFilteredPurePNG()` | 4096 x 4096 pure-color PNG of filtered set. No title band, no labels, no borders, no gap |
 | PNG (labelled) | `exportActivePalettePNGSized()` | Palette PNG at 1024/2048/4096, full labels |
 | PNG (pure) | `exportActivePalettePNGPure()` | Palette PNG at chosen size, swatches only |
 | ZIP (palette) | `exportActivePaletteZIP()` | Per-swatch 128x128 PNGs + manifest.txt/csv/json |
