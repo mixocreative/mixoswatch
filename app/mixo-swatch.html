@@ -216,7 +216,7 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
 .palette-panel-header .chev{transition:transform .15s;display:inline-block;margin-right:6px}
 .palette-panel.open .palette-panel-header{border-bottom-color:var(--border)}
 .palette-panel.open .palette-panel-header .chev{transform:rotate(90deg)}
-.palette-panel-body{display:none;padding:10px 16px;gap:10px;flex-direction:column;max-height:50vh;overflow:auto}
+.palette-panel-body{display:none;padding:6px 10px 8px;gap:0;flex-direction:column;max-height:50vh;overflow:visible}
 .palette-panel.open .palette-panel-body{display:flex}
 .swatch-grid{display:grid;padding:12px;gap:var(--gap,3px);align-content:start}
 
@@ -276,11 +276,7 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
 }
 .pal-export-label{font-size:11px;color:var(--muted);min-width:80px}
 .pal-mini-btn.danger:hover{background:rgba(255,80,80,.15);color:#ff8080;border-color:#ff8080}
-.pal-strip{
-  display:flex;flex-wrap:wrap;gap:2px;
-  max-height:64px;overflow-y:auto;padding:4px;
-  background:var(--bg2);border-radius:var(--r);
-}
+.pal-strip-legacy{display:none}/* superseded by compact pal-strip below */
 .pal-chip{
   width:16px;height:16px;border-radius:3px;
   border:1px solid rgba(0,0,0,0.12);cursor:pointer;
@@ -289,6 +285,48 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
 .pal-chip:hover{transform:scale(1.25);z-index:2}
 .pal-empty{font-size:10px;color:var(--faint);padding:4px 6px;font-style:italic}
 
+/* Compact palettes toolbar */
+.pal-toolbar{display:flex;align-items:center;gap:5px;padding:4px 0 2px;flex-wrap:wrap}
+.pal-toolbar .pal-sel{flex:1;min-width:110px;max-width:190px}
+.pal-toolbar .pal-mini-btn{padding:3px 7px;font-size:11px}
+.pal-selection-toggle{display:flex;align-items:center;gap:4px;cursor:pointer;font-size:11px;margin-left:auto;padding-right:4px}
+.pal-selection-toggle input{cursor:pointer}
+.pal-count-inline{font-size:11px;color:var(--accent);font-family:var(--font-mono);background:rgb(var(--accent-rgb,74,144,226) / .12);padding:1px 6px;border-radius:99px;white-space:nowrap}
+
+/* Dropdown menu */
+.pal-dropdown{position:relative}
+.pal-menu{
+  position:absolute;right:0;top:calc(100% + 4px);
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--r);
+  box-shadow:0 4px 16px rgba(0,0,0,.4);
+  min-width:220px;z-index:30;
+  display:flex;flex-direction:column;
+  padding:4px;
+}
+.pal-menu-left{right:auto;left:0}
+.pal-menu button{
+  background:transparent;border:0;text-align:left;
+  padding:6px 10px;color:var(--text);cursor:pointer;font-size:11px;
+  border-radius:3px;font-family:inherit;
+}
+.pal-menu button:hover{background:var(--bg2)}
+.pal-menu button.danger{color:#ff8080}
+.pal-menu button.danger:hover{background:rgba(255,80,80,.15)}
+.pal-menu-row{display:flex;align-items:center;gap:8px;padding:6px 10px;font-size:11px}
+.pal-menu-row label{color:var(--muted)}
+.pal-menu-row select{
+  background:var(--bg2);border:1px solid var(--border);color:var(--text);
+  padding:3px 6px;border-radius:3px;font-size:11px;font-family:var(--font-sans);
+}
+.pal-menu-sep{height:1px;background:var(--border);margin:4px 0}
+
+/* Preview strip - horizontal single row */
+.pal-strip{
+  display:flex;gap:2px;min-height:28px;max-height:32px;
+  padding:3px 0 4px;
+  overflow-x:auto;overflow-y:hidden;
+  scrollbar-width:thin;
+}
 
 .match-row .mode-group { display: inline-flex; }
 .lab-mode-group { width: 100%; }
@@ -848,71 +886,52 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
     <div class="palette-panel" id="palettePanel">
       <div class="palette-panel-header" onclick="togglePalettePanel()">
         <span><span class="chev">&#9658;</span> Palettes</span>
-        <span class="pal-count" id="palCount" title="How many swatches are in the active palette.">0</span>
       </div>
       <div class="palette-panel-body" id="palettePanelBody">
-
-        <!-- Section 1: Active palette -->
-        <div class="pal-section">
-          <div class="pal-section-label">Active palette</div>
-          <div class="pal-row">
-            <select class="pal-sel" id="palSel" onchange="onPalChange()" title="Switch between saved palettes."></select>
-            <button class="pal-mini-btn" onclick="newPalette()" title="Create a new palette">+ New</button>
-            <button class="pal-mini-btn" onclick="renamePalette()" title="Rename active palette">Rename</button>
-            <button class="pal-mini-btn danger" onclick="deletePalette()" title="Delete active palette">Delete</button>
+        <!-- Compact toolbar -->
+        <div class="pal-toolbar">
+          <select class="pal-sel" id="palSel" onchange="onPalChange()" title="Switch between saved palettes."></select>
+          <div class="pal-dropdown">
+            <button class="pal-mini-btn" onclick="_togglePalMenu('newMenu')" title="Create palette">+ &#9662;</button>
+            <div class="pal-menu pal-menu-left" id="newMenu" hidden>
+              <button onclick="newPalette();_closeAllPalMenus()">New empty palette</button>
+              <button onclick="duplicatePalette(activeId);_closeAllPalMenus()">Duplicate active</button>
+            </div>
           </div>
-          <div class="pal-row">
-            <label class="pal-toggle">
-              <input type="checkbox" id="togSel" onchange="toggleSelectMode()" title="When ON, clicking a swatch adds or removes it from the active palette.">
-              <span>Selection mode (click swatches to add/remove)</span>
-            </label>
-            <span class="pal-count-pill"><span id="palCount">0</span> swatches</span>
-          </div>
-        </div>
-
-        <!-- Section 2: Preview -->
-        <div class="pal-section">
-          <div class="pal-section-label">Preview (click any swatch to remove)</div>
-          <div class="pal-strip" id="palStrip"></div>
-        </div>
-
-        <!-- Section 3: Exports -->
-        <div class="pal-section">
-          <div class="pal-section-label">Export</div>
-          <div class="pal-row">
-            <label class="pal-export-label">Image size</label>
-            <select id="palPngSize" title="Canvas size for the palette PNG. Cells auto-scale to fill the square.">
-              <option value="1024">1024 x 1024</option>
-              <option value="2048" selected>2048 x 2048</option>
-              <option value="4096">4096 x 4096</option>
-            </select>
-          </div>
-          <div class="pal-row">
-            <button class="pal-mini-btn" style="flex:1" onclick="exportActivePalettePNGSized()" title="PNG with CMYK + hex + name labels per swatch.">PNG (labelled)</button>
-            <button class="pal-mini-btn" style="flex:1" onclick="exportActivePalettePNGPure()" title="PNG with only colored squares, no text.">PNG (pure colors)</button>
-          </div>
-          <div class="pal-row">
-            <button class="pal-mini-btn primary" style="flex:1" onclick="exportActivePaletteZIP()" title="Download a .zip with one 128px PNG per swatch + manifest.">ZIP (one 128px PNG per swatch + manifest)</button>
-          </div>
-          <div class="pal-row">
-            <button class="pal-mini-btn" style="flex:1" onclick="exportActivePaletteASE()" title="Save as .ase (Photoshop / Illustrator / Affinity / Substance).">ASE (Adobe / Affinity / Substance)</button>
-            <button class="pal-mini-btn" style="flex:1" onclick="exportActivePaletteGPL()" title="Save as .gpl (GIMP / Krita / Inkscape / Blender).">GPL (GIMP / Krita / Inkscape)</button>
+          <button class="pal-mini-btn" onclick="renamePalette()" title="Rename active palette">&#9998;</button>
+          <button class="pal-mini-btn danger" onclick="deletePalette()" title="Delete active palette">&#x1F5D1;</button>
+          <label class="pal-selection-toggle" title="Click swatches in the grid to add/remove from active palette">
+            <input type="checkbox" id="togSel" onchange="toggleSelectMode()"> Select
+          </label>
+          <span class="pal-count-inline" title="Swatches in active palette"><span id="palCount">0</span>sw</span>
+          <div class="pal-dropdown">
+            <button class="pal-mini-btn" onclick="_togglePalMenu('exportMenu')" title="Export options">Export &#9662;</button>
+            <div class="pal-menu" id="exportMenu" hidden>
+              <div class="pal-menu-row">
+                <label>Image size</label>
+                <select id="palPngSize" title="Canvas size for the palette PNG.">
+                  <option value="1024">1024</option>
+                  <option value="2048" selected>2048</option>
+                  <option value="4096">4096</option>
+                </select>
+              </div>
+              <div class="pal-menu-sep"></div>
+              <button onclick="exportActivePalettePNGSized();_closeAllPalMenus()">PNG - labelled</button>
+              <button onclick="exportActivePalettePNGPure();_closeAllPalMenus()">PNG - pure color</button>
+              <button onclick="exportActivePaletteZIP();_closeAllPalMenus()">ZIP - per-swatch + manifest</button>
+              <button onclick="exportActivePaletteASE();_closeAllPalMenus()">ASE - Adobe / Affinity / Substance</button>
+              <button onclick="exportActivePaletteGPL();_closeAllPalMenus()">GPL - GIMP / Krita / Inkscape</button>
+              <div class="pal-menu-sep"></div>
+              <button onclick="exportPalettes();_closeAllPalMenus()">Backup all palettes (.json)</button>
+              <button onclick="document.getElementById('palFile').click();_closeAllPalMenus()">Import .json</button>
+              <div class="pal-menu-sep"></div>
+              <button class="danger" onclick="clearActivePalette();_closeAllPalMenus()">Clear active palette</button>
+              <input type="file" id="palFile" accept=".json,.palettes" style="display:none" onchange="importPalettes(event)">
+            </div>
           </div>
         </div>
-
-        <!-- Section 4: Backup -->
-        <div class="pal-section">
-          <div class="pal-section-label">Backup</div>
-          <div class="pal-row">
-            <button class="pal-mini-btn" style="flex:1" onclick="exportPalettes()" title="Save all palettes to a .json file you can re-import later.">Export all palettes (.json)</button>
-            <button class="pal-mini-btn" style="flex:1" onclick="document.getElementById('palFile').click()">Import</button>
-            <input type="file" id="palFile" accept=".json,.palettes" style="display:none" onchange="importPalettes(event)">
-          </div>
-          <div class="pal-row">
-            <button class="pal-mini-btn danger" style="flex:1" onclick="clearActivePalette()" title="Empty the active palette but keep its name.">Clear active palette</button>
-          </div>
-        </div>
-
+        <!-- Preview strip -->
+        <div class="pal-strip" id="palStrip" title="Click any swatch to remove from palette"></div>
         <!-- Palettes view grid (rendered when viewMode='palettes') -->
         <div class="pm-wrap" id="pmWrap" style="display:none"></div>
       </div>
@@ -2007,6 +2026,21 @@ function onPalChange() {
   refreshPalUI();
   render();
 }
+
+// Compact palette toolbar dropdown helpers
+function _togglePalMenu(id) {
+  const menu = document.getElementById(id);
+  if (!menu) return;
+  const wasOpen = !menu.hidden;
+  _closeAllPalMenus();
+  if (!wasOpen) menu.hidden = false;
+}
+function _closeAllPalMenus() {
+  document.querySelectorAll('.pal-menu').forEach(m => { m.hidden = true; });
+}
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.pal-dropdown')) _closeAllPalMenus();
+});
 
 function newPalette() {
   const name = prompt('Palette name:', 'Palette ' + (palettes.length+1));
