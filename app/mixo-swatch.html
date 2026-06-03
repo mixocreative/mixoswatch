@@ -1053,32 +1053,6 @@ function rlutLookup(rlut, R, G, B) {
   return [C*100/255, M*100/255, Y*100/255, K*100/255];
 }
 
-// -- system_name - port of swatches.py base_name -------------------------
-const HUE_NAMES = ['red','vermilion','orange','amber','yellow','lime',
-                   'green','jade','teal','cyan','blue','indigo',
-                   'violet','magenta'];
-function hueBin(deg){ const s=(deg+13+360)%360; return HUE_NAMES[Math.floor(s/(360/HUE_NAMES.length))]; }
-function lightnessBin(L){ if(L<20)return'ink'; if(L<40)return'deep'; if(L<60)return'mid'; if(L<80)return'soft'; return'pale'; }
-function chromaBin(C){ if(C<15)return'gray'; if(C<35)return'dusty'; if(C<60)return'fair'; return'vivid'; }
-function neutralName(L){
-  if(L<15)return'black';
-  if(L<38)return'dark-gray';
-  if(L<62)return'medium-gray';
-  if(L<85)return'light-gray';
-  return'white';
-}
-function baseName(L,a,b){
-  const C=Math.hypot(a,b);
-  if (C<6) return neutralName(L);
-  const h=(Math.atan2(b,a)*180/Math.PI+360)%360;
-  return `${lightnessBin(L)}-${chromaBin(C)}-${hueBin(h)}`;
-}
-function systemName(s){
-  // K-ramp gets canonical name
-  if (s.C===0 && s.M===0 && s.Y===0)
-    return s.K===0 ? 'white' : (s.K===100 ? 'black' : `k-${String(s.K).padStart(3,'0')}`);
-  return baseName(s.L_star, s.a_star, s.b_star);
-}
 
 // -- Round-trip ΔE - measures how well the profile holds this color ------
 let ACTIVE_RLUT = null;  // populated by rebuildAll when rlut exists
@@ -1674,7 +1648,6 @@ async function rebuildAll() {
     const end = Math.min(i+CHUNK, RAW.length);
     for (let j=i; j<end; j++) {
       deriveSwatch(RAW[j], lut);
-      RAW[j].system_name = systemName(RAW[j]);
       RAW[j].delta_e_print = ACTIVE_RLUT ? +deltaERoundTrip(RAW[j], lut, ACTIVE_RLUT).toFixed(2) : null;
       matchNearest(RAW[j], lut);
     }
@@ -2607,7 +2580,6 @@ function renderGS() {
       tac: Math.round(c2+m2+y2+k2),
       L_star: 100*(1 - pct/100), a_star:0, b_star:0,
       luminance:+Lw.toFixed(5),
-      system_name: pct===0 ? 'white' : pct===100 ? 'black' : `n-${String(pct).padStart(3,'0')}`,
       neutral_pct: pct,
     };
     const cell = document.createElement('div');
@@ -2681,8 +2653,6 @@ function openDetail(sw) {
   // display pref). Each chip surfaces the corpus label + matched primary +
   // secondary (if available) + ΔE + which anchor was used for the match.
   let chips = '';
-  if (sw.system_name)
-    chips += `<span class="chip" style="background:#eee;color:#333" title="Internal descriptive system name (lightness · chroma · hue)">${sw.system_name}</span>`;
   for (const lib of CORPORA.libraries) {
     const m = sw.matches?.[lib.id];
     if (!m || !m.entry) continue;
@@ -2984,12 +2954,12 @@ function _renderSwatchPNG(data, filename, opts = {}) {
   }, 'image/png');
 }
 
-// -- assignUniqueNames - port of swatches.py assign_unique_names ---------
-// Group by base name, sort by delta_e_print, suffix -02, -03... on dupes
-function assignUniqueNames(swatches, baseField = 'system_name') {
+// -- assignUniqueNames - group swatches by hex for dedup suffix logic ----
+// Sort by delta_e_print, suffix -02, -03... on dupes within the same hex
+function assignUniqueNames(swatches) {
   const groups = new Map();
   for (const s of swatches) {
-    const k = s[baseField] || 'unnamed';
+    const k = s.hex || 'unnamed';
     if (!groups.has(k)) groups.set(k, []);
     groups.get(k).push(s);
   }
@@ -3207,7 +3177,7 @@ function renderHueLightMap() {
         palSet,
       };
       const built = _makeSwatchCell(s, ctx);
-      built.title = `${s.system_name || ''} · ${s.hex} · ΔE ${s.delta_e_print?.toFixed(2) ?? '-'}`;
+      built.title = `${s.hex} · ΔE ${s.delta_e_print?.toFixed(2) ?? '-'}`;
       container.appendChild(built);
     }
   }
@@ -3378,10 +3348,6 @@ function _renderPaletteLabelledPNG(swatches, filename, canvasSize, title) {
     ctx.fillText(`C${sw.C} M${sw.M} Y${sw.Y} K${sw.K}`, cx + pad, y); y += fzCmyk + 2;
     ctx.font = `${fzHex}px "IBM Plex Mono", ui-monospace, monospace`;
     ctx.fillText(sw.hex, cx + pad, y); y += fzHex + 2;
-    if (sw.system_name) {
-      ctx.font = `${fzHtml}px "IBM Plex Sans", system-ui, sans-serif`;
-      ctx.fillText(sw.system_name, cx + pad, y); y += fzHtml + 2;
-    }
     if (sw.jpn_name && (sw.jpn_closest || (sw.deltaE_jpn ?? 99) <= 8)) {
       ctx.font = `600 ${fzJpn}px "Noto Sans JP", system-ui, sans-serif`;
       ctx.fillText(sw.jpn_name, cx + pad, y); y += fzJpn + 2;
@@ -3457,7 +3423,7 @@ async function _buildPaletteZip(palette, swatches) {
   const entries = [];
   for (const sw of swatches) {
     const hex = sw.hex.replace('#','').toLowerCase();
-    const name = sw.export_name || sw.system_name || hex;
+    const name = sw.export_name || hex;
     const fn = `swatch-${hex}-${name}.png`;
     const data = await _solidPngBytes(sw.hex, 128);
     entries.push({ name: fn, data });
@@ -3477,7 +3443,7 @@ async function _buildPaletteZip(palette, swatches) {
   lines.push(`# Columns: NAME | #HEX | RGB | CMYK% | dE`);
   lines.push('#' + '-'.repeat(92));
   for (const sw of swatches) {
-    const name  = (sw.export_name || sw.system_name || '').padEnd(26).slice(0,26);
+    const name  = (sw.export_name || sw.hex || '').padEnd(26).slice(0,26);
     const hex   = sw.hex.toUpperCase();
     const rgb   = `RGB(${String(sw.R).padStart(3)},${String(sw.G).padStart(3)},${String(sw.B).padStart(3)})`;
     const cmyk  = `CMYK(${String(sw.C).padStart(3)},${String(sw.M).padStart(3)},${String(sw.Y).padStart(3)},${String(sw.K).padStart(3)})%`;
@@ -3490,7 +3456,7 @@ async function _buildPaletteZip(palette, swatches) {
   const csvRows = [['name','hex','r','g','b','c','m','y','k','delta_e','filename']];
   for (const sw of swatches) {
     const hex = sw.hex.replace('#','').toLowerCase();
-    const name = sw.export_name || sw.system_name || hex;
+    const name = sw.export_name || hex;
     csvRows.push([
       name, '#' + hex.toUpperCase(),
       sw.R, sw.G, sw.B, sw.C, sw.M, sw.Y, sw.K,
@@ -3508,8 +3474,7 @@ async function _buildPaletteZip(palette, swatches) {
   const jsObj = {
     icc_profile: profile,
     delta_e_threshold: dEthr,
-    count_safe: swatches.filter(s => !/^k-\d/.test(s.system_name || '')).length,
-    count_k_ramp: swatches.filter(s =>  /^k-\d/.test(s.system_name || '')).length,
+    count_k_ramp: swatches.filter(s => s.C===0 && s.M===0 && s.Y===0).length,
     count_total: swatches.length,
     swatches: swatches.map(s => ({
       rgb: [s.R, s.G, s.B],
@@ -3517,8 +3482,7 @@ async function _buildPaletteZip(palette, swatches) {
       cmyk: [s.C, s.M, s.Y, s.K],
       lab: [s.L_star, s.a_star, s.b_star],
       delta_e: s.delta_e_print == null ? null : +(+s.delta_e_print).toFixed(3),
-      base_name: s.system_name,
-      name: s.export_name || s.system_name,
+      name: s.export_name || null,
       jpn_name: s.jpn_name || null,
       jpn_romaji: s.jpn_romaji || null,
       html_name: s.html_name || null,
