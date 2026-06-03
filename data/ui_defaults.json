@@ -1,6 +1,6 @@
 {
   "format": "swatch.ui_defaults/v1",
-  "_doc": "First-run + Reset-to-defaults source of truth for the browser tool. Edit this file to change the initial state every user sees on a fresh install. The current per-user state lives in browser localStorage (key cmykUIState_v1) and is independent of this file.",
+  "_doc": "First-run + Reset-to-defaults source of truth for the browser tool. Edit this file to change the initial state every user sees on a fresh install. The current per-user state lives in browser localStorage (key cmykUIState_v2) and is independent of this file.",
 
   "cmyk_explorer": {
     "step": 10,
@@ -9,22 +9,26 @@
     "sort_mode": "hue",
     "k_tier": 3,
     "named_filter": "all",
-    "name_tolerance": 0,
     "wcag_aa": false,
     "wcag_aaa": false,
     "white_text_only": false,
     "black_text_only": false,
     "search": "",
     "cmyk_range": { "c": [0,100], "m": [0,100], "y": [0,100], "k": [0,100] },
-    "tac_max": 400,
+    "tac_max": 240,
     "delta_e_max": null,
     "default_profile_match": "FOGRA39",
     "active_palette_id": null,
+
+    "lab_mode": "d50",
+    "gamut_safe_only": false,
+    "palette_panel_open": false,
+
     "corpora_prefs": {
-      "jpn":     { "display": "primary", "anchor": "cmyk" },
-      "html":    { "display": "primary", "anchor": "cmyk" },
-      "jpn-dic": { "display": "name",    "anchor": "cmyk" },
-      "zh-dic":  { "display": "name",    "anchor": "cmyk" }
+      "_global": { "anchor": "cmyk", "tolerance": 3.0 },
+      "jp-trad": { "display": "name_ja" },
+      "html":    { "display": "name_en" },
+      "zh-trad": { "display": "name_zh" }
     }
   }
 }
