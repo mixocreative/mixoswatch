@@ -399,7 +399,7 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
 .copy-btn.ok{background:#0A2A14;color:#60D090;border-color:transparent}
 @media(prefers-color-scheme:light){.copy-btn.ok{background:#EAF4EC;color:#0A5C28}}
 
-/* per-library Naming UI rows */
+/* per-library Naming UI rows (legacy nm-* kept for safety) */
 .nm-row{display:flex;flex-direction:column;gap:4px;padding:6px 0;border-top:1px solid var(--border2)}
 .nm-row:first-child{border-top:none;padding-top:0}
 .nm-head{font-size:11px;color:var(--text);font-family:var(--font-sans);letter-spacing:.01em}
@@ -409,6 +409,11 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
 .nm-radio{display:inline-flex;align-items:center;gap:3px;font-size:10.5px;color:var(--muted);cursor:pointer;line-height:1.4}
 .nm-radio input{margin:0;cursor:pointer}
 .nm-radio:hover{color:var(--text)}
+/* per-library corpus cards (corp-*) */
+.corp-card{border:1px solid var(--border);border-radius:var(--r);padding:8px 10px;margin-bottom:8px}
+.corp-label{font-size:11px;font-weight:500;color:var(--text);margin-bottom:5px}
+.corp-display-row{display:flex;flex-wrap:wrap;gap:8px;font-size:11px;color:var(--muted)}
+.corp-radio{display:flex;align-items:center;gap:3px;cursor:pointer}
 
 /* Filter checkboxes */
 .flt-row{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text);padding:3px 0;cursor:pointer;line-height:1.4}
@@ -1417,58 +1422,50 @@ async function rematchAll() {
 // (primary/secondary/none) and an anchor dropdown (hex/cmyk, only shown
 // when the library has at least one entry carrying a cmyk attribute).
 function buildNamingUI() {
-  const wrap = document.getElementById('namingRows');
-  if (!wrap) return;
-  wrap.innerHTML = '';
-  if (!CORPORA.libraries.length) {
-    wrap.innerHTML = '<div style="font-size:10.5px;color:var(--faint)">No corpora loaded.</div>';
-    return;
-  }
+  const root = document.getElementById('namingRows');
+  if (!root) return;
+  root.innerHTML = '';
+  if (!CORPORA.libraries.length) { root.textContent = 'No corpora loaded.'; return; }
   for (const lib of CORPORA.libraries) {
-    const prefs = _libPref(lib.id);
+    const pref = _libPref(lib.id);
+    const div = document.createElement('div');
+    div.className = 'corp-card';
+    const h = document.createElement('div');
+    h.className = 'corp-label';
+    h.textContent = `${lib.label.en} (${lib.entries.length})`;
+    div.appendChild(h);
     const row = document.createElement('div');
-    row.className = 'nm-row';
-
-    const head = document.createElement('div');
-    head.className = 'nm-head';
-    head.textContent = lib.label;
-    head.title = `${lib.entries.length} entries · fields: `
-              + lib.fields.map(f => f.label || f.id).join(', ');
-    row.appendChild(head);
-
-    // Radio group: one radio per declared field + hide.
-    const radios = document.createElement('div');
-    radios.className = 'nm-radios';
-    const groupName = 'nm-' + lib.id;
-    const currentField = _libDisplayField(lib.id);  // null = hidden
-    const opts = lib.fields.map(f => [f.id, f.label || f.id])
-                           .concat([['__hide__', 'hide']]);
-    for (const [val, lbl] of opts) {
-      const id = `${groupName}-${val}`;
-      const wrapL = document.createElement('label');
-      wrapL.className = 'nm-radio';
-      wrapL.htmlFor = id;
-      const r = document.createElement('input');
-      r.type  = 'radio';
-      r.name  = groupName;
-      r.id    = id;
-      r.value = val;
-      if ((val === '__hide__' && currentField === null) || val === currentField) r.checked = true;
-      r.onchange = () => {
-        _setLibPref(lib.id, 'display', val === '__hide__' ? 'none' : val);
-        _scheduleRender();
-      };
-      const txt = document.createElement('span');
-      txt.textContent = lbl;
-      wrapL.appendChild(r);
-      wrapL.appendChild(txt);
-      radios.appendChild(wrapL);
+    row.className = 'corp-display-row';
+    for (const f of lib.fields) {
+      const labelText = (f.label && f.label.en) ? f.label.en : (f.label || f.id);
+      const lab = document.createElement('label');
+      lab.className = 'corp-radio';
+      const input = document.createElement('input');
+      input.type = 'radio'; input.name = `display-${lib.id}`; input.value = f.id;
+      input.checked = (pref.display || lib.default_display) === f.id;
+      input.addEventListener('change', () => {
+        _setLibPref(lib.id, 'display', f.id);
+        if (typeof _scheduleRender === 'function') _scheduleRender();
+        else if (typeof render === 'function') render();
+      });
+      lab.append(input, ' ', labelText);
+      row.appendChild(lab);
     }
-    row.appendChild(radios);
-
+    // Hide option
+    const hideLab = document.createElement('label');
+    hideLab.className = 'corp-radio';
+    const hideIn = document.createElement('input');
+    hideIn.type='radio'; hideIn.name=`display-${lib.id}`; hideIn.value='hide';
+    hideIn.checked = pref.display === 'hide';
+    hideIn.addEventListener('change', () => {
+      _setLibPref(lib.id, 'display', 'hide');
+      if (typeof _scheduleRender === 'function') _scheduleRender();
+      else if (typeof render === 'function') render();
+    });
+    hideLab.append(hideIn, ' hide');
+    row.appendChild(hideLab);
+    div.appendChild(row);
     // Anchor switch shown only when entries carry both hex and cmyk.
-    // Segmented two-button toggle. Flipping rematches ONLY this library
-    // (chunked, with progress) so the UI thread does not stall.
     if (lib._hasCmyk && lib._hasHex) {
       const swc = document.createElement('div');
       swc.className = 'ax-switch';
@@ -1477,11 +1474,11 @@ function buildNamingUI() {
       for (const [v, t] of [['hex','hex'], ['cmyk','cmyk']]) {
         const b = document.createElement('button');
         b.type = 'button';
-        b.className = 'ax-opt' + (prefs.anchor === v ? ' active' : '');
+        b.className = 'ax-opt' + (pref.anchor === v ? ' active' : '');
         b.dataset.val = v;
         b.textContent = t;
         b.onclick = async () => {
-          if (b.classList.contains('active')) return;     // no-op when already selected
+          if (b.classList.contains('active')) return;
           swc.querySelectorAll('.ax-opt').forEach(x => x.classList.toggle('active', x === b));
           _setLibPref(lib.id, 'anchor', v);
           await rematchOne(lib.id);
@@ -1491,15 +1488,14 @@ function buildNamingUI() {
       }
       const wrap2 = document.createElement('div');
       wrap2.className = 'ax-row';
-      const label = document.createElement('span');
-      label.className = 'ax-label';
-      label.textContent = 'anchor';
-      wrap2.appendChild(label);
+      const axLabel = document.createElement('span');
+      axLabel.className = 'ax-label';
+      axLabel.textContent = 'anchor';
+      wrap2.appendChild(axLabel);
       wrap2.appendChild(swc);
-      row.appendChild(wrap2);
+      div.appendChild(wrap2);
     }
-
-    wrap.appendChild(row);
+    root.appendChild(div);
   }
 }
 
