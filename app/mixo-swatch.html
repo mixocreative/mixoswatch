@@ -459,7 +459,7 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
   <div class="topbar-sep"></div>
   <span class="count-tag" id="countLabel" title="How many swatches the filters currently allow.">- swatches</span>
   <button class="btn" onclick="resetUIToDefaults()" title="Reset all UI controls (cell size, sort, filters, naming) to the values in data/ui_defaults.json. Saved palettes are kept.">↺ Reset UI to defaults</button>
-  <div class="mode-group" id="modeGroup" role="tablist" aria-label="View mode"><button class="btn mode-btn active" id="mode-grid"     onclick="setViewMode('grid')" title="Regular swatch grid - every filtered swatch as a cell.">Grid</button><button class="btn mode-btn"        id="mode-huelight" onclick="setViewMode('huelight')" title="Hue × Lightness map. One representative cell per (hue,light) bucket - quick palette overview.">Hue × Light</button><button class="btn mode-btn"        id="mode-palettes" onclick="setViewMode('palettes')" title="Palettes mode - manage all saved palettes with per-palette actions.">Palettes</button></div>
+  <div class="mode-group" id="modeGroup" role="tablist" aria-label="View mode"><button class="btn mode-btn active" id="mode-grid"     onclick="setViewMode('grid')" title="Regular swatch grid - every filtered swatch as a cell.">Grid</button><button class="btn mode-btn"        id="mode-palettes" onclick="setViewMode('palettes')" title="Palettes mode - manage all saved palettes with per-palette actions.">Palettes</button></div>
   <button class="btn" onclick="exportCSV()" title="Save the currently filtered swatches as a UTF-8 CSV (Excel-ready, keeps kanji).">↓ CSV</button>
   <button class="btn" onclick="exportPNG()" title="Save the currently filtered swatches as a square PNG board with title band.">↓ PNG</button>
 </header>
@@ -762,6 +762,7 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
         <button class="btn sort-btn" id="sort-C"      onclick="setSort('C')" title="Order by Cyan ink % only.">Cyan</button>
         <button class="btn sort-btn" id="sort-chroma" onclick="setSort('chroma')" title="Order by saturation. Dull/neutral colors first, vivid last.">Chroma</button>
         <button class="btn sort-btn" id="sort-safety" onclick="setSort('safety')" title="Order by round-trip reliability. Most-reliable first; riskier (near gamut boundary) last.">Safety</button>
+        <button class="btn sort-btn" id="sort-huelight" onclick="setSort('huelight')" title="2D map: one representative cell per (hue, lightness) bucket.">Hue x Light</button>
       </div>
     </div>
 
@@ -1885,9 +1886,15 @@ function setViewMode(m) {
   if (!['grid','huelight','palettes'].includes(m)) return;
   viewMode = m;
   paletteMode = (m === 'palettes');
-  ['grid','huelight','palettes'].forEach(k => {
+  ['grid','palettes'].forEach(k => {
     document.getElementById('mode-' + k)?.classList.toggle('active', k === m);
   });
+  if (m !== 'huelight') {
+    document.getElementById('sort-huelight')?.classList.remove('active');
+  } else {
+    document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('sort-huelight')?.classList.add('active');
+  }
   // Update topbar count: palette mode swaps to palette-count, else clear
   if (m === 'palettes')
     document.getElementById('countLabel').textContent =
@@ -2896,6 +2903,13 @@ function setStep(s) {
 }
 
 function setSort(m) {
+  if (m === 'huelight') {
+    setViewMode('huelight');
+    document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('sort-huelight')?.classList.add('active');
+    return;
+  }
+  if (viewMode === 'huelight') setViewMode('grid');
   sortMode = m;
   document.querySelectorAll('.sort-btn').forEach(b=>b.classList.remove('active'));
   document.getElementById('sort-'+m).classList.add('active');
