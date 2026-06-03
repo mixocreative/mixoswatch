@@ -3476,17 +3476,20 @@ async function _buildPaletteZip(palette, swatches) {
     delta_e_threshold: dEthr,
     count_k_ramp: swatches.filter(s => s.C===0 && s.M===0 && s.Y===0).length,
     count_total: swatches.length,
-    swatches: swatches.map(s => ({
-      rgb: [s.R, s.G, s.B],
-      hex: s.hex.replace('#','').toLowerCase(),
-      cmyk: [s.C, s.M, s.Y, s.K],
-      lab: [s.L_star, s.a_star, s.b_star],
-      delta_e: s.delta_e_print == null ? null : +(+s.delta_e_print).toFixed(3),
-      name: s.export_name || null,
-      jpn_name: s.jpn_name || null,
-      jpn_romaji: s.jpn_romaji || null,
-      html_name: s.html_name || null,
-    })),
+    swatches: swatches.map(s => {
+      const hex = s.hex.replace('#','').toLowerCase();
+      return {
+        rgb: [s.R, s.G, s.B],
+        hex: hex,
+        cmyk: [s.C, s.M, s.Y, s.K],
+        lab: [s.L_star, s.a_star, s.b_star],
+        delta_e: s.delta_e_print == null ? null : +(+s.delta_e_print).toFixed(3),
+        name: s.export_name || hex,
+        jpn_name: s.jpn_name || null,
+        jpn_romaji: s.jpn_romaji || null,
+        html_name: s.html_name || null,
+      };
+    }),
   };
   entries.push({ name: 'palette.json', data: enc.encode(JSON.stringify(jsObj, null, 2)) });
 
