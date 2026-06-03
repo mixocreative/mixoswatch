@@ -1304,7 +1304,6 @@ function matchNearest(s, fwdLUT) {
     if (prefs.anchor === 'cmyk' && lib._hasCmyk) _ensureCorpusCmykLabs(lib, fwdLUT);
     _matchOneCorpus(s, lib, prefs);
   }
-  _syncMirrorFor(s);
 }
 
 // Field text this corpus contributes to a swatch label for the current
@@ -1318,12 +1317,9 @@ function corpusCellText(libId, sw) {
 }
 // Visibility gate per corpus: closest carrier OR within tolerance.
 function corpusVisible(libId, sw) {
-  const m = sw.matches?.[libId];
-  if (!m) return false;
-  if (m.deltaE <= curTol) return true;
-  if (libId === 'jpn'  && sw.jpn_closest)  return true;
-  if (libId === 'html' && sw.html_closest) return true;
-  return false;
+  if (sw[`${libId}__closest`]) return true;
+  const dE = sw[`${libId}__deltaE`];
+  return typeof dE === 'number' && dE <= curTol;
 }
 
 // rAF-coalesced render scheduler. Rapid sidebar clicks (radios, checkboxes,
@@ -1354,33 +1350,25 @@ function _schedulePersist() {
 }
 
 // Match ONE corpus for ONE swatch. Shared by matchNearest + rematchOne.
+// Stores idx so _markClosest can enforce per-(lib,entry) uniqueness.
 function _matchOneCorpus(s, lib, prefs) {
   s.matches = s.matches || {};
-  let best=null, bestD=Infinity;
-  for (const e of lib.entries) {
-    const lab = _entryAnchorLab(e, prefs.anchor);
+  let bestE = -1, bestD = Infinity, bestEntry = null;
+  for (let j = 0; j < lib.entries.length; j++) {
+    const lab = _entryAnchorLab(lib.entries[j], prefs.anchor);
     if (!lab) continue;
     const d = deltaE2000(s.L_star,s.a_star,s.b_star, lab[0],lab[1],lab[2]);
-    if (d < bestD) { bestD = d; best = e; }
+    if (d < bestD) { bestD = d; bestE = j; bestEntry = lib.entries[j]; }
   }
-  s.matches[lib.id] = best ? {
-    entry:  best,
+  s.matches[lib.id] = bestE >= 0 ? {
+    entry:  bestEntry,
+    idx:    bestE,
     deltaE: +bestD.toFixed(2),
     anchor: prefs.anchor,
   } : null;
 }
 
-// Refresh the jpn_*/html_* legacy mirror fields for a single swatch.
-function _syncMirrorFor(s) {
-  const jLib = CORPORA.libraries.find(l => l.id === 'jpn');
-  const hLib = CORPORA.libraries.find(l => l.id === 'html');
-  const j = s.matches?.jpn, h = s.matches?.html;
-  s.jpn_name    = (j && jLib?.fields[0]) ? (j.entry[jLib.fields[0].id] || '') : '';
-  s.jpn_romaji  = (j && jLib?.fields[1]) ? (j.entry[jLib.fields[1].id] || '') : '';
-  s.deltaE_jpn  = j ? j.deltaE : Infinity;
-  s.html_name   = (h && hLib?.fields[0]) ? (h.entry[hLib.fields[0].id] || '') : '';
-  s.deltaE_html = h ? h.deltaE : Infinity;
-}
+// _syncMirrorFor removed - downstream code reads s[`${lib.id}__name`] etc directly.
 
 // Rematch ONLY the changed library against ALL swatches, chunked so the
 // UI thread breathes between batches and the progress overlay updates.
@@ -1406,13 +1394,11 @@ async function rematchOne(libId) {
     const end = Math.min(i + CHUNK, N);
     for (let j = i; j < end; j++) {
       _matchOneCorpus(DEDUP[j], lib, prefs);
-      if (libId === 'jpn' || libId === 'html') _syncMirrorFor(DEDUP[j]);
     }
     _setProgress(5 + (end / N) * 90, `${end.toLocaleString()} / ${N.toLocaleString()}`);
     if (end < N) await new Promise(r => requestAnimationFrame(r));
   }
-  if (libId === 'jpn')  _markClosest('jpn_name',  'deltaE_jpn',  'jpn_closest');
-  if (libId === 'html') _markClosest('html_name', 'deltaE_html', 'html_closest');
+  _markClosest(lib);
   _setProgress(100);
   setTimeout(_hideProgress, 150);
 }
@@ -1665,8 +1651,7 @@ async function rebuildAll() {
   });
   GS_DATA   = DEDUP.filter(s => s.C===0 && s.M===0 && s.Y===0 && s.K>0);
   MAIN_DATA = DEDUP.filter(s => !(s.C===0 && s.M===0 && s.Y===0 && s.K>0));
-  _markClosest('jpn_name',  'deltaE_jpn',  'jpn_closest');
-  _markClosest('html_name', 'deltaE_html', 'html_closest');
+  for (const lib of CORPORA.libraries) _markClosest(lib);
 
   _setProgress(100, 'Done');
   if (status) status.textContent = ACTIVE_PROFILE.label;
@@ -1674,14 +1659,27 @@ async function rebuildAll() {
   setTimeout(_hideProgress, 250);
 }
 
-function _markClosest(field, deltaField, flag) {
-  const best = new Map();
-  DEDUP.forEach((s, i) => {
-    const n = s[field]; if (!n) return;
-    const cur = best.get(n);
-    if (!cur || s[deltaField] < cur.deltaE) best.set(n, {idx:i, deltaE:s[deltaField]});
-  });
-  DEDUP.forEach((s, i) => { s[flag] = best.get(s[field])?.idx === i; });
+// For each lib entry, claim the single closest swatch.
+// Tiebreak: lower tac -> lower K -> lower index.
+// Writes s[`${lib.id}__name`], s[`${lib.id}__deltaE`], s[`${lib.id}__closest`].
+function _markClosest(lib) {
+  const claim = new Map();
+  for (let i = 0; i < DEDUP.length; i++) {
+    const s = DEDUP[i];
+    const m = s.matches?.[lib.id];
+    if (!m) { s[`${lib.id}__closest`] = false; continue; }
+    s[`${lib.id}__name`]    = m.entry;
+    s[`${lib.id}__deltaE`]  = m.deltaE;
+    s[`${lib.id}__closest`] = false;
+    const cur = claim.get(m.idx);
+    if (!cur ||
+        m.deltaE < cur.d ||
+        (m.deltaE === cur.d && s.tac < cur.tac) ||
+        (m.deltaE === cur.d && s.tac === cur.tac && s.K < cur.K)) {
+      claim.set(m.idx, { sIdx: i, d: m.deltaE, tac: s.tac, K: s.K });
+    }
+  }
+  for (const { sIdx } of claim.values()) DEDUP[sIdx][`${lib.id}__closest`] = true;
 }
 
 
@@ -2075,9 +2073,7 @@ function addToPalette(sw) {
   const key = _swKey(sw);
   if (p.swatches.some(x => _swKey(x) === key)) return;
   p.swatches.push({C:sw.C, M:sw.M, Y:sw.Y, K:sw.K, hex:sw.hex,
-                   R:sw.R, G:sw.G, B:sw.B,
-                   jpn_name:sw.jpn_name, jpn_romaji:sw.jpn_romaji,
-                   html_name:sw.html_name});
+                   R:sw.R, G:sw.G, B:sw.B});
   p.updated = Date.now();
   savePalettes();
   refreshPalUI();
@@ -2752,23 +2748,22 @@ function onTol(v) {
   _scheduleRender();
 }
 
-// helpers respecting tolerance + per-library display pref
-function jpnVisible(s){
-  if (_libPref('jpn').display === 'none') return false;
-  return s.jpn_closest  || (s.jpn_name  && s.deltaE_jpn  <= curTol);
-}
-function htmlVisible(s){
-  if (_libPref('html').display === 'none') return false;
-  return s.html_closest || (s.html_name && s.deltaE_html <= curTol);
+// Visibility helper: is this swatch the closest-or-within-tolerance match
+// for the given lib, considering display pref?
+function _visibleNamedFor(s, lib) {
+  if (!s[`${lib.id}__closest`]) {
+    const dE = s[`${lib.id}__deltaE`];
+    if (typeof dE !== 'number' || dE > curTol) return false;
+  }
+  return true;
 }
 // 'any' filter: any corpus matched within tolerance
 function anyCorpusVisible(s){
   // Filter is INDEPENDENT of display pref. Reads filter_enabled per lib.
-  for (const lib of CORPORA.libraries) {
-    if (!_libFilterEnabled(lib.id)) continue;
-    if (corpusVisible(lib.id, s)) return true;
-  }
-  return false;
+  return CORPORA.libraries.some(lib => {
+    if (!_libFilterEnabled(lib.id)) return false;
+    return corpusVisible(lib.id, s);
+  });
 }
 
 function setStep(s) {
@@ -2799,8 +2794,6 @@ function setLabMode(mode) {
   // Re-run corpus matching so deltaE values reflect the new whitepoint, then
   // re-render. rematchAll is async; _scheduleRender fires inside it already.
   rematchAll().then(() => {
-    _markClosest('jpn_name',  'deltaE_jpn',  'jpn_closest');
-    _markClosest('html_name', 'deltaE_html', 'html_closest');
     _scheduleRender();
   });
   persistUI();
@@ -2814,21 +2807,58 @@ function setLabMode(mode) {
 // ── CSV export ───────────────────────────────────────────────────────────────
 function exportCSV() {
   const data = sorted(filtered());
-  const fields = ['C','M','Y','K','tac','k_tier','k_tier_name','R','G','B','hex',
+  const fixed = ['C','M','Y','K','tac','k_tier','k_tier_name','R','G','B','hex',
     'luminance','text_color','contrast_ratio','wcag_aa','wcag_aaa',
-    'L_star','a_star','b_star','jpn_name','jpn_romaji','deltaE_jpn',
-    'html_name','deltaE_html','dic_name','pantone_name'];
-  const rows = [fields.join(',')];
+    'L_star','a_star','b_star'];
+  const dynHeaders = [];
+  for (const lib of CORPORA.libraries) {
+    for (const f of lib.fields) dynHeaders.push(lib.id + '_' + f.id);
+    dynHeaders.push(lib.id + '_deltaE');
+  }
+  const header = [...fixed, ...dynHeaders];
+  const rows = [header.join(',')];
   data.forEach(s => {
-    rows.push(fields.map(f=>{
-      const v = s[f]??'';
-      return typeof v==='string'&&v.includes(',')?`"${v}"`:v;
-    }).join(','));
+    const fxv = fixed.map(f => {
+      const v = s[f] ?? '';
+      const sv = String(v);
+      return /["
+,]/.test(sv) ? '"' + sv.replace(/"/g,'""') + '"' : sv;
+    });
+    const dyv = [];
+    for (const lib of CORPORA.libraries) {
+      const entry = s[lib.id + '__name'];
+      for (const f of lib.fields) {
+        const v = entry ? (entry[f.id] ?? '') : '';
+        const sv = String(v);
+        dyv.push(/["
+,]/.test(sv) ? '"' + sv.replace(/"/g,'""') + '"' : sv);
+      }
+      dyv.push(s[lib.id + '__deltaE'] ?? '');
+    }
+    rows.push([...fxv, ...dyv].join(','));
   });
-  const blob = new Blob(['\uFEFF'+rows.join('\n')],{type:'text/csv;charset=utf-8'});
+  const blob = new Blob(['﻿'+rows.join('
+')],{type:'text/csv;charset=utf-8'});
   const a = Object.assign(document.createElement('a'),
-    {href:URL.createObjectURL(blob), download:`cmyk_step${curStep}.csv`});
+    {href:URL.createObjectURL(blob), download:'cmyk_step' + curStep + '.csv'});
   a.click();
+}
+
+// ── Canvas name helper - dynamic per-library text lines ─────────────────────
+// Returns [{libId, name, dE}] for each visible corpus on this swatch.
+// Used by both PNG export renderers to avoid hardcoded field names.
+function _renderSwatchNames(s) {
+  const out = [];
+  for (const lib of CORPORA.libraries) {
+    if (!_visibleNamedFor(s, lib)) continue;
+    const entry = s[`${lib.id}__name`];
+    if (!entry) continue;
+    const displayField = _libDisplayField(lib.id);
+    if (!displayField) continue;
+    const name = entry[displayField] || entry.name_en || '?';
+    out.push({ libId: lib.id, name, dE: s[`${lib.id}__deltaE`] });
+  }
+  return out;
 }
 
 // ── PNG export - square grid, no gaps ────────────────────────────────────────
@@ -2877,7 +2907,6 @@ function _renderSwatchPNG(data, filename, opts = {}) {
   const fzCmyk = Math.max(5, Math.round(cs * 0.09));
   const fzHex  = Math.max(5, Math.round(cs * 0.10));
   const fzJpn  = Math.max(6, Math.round(cs * 0.12));
-  const fzRoma = Math.max(5, Math.round(cs * 0.09));
   const fzHtml = Math.max(4, Math.round(cs * 0.09));
   const fzBadg = Math.max(5, Math.round(cs * 0.10));
   const fzCR   = Math.max(4, Math.round(cs * 0.09));
@@ -2892,8 +2921,6 @@ function _renderSwatchPNG(data, filename, opts = {}) {
   const topCmyk = 2;
   const topHex  = topCmyk + fzCmyk + 2;
   const topJpn  = topHex  + (showHex ? fzHex + 2 : 0);
-  const topRoma = topJpn  + (showJpn ? fzJpn + 2 : 0);
-  const topHtml = topRoma + (showJpn ? fzRoma + 2 : 0);
 
   const mono = '"IBM Plex Mono", ui-monospace, monospace';
   const sans = '"Noto Sans JP", system-ui, sans-serif';
@@ -2917,17 +2944,15 @@ function _renderSwatchPNG(data, filename, opts = {}) {
       ctx.font = `${fzHex}px ${mono}`;
       ctx.fillText(sw.hex, cx+pad, cy+topHex);
     }
-    if (showJpn && jpnVisible(sw)) {
-      ctx.font = `600 ${fzJpn}px ${sans}`;
-      ctx.fillText(sw.jpn_name, cx+pad, cy+topJpn);
-      ctx.font = `italic ${fzRoma}px ${sans}`;
-      ctx.globalAlpha = 0.8;
-      ctx.fillText(sw.jpn_romaji, cx+pad, cy+topRoma);
-      ctx.globalAlpha = 1;
-    }
-    if (showHtml && htmlVisible(sw)) {
-      ctx.font = `${fzHtml}px ${sans}`;
-      ctx.fillText(sw.html_name, cx+pad, cy+topHtml);
+    if (showJpn) {
+      let yCursor = cy + topJpn;
+      for (const ent of _renderSwatchNames(sw)) {
+        const fz = ent.libId === 'jpn' ? fzJpn : fzHtml;
+        if (ent.libId === 'jpn' && !showJpn) continue;
+        if (ent.libId !== 'jpn' && !showHtml) continue;
+        ctx.font = (ent.libId === 'jpn' ? `600 ${fz}px ${sans}` : `${fz}px ${sans}`);
+        ctx.fillText(ent.name, cx+pad, yCursor); yCursor += fz + 2;
+      }
     }
     if (showBadge) {
       const tag = sw.wcag_aaa ? 'AAA' : sw.wcag_aa ? 'AA' : '✗';
@@ -3329,7 +3354,6 @@ function _renderPaletteLabelledPNG(swatches, filename, canvasSize, title) {
   const fzCmyk = Math.max(8, Math.round(cell * 0.09));
   const fzHex  = Math.max(8, Math.round(cell * 0.10));
   const fzJpn  = Math.max(8, Math.round(cell * 0.12));
-  const fzRoma = Math.max(7, Math.round(cell * 0.09));
   const fzHtml = Math.max(7, Math.round(cell * 0.09));
   const showLabels = cell >= 64;   // skip text on tiny cells
   const pad = Math.max(4, Math.round(cell * 0.04));
@@ -3345,17 +3369,11 @@ function _renderPaletteLabelledPNG(swatches, filename, canvasSize, title) {
     ctx.fillText(`C${sw.C} M${sw.M} Y${sw.Y} K${sw.K}`, cx + pad, y); y += fzCmyk + 2;
     ctx.font = `${fzHex}px "IBM Plex Mono", ui-monospace, monospace`;
     ctx.fillText(sw.hex, cx + pad, y); y += fzHex + 2;
-    if (sw.jpn_name && (sw.jpn_closest || (sw.deltaE_jpn ?? 99) <= 8)) {
-      ctx.font = `600 ${fzJpn}px "Noto Sans JP", system-ui, sans-serif`;
-      ctx.fillText(sw.jpn_name, cx + pad, y); y += fzJpn + 2;
-      ctx.font = `italic ${fzRoma}px "Noto Sans JP", system-ui, sans-serif`;
-      ctx.globalAlpha = 0.8;
-      ctx.fillText(sw.jpn_romaji || '', cx + pad, y); y += fzRoma + 2;
-      ctx.globalAlpha = 1;
-    }
-    if (sw.html_name && (sw.html_closest || (sw.deltaE_html ?? 99) <= 8)) {
-      ctx.font = `${fzHtml}px "IBM Plex Sans", system-ui, sans-serif`;
-      ctx.fillText(sw.html_name, cx + pad, y); y += fzHtml + 2;
+    for (const ent of _renderSwatchNames(sw)) {
+      const fz = ent.libId === 'jpn' ? fzJpn : fzHtml;
+      const fontFace = '"Noto Sans JP", system-ui, sans-serif';
+      ctx.font = (ent.libId === 'jpn' ? `600 ${fz}px ${fontFace}` : `${fz}px ${fontFace}`);
+      ctx.fillText(ent.name, cx + pad, y); y += fz + 2;
     }
   });
   ctx.restore();
@@ -3482,9 +3500,18 @@ async function _buildPaletteZip(palette, swatches) {
         lab: [s.L_star, s.a_star, s.b_star],
         delta_e: s.delta_e_print == null ? null : +(+s.delta_e_print).toFixed(3),
         name: s.export_name || hex,
-        jpn_name: s.jpn_name || null,
-        jpn_romaji: s.jpn_romaji || null,
-        html_name: s.html_name || null,
+        corpora: (() => {
+          const c = {};
+          for (const lib of CORPORA.libraries) {
+            const entry = s[`${lib.id}__name`];
+            if (entry) {
+              c[lib.id] = {};
+              for (const f of lib.fields) c[lib.id][f.id] = entry[f.id] || null;
+              c[lib.id].deltaE = s[`${lib.id}__deltaE`] ?? null;
+            }
+          }
+          return c;
+        })(),
       };
     }),
   };
