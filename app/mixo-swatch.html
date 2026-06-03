@@ -17,12 +17,6 @@
   --r:6px; --rl:10px;
   color-scheme:dark;
 }
-@media (prefers-color-scheme:light){:root{
-  --bg:#F5F4F0; --bg2:#EEEDEA; --surface:#FFFFFF;
-  --border:rgba(0,0,0,0.12); --border2:rgba(0,0,0,0.06);
-  --text:#1C1B18; --muted:#6B6A65; --faint:#9B9A95; --accent:#2867AE; --accent-rgb:40 103 174;
-  color-scheme:light;
-}}
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:100vh;overflow:hidden}
 
@@ -408,7 +402,6 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
   border:1px solid var(--border);color:var(--text);background:var(--bg2);line-height:1.5;
 }
 .chip.jpn{background:#0A2030;color:#6AC0E8;border-color:transparent}
-@media(prefers-color-scheme:light){.chip.jpn{background:#EAF4F8;color:#0A4A6A}}
 .copy-row{display:flex;gap:6px;flex-wrap:wrap;padding-top:3px}
 .copy-btn{
   font-size:11px;padding:5px 10px;border-radius:var(--r);
@@ -418,7 +411,6 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
 }
 .copy-btn:hover{background:var(--bg2)}
 .copy-btn.ok{background:#0A2A14;color:#60D090;border-color:transparent}
-@media(prefers-color-scheme:light){.copy-btn.ok{background:#EAF4EC;color:#0A5C28}}
 
 /* per-library Naming UI rows (legacy nm-* kept for safety) */
 .nm-row{display:flex;flex-direction:column;gap:4px;padding:6px 0;border-top:1px solid var(--border2)}
