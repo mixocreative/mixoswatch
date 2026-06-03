@@ -1,10 +1,62 @@
 {
-  "桜色":   {"en":"cherry blossom",   "zh":"樱花色"},
-  "桃色":   {"en":"peach",            "zh":"桃色"},
-  "鴇色":   {"en":"crested ibis pink","zh":"朱鹮色"},
-  "珊瑚色": {"en":"coral",            "zh":"珊瑚色"},
-  "薔薇色": {"en":"rose",             "zh":"蔷薇色"},
-  "韓紅":   {"en":"deep crimson",     "zh":"韩红"},
-  "紅梅色": {"en":"red plum",         "zh":"红梅色"},
-  "甚三紅": {"en":"safflower red",    "zh":"红花红"}
+  "撫子": {
+    "en": "pink dianthus",
+    "zh": "瞿麦红"
+  },
+  "紅梅": {
+    "en": "red plum",
+    "zh": "红梅色"
+  },
+  "蘇芳": {
+    "en": "sappanwood",
+    "zh": "苏芳木"
+  },
+  "桃": {
+    "en": "peach",
+    "zh": "桃色"
+  },
+  "苺": {
+    "en": "strawberry",
+    "zh": "草莓红"
+  },
+  "薄紅": {
+    "en": "pale crimson",
+    "zh": "淡红"
+  },
+  "桜": {
+    "en": "cherry blossom",
+    "zh": "樱花色"
+  },
+  "韓紅花": {
+    "en": "deep safflower",
+    "zh": "韩国红花"
+  },
+  "燕脂": {
+    "en": "crimson",
+    "zh": "胭脂色"
+  },
+  "紅": {
+    "en": "crimson red",
+    "zh": "红色"
+  },
+  "鴇": {
+    "en": "crested ibis pink",
+    "zh": "朱鹮色"
+  },
+  "小豆": {
+    "en": "adzuki red",
+    "zh": "红豆色"
+  },
+  "黄": {
+    "en": "yellow",
+    "zh": "黄色"
+  },
+  "紫": {
+    "en": "purple",
+    "zh": "紫色"
+  },
+  "藍": {
+    "en": "indigo",
+    "zh": "靛蓝"
+  }
 }
