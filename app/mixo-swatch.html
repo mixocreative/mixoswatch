@@ -472,6 +472,7 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
   <div class="mode-group" id="modeGroup" role="tablist" aria-label="View mode"><button class="btn mode-btn active" id="mode-grid"     onclick="setViewMode('grid')" title="Regular swatch grid - every filtered swatch as a cell.">Grid</button><button class="btn mode-btn"        id="mode-palettes" onclick="setViewMode('palettes')" title="Palettes mode - manage all saved palettes with per-palette actions.">Palettes</button></div>
   <button class="btn" onclick="exportCSV()" title="Save the currently filtered swatches as a UTF-8 CSV (Excel-ready, keeps kanji).">↓ CSV</button>
   <button class="btn" onclick="exportPNG()" title="Save the currently filtered swatches as a square PNG board with title band.">↓ PNG</button>
+  <button class="btn" onclick="exportFilteredSwatchZIP()" title="Download a .zip with one 128x128 pure-color PNG per currently-filtered swatch plus manifest.csv/json.">↓ ZIP (per-swatch)</button>
 </header>
 
 <div class="main">
@@ -3576,17 +3577,22 @@ async function _solidPngBytes(hex, size = 128) {
 }
 
 // -- Per-swatch ZIP export with manifests mirroring swatches.py --------
-async function _buildPaletteZip(palette, swatches) {
+// Reusable worker: builds a ZIP from any swatch list.
+// `label` is used in the manifest.txt header (palette name or "filtered").
+async function _buildSwatchZip(swatches, label) {
   // Apply unique-name suffix (-02 etc) like swatches.py
   assignUniqueNames(swatches);
   const enc = new TextEncoder();
 
-  // 1. Individual swatch PNGs
+  // 1. Individual swatch PNGs - 128x128 pure-color
   const entries = [];
   for (const sw of swatches) {
     const hex = sw.hex.replace('#','').toLowerCase();
-    const name = sw.export_name || hex;
-    const fn = `swatch-${hex}-${name}.png`;
+    const C = String(sw.C).padStart(3,'0');
+    const M = String(sw.M).padStart(3,'0');
+    const Y = String(sw.Y).padStart(3,'0');
+    const K = String(sw.K).padStart(3,'0');
+    const fn = `${hex}_C${C}M${M}Y${Y}K${K}.png`;
     const data = await _solidPngBytes(sw.hex, 128);
     entries.push({ name: fn, data });
   }
@@ -3598,7 +3604,7 @@ async function _buildPaletteZip(palette, swatches) {
   const dEthr = (typeof LIBRARY_META !== 'undefined' && LIBRARY_META)
     ? LIBRARY_META.delta_e_threshold : null;
   const lines = [];
-  lines.push(`# Palette manifest - ${palette.name}`);
+  lines.push(`# Swatch manifest - ${label}`);
   lines.push(`# ICC profile     : ${profile}`);
   if (dEthr != null) lines.push(`# deltaE threshold: ${dEthr}`);
   lines.push(`# Total swatches  : ${swatches.length}`);
@@ -3614,16 +3620,33 @@ async function _buildPaletteZip(palette, swatches) {
   }
   entries.push({ name: 'manifest.txt', data: enc.encode(lines.join('\n') + '\n') });
 
-  // 3. manifest.csv - same columns as swatches.py (l.1095-1102)
-  const csvRows = [['name','hex','r','g','b','c','m','y','k','delta_e','filename']];
+  // 3. manifest.csv - per-library closest names + deltaE (dynamic from CORPORA)
+  const libHeaders = [];
+  for (const lib of CORPORA.libraries) {
+    libHeaders.push(`${lib.id}_name_en`, `${lib.id}_deltaE`);
+  }
+  const csvRows = [['filename','hex','r','g','b','c','m','y','k',
+    'L_star','a_star','b_star','delta_e_print', ...libHeaders]];
   for (const sw of swatches) {
     const hex = sw.hex.replace('#','').toLowerCase();
-    const name = sw.export_name || hex;
+    const C = String(sw.C).padStart(3,'0');
+    const M = String(sw.M).padStart(3,'0');
+    const Y = String(sw.Y).padStart(3,'0');
+    const K = String(sw.K).padStart(3,'0');
+    const fn = `${hex}_C${C}M${M}Y${Y}K${K}.png`;
+    const libCols = [];
+    for (const lib of CORPORA.libraries) {
+      const entry = sw[`${lib.id}__name`];
+      libCols.push(entry?.name_en || '', sw[`${lib.id}__deltaE`] ?? '');
+    }
     csvRows.push([
-      name, '#' + hex.toUpperCase(),
+      fn, '#' + hex.toUpperCase(),
       sw.R, sw.G, sw.B, sw.C, sw.M, sw.Y, sw.K,
+      sw.L_star == null ? '' : (+sw.L_star).toFixed(3),
+      sw.a_star == null ? '' : (+sw.a_star).toFixed(3),
+      sw.b_star == null ? '' : (+sw.b_star).toFixed(3),
       sw.delta_e_print == null ? '' : (+sw.delta_e_print).toFixed(3),
-      `swatch-${hex}-${name}.png`,
+      ...libCols,
     ]);
   }
   const csvText = '﻿' + csvRows.map(r => r.map(v => {
@@ -3632,39 +3655,56 @@ async function _buildPaletteZip(palette, swatches) {
   }).join(',')).join('\n') + '\n';
   entries.push({ name: 'manifest.csv', data: enc.encode(csvText) });
 
-  // 4. palette.json - structured swatch data
+  // 4. manifest.json - structured swatch data array
   const jsObj = {
+    label,
     icc_profile: profile,
     delta_e_threshold: dEthr,
-    count_k_ramp: swatches.filter(s => s.C===0 && s.M===0 && s.Y===0).length,
     count_total: swatches.length,
     swatches: swatches.map(s => {
       const hex = s.hex.replace('#','').toLowerCase();
-      return {
+      const C = String(s.C).padStart(3,'0');
+      const M = String(s.M).padStart(3,'0');
+      const Y = String(s.Y).padStart(3,'0');
+      const K = String(s.K).padStart(3,'0');
+      const row = {
+        filename: `${hex}_C${C}M${M}Y${Y}K${K}.png`,
+        hex,
         rgb: [s.R, s.G, s.B],
-        hex: hex,
         cmyk: [s.C, s.M, s.Y, s.K],
         lab: [s.L_star, s.a_star, s.b_star],
-        delta_e: s.delta_e_print == null ? null : +(+s.delta_e_print).toFixed(3),
-        name: s.export_name || hex,
-        corpora: (() => {
-          const c = {};
-          for (const lib of CORPORA.libraries) {
-            const entry = s[`${lib.id}__name`];
-            if (entry) {
-              c[lib.id] = {};
-              for (const f of lib.fields) c[lib.id][f.id] = entry[f.id] || null;
-              c[lib.id].deltaE = s[`${lib.id}__deltaE`] ?? null;
-            }
-          }
-          return c;
-        })(),
+        delta_e_print: s.delta_e_print == null ? null : +(+s.delta_e_print).toFixed(3),
       };
+      for (const lib of CORPORA.libraries) {
+        const entry = s[`${lib.id}__name`];
+        row[lib.id] = entry
+          ? { name_en: entry.name_en || null, deltaE: s[`${lib.id}__deltaE`] ?? null }
+          : null;
+      }
+      return row;
     }),
   };
-  entries.push({ name: 'palette.json', data: enc.encode(JSON.stringify(jsObj, null, 2)) });
+  entries.push({ name: 'manifest.json', data: enc.encode(JSON.stringify(jsObj, null, 2)) });
 
   return buildZip(entries);
+}
+
+// Thin wrapper kept for backwards compatibility with per-palette ZIP calls.
+async function _buildPaletteZip(palette, swatches) {
+  return _buildSwatchZip(swatches, palette.name);
+}
+
+// Top-level: export all currently-filtered swatches as a ZIP.
+async function exportFilteredSwatchZIP() {
+  const swatches = typeof filtered === 'function' ? filtered() : [];
+  if (!swatches.length) { alert('No swatches in current filter.'); return; }
+  if (swatches.length > 5000) {
+    const mb = (swatches.length * 0.6 / 1024).toFixed(0);
+    if (!confirm(`You are about to download ${swatches.length} swatches as individual PNGs (~${mb} MB ZIP). Continue?`)) return;
+  }
+  const zipBytes = await _buildSwatchZip(swatches, `filtered-${swatches.length}`);
+  downloadBlob(new Blob([zipBytes], { type: 'application/zip' }),
+    `mixo-swatch-filtered-${swatches.length}.zip`);
 }
 
 async function exportActivePaletteZIP() {
