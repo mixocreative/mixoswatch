@@ -30,7 +30,7 @@ def main():
     entries = []
     for r in raw:
         kanji = r.get("name") or r.get("kanji") or ""
-        romaji = (r.get("pronounce") or r.get("romaji") or "").strip()
+        romaji = (r.get("pronounce") or r.get("romaji") or "").strip().lower()
         hex_v = r.get("hex", "").upper()
         if not hex_v.startswith("#"):
             hex_v = "#" + hex_v
