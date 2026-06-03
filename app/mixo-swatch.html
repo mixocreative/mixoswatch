@@ -1436,7 +1436,7 @@ function _setLibFilter(libId, on) {
 
 // Cache both Lab modes for a single corpus entry.
 // hex path: parsed directly from entry.hex.
-// cmyk path: requires ACTIVE_LUT; silently skipped if LUT not loaded yet.
+// cmyk path: requires active forward LUT bytes; silently skipped if LUT not loaded yet.
 function _cacheEntryLabs(e) {
   if (e.hex) {
     const r=parseInt(e.hex.slice(1,3),16),
@@ -1445,14 +1445,16 @@ function _cacheEntryLabs(e) {
     e._lab_d50_hex = rgb2lab_d50(r,g,b);
     e._lab_d65_hex = rgb2lab_d65(r,g,b);
   }
-  if (Array.isArray(e.cmyk) && e.cmyk.length === 4 && ACTIVE_LUT) {
-    const [R,G,B] = lutLookup(ACTIVE_LUT, e.cmyk[0], e.cmyk[1], e.cmyk[2], e.cmyk[3]);
+  const fwd = (typeof ACTIVE_PROFILE !== 'undefined' && ACTIVE_PROFILE)
+              ? LUT_CACHE.get(ACTIVE_PROFILE.lut) : null;
+  if (Array.isArray(e.cmyk) && e.cmyk.length === 4 && fwd) {
+    const [R,G,B] = lutLookup(fwd, e.cmyk[0], e.cmyk[1], e.cmyk[2], e.cmyk[3]);
     e._lab_d50_cmyk = rgb2lab_d50(R,G,B);
     e._lab_d65_cmyk = rgb2lab_d65(R,G,B);
   }
 }
 
-// Fill in cmyk Lab for entries that were cached before ACTIVE_LUT was ready.
+// Fill in cmyk Lab for entries that were cached before forward LUT was ready.
 // Called when anchor flips to 'cmyk' or when a new LUT is loaded.
 function _ensureCorpusCmykLabs(lib, fwdLUT) {
   if (!fwdLUT) return false;
@@ -3151,8 +3153,7 @@ function exportCSV() {
     const fxv = fixed.map(f => {
       const v = s[f] ?? '';
       const sv = String(v);
-      return /["
-,]/.test(sv) ? '"' + sv.replace(/"/g,'""') + '"' : sv;
+      return /["\n,]/.test(sv) ? '"' + sv.replace(/"/g,'""') + '"' : sv;
     });
     const dyv = [];
     for (const lib of CORPORA.libraries) {
@@ -3160,15 +3161,13 @@ function exportCSV() {
       for (const f of lib.fields) {
         const v = entry ? (entry[f.id] ?? '') : '';
         const sv = String(v);
-        dyv.push(/["
-,]/.test(sv) ? '"' + sv.replace(/"/g,'""') + '"' : sv);
+        dyv.push(/["\n,]/.test(sv) ? '"' + sv.replace(/"/g,'""') + '"' : sv);
       }
       dyv.push(s[lib.id + '__deltaE'] ?? '');
     }
     rows.push([...fxv, ...dyv].join(','));
   });
-  const blob = new Blob(['﻿'+rows.join('
-')],{type:'text/csv;charset=utf-8'});
+  const blob = new Blob(['﻿'+rows.join('\n')],{type:'text/csv;charset=utf-8'});
   const a = Object.assign(document.createElement('a'),
     {href:URL.createObjectURL(blob), download:'cmyk_step' + curStep + '.csv'});
   a.click();
