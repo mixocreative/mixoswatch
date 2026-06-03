@@ -1,0 +1,3297 @@
+{
+  "id": "jp-trad",
+  "label": {
+    "en": "Japanese traditional (NipponColors 250)",
+    "ja": "日本の伝統色",
+    "zh": "日本传统色"
+  },
+  "fields": [
+    {
+      "id": "name_ja",
+      "label": {
+        "en": "kanji",
+        "ja": "漢字",
+        "zh": "汉字"
+      }
+    },
+    {
+      "id": "romaji",
+      "label": {
+        "en": "romaji",
+        "ja": "ローマ字",
+        "zh": "罗马字"
+      }
+    },
+    {
+      "id": "name_en",
+      "label": {
+        "en": "English",
+        "ja": "英語",
+        "zh": "英文"
+      }
+    },
+    {
+      "id": "name_zh",
+      "label": {
+        "en": "Chinese",
+        "ja": "中国語",
+        "zh": "中文"
+      }
+    }
+  ],
+  "default_display": "name_ja",
+  "anchor": "cmyk",
+  "source": "https://nipponcolors.com/ (250 entries, public)",
+  "entries": [
+    {
+      "name_ja": "撫子",
+      "romaji": "NADESHIKO",
+      "name_en": "NADESHIKO",
+      "name_zh": "NADESHIKO",
+      "hex": "#DC9FB4",
+      "cmyk": [
+        2,
+        43,
+        3,
+        0
+      ]
+    },
+    {
+      "name_ja": "紅梅",
+      "romaji": "KOHBAI",
+      "name_en": "KOHBAI",
+      "name_zh": "KOHBAI",
+      "hex": "#E16B8C",
+      "cmyk": [
+        0,
+        73,
+        24,
+        0
+      ]
+    },
+    {
+      "name_ja": "蘇芳",
+      "romaji": "SUOH",
+      "name_en": "SUOH",
+      "name_zh": "SUOH",
+      "hex": "#8E354A",
+      "cmyk": [
+        51,
+        93,
+        58,
+        10
+      ]
+    },
+    {
+      "name_ja": "退紅",
+      "romaji": "TAIKOH",
+      "name_en": "TAIKOH",
+      "name_zh": "TAIKOH",
+      "hex": "#F8C3CD",
+      "cmyk": [
+        0,
+        31,
+        9,
+        0
+      ]
+    },
+    {
+      "name_ja": "一斥染",
+      "romaji": "IKKONZOME",
+      "name_en": "IKKONZOME",
+      "name_zh": "IKKONZOME",
+      "hex": "#F4A7B9",
+      "cmyk": [
+        0,
+        48,
+        15,
+        0
+      ]
+    },
+    {
+      "name_ja": "桑染",
+      "romaji": "KUWAZOME",
+      "name_en": "KUWAZOME",
+      "name_zh": "KUWAZOME",
+      "hex": "#64363C",
+      "cmyk": [
+        69,
+        86,
+        65,
+        35
+      ]
+    },
+    {
+      "name_ja": "桃",
+      "romaji": "MOMO",
+      "name_en": "MOMO",
+      "name_zh": "MOMO",
+      "hex": "#F596AA",
+      "cmyk": [
+        0,
+        55,
+        19,
+        0
+      ]
+    },
+    {
+      "name_ja": "苺",
+      "romaji": "ICHIGO",
+      "name_en": "ICHIGO",
+      "name_zh": "ICHIGO",
+      "hex": "#B5495B",
+      "cmyk": [
+        2,
+        70,
+        38,
+        30
+      ]
+    },
+    {
+      "name_ja": "薄紅",
+      "romaji": "USUBENI",
+      "name_en": "USUBENI",
+      "name_zh": "USUBENI",
+      "hex": "#E87A90",
+      "cmyk": [
+        0,
+        64,
+        26,
+        0
+      ]
+    },
+    {
+      "name_ja": "今様",
+      "romaji": "IMAYOH",
+      "name_en": "IMAYOH",
+      "name_zh": "IMAYOH",
+      "hex": "#D05A6E",
+      "cmyk": [
+        0,
+        75,
+        38,
+        20
+      ]
+    },
+    {
+      "name_ja": "中紅",
+      "romaji": "NAKABENI",
+      "name_en": "NAKABENI",
+      "name_zh": "NAKABENI",
+      "hex": "#DB4D6D",
+      "cmyk": [
+        5,
+        83,
+        40,
+        0
+      ]
+    },
+    {
+      "name_ja": "桜",
+      "romaji": "SAKURA",
+      "name_en": "SAKURA",
+      "name_zh": "SAKURA",
+      "hex": "#FEDFE1",
+      "cmyk": [
+        0,
+        17,
+        6,
+        0
+      ]
+    },
+    {
+      "name_ja": "梅鼠",
+      "romaji": "UMENEZUMI",
+      "name_en": "UMENEZUMI",
+      "name_zh": "UMENEZUMI",
+      "hex": "#9E7A7A",
+      "cmyk": [
+        48,
+        59,
+        49,
+        0
+      ]
+    },
+    {
+      "name_ja": "韓紅花",
+      "romaji": "KARAKURENAI",
+      "name_en": "KARAKURENAI",
+      "name_zh": "KARAKURENAI",
+      "hex": "#D0104C",
+      "cmyk": [
+        15,
+        98,
+        61,
+        0
+      ]
+    },
+    {
+      "name_ja": "燕脂",
+      "romaji": "ENJI",
+      "name_en": "ENJI",
+      "name_zh": "ENJI",
+      "hex": "#9F353A",
+      "cmyk": [
+        42,
+        93,
+        68,
+        6
+      ]
+    },
+    {
+      "name_ja": "紅",
+      "romaji": "KURENAI",
+      "name_en": "KURENAI",
+      "name_zh": "KURENAI",
+      "hex": "#CB1B45",
+      "cmyk": [
+        0,
+        100,
+        65,
+        10
+      ]
+    },
+    {
+      "name_ja": "鴇",
+      "romaji": "TOKI",
+      "name_en": "TOKI",
+      "name_zh": "TOKI",
+      "hex": "#EEA9A9",
+      "cmyk": [
+        2,
+        45,
+        27,
+        0
+      ]
+    },
+    {
+      "name_ja": "長春",
+      "romaji": "CYOHSYUN",
+      "name_en": "CYOHSYUN",
+      "name_zh": "CYOHSYUN",
+      "hex": "#BF6766",
+      "cmyk": [
+        25,
+        70,
+        53,
+        0
+      ]
+    },
+    {
+      "name_ja": "深緋",
+      "romaji": "KOKIAKE",
+      "name_en": "KOKIAKE",
+      "name_zh": "KOKIAKE",
+      "hex": "#86473F",
+      "cmyk": [
+        54,
+        75,
+        65,
+        14
+      ]
+    },
+    {
+      "name_ja": "桜鼠",
+      "romaji": "SAKURANEZUMI",
+      "name_en": "SAKURANEZUMI",
+      "name_zh": "SAKURANEZUMI",
+      "hex": "#B19693",
+      "cmyk": [
+        34,
+        46,
+        39,
+        0
+      ]
+    },
+    {
+      "name_ja": "甚三紅",
+      "romaji": "JINZAMOMI",
+      "name_en": "safflower red",
+      "name_zh": "红花红",
+      "hex": "#EB7A77",
+      "cmyk": [
+        0,
+        65,
+        46,
+        0
+      ]
+    },
+    {
+      "name_ja": "小豆",
+      "romaji": "AZUKI",
+      "name_en": "AZUKI",
+      "name_zh": "AZUKI",
+      "hex": "#954A45",
+      "cmyk": [
+        48,
+        78,
+        66,
+        10
+      ]
+    },
+    {
+      "name_ja": "蘇芳香",
+      "romaji": "SUOHKOH",
+      "name_en": "SUOHKOH",
+      "name_zh": "SUOHKOH",
+      "hex": "#A96360",
+      "cmyk": [
+        42,
+        70,
+        58,
+        1
+      ]
+    },
+    {
+      "name_ja": "赤紅",
+      "romaji": "AKABENI",
+      "name_en": "AKABENI",
+      "name_zh": "AKABENI",
+      "hex": "#CB4042",
+      "cmyk": [
+        15,
+        85,
+        68,
+        0
+      ]
+    },
+    {
+      "name_ja": "真朱",
+      "romaji": "SHINSYU",
+      "name_en": "SHINSYU",
+      "name_zh": "SHINSYU",
+      "hex": "#AB3B3A",
+      "cmyk": [
+        35,
+        85,
+        70,
+        2
+      ]
+    },
+    {
+      "name_ja": "灰桜",
+      "romaji": "HAIZAKURA",
+      "name_en": "HAIZAKURA",
+      "name_zh": "HAIZAKURA",
+      "hex": "#D7C4BB",
+      "cmyk": [
+        2,
+        12,
+        12,
+        10
+      ]
+    },
+    {
+      "name_ja": "栗梅",
+      "romaji": "KURIUME",
+      "name_en": "KURIUME",
+      "name_zh": "KURIUME",
+      "hex": "#904840",
+      "cmyk": [
+        50,
+        78,
+        68,
+        13
+      ]
+    },
+    {
+      "name_ja": "海老茶",
+      "romaji": "EBICHA",
+      "name_en": "EBICHA",
+      "name_zh": "EBICHA",
+      "hex": "#734338",
+      "cmyk": [
+        55,
+        77,
+        68,
+        27
+      ]
+    },
+    {
+      "name_ja": "銀朱",
+      "romaji": "GINSYU",
+      "name_en": "GINSYU",
+      "name_zh": "GINSYU",
+      "hex": "#C73E3A",
+      "cmyk": [
+        16,
+        86,
+        70,
+        0
+      ]
+    },
+    {
+      "name_ja": "黒鳶",
+      "romaji": "KUROTOBI",
+      "name_en": "KUROTOBI",
+      "name_zh": "KUROTOBI",
+      "hex": "#554236",
+      "cmyk": [
+        71,
+        74,
+        69,
+        41
+      ]
+    },
+    {
+      "name_ja": "紅鳶",
+      "romaji": "BENITOBI",
+      "name_en": "BENITOBI",
+      "name_zh": "BENITOBI",
+      "hex": "#994639",
+      "cmyk": [
+        45,
+        82,
+        72,
+        11
+      ]
+    },
+    {
+      "name_ja": "曙",
+      "romaji": "AKEBONO",
+      "name_en": "AKEBONO",
+      "name_zh": "AKEBONO",
+      "hex": "#F19483",
+      "cmyk": [
+        0,
+        57,
+        47,
+        0
+      ]
+    },
+    {
+      "name_ja": "紅樺",
+      "romaji": "BENIKABA",
+      "name_en": "BENIKABA",
+      "name_zh": "BENIKABA",
+      "hex": "#B54434",
+      "cmyk": [
+        35,
+        87,
+        79,
+        1
+      ]
+    },
+    {
+      "name_ja": "水がき",
+      "romaji": "MIZUGAKI",
+      "name_en": "MIZUGAKI",
+      "name_zh": "MIZUGAKI",
+      "hex": "#B9887D",
+      "cmyk": [
+        30,
+        54,
+        46,
+        0
+      ]
+    },
+    {
+      "name_ja": "珊瑚朱",
+      "romaji": "SANGOSYU",
+      "name_en": "SANGOSYU",
+      "name_zh": "SANGOSYU",
+      "hex": "#F17C67",
+      "cmyk": [
+        0,
+        65,
+        58,
+        0
+      ]
+    },
+    {
+      "name_ja": "紅檜皮",
+      "romaji": "BENIHIWADA",
+      "name_en": "BENIHIWADA",
+      "name_zh": "BENIHIWADA",
+      "hex": "#884C3A",
+      "cmyk": [
+        52,
+        74,
+        70,
+        18
+      ]
+    },
+    {
+      "name_ja": "猩猩緋",
+      "romaji": "SYOJYOHI",
+      "name_en": "SYOJYOHI",
+      "name_zh": "SYOJYOHI",
+      "hex": "#E83015",
+      "cmyk": [
+        0,
+        89,
+        79,
+        0
+      ]
+    },
+    {
+      "name_ja": "鉛丹",
+      "romaji": "ENTAN",
+      "name_en": "ENTAN",
+      "name_zh": "ENTAN",
+      "hex": "#D75455",
+      "cmyk": [
+        0,
+        72,
+        63,
+        7
+      ]
+    },
+    {
+      "name_ja": "芝翫茶",
+      "romaji": "SHIKANCHA",
+      "name_en": "SHIKANCHA",
+      "name_zh": "SHIKANCHA",
+      "hex": "#B55D4C",
+      "cmyk": [
+        37,
+        72,
+        68,
+        0
+      ]
+    },
+    {
+      "name_ja": "檜皮",
+      "romaji": "HIWADA",
+      "name_en": "HIWADA",
+      "name_zh": "HIWADA",
+      "hex": "#854836",
+      "cmyk": [
+        49,
+        73,
+        70,
+        18
+      ]
+    },
+    {
+      "name_ja": "柿渋",
+      "romaji": "KAKISHIBU",
+      "name_en": "KAKISHIBU",
+      "name_zh": "KAKISHIBU",
+      "hex": "#A35E47",
+      "cmyk": [
+        43,
+        72,
+        71,
+        4
+      ]
+    },
+    {
+      "name_ja": "緋",
+      "romaji": "AKE",
+      "name_en": "AKE",
+      "name_zh": "AKE",
+      "hex": "#CC543A",
+      "cmyk": [
+        17,
+        79,
+        74,
+        0
+      ]
+    },
+    {
+      "name_ja": "鳶",
+      "romaji": "TOBI",
+      "name_en": "TOBI",
+      "name_zh": "TOBI",
+      "hex": "#724832",
+      "cmyk": [
+        58,
+        73,
+        70,
+        26
+      ]
+    },
+    {
+      "name_ja": "紅緋",
+      "romaji": "BENIHI",
+      "name_en": "BENIHI",
+      "name_zh": "BENIHI",
+      "hex": "#F75C2F",
+      "cmyk": [
+        0,
+        75,
+        74,
+        0
+      ]
+    },
+    {
+      "name_ja": "栗皮茶",
+      "romaji": "KURIKAWACHA",
+      "name_en": "KURIKAWACHA",
+      "name_zh": "KURIKAWACHA",
+      "hex": "#6A4028",
+      "cmyk": [
+        58,
+        74,
+        72,
+        30
+      ]
+    },
+    {
+      "name_ja": "弁柄",
+      "romaji": "BENGARA",
+      "name_en": "BENGARA",
+      "name_zh": "BENGARA",
+      "hex": "#9A5034",
+      "cmyk": [
+        44,
+        74,
+        75,
+        12
+      ]
+    },
+    {
+      "name_ja": "照柿",
+      "romaji": "TERIGAKI",
+      "name_en": "TERIGAKI",
+      "name_zh": "TERIGAKI",
+      "hex": "#C46243",
+      "cmyk": [
+        24,
+        72,
+        72,
+        0
+      ]
+    },
+    {
+      "name_ja": "江戸茶",
+      "romaji": "EDOCHA",
+      "name_en": "EDOCHA",
+      "name_zh": "EDOCHA",
+      "hex": "#AF5F3C",
+      "cmyk": [
+        38,
+        70,
+        71,
+        3
+      ]
+    },
+    {
+      "name_ja": "洗朱",
+      "romaji": "ARAISYU",
+      "name_en": "ARAISYU",
+      "name_zh": "ARAISYU",
+      "hex": "#FB966E",
+      "cmyk": [
+        0,
+        54,
+        56,
+        0
+      ]
+    },
+    {
+      "name_ja": "百塩茶",
+      "romaji": "MOMOSHIOCHA",
+      "name_en": "MOMOSHIOCHA",
+      "name_zh": "MOMOSHIOCHA",
+      "hex": "#724938",
+      "cmyk": [
+        61,
+        70,
+        68,
+        25
+      ]
+    },
+    {
+      "name_ja": "唐茶",
+      "romaji": "KARACHA",
+      "name_en": "KARACHA",
+      "name_zh": "KARACHA",
+      "hex": "#B47157",
+      "cmyk": [
+        38,
+        64,
+        65,
+        0
+      ]
+    },
+    {
+      "name_ja": "ときがら茶",
+      "romaji": "TOKIGARACHA",
+      "name_en": "TOKIGARACHA",
+      "name_zh": "TOKIGARACHA",
+      "hex": "#DB8E71",
+      "cmyk": [
+        10,
+        55,
+        57,
+        0
+      ]
+    },
+    {
+      "name_ja": "黄丹",
+      "romaji": "OHNI",
+      "name_en": "OHNI",
+      "name_zh": "OHNI",
+      "hex": "#F05E1C",
+      "cmyk": [
+        0,
+        72,
+        90,
+        0
+      ]
+    },
+    {
+      "name_ja": "纁",
+      "romaji": "SOHI",
+      "name_en": "SOHI",
+      "name_zh": "SOHI",
+      "hex": "#ED784A",
+      "cmyk": [
+        0,
+        65,
+        73,
+        0
+      ]
+    },
+    {
+      "name_ja": "遠州茶",
+      "romaji": "ENSYUCHA",
+      "name_en": "ENSYUCHA",
+      "name_zh": "ENSYUCHA",
+      "hex": "#CA7853",
+      "cmyk": [
+        21,
+        64,
+        67,
+        0
+      ]
+    },
+    {
+      "name_ja": "樺茶",
+      "romaji": "KABACHA",
+      "name_en": "KABACHA",
+      "name_zh": "KABACHA",
+      "hex": "#B35C37",
+      "cmyk": [
+        36,
+        72,
+        76,
+        2
+      ]
+    },
+    {
+      "name_ja": "焦茶",
+      "romaji": "KOGECHA",
+      "name_en": "KOGECHA",
+      "name_zh": "KOGECHA",
+      "hex": "#563F2E",
+      "cmyk": [
+        68,
+        73,
+        71,
+        40
+      ]
+    },
+    {
+      "name_ja": "赤香",
+      "romaji": "AKAKOH",
+      "name_en": "AKAKOH",
+      "name_zh": "AKAKOH",
+      "hex": "#E3916E",
+      "cmyk": [
+        5,
+        55,
+        60,
+        0
+      ]
+    },
+    {
+      "name_ja": "雀茶",
+      "romaji": "SUZUMECHA",
+      "name_en": "SUZUMECHA",
+      "name_zh": "SUZUMECHA",
+      "hex": "#8F5A3C",
+      "cmyk": [
+        52,
+        69,
+        73,
+        15
+      ]
+    },
+    {
+      "name_ja": "宍",
+      "romaji": "SHISHI",
+      "name_en": "SHISHI",
+      "name_zh": "SHISHI",
+      "hex": "#F0A986",
+      "cmyk": [
+        0,
+        47,
+        50,
+        0
+      ]
+    },
+    {
+      "name_ja": "宗伝唐茶",
+      "romaji": "SODENKARACHA",
+      "name_en": "SODENKARACHA",
+      "name_zh": "SODENKARACHA",
+      "hex": "#A0674B",
+      "cmyk": [
+        48,
+        66,
+        70,
+        6
+      ]
+    },
+    {
+      "name_ja": "樺",
+      "romaji": "KABA",
+      "name_en": "KABA",
+      "name_zh": "KABA",
+      "hex": "#C1693C",
+      "cmyk": [
+        26,
+        70,
+        78,
+        0
+      ]
+    },
+    {
+      "name_ja": "深支子",
+      "romaji": "KOKIKUCHINASHI",
+      "name_en": "KOKIKUCHINASHI",
+      "name_zh": "KOKIKUCHINASHI",
+      "hex": "#FB9966",
+      "cmyk": [
+        0,
+        53,
+        65,
+        0
+      ]
+    },
+    {
+      "name_ja": "胡桃",
+      "romaji": "KURUMI",
+      "name_en": "KURUMI",
+      "name_zh": "KURUMI",
+      "hex": "#947A6D",
+      "cmyk": [
+        51,
+        56,
+        57,
+        1
+      ]
+    },
+    {
+      "name_ja": "代赭",
+      "romaji": "TAISYA",
+      "name_en": "TAISYA",
+      "name_zh": "TAISYA",
+      "hex": "#A36336",
+      "cmyk": [
+        38,
+        67,
+        82,
+        3
+      ]
+    },
+    {
+      "name_ja": "洗柿",
+      "romaji": "ARAIGAKI",
+      "name_en": "ARAIGAKI",
+      "name_zh": "ARAIGAKI",
+      "hex": "#E79460",
+      "cmyk": [
+        0,
+        53,
+        67,
+        0
+      ]
+    },
+    {
+      "name_ja": "黄櫨染",
+      "romaji": "KOHROZEN",
+      "name_en": "KOHROZEN",
+      "name_zh": "KOHROZEN",
+      "hex": "#7D532C",
+      "cmyk": [
+        55,
+        68,
+        78,
+        23
+      ]
+    },
+    {
+      "name_ja": "赤朽葉",
+      "romaji": "AKAKUCHIBA",
+      "name_en": "AKAKUCHIBA",
+      "name_zh": "AKAKUCHIBA",
+      "hex": "#C78550",
+      "cmyk": [
+        5,
+        52,
+        70,
+        14
+      ]
+    },
+    {
+      "name_ja": "礪茶",
+      "romaji": "TONOCHA",
+      "name_en": "TONOCHA",
+      "name_zh": "TONOCHA",
+      "hex": "#985F2A",
+      "cmyk": [
+        48,
+        66,
+        79,
+        7
+      ]
+    },
+    {
+      "name_ja": "赤白橡",
+      "romaji": "AKASHIROTSURUBAMI",
+      "name_en": "AKASHIROTSURUBAMI",
+      "name_zh": "AKASHIROTSURUBAMI",
+      "hex": "#E1A679",
+      "cmyk": [
+        6,
+        42,
+        55,
+        0
+      ]
+    },
+    {
+      "name_ja": "煎茶",
+      "romaji": "SENCHA",
+      "name_en": "SENCHA",
+      "name_zh": "SENCHA",
+      "hex": "#855B32",
+      "cmyk": [
+        55,
+        66,
+        75,
+        14
+      ]
+    },
+    {
+      "name_ja": "萱草",
+      "romaji": "KANZO",
+      "name_en": "KANZO",
+      "name_zh": "KANZO",
+      "hex": "#FC9F4D",
+      "cmyk": [
+        0,
+        49,
+        72,
+        0
+      ]
+    },
+    {
+      "name_ja": "洒落柿",
+      "romaji": "SHAREGAKI",
+      "name_en": "SHAREGAKI",
+      "name_zh": "SHAREGAKI",
+      "hex": "#FFBA84",
+      "cmyk": [
+        0,
+        36,
+        53,
+        0
+      ]
+    },
+    {
+      "name_ja": "紅鬱金",
+      "romaji": "BENIUKON",
+      "name_en": "BENIUKON",
+      "name_zh": "BENIUKON",
+      "hex": "#E98B2A",
+      "cmyk": [
+        0,
+        52,
+        80,
+        0
+      ]
+    },
+    {
+      "name_ja": "梅染",
+      "romaji": "UMEZOME",
+      "name_en": "UMEZOME",
+      "name_zh": "UMEZOME",
+      "hex": "#E9A368",
+      "cmyk": [
+        3,
+        45,
+        62,
+        0
+      ]
+    },
+    {
+      "name_ja": "枇杷茶",
+      "romaji": "BIWACHA",
+      "name_en": "BIWACHA",
+      "name_zh": "BIWACHA",
+      "hex": "#B17844",
+      "cmyk": [
+        35,
+        58,
+        75,
+        0
+      ]
+    },
+    {
+      "name_ja": "丁子茶",
+      "romaji": "CHOJICHA",
+      "name_en": "CHOJICHA",
+      "name_zh": "CHOJICHA",
+      "hex": "#96632E",
+      "cmyk": [
+        50,
+        61,
+        76,
+        9
+      ]
+    },
+    {
+      "name_ja": "憲法染",
+      "romaji": "KENPOHZOME",
+      "name_en": "KENPOHZOME",
+      "name_zh": "KENPOHZOME",
+      "hex": "#43341B",
+      "cmyk": [
+        76,
+        71,
+        73,
+        47
+      ]
+    },
+    {
+      "name_ja": "琥珀",
+      "romaji": "KOHAKU",
+      "name_en": "KOHAKU",
+      "name_zh": "KOHAKU",
+      "hex": "#CA7A2C",
+      "cmyk": [
+        20,
+        58,
+        85,
+        0
+      ]
+    },
+    {
+      "name_ja": "薄柿",
+      "romaji": "USUGAKI",
+      "name_en": "USUGAKI",
+      "name_zh": "USUGAKI",
+      "hex": "#ECB88A",
+      "cmyk": [
+        0,
+        34,
+        52,
+        0
+      ]
+    },
+    {
+      "name_ja": "伽羅",
+      "romaji": "KYARA",
+      "name_en": "KYARA",
+      "name_zh": "KYARA",
+      "hex": "#78552B",
+      "cmyk": [
+        58,
+        62,
+        72,
+        16
+      ]
+    },
+    {
+      "name_ja": "丁子染",
+      "romaji": "CHOJIZOME",
+      "name_en": "CHOJIZOME",
+      "name_zh": "CHOJIZOME",
+      "hex": "#B07736",
+      "cmyk": [
+        36,
+        57,
+        79,
+        0
+      ]
+    },
+    {
+      "name_ja": "柴染",
+      "romaji": "FUSHIZOME",
+      "name_en": "FUSHIZOME",
+      "name_zh": "FUSHIZOME",
+      "hex": "#967249",
+      "cmyk": [
+        50,
+        56,
+        71,
+        5
+      ]
+    },
+    {
+      "name_ja": "朽葉",
+      "romaji": "KUCHIBA",
+      "name_en": "KUCHIBA",
+      "name_zh": "KUCHIBA",
+      "hex": "#E2943B",
+      "cmyk": [
+        7,
+        49,
+        80,
+        0
+      ]
+    },
+    {
+      "name_ja": "金茶",
+      "romaji": "KINCHA",
+      "name_en": "KINCHA",
+      "name_zh": "KINCHA",
+      "hex": "#C7802D",
+      "cmyk": [
+        20,
+        56,
+        89,
+        0
+      ]
+    },
+    {
+      "name_ja": "狐",
+      "romaji": "KITSUNE",
+      "name_en": "KITSUNE",
+      "name_zh": "KITSUNE",
+      "hex": "#9B6E23",
+      "cmyk": [
+        46,
+        57,
+        80,
+        4
+      ]
+    },
+    {
+      "name_ja": "煤竹",
+      "romaji": "SUSUTAKE",
+      "name_en": "SUSUTAKE",
+      "name_zh": "SUSUTAKE",
+      "hex": "#6E552F",
+      "cmyk": [
+        62,
+        63,
+        73,
+        21
+      ]
+    },
+    {
+      "name_ja": "薄香",
+      "romaji": "USUKOH",
+      "name_en": "USUKOH",
+      "name_zh": "USUKOH",
+      "hex": "#EBB471",
+      "cmyk": [
+        0,
+        34,
+        60,
+        0
+      ]
+    },
+    {
+      "name_ja": "砥粉",
+      "romaji": "TONOKO",
+      "name_en": "TONOKO",
+      "name_zh": "TONOKO",
+      "hex": "#D7B98E",
+      "cmyk": [
+        5,
+        20,
+        38,
+        15
+      ]
+    },
+    {
+      "name_ja": "銀煤竹",
+      "romaji": "GINSUSUTAKE",
+      "name_en": "GINSUSUTAKE",
+      "name_zh": "GINSUSUTAKE",
+      "hex": "#82663A",
+      "cmyk": [
+        54,
+        58,
+        76,
+        10
+      ]
+    },
+    {
+      "name_ja": "黄土",
+      "romaji": "OHDO",
+      "name_en": "OHDO",
+      "name_zh": "OHDO",
+      "hex": "#B68E55",
+      "cmyk": [
+        31,
+        45,
+        66,
+        0
+      ]
+    },
+    {
+      "name_ja": "白茶",
+      "romaji": "SHIRACHA",
+      "name_en": "SHIRACHA",
+      "name_zh": "SHIRACHA",
+      "hex": "#BC9F77",
+      "cmyk": [
+        32,
+        40,
+        57,
+        0
+      ]
+    },
+    {
+      "name_ja": "媚茶",
+      "romaji": "KOBICHA",
+      "name_en": "KOBICHA",
+      "name_zh": "KOBICHA",
+      "hex": "#876633",
+      "cmyk": [
+        58,
+        59,
+        78,
+        14
+      ]
+    },
+    {
+      "name_ja": "黄唐茶",
+      "romaji": "KIGARACHA",
+      "name_en": "KIGARACHA",
+      "name_zh": "KIGARACHA",
+      "hex": "#C18A26",
+      "cmyk": [
+        28,
+        48,
+        83,
+        0
+      ]
+    },
+    {
+      "name_ja": "山吹",
+      "romaji": "YAMABUKI",
+      "name_en": "YAMABUKI",
+      "name_zh": "YAMABUKI",
+      "hex": "#FFB11B",
+      "cmyk": [
+        0,
+        37,
+        87,
+        0
+      ]
+    },
+    {
+      "name_ja": "山吹茶",
+      "romaji": "YAMABUKICHA",
+      "name_en": "YAMABUKICHA",
+      "name_zh": "YAMABUKICHA",
+      "hex": "#D19826",
+      "cmyk": [
+        17,
+        44,
+        89,
+        0
+      ]
+    },
+    {
+      "name_ja": "櫨染",
+      "romaji": "HAJIZOME",
+      "name_en": "HAJIZOME",
+      "name_zh": "HAJIZOME",
+      "hex": "#DDA52D",
+      "cmyk": [
+        8,
+        40,
+        83,
+        0
+      ]
+    },
+    {
+      "name_ja": "桑茶",
+      "romaji": "KUWACHA",
+      "name_en": "KUWACHA",
+      "name_zh": "KUWACHA",
+      "hex": "#C99833",
+      "cmyk": [
+        25,
+        44,
+        83,
+        0
+      ]
+    },
+    {
+      "name_ja": "玉子",
+      "romaji": "TAMAGO",
+      "name_en": "TAMAGO",
+      "name_zh": "TAMAGO",
+      "hex": "#F9BF45",
+      "cmyk": [
+        0,
+        29,
+        74,
+        0
+      ]
+    },
+    {
+      "name_ja": "白橡",
+      "romaji": "SHIROTSURUBAMI",
+      "name_en": "SHIROTSURUBAMI",
+      "name_zh": "SHIROTSURUBAMI",
+      "hex": "#DCB879",
+      "cmyk": [
+        16,
+        30,
+        60,
+        0
+      ]
+    },
+    {
+      "name_ja": "黄橡",
+      "romaji": "KITSURUBAMI",
+      "name_en": "KITSURUBAMI",
+      "name_zh": "KITSURUBAMI",
+      "hex": "#BA9132",
+      "cmyk": [
+        31,
+        44,
+        77,
+        0
+      ]
+    },
+    {
+      "name_ja": "玉蜀黍",
+      "romaji": "TAMAMOROKOSHI",
+      "name_en": "TAMAMOROKOSHI",
+      "name_zh": "TAMAMOROKOSHI",
+      "hex": "#E8B647",
+      "cmyk": [
+        4,
+        29,
+        71,
+        0
+      ]
+    },
+    {
+      "name_ja": "花葉",
+      "romaji": "HANABA",
+      "name_en": "HANABA",
+      "name_zh": "HANABA",
+      "hex": "#F7C242",
+      "cmyk": [
+        0,
+        25,
+        72,
+        0
+      ]
+    },
+    {
+      "name_ja": "生壁",
+      "romaji": "NAMAKABE",
+      "name_en": "NAMAKABE",
+      "name_zh": "NAMAKABE",
+      "hex": "#7D6C46",
+      "cmyk": [
+        58,
+        56,
+        70,
+        8
+      ]
+    },
+    {
+      "name_ja": "鳥の子",
+      "romaji": "TORINOKO",
+      "name_en": "TORINOKO",
+      "name_zh": "TORINOKO",
+      "hex": "#DAC9A6",
+      "cmyk": [
+        14,
+        20,
+        39,
+        0
+      ]
+    },
+    {
+      "name_ja": "浅黄",
+      "romaji": "USUKI",
+      "name_en": "USUKI",
+      "name_zh": "USUKI",
+      "hex": "#FAD689",
+      "cmyk": [
+        0,
+        17,
+        53,
+        0
+      ]
+    },
+    {
+      "name_ja": "黄朽葉",
+      "romaji": "KIKUCHIBA",
+      "name_en": "KIKUCHIBA",
+      "name_zh": "KIKUCHIBA",
+      "hex": "#D9AB42",
+      "cmyk": [
+        14,
+        33,
+        75,
+        0
+      ]
+    },
+    {
+      "name_ja": "梔子",
+      "romaji": "KUCHINASHI",
+      "name_en": "KUCHINASHI",
+      "name_zh": "KUCHINASHI",
+      "hex": "#F6C555",
+      "cmyk": [
+        0,
+        25,
+        70,
+        0
+      ]
+    },
+    {
+      "name_ja": "籐黄",
+      "romaji": "TOHOH",
+      "name_en": "TOHOH",
+      "name_zh": "TOHOH",
+      "hex": "#FFC408",
+      "cmyk": [
+        0,
+        25,
+        86,
+        0
+      ]
+    },
+    {
+      "name_ja": "鬱金",
+      "romaji": "UKON",
+      "name_en": "UKON",
+      "name_zh": "UKON",
+      "hex": "#EFBB24",
+      "cmyk": [
+        3,
+        29,
+        88,
+        0
+      ]
+    },
+    {
+      "name_ja": "芥子",
+      "romaji": "KARASHI",
+      "name_en": "KARASHI",
+      "name_zh": "KARASHI",
+      "hex": "#CAAD5F",
+      "cmyk": [
+        0,
+        16,
+        70,
+        27
+      ]
+    },
+    {
+      "name_ja": "肥後煤竹",
+      "romaji": "HIGOSUSUTAKE",
+      "name_en": "HIGOSUSUTAKE",
+      "name_zh": "HIGOSUSUTAKE",
+      "hex": "#8D742A",
+      "cmyk": [
+        55,
+        53,
+        82,
+        7
+      ]
+    },
+    {
+      "name_ja": "利休白茶",
+      "romaji": "RIKYUSHIRACHA",
+      "name_en": "RIKYUSHIRACHA",
+      "name_zh": "RIKYUSHIRACHA",
+      "hex": "#B4A582",
+      "cmyk": [
+        36,
+        33,
+        54,
+        0
+      ]
+    },
+    {
+      "name_ja": "灰汁",
+      "romaji": "AKU",
+      "name_en": "AKU",
+      "name_zh": "AKU",
+      "hex": "#877F6C",
+      "cmyk": [
+        58,
+        51,
+        60,
+        1
+      ]
+    },
+    {
+      "name_ja": "利休茶",
+      "romaji": "RIKYUCHA",
+      "name_en": "RIKYUCHA",
+      "name_zh": "RIKYUCHA",
+      "hex": "#897D55",
+      "cmyk": [
+        57,
+        50,
+        70,
+        3
+      ]
+    },
+    {
+      "name_ja": "路考茶",
+      "romaji": "ROKOHCHA",
+      "name_en": "ROKOHCHA",
+      "name_zh": "ROKOHCHA",
+      "hex": "#74673E",
+      "cmyk": [
+        64,
+        57,
+        73,
+        10
+      ]
+    },
+    {
+      "name_ja": "菜種油",
+      "romaji": "NATANEYU",
+      "name_en": "NATANEYU",
+      "name_zh": "NATANEYU",
+      "hex": "#A28C37",
+      "cmyk": [
+        46,
+        42,
+        84,
+        0
+      ]
+    },
+    {
+      "name_ja": "鶯茶",
+      "romaji": "UGUISUCHA",
+      "name_en": "UGUISUCHA",
+      "name_zh": "UGUISUCHA",
+      "hex": "#6C6024",
+      "cmyk": [
+        64,
+        56,
+        78,
+        16
+      ]
+    },
+    {
+      "name_ja": "黄海松茶",
+      "romaji": "KIMIRUCHA",
+      "name_en": "KIMIRUCHA",
+      "name_zh": "KIMIRUCHA",
+      "hex": "#867835",
+      "cmyk": [
+        57,
+        48,
+        78,
+        6
+      ]
+    },
+    {
+      "name_ja": "海松茶",
+      "romaji": "MIRUCHA",
+      "name_en": "MIRUCHA",
+      "name_zh": "MIRUCHA",
+      "hex": "#62592C",
+      "cmyk": [
+        68,
+        59,
+        75,
+        22
+      ]
+    },
+    {
+      "name_ja": "刈安",
+      "romaji": "KARIYASU",
+      "name_en": "KARIYASU",
+      "name_zh": "KARIYASU",
+      "hex": "#E9CD4C",
+      "cmyk": [
+        7,
+        15,
+        74,
+        0
+      ]
+    },
+    {
+      "name_ja": "菜の花",
+      "romaji": "NANOHANA",
+      "name_en": "NANOHANA",
+      "name_zh": "NANOHANA",
+      "hex": "#F7D94C",
+      "cmyk": [
+        2,
+        11,
+        75,
+        0
+      ]
+    },
+    {
+      "name_ja": "黄蘗",
+      "romaji": "KIHADA",
+      "name_en": "KIHADA",
+      "name_zh": "KIHADA",
+      "hex": "#FBE251",
+      "cmyk": [
+        0,
+        5,
+        73,
+        0
+      ]
+    },
+    {
+      "name_ja": "蒸栗",
+      "romaji": "MUSHIKURI",
+      "name_en": "MUSHIKURI",
+      "name_zh": "MUSHIKURI",
+      "hex": "#D9CD90",
+      "cmyk": [
+        16,
+        15,
+        52,
+        0
+      ]
+    },
+    {
+      "name_ja": "青朽葉",
+      "romaji": "AOKUCHIBA",
+      "name_en": "AOKUCHIBA",
+      "name_zh": "AOKUCHIBA",
+      "hex": "#ADA142",
+      "cmyk": [
+        38,
+        31,
+        76,
+        0
+      ]
+    },
+    {
+      "name_ja": "女郎花",
+      "romaji": "OMINAESHI",
+      "name_en": "OMINAESHI",
+      "name_zh": "OMINAESHI",
+      "hex": "#DDD23B",
+      "cmyk": [
+        16,
+        9,
+        82,
+        0
+      ]
+    },
+    {
+      "name_ja": "鶸茶",
+      "romaji": "HIWACHA",
+      "name_en": "HIWACHA",
+      "name_zh": "HIWACHA",
+      "hex": "#A5A051",
+      "cmyk": [
+        45,
+        33,
+        76,
+        0
+      ]
+    },
+    {
+      "name_ja": "鶸",
+      "romaji": "HIWA",
+      "name_en": "HIWA",
+      "name_zh": "HIWA",
+      "hex": "#BEC23F",
+      "cmyk": [
+        32,
+        15,
+        85,
+        0
+      ]
+    },
+    {
+      "name_ja": "鶯",
+      "romaji": "UGUISU",
+      "name_en": "UGUISU",
+      "name_zh": "UGUISU",
+      "hex": "#6C6A2D",
+      "cmyk": [
+        67,
+        54,
+        84,
+        14
+      ]
+    },
+    {
+      "name_ja": "柳茶",
+      "romaji": "YANAGICHA",
+      "name_en": "YANAGICHA",
+      "name_zh": "YANAGICHA",
+      "hex": "#939650",
+      "cmyk": [
+        52,
+        37,
+        73,
+        0
+      ]
+    },
+    {
+      "name_ja": "苔",
+      "romaji": "KOKE",
+      "name_en": "KOKE",
+      "name_zh": "KOKE",
+      "hex": "#838A2D",
+      "cmyk": [
+        62,
+        41,
+        83,
+        2
+      ]
+    },
+    {
+      "name_ja": "麹塵",
+      "romaji": "KIKUJIN",
+      "name_en": "KIKUJIN",
+      "name_zh": "KIKUJIN",
+      "hex": "#B1B479",
+      "cmyk": [
+        37,
+        23,
+        63,
+        0
+      ]
+    },
+    {
+      "name_ja": "璃寛茶",
+      "romaji": "RIKANCHA",
+      "name_en": "RIKANCHA",
+      "name_zh": "RIKANCHA",
+      "hex": "#616138",
+      "cmyk": [
+        72,
+        58,
+        73,
+        19
+      ]
+    },
+    {
+      "name_ja": "藍媚茶",
+      "romaji": "AIKOBICHA",
+      "name_en": "AIKOBICHA",
+      "name_zh": "AIKOBICHA",
+      "hex": "#4B4E2A",
+      "cmyk": [
+        76,
+        61,
+        74,
+        30
+      ]
+    },
+    {
+      "name_ja": "海松",
+      "romaji": "MIRU",
+      "name_en": "MIRU",
+      "name_zh": "MIRU",
+      "hex": "#5B622E",
+      "cmyk": [
+        72,
+        56,
+        78,
+        20
+      ]
+    },
+    {
+      "name_ja": "千歳茶",
+      "romaji": "SENSAICHA",
+      "name_en": "SENSAICHA",
+      "name_zh": "SENSAICHA",
+      "hex": "#4D5139",
+      "cmyk": [
+        77,
+        61,
+        70,
+        30
+      ]
+    },
+    {
+      "name_ja": "梅幸茶",
+      "romaji": "BAIKOCHA",
+      "name_en": "BAIKOCHA",
+      "name_zh": "BAIKOCHA",
+      "hex": "#89916B",
+      "cmyk": [
+        57,
+        38,
+        63,
+        0
+      ]
+    },
+    {
+      "name_ja": "鶸萌黄",
+      "romaji": "HIWAMOEGI",
+      "name_en": "HIWAMOEGI",
+      "name_zh": "HIWAMOEGI",
+      "hex": "#90B44B",
+      "cmyk": [
+        56,
+        13,
+        77,
+        0
+      ]
+    },
+    {
+      "name_ja": "柳染",
+      "romaji": "YANAGIZOME",
+      "name_en": "YANAGIZOME",
+      "name_zh": "YANAGIZOME",
+      "hex": "#91AD70",
+      "cmyk": [
+        56,
+        24,
+        65,
+        0
+      ]
+    },
+    {
+      "name_ja": "裏柳",
+      "romaji": "URAYANAGI",
+      "name_en": "URAYANAGI",
+      "name_zh": "URAYANAGI",
+      "hex": "#B5CAA0",
+      "cmyk": [
+        36,
+        10,
+        45,
+        0
+      ]
+    },
+    {
+      "name_ja": "岩井茶",
+      "romaji": "IWAICHA",
+      "name_en": "IWAICHA",
+      "name_zh": "IWAICHA",
+      "hex": "#646A58",
+      "cmyk": [
+        69,
+        52,
+        63,
+        7
+      ]
+    },
+    {
+      "name_ja": "萌黄",
+      "romaji": "MOEGI",
+      "name_en": "MOEGI",
+      "name_zh": "MOEGI",
+      "hex": "#7BA23F",
+      "cmyk": [
+        70,
+        23,
+        86,
+        0
+      ]
+    },
+    {
+      "name_ja": "苗",
+      "romaji": "NAE",
+      "name_en": "NAE",
+      "name_zh": "NAE",
+      "hex": "#86C166",
+      "cmyk": [
+        57,
+        1,
+        72,
+        0
+      ]
+    },
+    {
+      "name_ja": "柳煤竹",
+      "romaji": "YANAGISUSUTAKE",
+      "name_en": "YANAGISUSUTAKE",
+      "name_zh": "YANAGISUSUTAKE",
+      "hex": "#4A593D",
+      "cmyk": [
+        76,
+        57,
+        70,
+        17
+      ]
+    },
+    {
+      "name_ja": "松葉",
+      "romaji": "MATSUBA",
+      "name_en": "MATSUBA",
+      "name_zh": "MATSUBA",
+      "hex": "#42602D",
+      "cmyk": [
+        80,
+        55,
+        79,
+        20
+      ]
+    },
+    {
+      "name_ja": "青丹",
+      "romaji": "AONI",
+      "name_en": "AONI",
+      "name_zh": "AONI",
+      "hex": "#516E41",
+      "cmyk": [
+        76,
+        51,
+        75,
+        12
+      ]
+    },
+    {
+      "name_ja": "薄青",
+      "romaji": "USUAO",
+      "name_en": "USUAO",
+      "name_zh": "USUAO",
+      "hex": "#91B493",
+      "cmyk": [
+        57,
+        19,
+        52,
+        0
+      ]
+    },
+    {
+      "name_ja": "柳鼠",
+      "romaji": "YANAGINEZUMI",
+      "name_en": "YANAGINEZUMI",
+      "name_zh": "YANAGINEZUMI",
+      "hex": "#808F7C",
+      "cmyk": [
+        61,
+        41,
+        53,
+        0
+      ]
+    },
+    {
+      "name_ja": "常磐",
+      "romaji": "TOKIWA",
+      "name_en": "TOKIWA",
+      "name_zh": "TOKIWA",
+      "hex": "#1B813E",
+      "cmyk": [
+        82,
+        0,
+        78,
+        40
+      ]
+    },
+    {
+      "name_ja": "若竹",
+      "romaji": "WAKATAKE",
+      "name_en": "WAKATAKE",
+      "name_zh": "WAKATAKE",
+      "hex": "#5DAC81",
+      "cmyk": [
+        68,
+        13,
+        59,
+        0
+      ]
+    },
+    {
+      "name_ja": "千歳緑",
+      "romaji": "CHITOSEMIDORI",
+      "name_en": "CHITOSEMIDORI",
+      "name_zh": "CHITOSEMIDORI",
+      "hex": "#36563C",
+      "cmyk": [
+        83,
+        55,
+        69,
+        22
+      ]
+    },
+    {
+      "name_ja": "緑",
+      "romaji": "MIDORI",
+      "name_en": "MIDORI",
+      "name_zh": "MIDORI",
+      "hex": "#227D51",
+      "cmyk": [
+        86,
+        36,
+        70,
+        0
+      ]
+    },
+    {
+      "name_ja": "白緑",
+      "romaji": "BYAKUROKU",
+      "name_en": "BYAKUROKU",
+      "name_zh": "BYAKUROKU",
+      "hex": "#A8D8B9",
+      "cmyk": [
+        44,
+        0,
+        37,
+        0
+      ]
+    },
+    {
+      "name_ja": "老竹",
+      "romaji": "OITAKE",
+      "name_en": "OITAKE",
+      "name_zh": "OITAKE",
+      "hex": "#6A8372",
+      "cmyk": [
+        71,
+        46,
+        60,
+        2
+      ]
+    },
+    {
+      "name_ja": "木賊",
+      "romaji": "TOKUSA",
+      "name_en": "TOKUSA",
+      "name_zh": "TOKUSA",
+      "hex": "#2D6D4B",
+      "cmyk": [
+        86,
+        46,
+        70,
+        8
+      ]
+    },
+    {
+      "name_ja": "御納戸茶",
+      "romaji": "ONANDOCHA",
+      "name_en": "ONANDOCHA",
+      "name_zh": "ONANDOCHA",
+      "hex": "#465D4C",
+      "cmyk": [
+        81,
+        60,
+        68,
+        22
+      ]
+    },
+    {
+      "name_ja": "緑青",
+      "romaji": "ROKUSYOH",
+      "name_en": "ROKUSYOH",
+      "name_zh": "ROKUSYOH",
+      "hex": "#24936E",
+      "cmyk": [
+        83,
+        23,
+        63,
+        0
+      ]
+    },
+    {
+      "name_ja": "錆青磁",
+      "romaji": "SABISEIJI",
+      "name_en": "SABISEIJI",
+      "name_zh": "SABISEIJI",
+      "hex": "#86A697",
+      "cmyk": [
+        58,
+        30,
+        45,
+        0
+      ]
+    },
+    {
+      "name_ja": "青竹",
+      "romaji": "AOTAKE",
+      "name_en": "AOTAKE",
+      "name_zh": "AOTAKE",
+      "hex": "#00896C",
+      "cmyk": [
+        92,
+        28,
+        67,
+        0
+      ]
+    },
+    {
+      "name_ja": "ビロード",
+      "romaji": "VELUDO",
+      "name_en": "VELUDO",
+      "name_zh": "VELUDO",
+      "hex": "#096148",
+      "cmyk": [
+        93,
+        54,
+        71,
+        20
+      ]
+    },
+    {
+      "name_ja": "虫襖",
+      "romaji": "MUSHIAO",
+      "name_en": "MUSHIAO",
+      "name_zh": "MUSHIAO",
+      "hex": "#20604F",
+      "cmyk": [
+        89,
+        55,
+        67,
+        17
+      ]
+    },
+    {
+      "name_ja": "藍海松茶",
+      "romaji": "AIMIRUCHA",
+      "name_en": "AIMIRUCHA",
+      "name_zh": "AIMIRUCHA",
+      "hex": "#0F4C3A",
+      "cmyk": [
+        89,
+        60,
+        67,
+        30
+      ]
+    },
+    {
+      "name_ja": "沈香茶",
+      "romaji": "TONOCHA2",
+      "name_en": "TONOCHA2",
+      "name_zh": "TONOCHA2",
+      "hex": "#4F726C",
+      "cmyk": [
+        77,
+        50,
+        57,
+        4
+      ]
+    },
+    {
+      "name_ja": "青緑",
+      "romaji": "AOMIDORI",
+      "name_en": "AOMIDORI",
+      "name_zh": "AOMIDORI",
+      "hex": "#00AA90",
+      "cmyk": [
+        88,
+        0,
+        53,
+        0
+      ]
+    },
+    {
+      "name_ja": "青磁",
+      "romaji": "SEIJI",
+      "name_en": "SEIJI",
+      "name_zh": "SEIJI",
+      "hex": "#69B0AC",
+      "cmyk": [
+        61,
+        14,
+        34,
+        0
+      ]
+    },
+    {
+      "name_ja": "鉄",
+      "romaji": "TETSU",
+      "name_en": "TETSU",
+      "name_zh": "TETSU",
+      "hex": "#26453D",
+      "cmyk": [
+        90,
+        63,
+        66,
+        30
+      ]
+    },
+    {
+      "name_ja": "水浅葱",
+      "romaji": "MIZUASAGI",
+      "name_en": "MIZUASAGI",
+      "name_zh": "MIZUASAGI",
+      "hex": "#66BAB7",
+      "cmyk": [
+        68,
+        10,
+        33,
+        0
+      ]
+    },
+    {
+      "name_ja": "青碧",
+      "romaji": "SEIHEKI",
+      "name_en": "SEIHEKI",
+      "name_zh": "SEIHEKI",
+      "hex": "#268785",
+      "cmyk": [
+        85,
+        35,
+        50,
+        0
+      ]
+    },
+    {
+      "name_ja": "錆鉄御納戸",
+      "romaji": "SABITETSUONANDO",
+      "name_en": "SABITETSUONANDO",
+      "name_zh": "SABITETSUONANDO",
+      "hex": "#405B55",
+      "cmyk": [
+        83,
+        59,
+        60,
+        13
+      ]
+    },
+    {
+      "name_ja": "高麗納戸",
+      "romaji": "KORAINANDO",
+      "name_en": "KORAINANDO",
+      "name_zh": "KORAINANDO",
+      "hex": "#305A56",
+      "cmyk": [
+        88,
+        58,
+        61,
+        15
+      ]
+    },
+    {
+      "name_ja": "白群",
+      "romaji": "BYAKUGUN",
+      "name_en": "BYAKUGUN",
+      "name_zh": "BYAKUGUN",
+      "hex": "#78C2C4",
+      "cmyk": [
+        52,
+        0,
+        20,
+        0
+      ]
+    },
+    {
+      "name_ja": "御召茶",
+      "romaji": "OMESHICHA",
+      "name_en": "OMESHICHA",
+      "name_zh": "OMESHICHA",
+      "hex": "#376B6D",
+      "cmyk": [
+        87,
+        54,
+        54,
+        5
+      ]
+    },
+    {
+      "name_ja": "瓶覗",
+      "romaji": "KAMENOZOKI",
+      "name_en": "KAMENOZOKI",
+      "name_zh": "KAMENOZOKI",
+      "hex": "#A5DEE4",
+      "cmyk": [
+        42,
+        0,
+        11,
+        0
+      ]
+    },
+    {
+      "name_ja": "深川鼠",
+      "romaji": "FUKAGAWANEZUMI",
+      "name_en": "FUKAGAWANEZUMI",
+      "name_zh": "FUKAGAWANEZUMI",
+      "hex": "#77969A",
+      "cmyk": [
+        63,
+        38,
+        40,
+        0
+      ]
+    },
+    {
+      "name_ja": "錆浅葱",
+      "romaji": "SABIASAGI",
+      "name_en": "SABIASAGI",
+      "name_zh": "SABIASAGI",
+      "hex": "#6699A1",
+      "cmyk": [
+        66,
+        30,
+        34,
+        0
+      ]
+    },
+    {
+      "name_ja": "水",
+      "romaji": "MIZU",
+      "name_en": "MIZU",
+      "name_zh": "MIZU",
+      "hex": "#81C7D4",
+      "cmyk": [
+        55,
+        6,
+        17,
+        0
+      ]
+    },
+    {
+      "name_ja": "浅葱",
+      "romaji": "ASAGI",
+      "name_en": "ASAGI",
+      "name_zh": "ASAGI",
+      "hex": "#33A6B8",
+      "cmyk": [
+        82,
+        18,
+        27,
+        0
+      ]
+    },
+    {
+      "name_ja": "御納戸",
+      "romaji": "ONANDO",
+      "name_en": "ONANDO",
+      "name_zh": "ONANDO",
+      "hex": "#0C4842",
+      "cmyk": [
+        92,
+        65,
+        62,
+        25
+      ]
+    },
+    {
+      "name_ja": "藍",
+      "romaji": "AI",
+      "name_en": "AI",
+      "name_zh": "AI",
+      "hex": "#0D5661",
+      "cmyk": [
+        95,
+        63,
+        56,
+        17
+      ]
+    },
+    {
+      "name_ja": "新橋",
+      "romaji": "SHINBASHI",
+      "name_en": "SHINBASHI",
+      "name_zh": "SHINBASHI",
+      "hex": "#0089A7",
+      "cmyk": [
+        95,
+        31,
+        30,
+        0
+      ]
+    },
+    {
+      "name_ja": "錆御納戸",
+      "romaji": "SABIONANDO",
+      "name_en": "SABIONANDO",
+      "name_zh": "SABIONANDO",
+      "hex": "#336774",
+      "cmyk": [
+        87,
+        56,
+        52,
+        6
+      ]
+    },
+    {
+      "name_ja": "鉄御納戸",
+      "romaji": "TETSUONANDO",
+      "name_en": "TETSUONANDO",
+      "name_zh": "TETSUONANDO",
+      "hex": "#255359",
+      "cmyk": [
+        90,
+        63,
+        59,
+        21
+      ]
+    },
+    {
+      "name_ja": "花浅葱",
+      "romaji": "HANAASAGI",
+      "name_en": "HANAASAGI",
+      "name_zh": "HANAASAGI",
+      "hex": "#1E88A8",
+      "cmyk": [
+        90,
+        32,
+        23,
+        0
+      ]
+    },
+    {
+      "name_ja": "藍鼠",
+      "romaji": "AINEZUMI",
+      "name_en": "AINEZUMI",
+      "name_zh": "AINEZUMI",
+      "hex": "#566C73",
+      "cmyk": [
+        78,
+        57,
+        52,
+        7
+      ]
+    },
+    {
+      "name_ja": "舛花",
+      "romaji": "MASUHANA",
+      "name_en": "MASUHANA",
+      "name_zh": "MASUHANA",
+      "hex": "#577C8A",
+      "cmyk": [
+        78,
+        48,
+        42,
+        0
+      ]
+    },
+    {
+      "name_ja": "空",
+      "romaji": "SORA",
+      "name_en": "SORA",
+      "name_zh": "SORA",
+      "hex": "#58B2DC",
+      "cmyk": [
+        72,
+        13,
+        7,
+        0
+      ]
+    },
+    {
+      "name_ja": "熨斗目花",
+      "romaji": "NOSHIMEHANA",
+      "name_en": "NOSHIMEHANA",
+      "name_zh": "NOSHIMEHANA",
+      "hex": "#2B5F75",
+      "cmyk": [
+        92,
+        60,
+        47,
+        4
+      ]
+    },
+    {
+      "name_ja": "千草",
+      "romaji": "CHIGUSA",
+      "name_en": "CHIGUSA",
+      "name_zh": "CHIGUSA",
+      "hex": "#3A8FB7",
+      "cmyk": [
+        83,
+        31,
+        17,
+        0
+      ]
+    },
+    {
+      "name_ja": "御召御納戸",
+      "romaji": "OMESHIONANDO",
+      "name_en": "OMESHIONANDO",
+      "name_zh": "OMESHIONANDO",
+      "hex": "#2E5C6E",
+      "cmyk": [
+        90,
+        63,
+        51,
+        7
+      ]
+    },
+    {
+      "name_ja": "縹",
+      "romaji": "HANADA",
+      "name_en": "HANADA",
+      "name_zh": "HANADA",
+      "hex": "#006284",
+      "cmyk": [
+        100,
+        60,
+        41,
+        2
+      ]
+    },
+    {
+      "name_ja": "勿忘草",
+      "romaji": "WASURENAGUSA",
+      "name_en": "WASURENAGUSA",
+      "name_zh": "WASURENAGUSA",
+      "hex": "#7DB9DE",
+      "cmyk": [
+        52,
+        10,
+        0,
+        0
+      ]
+    },
+    {
+      "name_ja": "群青",
+      "romaji": "GUNJYO",
+      "name_en": "GUNJYO",
+      "name_zh": "GUNJYO",
+      "hex": "#51A8DD",
+      "cmyk": [
+        67,
+        21,
+        0,
+        0
+      ]
+    },
+    {
+      "name_ja": "露草",
+      "romaji": "TSUYUKUSA",
+      "name_en": "TSUYUKUSA",
+      "name_zh": "TSUYUKUSA",
+      "hex": "#2EA9DF",
+      "cmyk": [
+        73,
+        20,
+        0,
+        0
+      ]
+    },
+    {
+      "name_ja": "黒橡",
+      "romaji": "KUROTSURUBAMI",
+      "name_en": "KUROTSURUBAMI",
+      "name_zh": "KUROTSURUBAMI",
+      "hex": "#0B1013",
+      "cmyk": [
+        92,
+        78,
+        64,
+        48
+      ]
+    },
+    {
+      "name_ja": "紺",
+      "romaji": "KON",
+      "name_en": "KON",
+      "name_zh": "KON",
+      "hex": "#0F2540",
+      "cmyk": [
+        100,
+        85,
+        50,
+        24
+      ]
+    },
+    {
+      "name_ja": "褐",
+      "romaji": "KACHI",
+      "name_en": "KACHI",
+      "name_zh": "KACHI",
+      "hex": "#08192D",
+      "cmyk": [
+        100,
+        86,
+        60,
+        45
+      ]
+    },
+    {
+      "name_ja": "瑠璃",
+      "romaji": "RURI",
+      "name_en": "RURI",
+      "name_zh": "RURI",
+      "hex": "#005CAF",
+      "cmyk": [
+        97,
+        65,
+        0,
+        0
+      ]
+    },
+    {
+      "name_ja": "瑠璃紺",
+      "romaji": "RURIKON",
+      "name_en": "RURIKON",
+      "name_zh": "RURIKON",
+      "hex": "#0B346E",
+      "cmyk": [
+        100,
+        85,
+        39,
+        4
+      ]
+    },
+    {
+      "name_ja": "紅碧",
+      "romaji": "BENIMIDORI",
+      "name_en": "BENIMIDORI",
+      "name_zh": "BENIMIDORI",
+      "hex": "#7B90D2",
+      "cmyk": [
+        64,
+        44,
+        0,
+        0
+      ]
+    },
+    {
+      "name_ja": "藤鼠",
+      "romaji": "FUJINEZUMI",
+      "name_en": "FUJINEZUMI",
+      "name_zh": "FUJINEZUMI",
+      "hex": "#6E75A4",
+      "cmyk": [
+        69,
+        56,
+        17,
+        0
+      ]
+    },
+    {
+      "name_ja": "鉄紺",
+      "romaji": "TETSUKON",
+      "name_en": "TETSUKON",
+      "name_zh": "TETSUKON",
+      "hex": "#261E47",
+      "cmyk": [
+        80,
+        65,
+        0,
+        77
+      ]
+    },
+    {
+      "name_ja": "紺青",
+      "romaji": "KONJYO",
+      "name_en": "KONJYO",
+      "name_zh": "KONJYO",
+      "hex": "#113285",
+      "cmyk": [
+        100,
+        85,
+        15,
+        0
+      ]
+    },
+    {
+      "name_ja": "紅掛花",
+      "romaji": "BENIKAKEHANA",
+      "name_en": "BENIKAKEHANA",
+      "name_zh": "BENIKAKEHANA",
+      "hex": "#4E4F97",
+      "cmyk": [
+        82,
+        70,
+        14,
+        0
+      ]
+    },
+    {
+      "name_ja": "紺桔梗",
+      "romaji": "KONKIKYO",
+      "name_en": "KONKIKYO",
+      "name_zh": "KONKIKYO",
+      "hex": "#211E55",
+      "cmyk": [
+        100,
+        90,
+        42,
+        12
+      ]
+    },
+    {
+      "name_ja": "藤",
+      "romaji": "FUJI",
+      "name_en": "FUJI",
+      "name_zh": "FUJI",
+      "hex": "#8B81C3",
+      "cmyk": [
+        58,
+        52,
+        0,
+        0
+      ]
+    },
+    {
+      "name_ja": "二藍",
+      "romaji": "FUTAAI",
+      "name_en": "FUTAAI",
+      "name_zh": "FUTAAI",
+      "hex": "#70649A",
+      "cmyk": [
+        72,
+        67,
+        21,
+        0
+      ]
+    },
+    {
+      "name_ja": "楝",
+      "romaji": "OUCHI",
+      "name_en": "OUCHI",
+      "name_zh": "OUCHI",
+      "hex": "#9B90C2",
+      "cmyk": [
+        42,
+        42,
+        0,
+        0
+      ]
+    },
+    {
+      "name_ja": "藤紫",
+      "romaji": "FUJIMURASAKI",
+      "name_en": "FUJIMURASAKI",
+      "name_zh": "FUJIMURASAKI",
+      "hex": "#8A6BBE",
+      "cmyk": [
+        58,
+        60,
+        0,
+        0
+      ]
+    },
+    {
+      "name_ja": "桔梗",
+      "romaji": "KIKYO",
+      "name_en": "KIKYO",
+      "name_zh": "KIKYO",
+      "hex": "#6A4C9C",
+      "cmyk": [
+        75,
+        75,
+        10,
+        0
+      ]
+    },
+    {
+      "name_ja": "紫苑",
+      "romaji": "SHION",
+      "name_en": "SHION",
+      "name_zh": "SHION",
+      "hex": "#8F77B5",
+      "cmyk": [
+        55,
+        58,
+        1,
+        0
+      ]
+    },
+    {
+      "name_ja": "滅紫",
+      "romaji": "MESSHI",
+      "name_en": "MESSHI",
+      "name_zh": "MESSHI",
+      "hex": "#533D5B",
+      "cmyk": [
+        82,
+        80,
+        48,
+        15
+      ]
+    },
+    {
+      "name_ja": "薄",
+      "romaji": "USU",
+      "name_en": "USU",
+      "name_zh": "USU",
+      "hex": "#B28FCE",
+      "cmyk": [
+        43,
+        51,
+        0,
+        0
+      ]
+    },
+    {
+      "name_ja": "半",
+      "romaji": "HASHITA",
+      "name_en": "HASHITA",
+      "name_zh": "HASHITA",
+      "hex": "#986DB2",
+      "cmyk": [
+        55,
+        63,
+        0,
+        0
+      ]
+    },
+    {
+      "name_ja": "江戸紫",
+      "romaji": "EDOMURASAKI",
+      "name_en": "EDOMURASAKI",
+      "name_zh": "EDOMURASAKI",
+      "hex": "#77428D",
+      "cmyk": [
+        60,
+        74,
+        0,
+        14
+      ]
+    },
+    {
+      "name_ja": "紫紺",
+      "romaji": "SHIKON",
+      "name_en": "SHIKON",
+      "name_zh": "SHIKON",
+      "hex": "#3C2F41",
+      "cmyk": [
+        88,
+        84,
+        60,
+        45
+      ]
+    },
+    {
+      "name_ja": "深紫",
+      "romaji": "KOKIMURASAKI",
+      "name_en": "KOKIMURASAKI",
+      "name_zh": "KOKIMURASAKI",
+      "hex": "#4A225D",
+      "cmyk": [
+        90,
+        93,
+        43,
+        16
+      ]
+    },
+    {
+      "name_ja": "菫",
+      "romaji": "SUMIRE",
+      "name_en": "SUMIRE",
+      "name_zh": "SUMIRE",
+      "hex": "#66327C",
+      "cmyk": [
+        74,
+        83,
+        22,
+        0
+      ]
+    },
+    {
+      "name_ja": "紫",
+      "romaji": "MURASAKI",
+      "name_en": "MURASAKI",
+      "name_zh": "MURASAKI",
+      "hex": "#592C63",
+      "cmyk": [
+        81,
+        87,
+        40,
+        7
+      ]
+    },
+    {
+      "name_ja": "菖蒲",
+      "romaji": "AYAME",
+      "name_en": "AYAME",
+      "name_zh": "AYAME",
+      "hex": "#6F3381",
+      "cmyk": [
+        71,
+        87,
+        14,
+        0
+      ]
+    },
+    {
+      "name_ja": "藤煤竹",
+      "romaji": "FUJISUSUTAKE",
+      "name_en": "FUJISUSUTAKE",
+      "name_zh": "FUJISUSUTAKE",
+      "hex": "#574C57",
+      "cmyk": [
+        75,
+        70,
+        57,
+        25
+      ]
+    },
+    {
+      "name_ja": "紅藤",
+      "romaji": "BENIFUJI",
+      "name_en": "BENIFUJI",
+      "name_zh": "BENIFUJI",
+      "hex": "#B481BB",
+      "cmyk": [
+        38,
+        60,
+        0,
+        0
+      ]
+    },
+    {
+      "name_ja": "黒紅",
+      "romaji": "KUROBENI",
+      "name_en": "KUROBENI",
+      "name_zh": "KUROBENI",
+      "hex": "#3F2B36",
+      "cmyk": [
+        86,
+        85,
+        64,
+        50
+      ]
+    },
+    {
+      "name_ja": "茄子紺",
+      "romaji": "NASUKON",
+      "name_en": "NASUKON",
+      "name_zh": "NASUKON",
+      "hex": "#572A3F",
+      "cmyk": [
+        40,
+        73,
+        10,
+        73
+      ]
+    },
+    {
+      "name_ja": "葡萄鼠",
+      "romaji": "BUDOHNEZUMI",
+      "name_en": "BUDOHNEZUMI",
+      "name_zh": "BUDOHNEZUMI",
+      "hex": "#5E3D50",
+      "cmyk": [
+        73,
+        77,
+        54,
+        17
+      ]
+    },
+    {
+      "name_ja": "鳩羽鼠",
+      "romaji": "HATOBANEZUMI",
+      "name_en": "HATOBANEZUMI",
+      "name_zh": "HATOBANEZUMI",
+      "hex": "#72636E",
+      "cmyk": [
+        68,
+        64,
+        51,
+        6
+      ]
+    },
+    {
+      "name_ja": "杜若",
+      "romaji": "KAKITSUBATA",
+      "name_en": "KAKITSUBATA",
+      "name_zh": "KAKITSUBATA",
+      "hex": "#622954",
+      "cmyk": [
+        77,
+        92,
+        48,
+        21
+      ]
+    },
+    {
+      "name_ja": "蒲葡",
+      "romaji": "EBIZOME",
+      "name_en": "EBIZOME",
+      "name_zh": "EBIZOME",
+      "hex": "#6D2E5B",
+      "cmyk": [
+        71,
+        89,
+        48,
+        12
+      ]
+    },
+    {
+      "name_ja": "牡丹",
+      "romaji": "BOTAN",
+      "name_en": "BOTAN",
+      "name_zh": "BOTAN",
+      "hex": "#C1328E",
+      "cmyk": [
+        25,
+        91,
+        8,
+        0
+      ]
+    },
+    {
+      "name_ja": "梅紫",
+      "romaji": "UMEMURASAKI",
+      "name_en": "UMEMURASAKI",
+      "name_zh": "UMEMURASAKI",
+      "hex": "#A8497A",
+      "cmyk": [
+        45,
+        80,
+        37,
+        0
+      ]
+    },
+    {
+      "name_ja": "似紫",
+      "romaji": "NISEMURASAKI",
+      "name_en": "NISEMURASAKI",
+      "name_zh": "NISEMURASAKI",
+      "hex": "#562E37",
+      "cmyk": [
+        75,
+        84,
+        62,
+        42
+      ]
+    },
+    {
+      "name_ja": "躑躅",
+      "romaji": "TSUTSUJI",
+      "name_en": "TSUTSUJI",
+      "name_zh": "TSUTSUJI",
+      "hex": "#E03C8A",
+      "cmyk": [
+        0,
+        80,
+        3,
+        0
+      ]
+    },
+    {
+      "name_ja": "紫鳶",
+      "romaji": "MURASAKITOBI",
+      "name_en": "MURASAKITOBI",
+      "name_zh": "MURASAKITOBI",
+      "hex": "#60373E",
+      "cmyk": [
+        70,
+        78,
+        61,
+        30
+      ]
+    },
+    {
+      "name_ja": "白練",
+      "romaji": "SHIRONERI",
+      "name_en": "SHIRONERI",
+      "name_zh": "SHIRONERI",
+      "hex": "#FCFAF2",
+      "cmyk": [
+        0,
+        3,
+        11,
+        0
+      ]
+    },
+    {
+      "name_ja": "胡粉",
+      "romaji": "GOFUN",
+      "name_en": "GOFUN",
+      "name_zh": "GOFUN",
+      "hex": "#FFFFFB",
+      "cmyk": [
+        0,
+        0,
+        2,
+        0
+      ]
+    },
+    {
+      "name_ja": "白鼠",
+      "romaji": "SHIRONEZUMI",
+      "name_en": "SHIRONEZUMI",
+      "name_zh": "SHIRONEZUMI",
+      "hex": "#BDC0BA",
+      "cmyk": [
+        31,
+        23,
+        28,
+        0
+      ]
+    },
+    {
+      "name_ja": "銀鼠",
+      "romaji": "GINNEZUMI",
+      "name_en": "GINNEZUMI",
+      "name_zh": "GINNEZUMI",
+      "hex": "#91989F",
+      "cmyk": [
+        52,
+        39,
+        36,
+        0
+      ]
+    },
+    {
+      "name_ja": "鉛",
+      "romaji": "NAMARI",
+      "name_en": "NAMARI",
+      "name_zh": "NAMARI",
+      "hex": "#787878",
+      "cmyk": [
+        8,
+        0,
+        0,
+        73
+      ]
+    },
+    {
+      "name_ja": "灰",
+      "romaji": "HAI",
+      "name_en": "HAI",
+      "name_zh": "HAI",
+      "hex": "#828282",
+      "cmyk": [
+        0,
+        0,
+        0,
+        70
+      ]
+    },
+    {
+      "name_ja": "素鼠",
+      "romaji": "SUNEZUMI",
+      "name_en": "SUNEZUMI",
+      "name_zh": "SUNEZUMI",
+      "hex": "#787D7B",
+      "cmyk": [
+        65,
+        53,
+        53,
+        0
+      ]
+    },
+    {
+      "name_ja": "利休鼠",
+      "romaji": "RIKYUNEZUMI",
+      "name_en": "RIKYUNEZUMI",
+      "name_zh": "RIKYUNEZUMI",
+      "hex": "#707C74",
+      "cmyk": [
+        66,
+        50,
+        54,
+        1
+      ]
+    },
+    {
+      "name_ja": "鈍",
+      "romaji": "NIBI",
+      "name_en": "NIBI",
+      "name_zh": "NIBI",
+      "hex": "#656765",
+      "cmyk": [
+        5,
+        0,
+        0,
+        80
+      ]
+    },
+    {
+      "name_ja": "青鈍",
+      "romaji": "AONIBI",
+      "name_en": "AONIBI",
+      "name_zh": "AONIBI",
+      "hex": "#535953",
+      "cmyk": [
+        78,
+        63,
+        62,
+        20
+      ]
+    },
+    {
+      "name_ja": "溝鼠",
+      "romaji": "DOBUNEZUMI",
+      "name_en": "DOBUNEZUMI",
+      "name_zh": "DOBUNEZUMI",
+      "hex": "#4F4F48",
+      "cmyk": [
+        78,
+        65,
+        65,
+        30
+      ]
+    },
+    {
+      "name_ja": "紅消鼠",
+      "romaji": "BENIKESHINEZUMI",
+      "name_en": "BENIKESHINEZUMI",
+      "name_zh": "BENIKESHINEZUMI",
+      "hex": "#52433D",
+      "cmyk": [
+        73,
+        69,
+        63,
+        30
+      ]
+    },
+    {
+      "name_ja": "藍墨茶",
+      "romaji": "AISUMICHA",
+      "name_en": "AISUMICHA",
+      "name_zh": "AISUMICHA",
+      "hex": "#373C38",
+      "cmyk": [
+        86,
+        72,
+        68,
+        47
+      ]
+    },
+    {
+      "name_ja": "檳榔子染",
+      "romaji": "BINROJIZOME",
+      "name_en": "BINROJIZOME",
+      "name_zh": "BINROJIZOME",
+      "hex": "#3A3226",
+      "cmyk": [
+        79,
+        72,
+        72,
+        50
+      ]
+    },
+    {
+      "name_ja": "消炭",
+      "romaji": "KESHIZUMI",
+      "name_en": "KESHIZUMI",
+      "name_zh": "KESHIZUMI",
+      "hex": "#434343",
+      "cmyk": [
+        0,
+        0,
+        0,
+        88
+      ]
+    },
+    {
+      "name_ja": "墨",
+      "romaji": "SUMI",
+      "name_en": "SUMI",
+      "name_zh": "SUMI",
+      "hex": "#1C1C1C",
+      "cmyk": [
+        92,
+        78,
+        73,
+        66
+      ]
+    },
+    {
+      "name_ja": "黒",
+      "romaji": "KURO",
+      "name_en": "KURO",
+      "name_zh": "KURO",
+      "hex": "#080808",
+      "cmyk": [
+        91,
+        84,
+        74,
+        71
+      ]
+    },
+    {
+      "name_ja": "呂",
+      "romaji": "RO",
+      "name_en": "RO",
+      "name_zh": "RO",
+      "hex": "#0C0C0C",
+      "cmyk": [
+        0,
+        0,
+        0,
+        100
+      ]
+    }
+  ]
+}
