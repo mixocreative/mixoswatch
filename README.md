@@ -2,7 +2,7 @@
 
 One browser tool for designing print-safe colors against real ICC profiles, plus a small Python script that prepares the lookup tables it consumes. Built for designers who work across **2D commercial print** and **3D color printing** (Mimaki 3DUJ, Stratasys J55, Cura material libraries, etc.).
 
-- **`app/mixo-swatch.html`** (Mixo Swatch) · live grid of every CMYK value at a chosen step, rendered through a CMYK ICC profile of your choice. Filter by total area coverage, by named-color closeness (Japanese traditional + W3C CSS + DIC Japanese + DIC Chinese), by **ΔE max** for round-trip safety, build palettes, export ASE / GPL / PNG / JSON.
+- **`app/mixo-swatch.html`** (Mixo Swatch) · live grid of every CMYK value at a chosen step, rendered through a CMYK ICC profile of your choice. Filter by total area coverage, by named-color closeness (Japanese traditional + Chinese traditional + W3C CSS), by **ΔE max** for round-trip safety, build palettes, export ASE / GPL / PNG / JSON / ZIP.
 - **`index.html`** · zen landing with live interactive demos for every sidebar control, tri-lingual (EN / 日本語 / 繁中).
 
 ## Why
@@ -131,54 +131,53 @@ python scripts/gen_luts.py CoatedFOGRA39.icc
 
 ## Editing the named-color corpora (no rebuild needed)
 
-`data/corpora/name_corpora.json` ships with four corpora out of the box. Add more by editing the JSON; refresh the browser; done. No Python step.
+`data/corpora/name_corpora.json` ships with three corpora. Add more by editing the JSON; refresh the browser; done. No Python step.
 
 | ID | Source | Anchor | Entries |
 |---|---|---|---|
-| `jpn` | Japanese traditional palette (Wikipedia) | hex | 111 |
-| `html` | W3C CSS Color Module Level 4 named colors | hex | 141 |
-| `jpn-dic` | DIC Japanese Traditional (matte), seed N801..N810 | cmyk | 10 |
-| `zh-dic` | DIC Chinese Traditional, seed reds + yellows + blues | cmyk | 24 |
+| `jp-trad` | NipponColors.com Japanese traditional colors | hex | 250 |
+| `html` | W3C CSS Color Module Level 4 canonical named colors | hex | 148 |
+| `zh-trad` | Chinese traditional color corpus | hex | 526 |
 
-Schema (v2.1) lives in `ARCHITECTURE.md §7.1`. The short version:
+Schema (v3) lives in `ARCHITECTURE.md §6.1`. The short version:
 
 ```json
 {
-  "version": 2,
-  "schema_rev": "2.1",
+  "version": 3,
+  "schema_rev": "3.0",
   "corpora": [
     {
-      "id": "jpn-dic",
-      "label": "DIC Japanese Traditional (matte)",
+      "id": "jp-trad",
+      "label": { "en": "Japanese traditional", "ja": "日本の伝統色", "zh": "日本傳統色" },
       "fields": [
-        { "id": "name",     "label": "kanji" },
-        { "id": "romaji",   "label": "romaji" },
-        { "id": "english",  "label": "english" },
-        { "id": "dic_code", "label": "DIC code" }
+        { "id": "name_ja", "label": { "en": "kanji",  "ja": "漢字", "zh": "漢字" } },
+        { "id": "romaji",  "label": { "en": "romaji", "ja": "ローマ字", "zh": "羅馬字" } },
+        { "id": "name_en", "label": { "en": "english","ja": "英語", "zh": "英語" } }
       ],
-      "default_display": "name",
-      "anchor": "cmyk",
+      "default_display": "name_ja",
+      "anchor": "hex",
       "entries": [
-        { "name": "苅安色", "romaji": "kariyasu-iro",
-          "english": "Kariyasu Yellow", "dic_code": "DIC-N804",
-          "hex": "#FDC600", "cmyk": [0, 19, 100, 0] }
+        {
+          "name_ja": "桜色", "name_en": "Sakura Pink", "name_zh": "櫻花色",
+          "romaji": "sakura-iro", "hex": "#FCC9D2"
+        }
       ]
     }
   ]
 }
 ```
 
-Each entry can carry `hex` and/or `cmyk` as *match anchors* (not display values). Per-library anchor (`hex` vs `cmyk`) decides which attribute drives the nearest-match math. The browser UI lets the user flip the anchor live.
-
-**Why CMYK anchoring matters for DIC corpora.** DIC sample books are authored as ink values. Hex equivalents in third-party tables are often back-converted from those CMYK values under one specific profile. If the user's profile is different, hex anchoring picks a slightly wrong target. CMYK anchoring routes the corpus's CMYK through the user's active profile first, giving a more honest match.
+Each entry carries `name_en`, `name_ja`, and `name_zh`. Empty slots fall back gracefully (see `ARCHITECTURE.md §6.1`). Each entry can also carry `hex` and/or `cmyk` as match anchors (not display values). The browser UI lets the user flip the per-library anchor between `hex` and `cmyk` live.
 
 ---
 
 ## Factory UI defaults (`data/ui_defaults.json`)
 
-First-run UI state lives in this JSON. The tool reads it on load and on "↺ Reset to defaults". User session state layers on top via `localStorage`, so the reset restores the JSON values while leaving saved palettes intact.
+First-run UI state lives in this JSON. The tool reads it on load and on "Reset to defaults". User session state layers on top via `localStorage` (key: `cmykUIState_v2`), so the reset restores the JSON values while leaving saved palettes intact.
 
 Edit this file when you want your team to start with non-default values (default profile, default cell size, default sort, default ΔE max, per-corpus display + anchor, etc.). Full key reference in `ARCHITECTURE.md §6.5`.
+
+**v1 migration.** If a browser has a `cmykUIState_v1` key from a pre-Spec-6 session, the tool migrates it to v2 on first load (reshaping `corpora_prefs` keys from `jpn`/`html` to `jp-trad`/`html`/`zh-trad`). The v1 key is preserved for downgrade.
 
 ---
 
@@ -226,7 +225,7 @@ Detailed budget + the lag-prevention rationale (rAF-coalesced render scheduler, 
 
 ## Architecture
 
-`ARCHITECTURE.md` is the full pipeline contract: color theory (CMYK / Lab / LCh, ΔE variants, GCR / UCR, K-tier philosophy, gamut), the LUT binary format (magic header, quadrilinear interpolation pseudocode), the round-trip safety gate, the descriptive naming system, the HTML pipeline (lifecycle, virtualization, two greyscale strips, view modes, palette format), and a step-by-step rebuild guide. Read it if you want to reproduce, extend, or audit the toolchain.
+`ARCHITECTURE.md` is the full pipeline contract: color theory (CMYK / Lab / LCh, ΔE variants, GCR / UCR, K-tier philosophy, gamut, Bradford D50/D65 CAT), the LUT binary format (magic header, quadrilinear interpolation pseudocode), the round-trip safety gate, the corpora schema v3 (tri-lingual fields, dynamic library IDs, per-(lib,entry) tiebreak), the HTML pipeline (lifecycle, virtualization, two greyscale strips, view modes, palette format), per-profile TAC defaults, and a step-by-step rebuild guide. Read it if you want to reproduce, extend, or audit the toolchain.
 
 ## License
 

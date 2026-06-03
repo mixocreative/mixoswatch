@@ -38,7 +38,7 @@ cmyk/
 |   `-- gen_luts.py                Build CMYK->sRGB + sRGB->CMYK LUTs from ICCs
 |-- data/                          Generated, mostly gitignored
 |   |-- corpora/
-|   |   `-- name_corpora.json      Japanese + W3C named color corpora (committed)
+|   |   `-- name_corpora.json      jp-trad + html + zh-trad named color corpora (committed, schema v3)
 |   `-- luts/
 |       |-- index.json             Profile manifest (consumed by the HTML)
 |       |-- <profile>.lut          Forward LUT: CMYK->sRGB (17^4 x 3 bytes ~= 245 KB)
@@ -64,8 +64,27 @@ them and can be either committed (for GitHub Pages hosting) or kept local.
 
 - **CMYK**: device-dependent. Four ink channels: Cyan, Magenta, Yellow, K (black). Each channel 0-100%. There is no "true" CMYK. The meaning of `(100, 0, 0, 0)` depends entirely on the press, paper, and ink. ICC profiles encode that meaning.
 - **sRGB**: device-independent for the web. The displayed color. Two-decade-old standard, virtually all browsers and monitors map to it.
-- **CIE Lab (D65)**: perceptually uniform color space. L*=lightness 0-100, a*=green vs red, b*=blue vs yellow. Used as the lingua franca for color math. Distances in Lab approximate perceived color difference.
+- **CIE Lab**: perceptually uniform color space. L*=lightness 0-100, a*=green vs red, b*=blue vs yellow. Used as the lingua franca for color math. Distances in Lab approximate perceived color difference. Two reference whites are in active use; see §2.7.
 - **CIE LCh**: polar form of Lab. L*=lightness, C*=chroma (saturation), h=hue angle.
+
+### 2.7 Color mode: D50 vs D65 (Bradford CAT)
+
+ICC profiles natively use D50 as their Profile Connection Space (PCS) white point. sRGB is defined under D65. The tool ships two Lab conversion paths and a global `LAB_MODE` toggle (`'d50'` | `'d65'`) in the HTML:
+
+- **`rgb2lab_d65`** (default for screen comparison): sRGB gamma expand -> XYZ D65 matrix -> adapt to D65 white. Used for corpora matching and ΔE comparisons where the reference is a screen-rendered hex value.
+- **`rgb2lab_d50`** (print mode): the same XYZ D65 result is chromatically adapted to D50 via the Bradford 3x3 CAT before entering the Lab formula. Matches what a color management engine sees when it reads the LUT output into an ICC PCS.
+
+Bradford CAT matrix (D65 to D50, applied to linear XYZ):
+
+```
+[Xd50]   [ 1.0478112  0.0228866 -0.0501270] [Xd65]
+[Yd50] = [ 0.0295424  0.9904844 -0.0170491] [Yd65]
+[Zd50]   [-0.0092345  0.0150436  0.7521316] [Zd65]
+```
+
+Every swatch and every corpus entry maintains two Lab caches: `lab_d65` and `lab_d50`. ΔE comparisons always use matching modes on both sides. The UI `LAB_MODE` control switches which cache feeds the ΔE and closest-name math. Switching mode triggers a full rematch pass.
+
+When `LAB_MODE = 'd50'`, the tool mirrors the numeric Lab values that ICC-aware prepress software reports, making ΔE readings directly comparable to Photoshop Info panel values measured under relative colorimetric intent.
 
 ### 2.2 ΔE (Delta-E) variants used
 
@@ -112,8 +131,20 @@ Real presses limit:
 | Mimaki 3DUJ (3D color print) | profile-dependent, usually <=300% |
 
 Exceeding TAC causes ink not to dry, smudges, paper warping. We expose
-TAC as a UI filter in the Mixo Swatch; user typically caps at 240% for
-safe coated work.
+TAC as a UI filter in the Mixo Swatch.
+
+**Per-profile TAC defaults.** `data/luts/index.json` carries `tac_recommended` and `tac_max` per profile entry. Values are sourced from public specifications (proof.de press standards, Cummings Printing data). When the user switches profiles the tool snaps the TAC slider to `tac_recommended` for the new profile unless the user has already adjusted it manually. The sidebar also ships five quick preset buttons:
+
+| Preset | tac_recommended | Notes |
+|---|---|---|
+| Newspaper / Uncoated | 220% | ISO newsprint |
+| Uncoated coated | 260% | General uncoated offset |
+| USWebCoatedSWOP | 300% | US web press |
+| FOGRA39 / Coated | 330% | European sheetfed coated |
+| JapanColor | 320% | Japanese offset coated |
+| 3D-print (Mimaki 3DUJ) | 300% | Profile-specific; checkbox in UI |
+
+The **3D-print preset** checkbox sets a special mode: the TAC slider maximum caps at the profile's `tac_max` and the recommended default is applied, reflecting the stricter ink-load constraints of resin-based 3D color printing.
 
 ### 2.5 K-tier philosophy (project-specific)
 
@@ -175,7 +206,11 @@ srgb_to_linear(u):
 [Z]   [0.0193339 0.1191920 0.9503041] [B]
 ```
 
-### 3.3 XYZ to Lab (D65 reference white Xn=0.95047, Yn=1, Zn=1.08883)
+### 3.3 XYZ to Lab (dual white points)
+
+The tool implements two variants (see §2.7):
+
+**`rgb2lab_d65`**: D65 reference white (Xn=0.95047, Yn=1, Zn=1.08883)
 
 ```
 f(t) = t^(1/3)            if t > 0.008856
@@ -185,6 +220,8 @@ L = 116 * f(Y/Yn) - 16
 a = 500 * (f(X/Xn) - f(Y/Yn))
 b = 200 * (f(Y/Yn) - f(Z/Zn))
 ```
+
+**`rgb2lab_d50`**: apply Bradford CAT (§2.7) to the linear XYZ first, then feed D50 reference white (Xn=0.96422, Yn=1, Zn=0.82521) into the same f(t) formula above.
 
 ### 3.4 WCAG relative luminance + contrast
 
@@ -199,8 +236,10 @@ AA (>= 4.5:1) / AAA (>= 7.0:1) compliance.
 ### 3.5 ΔE 2000
 
 The CIEDE2000 formula. Implemented identically in Python and JavaScript
-(`deltaE2000` in the HTML). Both use Lab D65 inputs and degrees for hue
-angles, with the standard 14 correction terms.
+(`deltaE2000` in the HTML). Both use degrees for hue angles and the
+standard 14 correction terms. Inputs are always the same Lab space on
+both sides of the comparison (D65 vs D65, or D50 vs D50, governed by
+`LAB_MODE` - see §2.7).
 
 ### 3.6 Naive CMYK to RGB (DO NOT USE for color decisions)
 
@@ -357,69 +396,75 @@ appears in 3D-print profiles such as Mimaki 3DUJ.
 
 ## 6. Name corpora (`data/corpora/name_corpora.json`)
 
-### 6.1 v2.1 schema (current)
+### 6.1 Schema v3 (current)
 
-Per-library the JSON declares an ordered `fields[]` array (each entry's
-displayable name fields, in priority order), a `default_display` (which
-field starts selected), an `anchor` (default match attribute `hex` or
-`cmyk`), and an `entries[]` list. Each entry may carry any of the
-declared fields plus the `hex` / `cmyk` anchor attributes.
+Per-library the JSON declares an `id`, a tri-lingual `label` object
+(`{en, ja, zh}`), an ordered `fields[]` array (each entry's displayable
+name fields), a `default_display`, an `anchor` (`hex` or `cmyk`), and an
+`entries[]` list. Each entry carries tri-lingual name fields plus optional
+transliteration.
 
 ```json
 {
-  "version": 2,
-  "schema_rev": "2.1",
+  "version": 3,
+  "schema_rev": "3.0",
   "corpora": [
     {
-      "id": "jpn",
-      "label": "Japanese traditional",
+      "id": "jp-trad",
+      "label": { "en": "Japanese traditional", "ja": "日本の伝統色", "zh": "日本傳統色" },
       "fields": [
-        { "id": "name",   "label": "kanji" },
-        { "id": "romaji", "label": "romaji" }
+        { "id": "name_ja",  "label": { "en": "kanji",  "ja": "漢字", "zh": "漢字" } },
+        { "id": "romaji",   "label": { "en": "romaji", "ja": "ローマ字", "zh": "羅馬字" } },
+        { "id": "name_en",  "label": { "en": "english","ja": "英語", "zh": "英語" } }
       ],
-      "default_display": "name",
+      "default_display": "name_ja",
       "anchor": "hex",
       "entries": [
-        { "name": "桜色", "romaji": "sakura-iro", "hex": "#FCC9D2" }
-      ]
-    },
-    {
-      "id": "jpn-dic",
-      "label": "DIC Japanese Traditional (matte, seed)",
-      "fields": [
-        { "id": "name",     "label": "kanji" },
-        { "id": "romaji",   "label": "romaji" },
-        { "id": "english",  "label": "english" },
-        { "id": "dic_code", "label": "DIC code" }
-      ],
-      "default_display": "name",
-      "anchor": "cmyk",
-      "entries": [
-        { "name": "苅安色", "romaji": "kariyasu-iro",
-          "english": "Kariyasu Yellow", "dic_code": "DIC-N804",
-          "hex": "#FDC600", "cmyk": [0, 19, 100, 0] }
+        {
+          "name_ja": "桜色", "name_en": "Sakura Pink", "name_zh": "櫻花色",
+          "romaji": "sakura-iro", "hex": "#FCC9D2"
+        }
       ]
     }
   ]
 }
 ```
 
+**Tri-lingual fields per entry.** Each entry carries `name_en`, `name_ja`,
+and `name_zh`. Entries that originally had only one language leave the
+other two as empty strings `""`. The loader fills empty strings with
+fallback rules:
+- If `name_zh` is `""`, fall back to `name_en` for Chinese display.
+- If `name_en` is `""`, fall back to `name_ja` for English display.
+- `name_ja` is never empty in the Japanese and Chinese corpora; it may be
+  empty for the html corpus (which uses `name_en` as primary).
+
+**Transliteration fields.** Japanese entries carry `romaji`; Chinese entries
+carry `pinyin`. Both are optional.
+
 Per-entry attributes:
-- `hex`: sRGB anchor (`#RRGGBB`). Used directly: hex to Lab to ΔE.
-- `cmyk`: 4 ints 0..100. Routed through the *active forward ICC LUT*
-  (CMYK to sRGB to Lab) before matching, so a brand swatch can be matched
-  in either gamut interpretation.
-- Any field declared in `fields[]` (`name`, `romaji`, `english`,
-  `dic_code`, `pinyin`, etc.).
+- `hex`: sRGB anchor (`#RRGGBB`). Used directly: hex to Lab (in the active
+  `LAB_MODE`) to ΔE.
+- `cmyk`: 4 ints 0..100. Routed through the active forward ICC LUT
+  (CMYK to sRGB to Lab) before matching.
+- Any declared `fields[]` member (`name_en`, `name_ja`, `name_zh`,
+  `romaji`, `pinyin`, etc.).
 
 The displayed swatch color always comes from the swatch's own
-LUT-computed sRGB. The corpus's `hex` / `cmyk` are *anchors for matching*,
-not for display, because the LUT-routed sRGB will often differ from the
-corpus's nominal value.
+LUT-computed sRGB. The corpus `hex` / `cmyk` values are match anchors
+only.
 
-Backward compatibility: v2 corpora with `primary` / `secondary` and the
-legacy `{ "jpn": [...], "html": [...] }` shape both still load. The HTML
-auto-promotes them to v2.1 on read.
+**Active corpora (v3 ship):**
+
+| ID | Source | Anchor | Entries |
+|---|---|---|---|
+| `jp-trad` | NipponColors.com (250 traditional Japanese colors) | hex | 250 |
+| `html` | W3C CSS Color Module Level 4 canonical hex | hex | 148 |
+| `zh-trad` | Chinese traditional color corpus | hex | 526 |
+
+Backward compatibility: the loader accepts v2 / v2.1 corpora (with
+`primary` / `secondary` fields and the legacy `{ "jpn": [...], "html": [...] }`
+shape) and auto-promotes them to v3 on read.
 
 ### 6.2 Matching algorithm
 
@@ -428,7 +473,7 @@ For each loaded library, each swatch gets a match:
 ```js
 sw.matches[lib.id] = {
   entry,      // ref to the winning corpus entry
-  deltaE,     // ΔE 2000 between sw and the entry's anchor Lab
+  deltaE,     // ΔE 2000 between sw and the entry's Lab (in active LAB_MODE)
   anchor,     // 'hex' or 'cmyk': which attribute drove the match
 };
 ```
@@ -437,47 +482,59 @@ The rendered text for any field is `m.entry[fieldId]`, looked up at
 draw time via `_libDisplayField(libId)` (which honors the user's per-
 library radio selection).
 
-Legacy mirror fields (`sw.jpn_name`, `sw.jpn_romaji`, `sw.html_name`,
-`sw.deltaE_jpn`, `sw.deltaE_html`) are derived from the generic matches
-on every match pass, so older render / export paths keep working
-unchanged.
+**Dynamic library IDs.** Swatch records store match data under
+`s[\`${lib.id}__name\`]`, `s[\`${lib.id}__closest\`]`, and
+`s[\`${lib.id}__deltaE\`]`. No hardcoded `jpn_*` or `html_*` field names
+exist; all paths are derived from `lib.id` at runtime.
+
+**Per-(lib, entry) uniqueness with tiebreak.** When multiple swatches
+tie on ΔE to the same corpus entry, the `_markClosest` pass uses a
+deterministic tiebreak: lower TAC wins; if still tied, lower K wins; if
+still tied, lower array index wins. This replaces the old `system_name` /
+`HUE_NAMES` / bin-threshold approach entirely.
 
 ### 6.3 Per-library UI
 
 Two sidebar sections, both built dynamically from `CORPORA.libraries`:
 
-**"Named swatches . filter"**: independent of the display setting.
+**"Named swatches - filter"**: independent of the display setting.
 Master "All libraries" checkbox plus one checkbox per library. When the
 filter pill is set to "Any named", a swatch passes the filter if and
-only if it matches a name in at least one *checked* library.
+only if it matches a name in at least one checked library.
 
-**"Naming . per library"**: one row per library:
+**"Naming - per library"**: one row per library:
 - A radio group with one button per declared field in `lib.fields[]` plus
   a `hide` option. The selected radio is the field rendered on the cell.
 - An anchor `<select>` (`hex` / `cmyk`) when the library has at least one
   entry carrying both attributes. Flipping the anchor triggers a full
   rematch (heavy but acceptable on explicit user action).
 
-State stored in `localStorage['cmykCorporaPrefs_v1']` under the keys
-`display`, `anchor`, and `filter_enabled`. The "Reset UI to defaults"
-button (§6.5) clears these along with the rest of UI state.
+State is part of `cmykUIState_v2` under `corpora_prefs[lib.id]` with
+keys `display`, `anchor`, and `filter_enabled`. The "Reset UI to
+defaults" button (§6.5) clears these along with the rest of UI state.
 
 The detail card chip pass is independent of the cell display radio: it
 shows every field of the matched entry for every library (no hiding),
 so the user can always see the full corpus context for a swatch.
 
+**Global anchor + dE tolerance.** A link badge in the header allows the
+user to lock the anchor mode globally (applies to all libraries) or set
+a global dE tolerance that relaxes the named-filter threshold without
+opening individual library dialogs.
+
 ### 6.4 Edit workflow
 
 1. Open `data/corpora/name_corpora.json` in any text editor (save UTF-8).
 2. Add a new corpus to the `corpora` array, or append entries to an
-   existing one.
+   existing one. Follow the v3 schema: tri-lingual `label` object,
+   tri-lingual `name_en`/`name_ja`/`name_zh` per entry.
 3. Save and refresh the browser. No Python rebuild needed. Lab is
-   computed in the browser on load.
+   computed in the browser on load (in both D50 and D65 modes).
 
 ### 6.5 UI defaults + reset (`data/ui_defaults.json`)
 
 The HTML ships with a single `data/ui_defaults.json` that controls
-the *factory defaults* applied on first run:
+the factory defaults applied on first run:
 
 ```json
 {
@@ -487,23 +544,37 @@ the *factory defaults* applied on first run:
     "name_tolerance": 0,
     "default_profile_match": "FOGRA39",
     "active_palette_id": null,
-    "corpora_prefs": { "jpn": { "display": "name", "anchor": "hex" }, "html": { "display": "name", "anchor": "hex" } }
+    "corpora_prefs": {
+      "jp-trad": { "display": "name_ja", "anchor": "hex" },
+      "html":    { "display": "name_en", "anchor": "hex" },
+      "zh-trad": { "display": "name_zh", "anchor": "hex" }
+    }
   }
 }
 ```
 
+**localStorage key: `cmykUIState_v2`.** The tool writes all UI state
+to this key. On first load (key absent), defaults from `ui_defaults.json`
+are applied. A v1-to-v2 migration runs at startup: if `cmykUIState_v1`
+is present and `cmykUIState_v2` is absent, the v1 object is read,
+`corpora_prefs` is reshaped from the old flat structure (keyed by
+`jpn`/`html`) to the new structure (keyed by `jp-trad`/`html`/`zh-trad`),
+and written under `cmykUIState_v2`. The `cmykUIState_v1` key is left
+intact for downgrade safety.
+
 Runtime layering:
 1. Load `data/ui_defaults.json`.
-2. Load `localStorage[cmyk_explorer_UIState_v1]` (everything the user
+2. Run v1->v2 migration if needed.
+3. Load `localStorage[cmykUIState_v2]` (everything the user
    changed since last visit).
-3. Merge: defaults < user state. User state wins per-key.
-4. Apply to live vars + DOM controls + `CORPORA_PREFS` before first
+4. Merge: defaults < user state. User state wins per-key.
+5. Apply to live vars + DOM controls + `CORPORA_PREFS` before first
    render.
-5. Sidebar-wide delegated listener (`change` + `input`) persists the
+6. Sidebar-wide delegated listener (`change` + `input`) persists the
    snapshot on every control flip.
 
 The **"Reset UI to defaults"** sidebar button:
-- Removes the `_UIState_` and `cmykCorporaPrefs_` localStorage keys.
+- Removes the `cmykUIState_v2` localStorage key.
 - Re-applies the JSON defaults.
 - Rebuilds the Naming UI.
 - Triggers a full rebuild / rematch.
@@ -518,11 +589,6 @@ dropdown carries a "no palette selected" placeholder. Select-mode
 clicks with no active palette prompt the user to create one or pick
 one before adding swatches. Deleting the last palette leaves
 `activeId === null` rather than auto-creating a replacement.
-
-Current corpus sources:
-- **HTML/CSS**: W3C CSS Color Module Level 4 canonical hex (141 entries)
-- **Japanese**: 111 traditional color names. Best replaced with the
-  authoritative `nippon-colors` corpus when available.
 
 ---
 
@@ -549,12 +615,12 @@ Current corpus sources:
      - `kTier(K)` to tier 1/2/3 + name
      - `tac = C + M + Y + K`
      - `grayscale = (C==0 && M==0 && Y==0)`
-   - `system_name = systemName(s)`: descriptive name
    - `delta_e_print`: `deltaERoundTrip(s, fwdLut, revLut)` (round-trip ΔE)
-   - `matchNearest(s)`: find closest jpn + html names
+   - `matchNearest(s)`: find closest entry in each active library;
+     populates `s.matches[lib.id]` for every lib in `CORPORA.libraries`
    - Dedupe by `C|M|Y|K` (defensive; lattice shouldn't dup)
    - Split into `MAIN_DATA` (non-K-only) + `GS_DATA` (K-only)
-   - `_markClosest('jpn_name'...)` + `_markClosest('html_name'...)`
+   - `_markClosest(lib.id)` for each active library (TAC/K/index tiebreak)
    - `render()`
 
 3. **`render()`**: pick view mode:
@@ -584,13 +650,22 @@ Below the main grid. See §5 for the renderer details.
 ### 7.4 View modes
 
 - **Grid**: virtualized swatch grid (default)
-- **Hue x Light**: 18 hue bins x 10 light bins, one representative
-  swatch per bucket (lowest delta_e_print wins). Cells are responsive,
-  shrink-to-fit when viewport narrow.
 - **Palettes**: list of saved palette panels with per-palette actions
   (rename, duplicate, clear, delete, PNG, ASE, GPL, JSON, ZIP)
 
-3-button group at the top: `[Grid] [Hue x Light] [Palettes]`.
+2-button group at the top: `[Grid] [Palettes]`.
+
+**Hue x Light** is not a separate view mode. It is a sort option in the
+**Sort by** row: selecting "Hue x Light" renders the 18 hue x 10 light
+bucket map inline within the grid area. Cells are responsive, shrink-to-fit
+when viewport narrow. Consolidating it into Sort by removes the mode-switch
+split and lets the user combine Hue x Light layout with any active filter
+set.
+
+**Palettes panel.** The Palettes block and the palette-manager (`pm-wrap`)
+are merged into a single collapsable panel that sits above the grid. The
+panel is collapsed by default; clicking the palette header or a disclosure
+triangle expands it.
 
 ### 7.5 Filters
 
@@ -601,7 +676,7 @@ Applied in `filtered()`:
 - **ΔE max** slider: hides swatches whose round-trip `delta_e_print`
   exceeds the threshold. This is the surviving round-trip safety
   mechanism for any selected profile, including Mimaki 3DUJ.
-- Named source pills (All / Any named / Japanese / HTML)
+- Named source pills (All / Any named / per-library checkboxes)
 - Name tolerance slider (ΔE allowance for non-closest swatches to also
   display the name)
 - WCAG AA / AAA toggles
@@ -627,7 +702,8 @@ JSON shape:
       "updated": 17000000,
       "swatches": [
         {"C": 20, "M": 10, "Y": 0, "K": 5, "hex": "#C0D9F2", "R": 192,
-         "jpn_name": "水色", "jpn_romaji": "mizu-iro", "html_name": "lightsteelblue"}
+         "jp-trad__name": "水色", "jp-trad__closest": true, "jp-trad__deltaE": 1.4,
+         "html__name": "lightsteelblue", "html__closest": false, "html__deltaE": 3.1}
       ]
     }
   ]
@@ -645,7 +721,8 @@ palette overwritten).
 | PNG (topbar) | `exportPNG()` | Square fit-square PNG of filtered set with title band |
 | PNG (labelled) | `exportActivePalettePNGSized()` | Palette PNG at 1024/2048/4096, full labels |
 | PNG (pure) | `exportActivePalettePNGPure()` | Palette PNG at chosen size, swatches only |
-| ZIP | `exportActivePaletteZIP()` | Per-swatch 128x128 PNGs + manifest.txt/csv/json |
+| ZIP (palette) | `exportActivePaletteZIP()` | Per-swatch 128x128 PNGs + manifest.txt/csv/json |
+| ZIP (swatch) | `exportSwatchZIP(sw)` | Single swatch: 128x128 PNG + name card, from the detail popover |
 | ASE | `exportActivePaletteASE()` | Adobe Swatch Exchange |
 | GPL | `exportActivePaletteGPL()` | GIMP Palette |
 
@@ -768,9 +845,28 @@ run one script, refresh. That is the workflow.
 
 ### 8.9 Why button-group mode switcher
 
-Single cycling button is fine when you're sure of the order. With
-three modes (Grid / Hue x Light / Palettes) a segmented group is more
-discoverable: you can see all three states and jump direct.
+Two modes (Grid / Palettes) use a segmented button group. Hue x Light
+moved to Sort by (§7.4), so a three-button group was no longer necessary.
+The two-button group is more compact and the Hue x Light option is now
+adjacent to the other sort options where it belongs semantically.
+
+### 8.10 UI consolidation rationale (Spec 6)
+
+Several UI changes were bundled in Spec 6 to reduce sidebar surface area:
+
+- **Hue x Light -> Sort by**: bringing a layout-style view into the sort
+  row eliminates a mode-switch and makes it composable with filters.
+- **Palettes collapsable panel**: the split between the palette dropdown
+  and the palette-manager panel was confusing. One collapsable panel with
+  a clear header reduces the mental model.
+- **Per-swatch ZIP**: previously export required selecting a palette. The
+  per-swatch ZIP lets the user export a single color directly from its
+  detail card without creating a palette.
+- **Dark-only theme**: light mode was rarely used, required double-testing,
+  and produced lower contrast for the CMYK color work. Locked to dark.
+- **Responsive breakpoints (1024 / 768 / 480)**: sidebar becomes a
+  drawer at 1024px, triggered by a hamburger button. At 768px the grid
+  columns narrow. At 480px single-column layout with full-width controls.
 
 ---
 
@@ -820,12 +916,16 @@ writes `data/luts/index.json`. Skips RGB-only working spaces.
 
 ### 10.4 Build name corpora
 
-Create `data/corpora/name_corpora.json` per the schema in §6. Even an empty
-arrays version (`{"jpn": [], "html": []}`) lets the HTML load. It just
-won't have nearest-name matches.
+`data/corpora/name_corpora.json` is committed and ready to use. It
+ships with three active corpora in schema v3 format (see §6.1):
 
-For the HTML/CSS corpus, copy the canonical CSS named colors. For
-Japanese, use the `nippon-colors` data or any open corpus.
+- `jp-trad`: 250 NipponColors.com Japanese traditional colors
+- `html`: 148 W3C CSS Color Module Level 4 canonical named colors
+- `zh-trad`: 526 Chinese traditional colors
+
+To add a corpus, edit the JSON per the v3 schema in §6.1 and refresh the
+browser. Even an empty corpora array lets the HTML load; it just won't
+have nearest-name matches.
 
 ### 10.5 Build the HTML
 
@@ -834,16 +934,16 @@ The HTML is self-contained, no build step. Compose:
 1. **Color math** (§3.1-3.5) ported to JS once
 2. **LUT engine** (§4.3): `loadLUT`, `lutLookup`, `loadRLUT`, `rlutLookup`
 3. **Lattice generator + per-swatch derivation** (§7.1)
-4. **Name matcher** (§6): `matchNearest`, `_markClosest`
-5. **Filters + sort** (§7.5), including the ΔE max slider
+4. **Name matcher** (§6): `matchNearest`, `_markClosest` (dynamic lib IDs)
+5. **Filters + sort** (§7.5), including ΔE max and the Hue x Light sort
 6. **Virtualized grid + cell builder** (§7.2)
 7. **Two greyscale strips** (§5): neutral via reverse+forward
    round-trip; pure-K via forward only
-8. **Hue x Light map** (§7.4) with responsive cell sizing (§8.6)
-9. **Palette CRUD** (§7.6) with localStorage persistence
-10. **Exports** (§7.7): CSV, PNG sized, PNG pure, ZIP, ASE, GPL
+8. **Hue x Light sort** (§7.4) rendered inline, responsive cell sizing (§8.6)
+9. **Palette CRUD + collapsable panel** (§7.6) with localStorage persistence
+10. **Exports** (§7.7): CSV, PNG sized, PNG pure, ZIP (palette + per-swatch), ASE, GPL
 11. **Tooltips** on every control (laymen friendly, not jargon)
-12. **3-button mode switcher** (§8.9)
+12. **2-button mode switcher** (§8.9)
 
 ### 10.6 Run the stack locally
 
@@ -897,9 +997,9 @@ Directory Privacy (`.htaccess` / `.htpasswd`). No HTML changes needed.
 - **No Mac Catalyst / iPad palette sync**. localStorage is per-browser.
 - **No diff view across profiles**. Could show a swatch's behavior
   side-by-side under 2-3 profiles at once.
-- **No nippon-colors authoritative corpus**. Current jpn corpus is
-  re-extracted from earlier naive output; should ingest the public
-  corpus.
+- **LAB_MODE toggle is global**. A per-library or per-corpus mode
+  (some corpora authored under D65, others under D50) is not supported.
+  All corpora use the same LAB_MODE for matching.
 
 ---
 
@@ -923,6 +1023,17 @@ Directory Privacy (`.htaccess` / `.htpasswd`). No HTML changes needed.
 | Virtualization | DOM only contains visible cells |
 | LUT | Lookup table (forward CMYK to RGB or reverse RGB to CMYK) |
 | Quadrilinear | 4-D interpolation between 16 LUT corners |
+| Bradford CAT | Chromatic adaptation transform D65->D50 used in rgb2lab_d50 |
+| LAB_MODE | Global toggle: 'd65' for screen comparison, 'd50' for print/ICC match |
+| D50 | ICC PCS white point (Xn=0.96422, Yn=1, Zn=0.82521) |
+| D65 | sRGB white point (Xn=0.95047, Yn=1, Zn=1.08883) |
+| jp-trad | Japanese traditional color corpus (250 NipponColors entries) |
+| zh-trad | Chinese traditional color corpus (526 entries) |
+| Corpus v3 | Schema with tri-lingual label + per-entry name_en/name_ja/name_zh |
+| Dynamic lib ID | Swatch fields keyed as `lib.id + "__name"` etc., no hardcoded IDs |
+| tac_recommended | Per-profile suggested TAC cap, sourced from press spec data |
+| tac_max | Per-profile hard maximum TAC, used when 3D-print preset is active |
+| cmykUIState_v2 | Current localStorage key for all UI state (migrated from v1) |
 
 ---
 
