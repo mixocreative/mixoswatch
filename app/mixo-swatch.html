@@ -262,6 +262,20 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
   background:var(--bg2);border-radius:var(--r);font-size:11px;
 }
 .pal-count{font-family:var(--font-mono);color:var(--muted);font-size:10px}
+.pal-section{margin-bottom:14px}
+.pal-section:last-child{margin-bottom:0}
+.pal-section-label{
+  font-size:10px;text-transform:uppercase;letter-spacing:.08em;
+  color:var(--muted);margin-bottom:6px;font-weight:500;
+}
+.pal-toggle{display:flex;align-items:center;gap:6px;cursor:pointer;flex:1;font-size:11px}
+.pal-toggle input{cursor:pointer}
+.pal-count-pill{
+  font-size:11px;color:var(--accent);background:rgb(var(--accent-rgb,74,144,226) / .12);
+  padding:2px 8px;border-radius:99px;font-family:var(--font-mono);white-space:nowrap;
+}
+.pal-export-label{font-size:11px;color:var(--muted);min-width:80px}
+.pal-mini-btn.danger:hover{background:rgba(255,80,80,.15);color:#ff8080;border-color:#ff8080}
 .pal-strip{
   display:flex;flex-wrap:wrap;gap:2px;
   max-height:64px;overflow-y:auto;padding:4px;
@@ -276,6 +290,10 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
 .pal-empty{font-size:10px;color:var(--faint);padding:4px 6px;font-style:italic}
 
 
+.match-row .mode-group { display: inline-flex; }
+.lab-mode-group { width: 100%; }
+.lab-mode-group .mode-btn { flex: 1; }
+.anchor-group .mode-btn { padding: 4px 10px; }
 .pal-size-row{display:flex;gap:6px;align-items:center;margin-top:4px}
 .pal-size-row label{font-size:11px;color:var(--muted)}
 .pal-size-row select{
@@ -543,13 +561,9 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
     <!-- Color mode (Lab whitepoint) -->
     <div class="sec">
       <div class="sec-label" title="Color mode picks the Lab whitepoint used for corpus matching. Print mode (D50) aligns with ICC-standard swatch books. Screen mode (D65) is pure sRGB-native.">Color mode</div>
-      <div class="lab-mode-row">
-        <label class="lab-radio">
-          <input type="radio" name="labMode" value="d50" checked onchange="setLabMode('d50')"> Print (D50)
-        </label>
-        <label class="lab-radio">
-          <input type="radio" name="labMode" value="d65" onchange="setLabMode('d65')"> Screen (D65)
-        </label>
+      <div class="mode-group lab-mode-group" id="labModeGroup">
+        <button type="button" class="mode-btn active" data-lab="d50" onclick="setLabMode('d50')">Print (D50)</button>
+        <button type="button" class="mode-btn" data-lab="d65" onclick="setLabMode('d65')">Screen (D65)</button>
       </div>
     </div>
 
@@ -737,8 +751,10 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
         </div>
         <div class="match-row">
           <div class="match-label">Anchor</div>
-          <label class="match-radio"><input type="radio" name="anchor" value="cmyk" checked onchange="setGlobalAnchor('cmyk')"> CMYK</label>
-          <label class="match-radio"><input type="radio" name="anchor" value="hex"  onchange="setGlobalAnchor('hex')"> hex</label>
+          <div class="mode-group anchor-group" id="anchorGroup">
+            <button type="button" class="mode-btn active" data-anchor="cmyk" onclick="setGlobalAnchor('cmyk')">CMYK</button>
+            <button type="button" class="mode-btn" data-anchor="hex" onclick="setGlobalAnchor('hex')">hex</button>
+          </div>
         </div>
         <div class="match-help">Match by CMYK-Lab (print) or hex-Lab (screen). html corpus falls back to hex when anchor=cmyk.</div>
         <div class="match-row" style="margin-top:6px">
@@ -835,47 +851,69 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
         <span class="pal-count" id="palCount" title="How many swatches are in the active palette.">0</span>
       </div>
       <div class="palette-panel-body" id="palettePanelBody">
-        <div class="pal-row">
-          <select class="pal-sel" id="palSel" onchange="onPalChange()" title="Switch between saved palettes. Each palette is a small set of swatches you've collected."></select>
-          <button class="pal-mini-btn" onclick="newPalette()"      title="New palette">+</button>
-          <button class="pal-mini-btn" onclick="renamePalette()"   title="Rename">&#9998;</button>
-          <button class="pal-mini-btn danger" onclick="deletePalette()" title="Delete">&#10005;</button>
+
+        <!-- Section 1: Active palette -->
+        <div class="pal-section">
+          <div class="pal-section-label">Active palette</div>
+          <div class="pal-row">
+            <select class="pal-sel" id="palSel" onchange="onPalChange()" title="Switch between saved palettes."></select>
+            <button class="pal-mini-btn" onclick="newPalette()" title="Create a new palette">+ New</button>
+            <button class="pal-mini-btn" onclick="renamePalette()" title="Rename active palette">Rename</button>
+            <button class="pal-mini-btn danger" onclick="deletePalette()" title="Delete active palette">Delete</button>
+          </div>
+          <div class="pal-row">
+            <label class="pal-toggle">
+              <input type="checkbox" id="togSel" onchange="toggleSelectMode()" title="When ON, clicking a swatch adds or removes it from the active palette.">
+              <span>Selection mode (click swatches to add/remove)</span>
+            </label>
+            <span class="pal-count-pill"><span id="palCount">0</span> swatches</span>
+          </div>
         </div>
-        <div class="pal-tog-row">
-          <label style="display:flex;align-items:center;gap:6px;cursor:pointer;flex:1">
-            <input type="checkbox" id="togSel" onchange="toggleSelectMode()" title="When ON, clicking a swatch adds (or removes) it from the active palette instead of opening the details.">
-            <span>Select mode</span>
-          </label>
+
+        <!-- Section 2: Preview -->
+        <div class="pal-section">
+          <div class="pal-section-label">Preview (click any swatch to remove)</div>
+          <div class="pal-strip" id="palStrip"></div>
         </div>
-        <div class="pal-strip" id="palStrip" title="Mini view of the active palette. Click any chip to remove that swatch."></div>
-        <div class="pal-size-row">
-          <label>PNG size</label>
-          <select id="palPngSize" title="Canvas size for the palette PNG. Cells auto-scale to fill the square with no gaps.">
-            <option value="1024">1024 x 1024</option>
-            <option value="2048" selected>2048 x 2048</option>
-            <option value="4096">4096 x 4096</option>
-          </select>
+
+        <!-- Section 3: Exports -->
+        <div class="pal-section">
+          <div class="pal-section-label">Export</div>
+          <div class="pal-row">
+            <label class="pal-export-label">Image size</label>
+            <select id="palPngSize" title="Canvas size for the palette PNG. Cells auto-scale to fill the square.">
+              <option value="1024">1024 x 1024</option>
+              <option value="2048" selected>2048 x 2048</option>
+              <option value="4096">4096 x 4096</option>
+            </select>
+          </div>
+          <div class="pal-row">
+            <button class="pal-mini-btn" style="flex:1" onclick="exportActivePalettePNGSized()" title="PNG with CMYK + hex + name labels per swatch.">PNG (labelled)</button>
+            <button class="pal-mini-btn" style="flex:1" onclick="exportActivePalettePNGPure()" title="PNG with only colored squares, no text.">PNG (pure colors)</button>
+          </div>
+          <div class="pal-row">
+            <button class="pal-mini-btn primary" style="flex:1" onclick="exportActivePaletteZIP()" title="Download a .zip with one 128px PNG per swatch + manifest.">ZIP (one 128px PNG per swatch + manifest)</button>
+          </div>
+          <div class="pal-row">
+            <button class="pal-mini-btn" style="flex:1" onclick="exportActivePaletteASE()" title="Save as .ase (Photoshop / Illustrator / Affinity / Substance).">ASE (Adobe / Affinity / Substance)</button>
+            <button class="pal-mini-btn" style="flex:1" onclick="exportActivePaletteGPL()" title="Save as .gpl (GIMP / Krita / Inkscape / Blender).">GPL (GIMP / Krita / Inkscape)</button>
+          </div>
         </div>
-        <div class="pal-row">
-          <button class="pal-mini-btn" style="flex:1" onclick="exportActivePalettePNGSized()" title="PNG with CMYK + hex + name labels per swatch, fitted to chosen size.">&#8595; PNG (labelled)</button>
-          <button class="pal-mini-btn" style="flex:1" onclick="exportActivePalettePNGPure()" title="PNG with only colored squares, no text. Same fit-square sizing.">&#8595; PNG (pure)</button>
+
+        <!-- Section 4: Backup -->
+        <div class="pal-section">
+          <div class="pal-section-label">Backup</div>
+          <div class="pal-row">
+            <button class="pal-mini-btn" style="flex:1" onclick="exportPalettes()" title="Save all palettes to a .json file you can re-import later.">Export all palettes (.json)</button>
+            <button class="pal-mini-btn" style="flex:1" onclick="document.getElementById('palFile').click()">Import</button>
+            <input type="file" id="palFile" accept=".json,.palettes" style="display:none" onchange="importPalettes(event)">
+          </div>
+          <div class="pal-row">
+            <button class="pal-mini-btn danger" style="flex:1" onclick="clearActivePalette()" title="Empty the active palette but keep its name.">Clear active palette</button>
+          </div>
         </div>
-        <div class="pal-row">
-          <button class="pal-mini-btn primary" style="flex:1" onclick="exportActivePaletteZIP()" title="Download a .zip with one 128x128 solid-color PNG per swatch + manifest.txt/csv/json. Mirrors swatches.py output format.">&#8595; ZIP (per-swatch + manifest)</button>
-        </div>
-        <div class="pal-row">
-          <button class="pal-mini-btn" style="flex:1" onclick="exportPalettes()" title="Save all palettes to a single .palettes.json file you can re-import later.">&#8595; Export</button>
-          <button class="pal-mini-btn" style="flex:1" onclick="document.getElementById('palFile').click()">&#8593; Import</button>
-          <input type="file" id="palFile" accept=".json,.palettes" style="display:none" onchange="importPalettes(event)" title="Pick a .palettes.json file to import. Choose merge or replace.">
-        </div>
-        <div class="pal-row">
-          <button class="pal-mini-btn" style="flex:1" onclick="clearActivePalette()" title="Empty the active palette but keep its name.">Clear</button>
-          <button class="pal-mini-btn primary" style="flex:1" onclick="exportActivePalettePNG()" title="Save the active palette as a PNG image with title band.">&#8595; PNG</button>
-        </div>
-        <div class="pal-row">
-          <button class="pal-mini-btn" style="flex:1" onclick="exportActivePaletteASE()" title="Save the active palette as a .ase file (Photoshop / Illustrator / Affinity / Substance).">&#8595; ASE</button>
-          <button class="pal-mini-btn" style="flex:1" onclick="exportActivePaletteGPL()" title="Save the active palette as a .gpl file (GIMP / Krita / Inkscape / Blender).">&#8595; GPL</button>
-        </div>
+
+        <!-- Palettes view grid (rendered when viewMode='palettes') -->
         <div class="pm-wrap" id="pmWrap" style="display:none"></div>
       </div>
     </div>
@@ -1081,8 +1119,8 @@ function applyUIState(s) {
       if (vTol)  vTol.textContent = curTol.toFixed(1);
     }
     if (CORPORA_PREFS._global.anchor) {
-      document.querySelectorAll('input[name="anchor"]').forEach(r => {
-        r.checked = (r.value === CORPORA_PREFS._global.anchor);
+      document.querySelectorAll('#anchorGroup .mode-btn').forEach(b => {
+        b.classList.toggle('active', b.dataset.anchor === CORPORA_PREFS._global.anchor);
       });
     }
   }
@@ -2933,18 +2971,32 @@ function snapTACToProfile() {
   document.getElementById('vTACMax').textContent = sl.max;
   if (typeof onFilter === 'function') onFilter();
 }
+let _3D_PREV_TAC = null;
+let _3D_PREV_DEMAX = null;
 function set3DPreset(on) {
-  if (!on) return;
   const slTAC = document.getElementById('slTAC');
-  if (slTAC && +slTAC.value > 240) {
-    slTAC.value = 240;
-    document.getElementById('vTAC').textContent = '240';
-  }
   const slDEmax = document.getElementById('slDEmax');
-  // slDEmax raw 0-100 -> divided by 10 = 0-10 effective. 3 effective = raw 30.
-  if (slDEmax && +slDEmax.value > 30) slDEmax.value = 30;
-  TAC_USER_OVERRIDE = true;
-  document.getElementById('tacOverride').style.display = 'inline-block';
+  const vTAC = document.getElementById('vTAC');
+  const vDEmax = document.getElementById('vDEmax');
+  if (!slTAC || !slDEmax) return;
+  if (on) {
+    if (_3D_PREV_TAC === null) _3D_PREV_TAC = +slTAC.value;
+    if (_3D_PREV_DEMAX === null) _3D_PREV_DEMAX = +slDEmax.value;
+    if (+slTAC.value > 240) slTAC.value = 240;
+    if (+slDEmax.value > 30 || +slDEmax.value === 100) slDEmax.value = 30;
+    TAC_USER_OVERRIDE = false;
+    document.getElementById('tacOverride').style.display = 'inline-block';
+  } else {
+    if (_3D_PREV_TAC !== null) { slTAC.value = _3D_PREV_TAC; _3D_PREV_TAC = null; }
+    if (_3D_PREV_DEMAX !== null) { slDEmax.value = _3D_PREV_DEMAX; _3D_PREV_DEMAX = null; }
+    TAC_USER_OVERRIDE = false;
+    document.getElementById('tacOverride').style.display = 'none';
+  }
+  if (vTAC) vTAC.textContent = slTAC.value;
+  if (vDEmax) {
+    const raw = +slDEmax.value;
+    vDEmax.textContent = raw >= 100 ? 'off' : 'dE <= ' + (raw / 10).toFixed(1);
+  }
   if (typeof onFilter === 'function') onFilter();
 }
 
@@ -3062,6 +3114,16 @@ function setGlobalAnchor(v) {
     CORPORA_PREFS[lib.id] = Object.assign({}, CORPORA_PREFS[lib.id] || {}, { anchor: v });
   }
   if (typeof _saveCorporaPrefs === 'function') _saveCorporaPrefs();
+  // Bidirectional sync: clicking anchor also flips Lab mode.
+  const newLab = (v === 'cmyk') ? 'd50' : 'd65';
+  if (LAB_MODE !== newLab) {
+    setLabMode(newLab); // setLabMode handles button groups + re-render
+    return;
+  }
+  // Lab mode already correct - just update anchor button states + re-render.
+  document.querySelectorAll('#anchorGroup .mode-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.anchor === v);
+  });
   if (typeof rematchAll === 'function') {
     rematchAll().then(() => {
       for (const lib of CORPORA.libraries) _markClosest(lib);
@@ -3123,6 +3185,15 @@ function setLabMode(mode) {
     const [L,a,b] = mode === 'd50' ? s.lab_d50 : s.lab_d65;
     s.L_star = +L.toFixed(2); s.a_star = +a.toFixed(2); s.b_star = +b.toFixed(2);
   }
+  // Auto-sync anchor: D50 (print) -> cmyk, D65 (screen) -> hex.
+  // Set directly - do NOT call setGlobalAnchor (avoids infinite recursion).
+  const newAnchor = (mode === 'd50') ? 'cmyk' : 'hex';
+  CORPORA_PREFS._global = CORPORA_PREFS._global || {};
+  CORPORA_PREFS._global.anchor = newAnchor;
+  for (const lib of CORPORA.libraries) {
+    CORPORA_PREFS[lib.id] = Object.assign({}, CORPORA_PREFS[lib.id] || {}, { anchor: newAnchor });
+  }
+  if (typeof _saveCorporaPrefs === 'function') _saveCorporaPrefs();
   // Re-run corpus matching so deltaE values reflect the new whitepoint, then
   // re-render. rematchAll is async; _scheduleRender fires inside it already.
   rematchAll().then(() => {
@@ -3131,8 +3202,12 @@ function setLabMode(mode) {
   persistUI();
   document.getElementById('labModeBadge').textContent =
     mode === 'd50' ? 'Mode: Print (D50)' : 'Mode: Screen (D65)';
-  document.querySelectorAll('input[name="labMode"]').forEach(r => {
-    r.checked = (r.value === mode);
+  // Reflect both button groups
+  document.querySelectorAll('#labModeGroup .mode-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.lab === mode);
+  });
+  document.querySelectorAll('#anchorGroup .mode-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.anchor === newAnchor);
   });
 }
 
@@ -3928,12 +4003,16 @@ window.addEventListener('load', async () => {
     // Apply defaults < user-saved state before first render.
     applyUIState(_resolvedUI());
     restorePalettePanelState();
-    // Reflect persisted lab_mode onto badge + radio (applyUIState sets LAB_MODE
-    // but cannot touch the DOM elements added after HTML parse).
+    // Reflect persisted lab_mode onto badge + button groups (applyUIState sets
+    // LAB_MODE but cannot touch DOM elements added after HTML parse).
     document.getElementById('labModeBadge').textContent =
       LAB_MODE === 'd50' ? 'Mode: Print (D50)' : 'Mode: Screen (D65)';
-    document.querySelectorAll('input[name="labMode"]').forEach(r => {
-      r.checked = (r.value === LAB_MODE);
+    document.querySelectorAll('#labModeGroup .mode-btn').forEach(b => {
+      b.classList.toggle('active', b.dataset.lab === LAB_MODE);
+    });
+    const _bootAnchor = CORPORA_PREFS?._global?.anchor || 'cmyk';
+    document.querySelectorAll('#anchorGroup .mode-btn').forEach(b => {
+      b.classList.toggle('active', b.dataset.anchor === _bootAnchor);
     });
     // Initialize dual-handle range fill bars after state is applied
     ['rng-c','rng-m','rng-y','rng-k'].forEach(_updateRangeFill);
