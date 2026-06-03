@@ -1847,50 +1847,41 @@
           <div class="panel-name">Naming libraries shipped<span class="jp">同梱辞書 ／ 內建詞典</span></div>
           <div class="panel-body">
             <p>
-              <span data-en>The tools ship with four name corpora out of the box. Add more by editing
+              <span data-en>The tools ship with three name corpora out of the box. Add more by editing
                 <code>data/corpora/name_corpora.json</code> and refreshing.</span>
-              <span data-ja>同梱辞書は四つ。<code>data/corpora/name_corpora.json</code>を編集して再読込すれば追加可能。</span>
-              <span data-zh>內建四個命名色詞典。編輯 <code>data/corpora/name_corpora.json</code> 後重新整理可加入更多。</span>
+              <span data-ja>同梱辞書は三つ。<code>data/corpora/name_corpora.json</code>を編集して再読込すれば追加可能。</span>
+              <span data-zh>內建三個命名色詞典。編輯 <code>data/corpora/name_corpora.json</code> 後重新整理可加入更多。</span>
             </p>
             <ul style="margin-top:6px;padding-left:0;list-style:none;display:flex;flex-direction:column;gap:8px">
               <li>
+                <span style="font-family:var(--mono);font-size:11px;color:var(--accent)">jp-trad</span> &nbsp;
+                <span style="font-family:var(--jp);font-size:12.5px;color:var(--text)">日本の伝統色 (NipponColors) · 250色</span>
+                <span class="gloss"
+                  data-en="250 traditional Japanese colors from nipponcolors.com. Each entry carries kanji, romaji, and CMYK from the source.">250 traditional Japanese colors from nipponcolors.com. Each entry carries kanji, romaji, and CMYK from the source.</span>
+                <span class="gloss"
+                  data-ja="nipponcolors.com 由来の日本の伝統色 250 色。各エントリは漢字・ローマ字・CMYK を保持。">nipponcolors.com 由来の日本の伝統色 250 色。各エントリは漢字・ローマ字・CMYK を保持。</span>
+                <span class="gloss"
+                  data-zh="來自 nipponcolors.com 的 250 個日本傳統色。每筆包含漢字、羅馬拼音與 CMYK。">來自 nipponcolors.com 的 250 個日本傳統色。每筆包含漢字、羅馬拼音與 CMYK。</span>
+              </li>
+              <li>
                 <span style="font-family:var(--mono);font-size:11px;color:var(--accent)">html</span> &nbsp;
-                <span style="font-family:var(--jp);font-size:12.5px;color:var(--text)">W3C CSS Color Module Level 4 ·
-                  141色</span>
+                <span style="font-family:var(--jp);font-size:12.5px;color:var(--text)">W3C CSS Color Module Level 4 · 148色</span>
                 <span class="gloss"
-                  data-en="The 141 named CSS colors every browser ships. Useful when you need a web-friendly name alongside the ink-friendly one.">The
-                  141 named CSS colors every browser ships. Useful when you need a web-friendly name alongside the
-                  ink-friendly one.</span>
+                  data-en="The 148 W3C-canonical named CSS colors every browser ships. sRGB-native; useful when you need a web-friendly name alongside the ink-friendly one.">The 148 W3C-canonical named CSS colors every browser ships. sRGB-native; useful when you need a web-friendly name alongside the ink-friendly one.</span>
                 <span class="gloss"
-                  data-ja="全ブラウザ標準搭載のCSS命名色141。プリント向け名とウェブ向け名を併記したい時に有効。">全ブラウザ標準搭載のCSS命名色141。印刷向け名とウェブ向け名を併記したい時に有効。</span>
-                <span class="gloss" data-zh="所有瀏覽器都內建的 141 個 CSS 命名色。當你需要在油墨色名旁附上網頁色名時很有用。">所有瀏覽器都內建的 141 個 CSS
-                  命名色。當你需要在油墨色名旁附上網頁色名時很有用。</span>
+                  data-ja="全ブラウザ標準搭載の W3C 公認 CSS 命名色 148 色。sRGB ネイティブ。プリント向け名とウェブ向け名を併記したい時に有効。">全ブラウザ標準搭載の W3C 公認 CSS 命名色 148 色。sRGB ネイティブ。プリント向け名とウェブ向け名を併記したい時に有効。</span>
+                <span class="gloss"
+                  data-zh="所有瀏覽器都內建的 W3C 公認 148 個 CSS 命名色，sRGB 原生。當你需要在油墨色名旁附上網頁色名時很有用。">所有瀏覽器都內建的 W3C 公認 148 個 CSS 命名色，sRGB 原生。當你需要在油墨色名旁附上網頁色名時很有用。</span>
               </li>
               <li>
-                <span style="font-family:var(--mono);font-size:11px;color:var(--accent)">jpn-dic</span> &nbsp;
-                <span style="font-family:var(--jp);font-size:12.5px;color:var(--text)">DIC日本の伝統色（マット）· N801〜N810
-                  種子</span>
+                <span style="font-family:var(--mono);font-size:11px;color:var(--accent)">zh-trad</span> &nbsp;
+                <span style="font-family:var(--jp);font-size:12.5px;color:var(--text)">中国の伝統色 · 526色</span>
                 <span class="gloss"
-                  data-en="DIC's Japanese traditional color guide, matte variant. Seeded with N801 to N810 with verified CMYK + DIC code. Editable; add more from your DIC sample book.">DIC's
-                  Japanese traditional color guide, matte variant. Seeded with N801 to N810 with verified CMYK + DIC
-                  code. Editable; add more from your DIC sample book.</span>
+                  data-en="526 traditional Chinese colors sourced from the 1957 Chinese Academy of Science color dictionary (mirrored on color-term.com). Each entry has hanzi, pinyin, hex, and derived CMYK.">526 traditional Chinese colors sourced from the 1957 Chinese Academy of Science color dictionary (mirrored on color-term.com). Each entry has hanzi, pinyin, hex, and derived CMYK.</span>
                 <span class="gloss"
-                  data-ja="DIC日本の伝統色（マット）。N801〜N810をCMYK＋DICコード検証済みで初期収録。DIC見本帳から追加編集可能。">DIC日本の伝統色（マット）。N801〜N810をCMYK＋DICコード検証済みで初期収録。DIC見本帳から追加編集可能。</span>
+                  data-ja="1957 年中国科学院色名辞典に由来する中国の伝統色 526 色 (color-term.com にミラー)。各エントリは漢字・拼音・hex・派生 CMYK を保持。">1957 年中国科学院色名辞典に由来する中国の伝統色 526 色 (color-term.com にミラー)。各エントリは漢字・拼音・hex・派生 CMYK を保持。</span>
                 <span class="gloss"
-                  data-zh="DIC 日本傳統色色票（霧面版）。初始收錄 N801 至 N810，附經驗證的 CMYK 與 DIC 編號。可編輯，從你的 DIC 樣本冊加入更多。">DIC
-                  日本傳統色色票（霧面版）。初始收錄 N801 至 N810，附經驗證的 CMYK 與 DIC 編號。可編輯，從你的 DIC 樣本冊加入更多。</span>
-              </li>
-              <li>
-                <span style="font-family:var(--mono);font-size:11px;color:var(--accent)">zh-dic</span> &nbsp;
-                <span style="font-family:var(--jp);font-size:12.5px;color:var(--text)">DIC中国の伝統色 · 24色 種子</span>
-                <span class="gloss"
-                  data-en="DIC's Chinese traditional color guide. 24 seed entries across reds, yellows, blues with hanzi + pinyin + English + DIC code.">DIC's
-                  Chinese traditional color guide. 24 seed entries across reds, yellows, blues with hanzi + pinyin +
-                  English + DIC code.</span>
-                <span class="gloss"
-                  data-ja="DIC中国の伝統色。赤・黄・青系の24エントリを初期収録。漢字＋拼音＋英語＋DICコード付き。">DIC中国の伝統色。赤・黄・青系の24エントリを初期収録。漢字＋拼音＋英語＋DICコード付き。</span>
-                <span class="gloss" data-zh="DIC 中國傳統色色票。初始收錄紅、黃、藍系共 24 筆，附漢字、拼音、英文與 DIC 編號。">DIC 中國傳統色色票。初始收錄紅、黃、藍系共 24
-                  筆，附漢字、拼音、英文與 DIC 編號。</span>
+                  data-zh="源自 1957 年中國科學院色名辭典的中國傳統色 526 種，鏡像於 color-term.com。每筆包含漢字、拼音、hex 與推導出的 CMYK。">源自 1957 年中國科學院色名辭典的中國傳統色 526 種，鏡像於 color-term.com。每筆包含漢字、拼音、hex 與推導出的 CMYK。</span>
               </li>
             </ul>
           </div>
@@ -2005,10 +1996,9 @@
               survive.</p>
             <div class="demo" data-demo="namefilter">
               <div class="demo-controls demo-check">
-                <label><input type="checkbox" value="jpn" checked> jpn</label>
+                <label><input type="checkbox" value="jp-trad" checked> jp-trad</label>
                 <label><input type="checkbox" value="html" checked> html</label>
-                <label><input type="checkbox" value="jpn-dic"> jpn-dic</label>
-                <label><input type="checkbox" value="zh-dic"> zh-dic</label>
+                <label><input type="checkbox" value="zh-trad"> zh-trad</label>
                 <span class="demo-count" id="d-nf-count">5 / 8 named</span>
               </div>
               <div class="demo-output" id="d-nf-out"></div>
@@ -2415,9 +2405,9 @@
         const out = root.querySelector('#d-nf-out');
         const ct = root.querySelector('#d-nf-count');
         const named = {
-          sakura: ['jpn', 'html'], kariyasu: ['jpn', 'jpn-dic'], yamabuki: ['jpn', 'jpn-dic'],
-          moegi: ['jpn'], asagi: ['jpn', 'html'], enji: ['jpn', 'jpn-dic'],
-          ai: ['jpn', 'zh-dic'], sumi: ['jpn'],
+          sakura: ['jp-trad', 'html'], kariyasu: ['jp-trad'], yamabuki: ['jp-trad'],
+          moegi: ['jp-trad'], asagi: ['jp-trad', 'html'], enji: ['jp-trad'],
+          ai: ['jp-trad', 'zh-trad'], sumi: ['jp-trad'],
         };
         out.innerHTML = '';
         const tiles = S.map(s => {
@@ -2620,7 +2610,7 @@
                   swatches: active.map(s => ({
                     C: s.cmyk[0], M: s.cmyk[1], Y: s.cmyk[2], K: s.cmyk[3],
                     hex: s.hex,
-                    jpn_name: s.k, jpn_romaji: s.r,
+                    name_ja: s.k, romaji: s.r,
                     dic_code: s.d,
                   })),
                 }],
