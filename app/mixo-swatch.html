@@ -35,6 +35,14 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
 .topbar-title{font-size:14px;font-weight:500;letter-spacing:-.02em;white-space:nowrap}
 .topbar-sep{flex:1}
 .count-tag{font-size:11px;color:var(--muted);font-family:var(--font-mono);white-space:nowrap}
+.lab-mode-badge{
+  font-size:11px;color:var(--accent);background:rgba(91,163,255,.10);
+  border:1px solid rgba(91,163,255,.30);border-radius:var(--r);
+  padding:3px 8px;font-family:var(--font-mono);white-space:nowrap;
+}
+.lab-mode-row{display:flex;gap:10px;font-size:12px}
+.lab-radio{display:flex;align-items:center;gap:5px;cursor:pointer;flex:1}
+.lab-radio input{cursor:pointer}
 .btn{
   font-size:12px;padding:5px 12px;border:1px solid var(--border);border-radius:var(--r);
   background:transparent;color:var(--text);cursor:pointer;transition:background .1s;white-space:nowrap;
@@ -431,6 +439,7 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
 <!-- Top bar -->
 <header class="topbar">
   <span class="topbar-title">Mixo Swatch</span>
+  <span class="lab-mode-badge" id="labModeBadge" title="Active Lab whitepoint. Switch in sidebar under 'Color mode'.">Mode: Print (D50)</span>
   <div class="topbar-sep"></div>
   <span class="count-tag" id="countLabel" title="How many swatches the filters currently allow.">- swatches</span>
   <button class="btn" onclick="resetUIToDefaults()" title="Reset all UI controls (cell size, sort, filters, naming) to the values in data/ui_defaults.json. Saved palettes are kept.">↺ Reset UI to defaults</button>
@@ -446,6 +455,19 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
 
     <div class="step-group-header">
       <span class="num">01</span><span class="lbl">Pick a profile</span><span class="sub">press + size</span>
+    </div>
+
+    <!-- Color mode (Lab whitepoint) -->
+    <div class="sec">
+      <div class="sec-label" title="Color mode picks the Lab whitepoint used for corpus matching. Print mode (D50) aligns with ICC-standard swatch books. Screen mode (D65) is pure sRGB-native.">Color mode</div>
+      <div class="lab-mode-row">
+        <label class="lab-radio">
+          <input type="radio" name="labMode" value="d50" checked onchange="setLabMode('d50')"> Print (D50)
+        </label>
+        <label class="lab-radio">
+          <input type="radio" name="labMode" value="d65" onchange="setLabMode('d65')"> Screen (D65)
+        </label>
+      </div>
     </div>
 
     <!-- ICC Profile -->
@@ -839,6 +861,7 @@ function _snapshotUI() {
     search: $('searchQ')?.value || '',
     active_palette_id: typeof activeId !== 'undefined' ? (activeId || null) : null,
     corpora_prefs: CORPORA_PREFS,
+    lab_mode: LAB_MODE,
   };
 }
 function persistUI() { _writeUIState(_snapshotUI()); }
@@ -852,6 +875,9 @@ function applyUIState(s) {
   if (typeof s.k_tier         === 'number') curKTier  = s.k_tier;
   if (typeof s.named_filter   === 'string') curNamed  = s.named_filter;
   if (typeof s.name_tolerance === 'number') curTol    = s.name_tolerance;
+  if (typeof s.lab_mode === 'string' && (s.lab_mode === 'd50' || s.lab_mode === 'd65')) {
+    LAB_MODE = s.lab_mode;
+  }
   if ($('togAA'))  $('togAA').checked  = !!s.wcag_aa;
   if ($('togAAA')) $('togAAA').checked = !!s.wcag_aaa;
   if ($('togWt'))  $('togWt').checked  = !!s.white_text_only;
@@ -2792,6 +2818,32 @@ function setSort(m) {
   _scheduleRender();
 }
 
+function setLabMode(mode) {
+  if (mode !== 'd50' && mode !== 'd65') return;
+  if (LAB_MODE === mode) return;
+  LAB_MODE = mode;
+  // Swap the active L*/a*/b* on every swatch to match the new whitepoint.
+  // Both lab_d50 and lab_d65 are pre-cached on each swatch (Task 3), so this
+  // is a pure memory copy - no recalculation.
+  for (const s of DEDUP) {
+    const [L,a,b] = mode === 'd50' ? s.lab_d50 : s.lab_d65;
+    s.L_star = +L.toFixed(2); s.a_star = +a.toFixed(2); s.b_star = +b.toFixed(2);
+  }
+  // Re-run corpus matching so deltaE values reflect the new whitepoint, then
+  // re-render. rematchAll is async; _scheduleRender fires inside it already.
+  rematchAll().then(() => {
+    _markClosest('jpn_name',  'deltaE_jpn',  'jpn_closest');
+    _markClosest('html_name', 'deltaE_html', 'html_closest');
+    _scheduleRender();
+  });
+  persistUI();
+  document.getElementById('labModeBadge').textContent =
+    mode === 'd50' ? 'Mode: Print (D50)' : 'Mode: Screen (D65)';
+  document.querySelectorAll('input[name="labMode"]').forEach(r => {
+    r.checked = (r.value === mode);
+  });
+}
+
 // ── CSV export ───────────────────────────────────────────────────────────────
 function exportCSV() {
   const data = sorted(filtered());
@@ -3512,6 +3564,13 @@ window.addEventListener('load', async () => {
     populateProfileSelect();
     // Apply defaults < user-saved state before first render.
     applyUIState(_resolvedUI());
+    // Reflect persisted lab_mode onto badge + radio (applyUIState sets LAB_MODE
+    // but cannot touch the DOM elements added after HTML parse).
+    document.getElementById('labModeBadge').textContent =
+      LAB_MODE === 'd50' ? 'Mode: Print (D50)' : 'Mode: Screen (D65)';
+    document.querySelectorAll('input[name="labMode"]').forEach(r => {
+      r.checked = (r.value === LAB_MODE);
+    });
     buildNamingUI();
     buildFilterUI();
     // Sidebar-wide change listener: persist on every control flip.
