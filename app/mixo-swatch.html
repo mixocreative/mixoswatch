@@ -131,6 +131,27 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
 .sv{font-size:10px;font-family:var(--font-mono);color:var(--muted);min-width:26px;text-align:right}
 .sv2{font-size:10px;font-family:var(--font-mono);color:var(--muted);min-width:26px;text-align:right}
 
+/* ── Dual-handle range sliders ── */
+.range-dual{position:relative;height:24px;margin:4px 0 2px}
+.range-dual .rd-track{position:absolute;left:0;right:0;top:11px;height:2px;background:var(--border)}
+.range-dual .rd-fill{position:absolute;top:11px;height:2px;background:var(--accent)}
+.range-dual input[type=range]{
+  position:absolute;left:0;right:0;top:0;width:100%;height:24px;
+  background:transparent;pointer-events:none;
+  -webkit-appearance:none;appearance:none;
+}
+.range-dual input[type=range]::-webkit-slider-thumb{
+  pointer-events:auto;-webkit-appearance:none;appearance:none;
+  width:14px;height:14px;border-radius:50%;background:var(--accent);
+  border:2px solid var(--surface);cursor:pointer;
+}
+.range-dual input[type=range]::-moz-range-thumb{
+  pointer-events:auto;width:14px;height:14px;border-radius:50%;background:var(--accent);
+  border:2px solid var(--surface);cursor:pointer;
+}
+.rd-label-row{display:flex;justify-content:space-between;align-items:center;margin-top:1px}
+.rd-vals{display:flex;gap:4px;align-items:center;font-size:10px;font-family:var(--font-mono);color:var(--muted)}
+
 /* Global match settings (link-badge, match-row, match-radio, match-help) */
 .link-badge{font-size:11px;color:var(--accent);font-weight:500}
 .match-row{display:flex;align-items:center;gap:8px;font-size:11px}
@@ -458,20 +479,33 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
   .main { grid-template-columns: 220px 1fr; }
 }
 @media (max-width: 767px) {
-  .main { grid-template-columns: 1fr; }
-  .sidebar {
-    position: fixed; top: 52px; left: -100%; bottom: 0; width: 280px;
-    transition: left .2s; z-index: 25; box-shadow: 0 0 20px rgba(0,0,0,.5);
+  /* Split-screen: sidebar on top (40vh), grid below. Both always visible. */
+  .main {
+    grid-template-columns: 1fr;
+    grid-template-rows: 40vh 1fr;
+    overflow: hidden;
   }
-  .sidebar.open { left: 0; }
-  .hamburger-btn { display: inline-flex; }
+  .sidebar {
+    position: static;    /* no longer a fixed drawer */
+    left: auto;
+    width: 100%;
+    max-height: 40vh;
+    overflow-y: auto;
+    border-right: 0;
+    border-bottom: 1px solid var(--border);
+    box-shadow: none;
+    transition: none;
+  }
+  .sidebar.open { left: auto; }  /* drawer class no longer applies */
+  .hamburger-btn { display: none; }  /* drawer gone, no hamburger needed */
+  .grid-area { min-height: 0; }
   .swatch-cell { min-width: 36px; min-height: 36px; }
   .topbar { gap: 6px; padding: 0 10px; }
   .lab-mode-badge { display: none; }
 }
 @media (max-width: 479px) {
   .swatch-cell { min-width: 32px; min-height: 32px; }
-  .detail-panel { width: 100% !important; max-width: 100% !important; }
+  .detail-card { width: 100% !important; max-width: 100% !important; }
 }
 @media (max-width: 767px) {
   .btn, .sort-btn, .pill, .preset-btn, .mode-btn {
@@ -572,37 +606,61 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
 
     <div class="sec">
       <div class="sec-label">CMYK range</div>
-      <div class="slider-row">
-        <span class="sk c">C</span>
-        <input type="range" min="0" max="100" value="0"   step="5" id="slCmn" oninput="onFilter()" title="Lower limit for Cyan ink (%).">
-        <span class="sv" id="vCmn">0</span>
-        <span style="font-size:9px;color:var(--faint)">-</span>
-        <input type="range" min="0" max="100" value="100" step="5" id="slCmx" oninput="onFilter()" title="Upper limit for Cyan ink (%).">
-        <span class="sv2" id="vCmx">100</span>
+
+      <!-- Cyan dual-handle -->
+      <div class="rd-label-row">
+        <span class="sk c" style="font-size:11px;font-family:var(--font-mono);font-weight:500">C</span>
+        <span class="rd-vals"><span id="vCmn">0</span><span style="color:var(--faint)">-</span><span id="vCmx">100</span></span>
       </div>
-      <div class="slider-row">
-        <span class="sk m">M</span>
-        <input type="range" min="0" max="100" value="0"   step="5" id="slMmn" oninput="onFilter()" title="Lower limit for Magenta ink (%).">
-        <span class="sv" id="vMmn">0</span>
-        <span style="font-size:9px;color:var(--faint)">-</span>
-        <input type="range" min="0" max="100" value="100" step="5" id="slMmx" oninput="onFilter()" title="Upper limit for Magenta ink (%).">
-        <span class="sv2" id="vMmx">100</span>
+      <div class="range-dual" id="rng-c">
+        <div class="rd-track"></div>
+        <div class="rd-fill" id="rfC"></div>
+        <input type="range" min="0" max="100" value="0"   step="5" id="slCmn"
+               oninput="_clampDual('rng-c');onFilter()" title="Cyan min (%)">
+        <input type="range" min="0" max="100" value="100" step="5" id="slCmx"
+               oninput="_clampDual('rng-c');onFilter()" title="Cyan max (%)">
       </div>
-      <div class="slider-row">
-        <span class="sk y">Y</span>
-        <input type="range" min="0" max="100" value="0"   step="5" id="slYmn" oninput="onFilter()" title="Lower limit for Yellow ink (%).">
-        <span class="sv" id="vYmn">0</span>
-        <span style="font-size:9px;color:var(--faint)">-</span>
-        <input type="range" min="0" max="100" value="100" step="5" id="slYmx" oninput="onFilter()" title="Upper limit for Yellow ink (%).">
-        <span class="sv2" id="vYmx">100</span>
+
+      <!-- Magenta dual-handle -->
+      <div class="rd-label-row">
+        <span class="sk m" style="font-size:11px;font-family:var(--font-mono);font-weight:500">M</span>
+        <span class="rd-vals"><span id="vMmn">0</span><span style="color:var(--faint)">-</span><span id="vMmx">100</span></span>
       </div>
-      <div class="slider-row">
-        <span class="sk k">K</span>
-        <input type="range" min="0" max="100" value="0"   step="5" id="slKmn" oninput="onFilter()" title="Lower limit for Black ink (%).">
-        <span class="sv" id="vKmn">0</span>
-        <span style="font-size:9px;color:var(--faint)">-</span>
-        <input type="range" min="0" max="100" value="100" step="5" id="slKmx" oninput="onFilter()" title="Upper limit for Black ink (%).">
-        <span class="sv2" id="vKmx">100</span>
+      <div class="range-dual" id="rng-m">
+        <div class="rd-track"></div>
+        <div class="rd-fill" id="rfM"></div>
+        <input type="range" min="0" max="100" value="0"   step="5" id="slMmn"
+               oninput="_clampDual('rng-m');onFilter()" title="Magenta min (%)">
+        <input type="range" min="0" max="100" value="100" step="5" id="slMmx"
+               oninput="_clampDual('rng-m');onFilter()" title="Magenta max (%)">
+      </div>
+
+      <!-- Yellow dual-handle -->
+      <div class="rd-label-row">
+        <span class="sk y" style="font-size:11px;font-family:var(--font-mono);font-weight:500">Y</span>
+        <span class="rd-vals"><span id="vYmn">0</span><span style="color:var(--faint)">-</span><span id="vYmx">100</span></span>
+      </div>
+      <div class="range-dual" id="rng-y">
+        <div class="rd-track"></div>
+        <div class="rd-fill" id="rfY"></div>
+        <input type="range" min="0" max="100" value="0"   step="5" id="slYmn"
+               oninput="_clampDual('rng-y');onFilter()" title="Yellow min (%)">
+        <input type="range" min="0" max="100" value="100" step="5" id="slYmx"
+               oninput="_clampDual('rng-y');onFilter()" title="Yellow max (%)">
+      </div>
+
+      <!-- Black dual-handle -->
+      <div class="rd-label-row">
+        <span class="sk k" style="font-size:11px;font-family:var(--font-mono);font-weight:500">K</span>
+        <span class="rd-vals"><span id="vKmn">0</span><span style="color:var(--faint)">-</span><span id="vKmx">100</span></span>
+      </div>
+      <div class="range-dual" id="rng-k">
+        <div class="rd-track"></div>
+        <div class="rd-fill" id="rfK"></div>
+        <input type="range" min="0" max="100" value="0"   step="5" id="slKmn"
+               oninput="_clampDual('rng-k');_syncKTierFromRange();onFilter()" title="Black min (%)">
+        <input type="range" min="0" max="100" value="100" step="5" id="slKmx"
+               oninput="_clampDual('rng-k');_syncKTierFromRange();onFilter()" title="Black max (%)">
       </div>
     </div>
 
@@ -624,10 +682,11 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
       </div>
       <div class="match-row" style="margin-top:8px">
         <label class="match-radio">
-          <input type="checkbox" id="tog3D" onchange="set3DPreset(this.checked)" title="Snap TAC&lt;=240, dE max&lt;=3, hide unreliable swatches. One-click safe palette for 3D color printers.">
-          3D-print preset (TAC&lt;=240, dE max&lt;=3)
+          <input type="checkbox" id="tog3D" onchange="set3DPreset(this.checked)">
+          3D-print preset
         </label>
       </div>
+      <div class="match-help">When on: TAC&lt;=240%, hide swatches with round-trip dE&gt;3, filter to gamut-safe palette for color 3D printers (PolyJet, MJF, binder jet).</div>
     </div>
 
     <div class="sec">
@@ -1502,7 +1561,7 @@ async function rematchOne(libId) {
   const lib = CORPORA.libraries.find(l => l.id === libId);
   if (!lib) return;
   const prefs = _libPref(libId);
-  _showProgress('Rematching ' + lib.label);
+  _showProgress('Rematching ' + lib.label.en);
   _setProgress(2, prefs.anchor === 'cmyk' ? 'Preparing cmyk anchors' : 'Preparing hex anchors');
   if (prefs.anchor === 'cmyk' && lib._hasCmyk) {
     let fwd = ACTIVE_PROFILE ? LUT_CACHE.get(ACTIVE_PROFILE.lut) : null;
@@ -1659,7 +1718,7 @@ function buildFilterUI() {
     };
     row.appendChild(cb);
     const txt = document.createElement('span');
-    txt.textContent = ' ' + lib.label;
+    txt.textContent = ' ' + lib.label.en;
     row.appendChild(txt);
     wrap.appendChild(row);
   }
@@ -1674,6 +1733,13 @@ async function loadIndex() {
 function populateProfileSelect() {
   const sel = document.getElementById('iccSel');
   sel.innerHTML = '';
+  if (!ICC_INDEX || !Array.isArray(ICC_INDEX.profiles) || ICC_INDEX.profiles.length === 0) {
+    const o = document.createElement('option');
+    o.value = ''; o.textContent = '(no profiles found - check data/luts/index.json)';
+    sel.appendChild(o);
+    console.warn('[populateProfileSelect] ICC_INDEX has no profiles', ICC_INDEX);
+    return;
+  }
   ICC_INDEX.profiles.forEach(p => {
     const o = document.createElement('option');
     o.value = p.filename;
@@ -2788,8 +2854,8 @@ function openDetail(sw) {
     const anchorTag = lib._hasCmyk
       ? ` <em style="opacity:.5;font-style:normal">[${m.anchor}]</em>`
       : '';
-    chips += `<span class="${klass}" title="${lib.label} · anchor: ${m.anchor}">`
-          +  `<em style="opacity:.6;font-style:normal;font-size:.85em">${lib.label}:</em> `
+    chips += `<span class="${klass}" title="${lib.label.en} - anchor: ${m.anchor}">`
+          +  `<em style="opacity:.6;font-style:normal;font-size:.85em">${lib.label.en}:</em> `
           +  `${fieldTxt} `
           +  `<em style="opacity:.65;font-style:normal">ΔE ${m.deltaE.toFixed(1)}</em>`
           +  `${anchorTag}</span>`;
@@ -2895,6 +2961,11 @@ function onFilter() {
     const deRaw = +document.getElementById('slDEmax').value;
     document.getElementById('vDEmax').textContent = deRaw >= 100 ? 'off' : 'ΔE ≤ ' + (deRaw / 10).toFixed(1);
   }
+  // Keep dual-handle fill bars in sync with label updates
+  _updateRangeFill('rng-c');
+  _updateRangeFill('rng-m');
+  _updateRangeFill('rng-y');
+  _updateRangeFill('rng-k');
   _scheduleRender();
 }
 
@@ -2903,7 +2974,63 @@ function setKTier(t) {
   document.getElementById('kt1').classList.toggle('active', t===1);
   document.getElementById('kt2').classList.toggle('active', t===2);
   document.getElementById('kt3').classList.toggle('active', t===3);
+  // Sync K range sliders to the selected tier's bounds
+  const tierRanges = {1:[0,25], 2:[0,50], 3:[0,100]};
+  const [kmn, kmx] = tierRanges[t] || [0,100];
+  const slKmn = document.getElementById('slKmn');
+  const slKmx = document.getElementById('slKmx');
+  if (slKmn) slKmn.value = kmn;
+  if (slKmx) slKmx.value = kmx;
+  _updateRangeFill('rng-k');
+  persistUI();
   _scheduleRender();
+}
+
+// Update the filled track between min and max thumbs for a dual-handle slider.
+function _updateRangeFill(id) {
+  const root = document.getElementById(id);
+  if (!root) return;
+  const inputs = root.querySelectorAll('input[type=range]');
+  if (inputs.length < 2) return;
+  const fill = root.querySelector('.rd-fill');
+  if (!fill) return;
+  const mn = +inputs[0].value;
+  const mx = +inputs[1].value;
+  fill.style.left  = mn + '%';
+  fill.style.right = (100 - mx) + '%';
+}
+
+// Clamp min <= max on a dual-handle slider and refresh its fill bar.
+function _clampDual(id) {
+  const root = document.getElementById(id);
+  if (!root) return;
+  const inputs = root.querySelectorAll('input[type=range]');
+  if (inputs.length < 2) return;
+  let mn = +inputs[0].value;
+  let mx = +inputs[1].value;
+  if (mn > mx) {
+    // Figure out which thumb was just moved by checking event target context;
+    // simplest safe fallback: pin both to the value that changed.
+    // We snap by setting both to the boundary that was crossed.
+    inputs[0].value = Math.min(mn, mx);
+    inputs[1].value = Math.max(mn, mx);
+  }
+  _updateRangeFill(id);
+}
+
+// Detect which K-tier pill (if any) the current K sliders correspond to,
+// and highlight that pill.
+function _syncKTierFromRange() {
+  const mn = +document.getElementById('slKmn').value;
+  const mx = +document.getElementById('slKmx').value;
+  let tier = 0; // custom / no pill highlighted
+  if (mn === 0 && mx <= 25)  tier = 1;
+  if (mn === 0 && mx > 25 && mx <= 50)  tier = 2;
+  if (mn === 0 && mx > 50)  tier = 3;
+  curKTier = tier || 3; // keep curKTier in sync for filter; fallback Tier 3 = show all
+  document.getElementById('kt1')?.classList.toggle('active', tier === 1);
+  document.getElementById('kt2')?.classList.toggle('active', tier === 2);
+  document.getElementById('kt3')?.classList.toggle('active', tier === 3);
 }
 
 function setNamed(m) {
@@ -3786,14 +3913,18 @@ window.addEventListener('load', async () => {
                 'Start the local server, then open the page through it:\n' +
                 '  Windows:  double-click run.bat\n' +
                 '  Mac/Linux: bash run.sh\n\n' +
-                'Then open  http://localhost:8765/cmyk_swatch_explorer.html';
+                'Then open  http://localhost:8765/app/mixo-swatch.html';
     document.getElementById('iccStatus').textContent = 'file:// blocked';
     alert(msg);
     return;
   }
   try {
     await loadUIDefaults();
-    await Promise.all([loadIndex(), loadCorpora()]);
+    console.log('[boot] loading index + corpora ...');
+    await Promise.all([
+      loadIndex().then(() => console.log('[boot] index loaded:', ICC_INDEX?.profiles?.length, 'profiles')),
+      loadCorpora().then(() => console.log('[boot] corpora loaded:', CORPORA.libraries.length, 'libraries')),
+    ]);
     populateProfileSelect();
     // Apply defaults < user-saved state before first render.
     applyUIState(_resolvedUI());
@@ -3805,6 +3936,8 @@ window.addEventListener('load', async () => {
     document.querySelectorAll('input[name="labMode"]').forEach(r => {
       r.checked = (r.value === LAB_MODE);
     });
+    // Initialize dual-handle range fill bars after state is applied
+    ['rng-c','rng-m','rng-y','rng-k'].forEach(_updateRangeFill);
     buildNamingUI();
     buildFilterUI();
     // Sidebar-wide change listener: persist on every control flip.
