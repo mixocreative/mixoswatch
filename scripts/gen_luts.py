@@ -187,6 +187,21 @@ def write_index(entries: list[dict]) -> None:
 
 
 def main():
+    TAC_TABLE = {
+        "CoatedFOGRA39":           {"rec": 330, "max": 350, "paper": "coated"},
+        "CoatedFOGRA27":           {"rec": 320, "max": 340, "paper": "coated"},
+        "UncoatedFOGRA29":         {"rec": 260, "max": 290, "paper": "uncoated"},
+        "WebCoatedFOGRA28":        {"rec": 300, "max": 320, "paper": "coated-web"},
+        "JapanColor2001Coated":    {"rec": 350, "max": 350, "paper": "coated"},
+        "JapanColor2001Uncoated":  {"rec": 260, "max": 290, "paper": "uncoated"},
+        "JapanColor2002Newspaper": {"rec": 240, "max": 260, "paper": "newsprint"},
+        "JapanWebCoated":          {"rec": 300, "max": 320, "paper": "coated-web"},
+        "USSheetfedCoated":        {"rec": 320, "max": 340, "paper": "coated"},
+        "USSheetfedUncoated":      {"rec": 260, "max": 290, "paper": "uncoated"},
+        "USWebCoatedSWOP":         {"rec": 300, "max": 320, "paper": "coated-web"},
+        "USWebUncoated":           {"rec": 260, "max": 290, "paper": "uncoated"},
+    }
+
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("file", nargs="?",
@@ -251,6 +266,9 @@ def main():
         elif do_build:
             print(f"  skip up-to-date: data/luts/{rlut_name}")
 
+        stem_key = icc.stem  # e.g. "CoatedFOGRA39"
+        tac_info = TAC_TABLE.get(stem_key, {"rec": 300, "max": 320, "paper": "unknown"})
+
         entries.append({
             "filename":   icc.name,
             "label":      label,
@@ -260,6 +278,9 @@ def main():
             "rlut":       f"data/luts/{rlut_name}" if rlut_path and rlut_path.exists() else None,
             "lut_bytes":  lut_path.stat().st_size if lut_path.exists() else None,
             "rlut_bytes": rlut_path.stat().st_size if rlut_path and rlut_path.exists() else None,
+            "tac_recommended": tac_info["rec"],
+            "tac_max":         tac_info["max"],
+            "paper":           tac_info["paper"],
         })
 
     if entries:
