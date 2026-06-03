@@ -289,8 +289,14 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
 .pal-toolbar{display:flex;align-items:center;gap:5px;padding:4px 0 2px;flex-wrap:wrap}
 .pal-toolbar .pal-sel{flex:1;min-width:110px;max-width:190px}
 .pal-toolbar .pal-mini-btn{padding:3px 7px;font-size:11px}
-.pal-selection-toggle{display:flex;align-items:center;gap:4px;cursor:pointer;font-size:11px;margin-left:auto;padding-right:4px}
-.pal-selection-toggle input{cursor:pointer}
+.pal-select-btn{display:inline-flex;align-items:center;gap:6px;font-size:11px;margin-left:auto}
+.pal-select-btn.on{background:rgb(var(--accent-rgb) / .18);border-color:var(--accent);color:var(--accent)}
+.pal-select-dot{
+  width:8px;height:8px;border-radius:50%;
+  background:var(--faint);transition:background .15s;
+  box-shadow:0 0 0 1px var(--border) inset;flex-shrink:0;
+}
+.pal-select-btn.on .pal-select-dot{background:var(--accent);box-shadow:0 0 6px rgb(var(--accent-rgb) / .6)}
 .pal-count-inline{font-size:11px;color:var(--accent);font-family:var(--font-mono);background:rgb(var(--accent-rgb,74,144,226) / .12);padding:1px 6px;border-radius:99px;white-space:nowrap}
 
 /* Dropdown menu */
@@ -615,6 +621,11 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
         To add a profile: drop the <code>.icc</code> into <code>icc/</code>,
         run <code>python scripts/gen_luts.py</code>, refresh.
       </div>
+      <!-- Round-trip safety slider - lives here so it's tied to the active profile -->
+      <div class="sec-label" style="margin-top:8px">Round-trip safety &middot; <span id="vDEmax">dE &lt;= 2.0</span></div>
+      <input type="range" min="0" max="20" value="20" step="1" id="slDEmax"
+             oninput="onFilter()"
+             title="Hide swatches whose round-trip color drift exceeds this dE on the active profile. Max 2.0 dE (industry print tolerance). Lower = safer; higher = more swatches shown.">
     </div>
 
     <div class="divider"></div>
@@ -623,8 +634,10 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
     <div class="sec">
       <div class="sec-label">Step interval</div>
       <div class="pill-row">
-        <button class="pill active" id="pill10" onclick="setStep(10)" title="Sample every 10% on each CMYK channel. Faster, ~14,000 colors total.">10-step</button>
-        <button class="pill" id="pill5"  onclick="setStep(5)" title="Sample every 5% on each CMYK channel. Slower, ~130,000 colors total. Use for a denser explore.">5-step</button>
+        <button class="pill" id="pill20" onclick="setStep(20)" title="20-step interval. Coarser sampling, ~1000 colors total. Fastest.">20</button>
+        <button class="pill" id="pill15" onclick="setStep(15)" title="15-step interval. ~2400 colors total.">15</button>
+        <button class="pill active" id="pill10" onclick="setStep(10)" title="10-step interval. ~14k colors. Default.">10</button>
+        <button class="pill" id="pill5"  onclick="setStep(5)" title="5-step interval. ~130k colors. Slower; for dense explore.">5</button>
       </div>
     </div>
 
@@ -657,65 +670,17 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
       <span class="num">02</span><span class="lbl">Narrow the set</span><span class="sub">filters + limits</span>
     </div>
 
-    <div class="sec">
-      <div class="sec-label">CMYK range</div>
-
-      <!-- Cyan dual-handle -->
-      <div class="rd-label-row">
-        <span class="sk c" style="font-size:11px;font-family:var(--font-mono);font-weight:500">C</span>
-        <span class="rd-vals"><span id="vCmn">0</span><span style="color:var(--faint)">-</span><span id="vCmx">100</span></span>
-      </div>
-      <div class="range-dual" id="rng-c">
-        <div class="rd-track"></div>
-        <div class="rd-fill" id="rfC"></div>
-        <input type="range" min="0" max="100" value="0"   step="5" id="slCmn"
-               oninput="_clampDual('rng-c');onFilter()" title="Cyan min (%)">
-        <input type="range" min="0" max="100" value="100" step="5" id="slCmx"
-               oninput="_clampDual('rng-c');onFilter()" title="Cyan max (%)">
-      </div>
-
-      <!-- Magenta dual-handle -->
-      <div class="rd-label-row">
-        <span class="sk m" style="font-size:11px;font-family:var(--font-mono);font-weight:500">M</span>
-        <span class="rd-vals"><span id="vMmn">0</span><span style="color:var(--faint)">-</span><span id="vMmx">100</span></span>
-      </div>
-      <div class="range-dual" id="rng-m">
-        <div class="rd-track"></div>
-        <div class="rd-fill" id="rfM"></div>
-        <input type="range" min="0" max="100" value="0"   step="5" id="slMmn"
-               oninput="_clampDual('rng-m');onFilter()" title="Magenta min (%)">
-        <input type="range" min="0" max="100" value="100" step="5" id="slMmx"
-               oninput="_clampDual('rng-m');onFilter()" title="Magenta max (%)">
-      </div>
-
-      <!-- Yellow dual-handle -->
-      <div class="rd-label-row">
-        <span class="sk y" style="font-size:11px;font-family:var(--font-mono);font-weight:500">Y</span>
-        <span class="rd-vals"><span id="vYmn">0</span><span style="color:var(--faint)">-</span><span id="vYmx">100</span></span>
-      </div>
-      <div class="range-dual" id="rng-y">
-        <div class="rd-track"></div>
-        <div class="rd-fill" id="rfY"></div>
-        <input type="range" min="0" max="100" value="0"   step="5" id="slYmn"
-               oninput="_clampDual('rng-y');onFilter()" title="Yellow min (%)">
-        <input type="range" min="0" max="100" value="100" step="5" id="slYmx"
-               oninput="_clampDual('rng-y');onFilter()" title="Yellow max (%)">
-      </div>
-
-      <!-- Black dual-handle -->
-      <div class="rd-label-row">
-        <span class="sk k" style="font-size:11px;font-family:var(--font-mono);font-weight:500">K</span>
-        <span class="rd-vals"><span id="vKmn">0</span><span style="color:var(--faint)">-</span><span id="vKmx">100</span></span>
-      </div>
-      <div class="range-dual" id="rng-k">
-        <div class="rd-track"></div>
-        <div class="rd-fill" id="rfK"></div>
-        <input type="range" min="0" max="100" value="0"   step="5" id="slKmn"
-               oninput="_clampDual('rng-k');_syncKTierFromRange();onFilter()" title="Black min (%)">
-        <input type="range" min="0" max="100" value="100" step="5" id="slKmx"
-               oninput="_clampDual('rng-k');_syncKTierFromRange();onFilter()" title="Black max (%)">
-      </div>
-    </div>
+    <!-- Hidden inputs preserve IDs used by filtered() / onFilter() -->
+    <input type="hidden" id="slCmn" value="0">
+    <input type="hidden" id="slCmx" value="100">
+    <input type="hidden" id="slMmn" value="0">
+    <input type="hidden" id="slMmx" value="100">
+    <input type="hidden" id="slYmn" value="0">
+    <input type="hidden" id="slYmx" value="100">
+    <!-- Display labels kept as hidden spans so onFilter() .textContent writes don't throw -->
+    <span id="vCmn" style="display:none">0</span><span id="vCmx" style="display:none">100</span>
+    <span id="vMmn" style="display:none">0</span><span id="vMmx" style="display:none">100</span>
+    <span id="vYmn" style="display:none">0</span><span id="vYmx" style="display:none">100</span>
 
     <div class="divider"></div>
 
@@ -739,16 +704,9 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
           3D-print preset
         </label>
       </div>
-      <div class="match-help">When on: TAC&lt;=240%, hide swatches with round-trip dE&gt;3, filter to gamut-safe palette for color 3D printers (PolyJet, MJF, binder jet).</div>
+      <div class="match-help">When on: TAC&lt;=240%, hide swatches with round-trip dE&gt;2, filter to gamut-safe palette for color 3D printers (PolyJet, MJF, binder jet).</div>
     </div>
 
-    <div class="sec">
-      <div class="sec-label">ΔE max (round-trip safety)</div>
-      <div class="slider-row">
-        <input type="range" min="0" max="100" value="100" step="1" id="slDEmax" oninput="onFilter()" title="Hide swatches whose round-trip color drift exceeds this ΔE. Off = show all. 0.5 = mathematically equal under the profile. 1.0 = trained-eye limit. Slider at far right = off.">
-        <span class="sv2" id="vDEmax">off</span>
-      </div>
-    </div>
 
 
     <div class="divider"></div>
@@ -763,6 +721,19 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
           <span class="kt-name">+ Tier 2 · Support</span><span class="kt-range">K 0-50</span></button>
         <button class="ktier-pill active" id="kt3" onclick="setKTier(3)" title="Adds Tier 3 (K up to 100%). True charcoals, espresso, deep wine - use only when you need that depth.">
           <span class="kt-name">+ Tier 3 · Deep</span><span class="kt-range">K 0-100</span></button>
+      </div>
+      <!-- K range fine-tune slider (complements the tier pills above) -->
+      <div class="rd-label-row" style="margin-top:6px">
+        <span class="sk k" style="font-size:11px;font-family:var(--font-mono);font-weight:500">K range</span>
+        <span class="rd-vals"><span id="vKmn">0</span><span style="color:var(--faint)">-</span><span id="vKmx">100</span></span>
+      </div>
+      <div class="range-dual" id="rng-k">
+        <div class="rd-track"></div>
+        <div class="rd-fill" id="rfK"></div>
+        <input type="range" min="0" max="100" value="0"   step="5" id="slKmn"
+               oninput="_clampDual('rng-k');_syncKTierFromRange();onFilter()" title="Black min (%)">
+        <input type="range" min="0" max="100" value="100" step="5" id="slKmx"
+               oninput="_clampDual('rng-k');_syncKTierFromRange();onFilter()" title="Black max (%)">
       </div>
       <div style="font-size:10px;color:var(--faint);line-height:1.5;margin-top:2px">
         Low K by default; deep darks only when needed.
@@ -797,10 +768,10 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
         </div>
         <div class="match-help">Match by CMYK-Lab (print) or hex-Lab (screen). html corpus falls back to hex when anchor=cmyk.</div>
         <div class="match-row" style="margin-top:6px">
-          <div class="match-label">dE tol &middot; <span id="vTol">3.0</span></div>
-          <input type="range" min="0" max="20" step="0.5" value="3" id="slTol" oninput="onTol(this.value)" title="Show a corpus name when swatch is within this dE of a named entry. Affects display only; does not affect underlying math.">
+          <div class="match-label">Naming Accuracy &middot; <span id="vTol">3.0</span></div>
+          <input type="range" min="0" max="20" step="0.5" value="3" id="slTol" oninput="onTol(this.value)" title="Show a corpus name when swatch is within this dE of a named entry. Smaller value = stricter name match (only exact closest). Larger = more permissive (more swatches show names).">
         </div>
-        <div class="match-help">Higher = more swatches show names. Set to 0 to show only literal closest matches.</div>
+        <div class="match-help">Higher = more swatches show names. Set to 0 to show only literal closest matches per library.</div>
       </div>
     </div>
 
@@ -901,9 +872,12 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
           </div>
           <button class="pal-mini-btn" onclick="renamePalette()" title="Rename active palette">&#9998;</button>
           <button class="pal-mini-btn danger" onclick="deletePalette()" title="Delete active palette">&#x1F5D1;</button>
-          <label class="pal-selection-toggle" title="Click swatches in the grid to add/remove from active palette">
-            <input type="checkbox" id="togSel" onchange="toggleSelectMode()"> Select
-          </label>
+          <button type="button" class="pal-mini-btn pal-select-btn" id="togSelBtn"
+                  onclick="toggleSelectMode()"
+                  title="Toggle selection mode. When ON, clicking a swatch in the grid adds or removes it from the active palette instead of opening details. Click this button again to leave selection mode.">
+            <span class="pal-select-dot"></span> Selection: OFF
+          </button>
+          <input type="hidden" id="togSel" value="0">
           <span class="pal-count-inline" title="Swatches in active palette"><span id="palCount">0</span>sw</span>
           <div class="pal-dropdown">
             <button class="pal-mini-btn" onclick="_togglePalMenu('exportMenu')" title="Export options">Export &#9662;</button>
@@ -1106,8 +1080,10 @@ function applyUIState(s) {
   if ($('togBt'))  $('togBt').checked  = !!s.black_text_only;
   if ($('searchQ')) $('searchQ').value = s.search || '';
   // step pills
-  $('pill10') ?.classList.toggle('active', curStep === 10);
-  $('pill5')  ?.classList.toggle('active', curStep === 5);
+  ['pill5','pill10','pill15','pill20'].forEach(id => {
+    const n = +id.replace('pill','');
+    $(id)?.classList.toggle('active', curStep === n);
+  });
   // K-tier pills
   ['kt1','kt2','kt3'].forEach((id, i) =>
     $(id)?.classList.toggle('active', curKTier === i+1));
@@ -1355,12 +1331,19 @@ function lutLookup(lut, c, m, y, k) {
 }
 
 // -- Lattice + per-swatch derivations -------------------------------------
-function genLattice(step) {
+function _ladder(step) {
   const out = [];
-  for (let k=0; k<=100; k+=step)
-    for (let y=0; y<=100; y+=step)
-      for (let m=0; m<=100; m+=step)
-        for (let c=0; c<=100; c+=step)
+  for (let v=0; v<=100; v+=step) out.push(v);
+  if (out[out.length-1] !== 100) out.push(100);
+  return out;
+}
+function genLattice(step) {
+  const ladder = _ladder(step);
+  const out = [];
+  for (const k of ladder)
+    for (const y of ladder)
+      for (const m of ladder)
+        for (const c of ladder)
           out.push({C:c,M:m,Y:y,K:k});
   return out;
 }
@@ -2086,7 +2069,15 @@ function clearActivePalette() {
 }
 
 function toggleSelectMode() {
-  selectMode = document.getElementById('togSel').checked;
+  selectMode = !selectMode;
+  const btn = document.getElementById('togSelBtn');
+  if (btn) {
+    btn.classList.toggle('on', selectMode);
+    btn.innerHTML = '<span class="pal-select-dot"></span> Selection: ' + (selectMode ? 'ON' : 'OFF');
+  }
+  // Keep hidden input in sync for any legacy code reading #togSel
+  const cb = document.getElementById('togSel');
+  if (cb) cb.value = selectMode ? '1' : '0';
 }
 
 function setViewMode(m) {
@@ -2462,8 +2453,7 @@ function filtered() {
   const kMn=+document.getElementById('slKmn').value;
   const kMx=+document.getElementById('slKmx').value;
   const tac =+document.getElementById('slTAC').value;
-  const deRaw = +document.getElementById('slDEmax').value;
-  const deMax = deRaw >= 100 ? Infinity : deRaw / 10;
+  const deMax = +document.getElementById('slDEmax').value / 10;
   const aa  = document.getElementById('togAA').checked;
   const aaa = document.getElementById('togAAA').checked;
   const wt  = document.getElementById('togWt').checked;
@@ -3018,7 +3008,7 @@ function set3DPreset(on) {
     if (_3D_PREV_TAC === null) _3D_PREV_TAC = +slTAC.value;
     if (_3D_PREV_DEMAX === null) _3D_PREV_DEMAX = +slDEmax.value;
     if (+slTAC.value > 240) slTAC.value = 240;
-    if (+slDEmax.value > 30 || +slDEmax.value === 100) slDEmax.value = 30;
+    if (+slDEmax.value > 20) slDEmax.value = 20;
     TAC_USER_OVERRIDE = false;
     document.getElementById('tacOverride').style.display = 'inline-block';
   } else {
@@ -3030,7 +3020,7 @@ function set3DPreset(on) {
   if (vTAC) vTAC.textContent = slTAC.value;
   if (vDEmax) {
     const raw = +slDEmax.value;
-    vDEmax.textContent = raw >= 100 ? 'off' : 'dE <= ' + (raw / 10).toFixed(1);
+    vDEmax.textContent = 'dE <= ' + (raw / 10).toFixed(1);
   }
   if (typeof onFilter === 'function') onFilter();
 }
@@ -3048,12 +3038,9 @@ function onFilter() {
   document.getElementById('vTAC').textContent = document.getElementById('slTAC').value;
   {
     const deRaw = +document.getElementById('slDEmax').value;
-    document.getElementById('vDEmax').textContent = deRaw >= 100 ? 'off' : 'ΔE ≤ ' + (deRaw / 10).toFixed(1);
+    document.getElementById('vDEmax').textContent = 'dE <= ' + (deRaw / 10).toFixed(1);
   }
-  // Keep dual-handle fill bars in sync with label updates
-  _updateRangeFill('rng-c');
-  _updateRangeFill('rng-m');
-  _updateRangeFill('rng-y');
+  // Keep dual-handle fill bar in sync (only K range remains as a visible slider)
   _updateRangeFill('rng-k');
   _scheduleRender();
 }
@@ -3190,8 +3177,10 @@ function anyCorpusVisible(s){
 
 function setStep(s) {
   curStep = s;
-  document.getElementById('pill10').classList.toggle('active', s===10);
-  document.getElementById('pill5').classList.toggle('active',  s===5);
+  ['pill5','pill10','pill15','pill20'].forEach(id => {
+    const n = +id.replace('pill','');
+    document.getElementById(id)?.classList.toggle('active', s === n);
+  });
   rebuildAll();
 }
 
@@ -4050,7 +4039,7 @@ window.addEventListener('load', async () => {
       b.classList.toggle('active', b.dataset.anchor === _bootAnchor);
     });
     // Initialize dual-handle range fill bars after state is applied
-    ['rng-c','rng-m','rng-y','rng-k'].forEach(_updateRangeFill);
+    ['rng-k'].forEach(_updateRangeFill);
     buildNamingUI();
     buildFilterUI();
     // Sidebar-wide change listener: persist on every control flip.
