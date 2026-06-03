@@ -1779,9 +1779,14 @@
         <span data-zh>為什麼「印刷優先」勝過直接給 Mimaki 一組 CMYK 數值或交給 RIP 自行從 RGB 決定。</span>
       </h3>
       <p>
-        <span data-en>Raw CMYK numbers mean nothing without an ICC. Hand RGB to the 3DUJ RIP and it silently compresses the gamut. Mixo routes every swatch through the Mimaki ICC on screen first, so what you pick is what cures on the build plate.</span>
-        <span data-ja>生のCMYK数値はICCなしでは意味を持たない。RGBを3DUJ RIPに渡せば、ガモットは静かに圧縮される。Mixoは全スウォッチをMimaki ICC経由で先に画面に描画する。選んだ色がそのまま造形プラテンで硬化する。</span>
-        <span data-zh>沒有 ICC，原始 CMYK 數值毫無意義。把 RGB 丟給 3DUJ RIP，色域會被靜默壓縮。Mixo 先把每個色塊透過 Mimaki ICC 渲染到螢幕上，挑到的就是固化在造型平台上的顏色。</span>
+        <span data-en>Raw CMYK numbers mean nothing without an ICC. Hand RGB to the 3DUJ RIP and it silently compresses the gamut. Mixo routes every swatch through the Mimaki proxy ICC on screen first, so what you pick is what cures on the build plate.</span>
+        <span data-ja>生のCMYK数値はICCなしでは意味を持たない。RGBを3DUJ RIPに渡せば、ガモットは静かに圧縮される。Mixoは全スウォッチをMimakiプロキシICC経由で先に画面に描画する。選んだ色がそのまま造形プラテンで硬化する。</span>
+        <span data-zh>沒有 ICC，原始 CMYK 數值毫無意義。把 RGB 丟給 3DUJ RIP，色域會被靜默壓縮。Mixo 先把每個色塊透過 Mimaki 代理 ICC 渲染到螢幕上，挑到的就是固化在造型平台上的顏色。</span>
+      </p>
+      <p style="margin-top:8px;font-size:12.5px;color:var(--muted);line-height:1.6">
+        <span data-en><b>"But Mimaki says use sRGB IEC61966-2.1."</b> True - for texture-map authoring (Substance Painter, ZBrush, Blender, Maya). RasterLink / MPM3 compresses sRGB textures into 3DUJ ink space with its proprietary multi-channel engine, which is the right tool there. Mixo is for the other workflow: spot-color brand palettes where the RIP's perceptual conversion would silently shift your brand cyan to "close enough". Mixo pre-routes CMYK through a Mimaki proxy, gates with round-trip dE, and lays the exact ink you specified.</span>
+        <span data-ja><b>「Mimaki公式はsRGB IEC61966-2.1推奨」</b> その通り。テクスチャマップ制作（Substance Painter、ZBrush、Blender、Maya）の場合。RasterLink / MPM3が独自のマルチチャンネルエンジンでsRGBテクスチャを3DUJインク空間へ圧縮する。Mixoはもう一方のワークフロー、つまりブランドのスポットカラー選定向け。RIPの知覚的変換はブランドシアンを「ほぼ近い色」に静かにずらしてしまう。MixoはCMYKをMimakiプロキシで先回しし、往復ΔEで門番し、指定したインクをそのまま下ろす。</span>
+        <span data-zh><b>「但 Mimaki 官方建議用 sRGB IEC61966-2.1」</b> 沒錯，前提是 3D 紋理貼圖製作（Substance Painter、ZBrush、Blender、Maya）。RasterLink / MPM3 用自家多通道引擎把 sRGB 紋理壓縮到 3DUJ 墨水空間，這在那個流程裡是對的。Mixo 服務的是另一個流程：品牌定色，RIP 的感知壓縮會把你的品牌青色靜悄悄挪到「差不多」。Mixo 先用 Mimaki 代理把 CMYK 預先路由，再用往返 dE 把關，然後下出你指定的那組墨。</span>
       </p>
       <div class="steps">
         <div class="step">

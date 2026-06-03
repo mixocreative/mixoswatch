@@ -17,7 +17,7 @@
     "cmyk_range": { "c": [0,100], "m": [0,100], "y": [0,100], "k": [0,80] },
     "tac_max": 240,
     "delta_e_max": 0.6,
-    "default_profile_match": "JapanColor2002Newspaper",
+    "default_profile_match": "UncoatedFOGRA29",
     "active_palette_id": null,
 
     "lab_mode": "d50",

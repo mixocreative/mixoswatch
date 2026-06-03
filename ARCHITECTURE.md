@@ -547,7 +547,7 @@ the factory defaults applied on first run. Current shipped values:
     "cmyk_range": { "c": [0,100], "m": [0,100], "y": [0,100], "k": [0,80] },
     "tac_max": 240,
     "delta_e_max": 0.6,
-    "default_profile_match": "JapanColor2002Newspaper",
+    "default_profile_match": "UncoatedFOGRA29",
     "active_palette_id": null,
     "lab_mode": "d50",
     "gamut_safe_only": false,
@@ -580,13 +580,33 @@ workflow on a coated press:
   paired with `tolerance: 5.5` this keeps the grid useful out of the box.
 - `lab_mode: "d50"` mirrors the ICC Profile Connection Space whitepoint
   used by Photoshop / InDesign Info panel readings.
-- `default_profile_match: "JapanColor2002Newspaper"` is the closest
-  bundled proxy for Mimaki 3DUJ. Newspaper's small gamut + 240 % TAC
-  recommendation tracks resin droplet pooling far better than coated
-  offset (FOGRA39, SWOP) which would over-saturate at TAC 300-350 and
-  push gamut beyond what 3DUJ can hold. `populateProfileSelect()`
-  searches the manifest with this string (case-insensitive) and falls
-  back to FOGRA39 then the first profile if the match is absent.
+- `default_profile_match: "UncoatedFOGRA29"` is the closest bundled
+  proxy for Mimaki 3DUJ when no genuine 3DUJ ICC is supplied. Gamut
+  approximately 78 % of FOGRA39 coated (within ~5 % of measured 3DUJ
+  gamut), TAC recommended 260 % sits inside the Mimaki safe zone
+  (240-280), and the warm-neutral axis tracks resin yellow-cast better
+  than any coated profile. ECI cross-media workflows reach for
+  UncoatedFOGRA29 in the same sample-then-tune role.
+  `populateProfileSelect()` searches the manifest with this string
+  (case-insensitive) and falls back to FOGRA39 then the first profile
+  if the match is absent.
+
+**Two Mimaki workflows, two right answers.** Mimaki's own RasterLink /
+MPM3 RIP documentation recommends sRGB IEC61966-2.1 input for
+**texture-map / 3D-asset** authoring (Substance Painter, ZBrush
+PolyPaint, Blender, Maya - everything that produces sRGB-tagged
+texture maps). The RIP's proprietary multi-channel engine (CMYK +
+White + Clear, optionally Lc / Lm) compresses sRGB into 3DUJ ink
+space intelligently and avoids the double-conversion you'd get from
+user-CMYK input. Mixo Swatch does **not** serve that workflow - it
+is not a texture authoring tool.
+
+Mixo Swatch serves the **spot-color / brand-palette** workflow:
+choosing a small set of named or branded colors that need explicit
+gamut decisions and visibility. For spot colors the sRGB path is
+wrong because the RIP's perceptual intent compresses brand colors
+silently. The correct path is CMYK pre-routed through a 3DUJ-like
+ICC + the round-trip dE gate, which is what Mixo Swatch does.
 - `ui_lang: "auto"` reads `navigator.language` on first run: `ja*` -> ja,
   `zh*` -> zh-Hant, anything else -> en. Persisted under
   `localStorage['ui_lang']` once the user picks from the topbar menu.

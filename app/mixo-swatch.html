@@ -1883,8 +1883,11 @@ function populateProfileSelect() {
   //   1. The factory-default substring from data/ui_defaults.json
   //      (default_profile_match). Tuned to the closest available
   //      Mimaki 3DUJ proxy when no genuine 3DUJ ICC is supplied:
-  //      JapanColor2002Newspaper (small gamut, TAC 240) tracks resin
-  //      pooling + droplet limits better than any coated offset profile.
+  //      UncoatedFOGRA29. Gamut ~= 78% of FOGRA39 coated (within ~5%
+  //      of measured 3DUJ gamut), TAC recommended 260% is inside the
+  //      Mimaki safe zone (240-280), and the warm-neutral axis tracks
+  //      resin yellow-cast better than coated profiles. This is the
+  //      most-cited bundled proxy in ECI / cross-media workflows.
   //   2. FOGRA39 as a generic coated fallback.
   //   3. The first profile in the manifest.
   const wanted = (UI_DEFAULTS && UI_DEFAULTS[UI_TOOL_KEY] && UI_DEFAULTS[UI_TOOL_KEY].default_profile_match) || '';
