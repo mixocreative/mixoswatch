@@ -133,6 +133,13 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
 .sv{font-size:10px;font-family:var(--font-mono);color:var(--muted);min-width:26px;text-align:right}
 .sv2{font-size:10px;font-family:var(--font-mono);color:var(--muted);min-width:26px;text-align:right}
 
+/* Global match settings (link-badge, match-row, match-radio, match-help) */
+.link-badge{font-size:11px;color:var(--accent);font-weight:500}
+.match-row{display:flex;align-items:center;gap:8px;font-size:11px}
+.match-label{min-width:60px;color:var(--text)}
+.match-radio{display:flex;align-items:center;gap:3px;cursor:pointer;color:var(--muted)}
+.match-help{font-size:10px;color:var(--faint);margin-top:3px;line-height:1.4}
+
 /* Toggles */
 .tog-row{display:flex;align-items:center;justify-content:space-between;gap:8px}
 .tog-lbl{font-size:12px;color:var(--text)}
@@ -663,12 +670,21 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
           <span class="kt-name">Any named</span><span class="kt-range">checked libs</span></button>
       </div>
       <div id="filterCheckboxes" style="margin-top:6px" title="When 'Any named' is on, only swatches that match a name in at least one of these checked libraries pass the filter. Independent of which name each library is set to display."></div>
-      <div class="sec-label" style="margin-top:8px">Name tolerance · ΔE ≤ <span id="vTol" title="Current name-match tolerance.">0</span></div>
-      <div class="slider-row">
-        <input type="range" min="0" max="20" step="0.5" value="0" id="slTol" oninput="onTol(this.value)" title="How loose the name match must be (Delta-E). 0 = only the single closest swatch wears the name. Higher = more swatches share the name (looser match).">
-      </div>
-      <div style="font-size:10px;color:var(--faint);line-height:1.4">
-        0 = only single closest. Higher = more swatches share the name.
+      <div class="sec">
+        <div class="sec-label">
+          <span class="link-badge" title="These controls apply to all libraries.">&#x1F517; Match settings (all libraries)</span>
+        </div>
+        <div class="match-row">
+          <div class="match-label">Anchor</div>
+          <label class="match-radio"><input type="radio" name="anchor" value="cmyk" checked onchange="setGlobalAnchor('cmyk')"> CMYK</label>
+          <label class="match-radio"><input type="radio" name="anchor" value="hex"  onchange="setGlobalAnchor('hex')"> hex</label>
+        </div>
+        <div class="match-help">Match by CMYK-Lab (print) or hex-Lab (screen). html corpus falls back to hex when anchor=cmyk.</div>
+        <div class="match-row" style="margin-top:6px">
+          <div class="match-label">dE tol &middot; <span id="vTol">3.0</span></div>
+          <input type="range" min="0" max="20" step="0.5" value="3" id="slTol" oninput="onTol(this.value)" title="Show a corpus name when swatch is within this dE of a named entry. Affects display only; does not affect underlying math.">
+        </div>
+        <div class="match-help">Higher = more swatches show names. Set to 0 to show only literal closest matches.</div>
       </div>
     </div>
 
@@ -911,6 +927,21 @@ function applyUIState(s) {
   if (s.corpora_prefs && typeof s.corpora_prefs === 'object') {
     CORPORA_PREFS = s.corpora_prefs;
     try { localStorage.setItem(CORPORA_PREFS_KEY, JSON.stringify(CORPORA_PREFS)); } catch {}
+  }
+  // Restore global anchor + tolerance from CORPORA_PREFS._global (set by setGlobalAnchor / onTol)
+  if (CORPORA_PREFS._global) {
+    if (typeof CORPORA_PREFS._global.tolerance === 'number') {
+      curTol = CORPORA_PREFS._global.tolerance;
+      const slTol = document.getElementById('slTol');
+      const vTol  = document.getElementById('vTol');
+      if (slTol) slTol.value = curTol;
+      if (vTol)  vTol.textContent = curTol.toFixed(1);
+    }
+    if (CORPORA_PREFS._global.anchor) {
+      document.querySelectorAll('input[name="anchor"]').forEach(r => {
+        r.checked = (r.value === CORPORA_PREFS._global.anchor);
+      });
+    }
   }
   // Active palette id (nullable). The palette UI handles unknown / null
   // gracefully via setActivePalette.
@@ -1188,12 +1219,14 @@ function _saveCorporaPrefs() {
   catch {}
 }
 function _libPref(libId) {
-  const lib = CORPORA.libraries.find(l => l.id === libId);
-  // Factory anchor default = 'cmyk' for every library. When a library has
-  // no cmyk attributes on its entries, _entryAnchorLab silently falls back
-  // to the hex anchor, so this is safe even for hex-only corpora.
-  const def = { display: 'primary', anchor: 'cmyk' };
-  return Object.assign(def, CORPORA_PREFS[libId] || {});
+  const global = CORPORA_PREFS._global || { anchor: 'cmyk', tolerance: 3.0 };
+  const lib = CORPORA_PREFS[libId] || {};
+  const libDef = CORPORA.libraries.find(l => l.id === libId) || {};
+  return {
+    display: lib.display || libDef.default_display || (libDef.fields?.[0]?.id) || 'name_en',
+    anchor:  global.anchor || 'cmyk',
+    tolerance: global.tolerance ?? 3.0,
+  };
 }
 function _setLibPref(libId, key, value) {
   CORPORA_PREFS[libId] = Object.assign({}, _libPref(libId), { [key]: value });
@@ -1685,7 +1718,7 @@ let curCell  = 48;   // px - user-controlled
 let sortMode = 'hue';
 let curKTier = 3;   // default: show all K tiers - user narrows via the Tier 1/2/3 pills
 let curNamed = 'all'; // all|any|jpn|html|dic|pantone
-let curTol   = 0;     // ΔE tolerance for name display/filter (0 = closest only)
+let curTol   = 3.0;   // dE tolerance for name display/filter (3.0 default; 0 = closest only)
 let paletteMode = false;
 let viewMode = 'grid';   // 'grid' | 'huelight' | 'palettes' 
 
@@ -2741,7 +2774,29 @@ function setNamed(m) {
 function onTol(v) {
   curTol = +v;
   document.getElementById('vTol').textContent = curTol.toFixed(1);
-  _scheduleRender();
+  CORPORA_PREFS._global = CORPORA_PREFS._global || {};
+  CORPORA_PREFS._global.tolerance = curTol;
+  if (typeof _saveCorporaPrefs === 'function') _saveCorporaPrefs();
+  if (typeof _scheduleRender === 'function') _scheduleRender();
+}
+
+function setGlobalAnchor(v) {
+  if (v !== 'cmyk' && v !== 'hex') return;
+  CORPORA_PREFS._global = CORPORA_PREFS._global || {};
+  CORPORA_PREFS._global.anchor = v;
+  for (const lib of CORPORA.libraries) {
+    CORPORA_PREFS[lib.id] = Object.assign({}, CORPORA_PREFS[lib.id] || {}, { anchor: v });
+  }
+  if (typeof _saveCorporaPrefs === 'function') _saveCorporaPrefs();
+  if (typeof rematchAll === 'function') {
+    rematchAll().then(() => {
+      for (const lib of CORPORA.libraries) _markClosest(lib);
+      if (typeof _scheduleRender === 'function') _scheduleRender();
+    });
+  } else {
+    for (const lib of CORPORA.libraries) _markClosest(lib);
+    if (typeof _scheduleRender === 'function') _scheduleRender();
+  }
 }
 
 // Visibility helper: is this swatch the closest-or-within-tolerance match
