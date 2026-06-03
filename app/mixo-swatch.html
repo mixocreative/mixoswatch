@@ -193,6 +193,16 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
 /* ── Grid area ── */
 .grid-area{display:flex;flex-direction:column;overflow:hidden;min-width:0}
 .grid-scroll{overflow-y:auto;overflow-x:hidden;flex:1;min-height:0}
+
+/* ── Palette panel (collapsible, sits between topbar and grid-scroll) ── */
+.palette-panel{border-bottom:1px solid var(--border);background:var(--surface);display:flex;flex-direction:column}
+.palette-panel-header{display:flex;align-items:center;justify-content:space-between;padding:8px 16px;cursor:pointer;font-size:12px;color:var(--text);user-select:none;border-bottom:1px solid transparent}
+.palette-panel-header:hover{background:var(--bg2)}
+.palette-panel-header .chev{transition:transform .15s;display:inline-block;margin-right:6px}
+.palette-panel.open .palette-panel-header{border-bottom-color:var(--border)}
+.palette-panel.open .palette-panel-header .chev{transform:rotate(90deg)}
+.palette-panel-body{display:none;padding:10px 16px;gap:10px;flex-direction:column;max-height:50vh;overflow:auto}
+.palette-panel.open .palette-panel-body{display:flex}
 .swatch-grid{display:grid;padding:12px;gap:var(--gap,3px);align-content:start}
 
 .swatch-cell{
@@ -500,55 +510,6 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
     <div class="divider"></div>
 
 
-    <!-- Palettes -->
-    <div class="sec">
-      <div class="sec-label">Palettes</div>
-      <div class="pal-row">
-        <select class="pal-sel" id="palSel" onchange="onPalChange()" title="Switch between saved palettes. Each palette is a small set of swatches you've collected."></select>
-        <button class="pal-mini-btn" onclick="newPalette()"      title="New palette">+</button>
-        <button class="pal-mini-btn" onclick="renamePalette()"   title="Rename">✎</button>
-        <button class="pal-mini-btn danger" onclick="deletePalette()" title="Delete">✕</button>
-      </div>
-      <div class="pal-tog-row">
-        <label style="display:flex;align-items:center;gap:6px;cursor:pointer;flex:1">
-          <input type="checkbox" id="togSel" onchange="toggleSelectMode()" title="When ON, clicking a swatch adds (or removes) it from the active palette instead of opening the details.">
-          <span>Select mode</span>
-        </label>
-        <span class="pal-count" id="palCount" title="How many swatches are in the active palette.">0</span>
-      </div>
-      <div class="pal-strip" id="palStrip" title="Mini view of the active palette. Click any chip to remove that swatch."></div>
-      <div class="pal-size-row">
-        <label>PNG size</label>
-        <select id="palPngSize" title="Canvas size for the palette PNG. Cells auto-scale to fill the square with no gaps.">
-          <option value="1024">1024 × 1024</option>
-          <option value="2048" selected>2048 × 2048</option>
-          <option value="4096">4096 × 4096</option>
-        </select>
-      </div>
-      <div class="pal-row">
-        <button class="pal-mini-btn" style="flex:1" onclick="exportActivePalettePNGSized()" title="PNG with CMYK + hex + name labels per swatch, fitted to chosen size.">↓ PNG (labelled)</button>
-        <button class="pal-mini-btn" style="flex:1" onclick="exportActivePalettePNGPure()" title="PNG with only colored squares, no text. Same fit-square sizing.">↓ PNG (pure)</button>
-      </div>
-      <div class="pal-row">
-        <button class="pal-mini-btn primary" style="flex:1" onclick="exportActivePaletteZIP()" title="Download a .zip with one 128×128 solid-color PNG per swatch + manifest.txt/csv/json. Mirrors swatches.py output format.">↓ ZIP (per-swatch + manifest)</button>
-      </div>
-      <div class="pal-row">
-        <button class="pal-mini-btn" style="flex:1" onclick="exportPalettes()" title="Save all palettes to a single .palettes.json file you can re-import later.">↓ Export</button>
-        <button class="pal-mini-btn" style="flex:1" onclick="document.getElementById('palFile').click()">↑ Import</button>
-        <input type="file" id="palFile" accept=".json,.palettes" style="display:none" onchange="importPalettes(event)" title="Pick a .palettes.json file to import. Choose merge or replace.">
-      </div>
-      <div class="pal-row">
-        <button class="pal-mini-btn" style="flex:1" onclick="clearActivePalette()" title="Empty the active palette but keep its name.">Clear</button>
-        <button class="pal-mini-btn primary" style="flex:1" onclick="exportActivePalettePNG()" title="Save the active palette as a PNG image with title band.">↓ PNG</button>
-      </div>
-      <div class="pal-row">
-        <button class="pal-mini-btn" style="flex:1" onclick="exportActivePaletteASE()" title="Save the active palette as a .ase file (Photoshop / Illustrator / Affinity / Substance).">↓ ASE</button>
-        <button class="pal-mini-btn" style="flex:1" onclick="exportActivePaletteGPL()" title="Save the active palette as a .gpl file (GIMP / Krita / Inkscape / Blender).">↓ GPL</button>
-      </div>
-    </div>
-
-    <div class="divider"></div>
-
     <div class="sec">
       <div class="sec-label">Step interval</div>
       <div class="pill-row">
@@ -786,15 +747,64 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
 
   <!-- ── Grid ── -->
   <div class="grid-area">
+    <div class="palette-panel" id="palettePanel">
+      <div class="palette-panel-header" onclick="togglePalettePanel()">
+        <span><span class="chev">&#9658;</span> Palettes</span>
+        <span class="pal-count" id="palCount" title="How many swatches are in the active palette.">0</span>
+      </div>
+      <div class="palette-panel-body" id="palettePanelBody">
+        <div class="pal-row">
+          <select class="pal-sel" id="palSel" onchange="onPalChange()" title="Switch between saved palettes. Each palette is a small set of swatches you've collected."></select>
+          <button class="pal-mini-btn" onclick="newPalette()"      title="New palette">+</button>
+          <button class="pal-mini-btn" onclick="renamePalette()"   title="Rename">&#9998;</button>
+          <button class="pal-mini-btn danger" onclick="deletePalette()" title="Delete">&#10005;</button>
+        </div>
+        <div class="pal-tog-row">
+          <label style="display:flex;align-items:center;gap:6px;cursor:pointer;flex:1">
+            <input type="checkbox" id="togSel" onchange="toggleSelectMode()" title="When ON, clicking a swatch adds (or removes) it from the active palette instead of opening the details.">
+            <span>Select mode</span>
+          </label>
+        </div>
+        <div class="pal-strip" id="palStrip" title="Mini view of the active palette. Click any chip to remove that swatch."></div>
+        <div class="pal-size-row">
+          <label>PNG size</label>
+          <select id="palPngSize" title="Canvas size for the palette PNG. Cells auto-scale to fill the square with no gaps.">
+            <option value="1024">1024 x 1024</option>
+            <option value="2048" selected>2048 x 2048</option>
+            <option value="4096">4096 x 4096</option>
+          </select>
+        </div>
+        <div class="pal-row">
+          <button class="pal-mini-btn" style="flex:1" onclick="exportActivePalettePNGSized()" title="PNG with CMYK + hex + name labels per swatch, fitted to chosen size.">&#8595; PNG (labelled)</button>
+          <button class="pal-mini-btn" style="flex:1" onclick="exportActivePalettePNGPure()" title="PNG with only colored squares, no text. Same fit-square sizing.">&#8595; PNG (pure)</button>
+        </div>
+        <div class="pal-row">
+          <button class="pal-mini-btn primary" style="flex:1" onclick="exportActivePaletteZIP()" title="Download a .zip with one 128x128 solid-color PNG per swatch + manifest.txt/csv/json. Mirrors swatches.py output format.">&#8595; ZIP (per-swatch + manifest)</button>
+        </div>
+        <div class="pal-row">
+          <button class="pal-mini-btn" style="flex:1" onclick="exportPalettes()" title="Save all palettes to a single .palettes.json file you can re-import later.">&#8595; Export</button>
+          <button class="pal-mini-btn" style="flex:1" onclick="document.getElementById('palFile').click()">&#8593; Import</button>
+          <input type="file" id="palFile" accept=".json,.palettes" style="display:none" onchange="importPalettes(event)" title="Pick a .palettes.json file to import. Choose merge or replace.">
+        </div>
+        <div class="pal-row">
+          <button class="pal-mini-btn" style="flex:1" onclick="clearActivePalette()" title="Empty the active palette but keep its name.">Clear</button>
+          <button class="pal-mini-btn primary" style="flex:1" onclick="exportActivePalettePNG()" title="Save the active palette as a PNG image with title band.">&#8595; PNG</button>
+        </div>
+        <div class="pal-row">
+          <button class="pal-mini-btn" style="flex:1" onclick="exportActivePaletteASE()" title="Save the active palette as a .ase file (Photoshop / Illustrator / Affinity / Substance).">&#8595; ASE</button>
+          <button class="pal-mini-btn" style="flex:1" onclick="exportActivePaletteGPL()" title="Save the active palette as a .gpl file (GIMP / Krita / Inkscape / Blender).">&#8595; GPL</button>
+        </div>
+        <div class="pm-wrap" id="pmWrap" style="display:none"></div>
+      </div>
+    </div>
     <div class="grid-scroll" id="gridScroll">
       <div class="swatch-grid" id="swatchGrid"></div>
       <div class="gs-wrap" id="gsWrap">
         <div class="gs-divider" title="Greys built via the active ICC profile from RGB-grayscale input. Reflects the printer's GCR / UCR - mixes CMY + K to hit the neutral axis.">Neutral ramp (ICC) · how the press hits a real grey</div>
         <div class="gs-strip" id="gsStripNeutral"></div>
-        <div class="gs-divider" style="margin-top:10px" title="Greys built with K ink only - CMYK(0,0,0,K) at K = 0,10,…,100. Shows what the press does without CMY mixing. Usually shows hue drift vs the ICC-neutral row above.">Pure K-only sweep · CMYK(0,0,0,K = 0 → 100)</div>
+        <div class="gs-divider" style="margin-top:10px" title="Greys built with K ink only - CMYK(0,0,0,K) at K = 0,10,...,100. Shows what the press does without CMY mixing. Usually shows hue drift vs the ICC-neutral row above.">Pure K-only sweep · CMYK(0,0,0,K = 0 to 100)</div>
         <div class="gs-strip" id="gsStripPureK"></div>
       </div>
-      <div class="pm-wrap" id="pmWrap" style="display:none"></div>
     </div>
   </div>
 
@@ -1972,6 +1982,7 @@ function setActivePalette(id) {
 }
 
 function renderPaletteMode() {
+  document.getElementById('palettePanel')?.classList.add('open');
   const wrap = document.getElementById('pmWrap');
   wrap.innerHTML = '';
 
@@ -3691,6 +3702,7 @@ window.addEventListener('load', async () => {
     populateProfileSelect();
     // Apply defaults < user-saved state before first render.
     applyUIState(_resolvedUI());
+    restorePalettePanelState();
     // Reflect persisted lab_mode onto badge + radio (applyUIState sets LAB_MODE
     // but cannot touch the DOM elements added after HTML parse).
     document.getElementById('labModeBadge').textContent =
@@ -3721,6 +3733,18 @@ window.addEventListener('load', async () => {
   }
 });
 window.addEventListener('resize', render);
+
+function togglePalettePanel() {
+  const panel = document.getElementById('palettePanel');
+  const open = panel.classList.toggle('open');
+  try { localStorage.setItem('palette_panel_open', open ? '1' : '0'); } catch {}
+}
+function restorePalettePanelState() {
+  try {
+    const v = localStorage.getItem('palette_panel_open');
+    if (v === '1') document.getElementById('palettePanel').classList.add('open');
+  } catch {}
+}
 </script>
 </body>
 </html>
