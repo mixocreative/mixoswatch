@@ -75,8 +75,32 @@
       min-height: 100dvh;
       display: flex;
       flex-direction: column;
-      line-height: 1.55
+      line-height: 1.55;
+      position: relative;
     }
+
+    /* Editorial paper-grain backdrop. Fixed, behind everything, points
+       pointer-events through, and respects prefers-reduced-transparency.
+       Two layers: a faint radial accent glow upper-left and a SVG noise
+       texture that catches light against the warm tan palette. */
+    body::before {
+      content: '';
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background:
+        radial-gradient(900px 600px at 6% -10%, rgb(var(--accent-rgb) / .07), transparent 60%),
+        radial-gradient(700px 500px at 110% 110%, rgb(var(--accent-rgb) / .05), transparent 55%);
+    }
+    body::after {
+      content: '';
+      position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: .35;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.7 0 0 0 0 0.66 0 0 0 0 0.55 0 0 0 0.08 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+      mix-blend-mode: overlay;
+    }
+    @media (prefers-reduced-transparency: reduce) {
+      body::before, body::after { display: none; }
+    }
+    .shell { position: relative; z-index: 1; }
+    footer { position: relative; z-index: 1; }
 
     ::selection {
       background: var(--accent);
@@ -1532,7 +1556,7 @@
             <span data-en>What this solves</span>
             <span data-ja>解決する痛点</span>
             <span data-zh>針對痛點</span>
-            <span class="tag">advantages</span>
+            <span class="tag"><span data-en>advantages</span><span data-ja>強み</span><span data-zh>優勢</span></span>
           </h4>
           <p>
             <span data-en>Compare presses side by side. Flip from FOGRA39 to Japan Color 2001 to SWOP to see how the
@@ -1548,7 +1572,7 @@
             <span data-en>Real RIP math</span>
             <span data-ja>実際のプリント用デジタルデータ</span>
             <span data-zh>更貼近真實的轉換算式</span>
-            <span class="tag">real math</span>
+            <span class="tag"><span data-en>real math</span><span data-ja>実数学</span><span data-zh>真實演算</span></span>
           </h4>
           <p>
             <span data-en><b>Real ICC math, not Photoshop guesses.</b> Our lookup tables sample sRGB → CMYK at LittleCMS, the open-source color engine inside GIMP, Scribus, Krita, and many prepress tools. The data layer matches what a LittleCMS prepress flow computes. What your monitor renders is still sRGB, and what your press lays down still depends on stock, ink, and lighting.</span>
@@ -1559,7 +1583,7 @@
             <span data-en>You set the tolerance</span>
             <span data-ja>許容差は自分で決める</span>
             <span data-zh>容差由你定</span>
-            <span class="tag">real math</span>
+            <span class="tag"><span data-en>real math</span><span data-ja>実数学</span><span data-zh>真實演算</span></span>
           </h4>
           <p>
             <span data-en>The ΔE slider decides how close a match has to be. 1.0 strict, 3 forgiving, 6 brand-only.
@@ -1574,7 +1598,7 @@
             <span data-en>Color name dictionary</span>
             <span data-zh>顏色名稱對照</span>
             <span data-ja>名前照合</span>
-            <span class="tag">exchange anchoring</span>
+            <span class="tag"><span data-en>exchange anchoring</span><span data-ja>アンカー切替</span><span data-zh>錨點切換</span></span>
           </h4>
           <p>
             <span data-en>Per-dictionary anchor for name matching. A swatch can match against a name corpus by its hex
@@ -1592,7 +1616,7 @@
             <span data-en>Batch export with multi-process compatibility</span>
             <span data-ja>各種3Dプリント・製造プロセスに合わせた一括書き出し</span>
             <span data-zh>支援各種製程的批次匯出</span>
-            <span class="tag">multi purpose</span>
+            <span class="tag"><span data-en>multi purpose</span><span data-ja>多用途</span><span data-zh>多用途</span></span>
           </h4>
           <p>
             <span data-en><i>Direct:</i> ASE for Photoshop / Illustrator / Affinity / Substance, GPL for GIMP / Krita
@@ -1613,7 +1637,7 @@
             <span data-en>One swatch, two worlds</span>
             <span data-ja>1スウォッチで2世界対応</span>
             <span data-zh>一套色票，兩個世界</span>
-            <span class="tag">best of both worlds</span>
+            <span class="tag"><span data-en>best of both worlds</span><span data-ja>両方の良さ</span><span data-zh>兩全其美</span></span>
           </h4>
           <p>
             <span data-en>One tool serves 2D print and 3D-print color matching. The colors are rough by physics but
@@ -1633,7 +1657,7 @@
             <span data-en>CMYK Color Steps</span>
             <span data-ja>CMYK着色ステップ（歩距）</span>
             <span data-zh>CMYK 着色步距</span>
-            <span class="tag">for print</span>
+            <span class="tag"><span data-en>for print</span><span data-ja>印刷向け</span><span data-zh>給印刷的</span></span>
           </h4>
           <p>
             <span data-en>In commercial printing practices and material calibration, printing houses and plate-making
@@ -1659,7 +1683,7 @@
             <span data-zh>為 3D 建模 × 3D 彩色列印量身訂造</span>
             <span data-ja>3Dモデリング×3Dカラープリント専用</span>
             <span data-en>Curated for 3D Modeling × 3D Coloured Print</span>
-            <span class="tag">curated</span>
+            <span class="tag"><span data-en>curated</span><span data-ja>厳選</span><span data-zh>精選</span></span>
           </h4>
           <p>
             <span data-en>Most 3D modeling tools render skin textures and product colors that look fine on screen but
@@ -1684,7 +1708,7 @@
             <span data-en>Customizable Printer ICC Profile</span>
             <span data-ja>カスタムプリンターICCプロファイル</span>
             <span data-zh>自訂列印機ICC色彩I描述檔</span>
-            <span class="tag">for print</span>
+            <span class="tag"><span data-en>for print</span><span data-ja>印刷向け</span><span data-zh>給印刷的</span></span>
           </h4>
           
           <p>
@@ -2081,8 +2105,11 @@
         <div class="panel">
           <div class="panel-name">Profile<span class="jp">プロファイル</span></div>
           <div class="panel-body">
-            <p>Every color is routed through one ICC profile. Switching profile re-renders every tile in the grid
-              against a different press condition.</p>
+            <p>
+              <span data-en>Every color is routed through one ICC profile. Switching profile re-renders every tile in the grid against a different press condition.</span>
+              <span data-ja>すべての色は1つのICCプロファイルでルーティング。プロファイルを切り替えると、グリッドの全タイルが別の印刷条件で再描画される。</span>
+              <span data-zh>每個顏色都透過一個 ICC 描述檔路由。切換描述檔，整個格網會依新的印刷條件重新繪製。</span>
+            </p>
             <div class="demo" data-demo="profile">
               <div class="demo-controls">
                 <span class="demo-label">profile:</span>
@@ -2094,8 +2121,11 @@
                 </select>
               </div>
               <div class="demo-output" id="d-profile-out"></div>
-              <div class="demo-hint">Same CMYK input. Different press. Different color on screen, different color on
-                paper.</div>
+              <div class="demo-hint">
+                <span data-en>Same CMYK input. Different press. Different color on screen, different color on paper.</span>
+                <span data-ja>同じCMYK値。違う印刷機。画面でも紙でも違う色になる。</span>
+                <span data-zh>同樣的 CMYK 數值，不同的印刷機，螢幕與紙上的顏色都不同。</span>
+              </div>
             </div>
           </div>
         </div>
@@ -2103,9 +2133,11 @@
         <div class="panel">
           <div class="panel-name">Step / cell size<span class="jp">解像度</span></div>
           <div class="panel-body">
-            <p>Step controls how dense the lattice is. Cell size controls how big each tile is drawn. Both work live, no
-              rebuild needed. Ships with <b>step 20 / cell 80 px</b> so the first paint is fast and every label is
-              legible; drop to step 10 or 5 when you want to explore denser samples.</p>
+            <p>
+              <span data-en>Step controls how dense the lattice is. Cell size controls how big each tile is drawn. Both work live, no rebuild needed. Ships with <b>step 20 / cell 80 px</b> so the first paint is fast and every label is legible; drop to step 10 or 5 when you want to explore denser samples.</span>
+              <span data-ja>ステップは格子の密度を、セルサイズは各タイルの描画サイズを制御。両方ともライブ動作、再ビルド不要。初期値は <b>ステップ20 / セル80px</b> で、初回描画が速くラベルもすべて読める。より密な探索が必要ならステップ10または5に下げる。</span>
+              <span data-zh>步距控制取色密度，色塊尺寸控制每個色塊的繪製大小。兩者皆即時生效，不需重新編譯。預設為 <b>步距 20 / 色塊 80 px</b>，首次繪製速度快且每個標籤都清晰可讀；要更密集的取樣可切換到步距 10 或 5。</span>
+            </p>
             <div class="demo" data-demo="step-cell">
               <div class="demo-controls">
                 <span class="demo-label">step:</span>
@@ -2117,8 +2149,11 @@
                 <span class="demo-count" id="d-step-count">8 tiles</span>
               </div>
               <div class="demo-output" id="d-step-out"></div>
-              <div class="demo-hint">Step 5 packs in more colors but takes longer to derive. Drag the cell slider to see
-                tiles grow live.</div>
+              <div class="demo-hint">
+                <span data-en>Step 5 packs in more colors but takes longer to derive. Drag the cell slider to see tiles grow live.</span>
+                <span data-ja>ステップ5は色数が多いが処理時間も増える。セルスライダーをドラッグするとタイルがリアルタイムで拡大。</span>
+                <span data-zh>步距 5 採樣更密但耗時更長。拖曳色塊滑桿即時觀察色塊放大。</span>
+              </div>
             </div>
           </div>
         </div>
@@ -2126,9 +2161,11 @@
         <div class="panel">
           <div class="panel-name">CMYK range + TAC<span class="jp">範囲</span></div>
           <div class="panel-body">
-            <p>Drag the slider to enforce a press limit. Tiles that exceed total ink coverage fade out of the visible
-              set. Ships with <b>TAC 240% + K range 0-80%</b> for a conservative coated baseline; the preset row
-              jumps to 260 / 300 / 330 / 350 / 220 for newsprint, SWOP, FOGRA39, Japan Color, and Mimaki 3DUJ.</p>
+            <p>
+              <span data-en>Drag the slider to enforce a press limit. Tiles that exceed total ink coverage fade out of the visible set. Ships with <b>TAC 240% + K range 0-80%</b> for a conservative coated baseline; the preset row jumps to 260 / 300 / 330 / 350 / 220 for newsprint, SWOP, FOGRA39, Japan Color, and Mimaki 3DUJ.</span>
+              <span data-ja>スライダーをドラッグして印刷機の上限を強制。総インク量を超えるタイルはフェードアウトする。初期値は <b>TAC 240% + K範囲 0-80%</b> の保守的なコート紙基準。プリセット行は新聞紙・SWOP・FOGRA39・Japan Color・Mimaki 3DUJ 用に 260 / 300 / 330 / 350 / 220 へ即移動。</span>
+              <span data-zh>拖曳滑桿即可施加印刷機上限。超過總油墨量的色塊會淡出可見集合。預設為 <b>TAC 240% + K 範圍 0-80%</b>，採用保守的塗佈紙基準；預設列可直接跳到 260 / 300 / 330 / 350 / 220 對應新聞紙、SWOP、FOGRA39、Japan Color 與 Mimaki 3DUJ。</span>
+            </p>
             <div class="demo" data-demo="tac">
               <div class="demo-controls">
                 <span class="demo-label">TAC ≤</span>
@@ -2137,8 +2174,11 @@
                 <span class="demo-count" id="d-tac-count">5 / 8 pass</span>
               </div>
               <div class="demo-output" id="d-tac-out"></div>
-              <div class="demo-hint">Newspaper ≈ 240%, sheetfed coated ≈ 300%, generous ≈ 350%. Faded tiles are over the
-                cap.</div>
+              <div class="demo-hint">
+                <span data-en>Newspaper ≈ 240%, sheetfed coated ≈ 300%, generous ≈ 350%. Faded tiles are over the cap.</span>
+                <span data-ja>新聞紙 ≈ 240%、枚葉コート紙 ≈ 300%、余裕設定 ≈ 350%。フェードしたタイルは上限超過。</span>
+                <span data-zh>新聞紙 ≈ 240%、單張塗佈紙 ≈ 300%、寬鬆 ≈ 350%。淡出的色塊代表超出上限。</span>
+              </div>
             </div>
           </div>
         </div>
@@ -2146,7 +2186,11 @@
         <div class="panel">
           <div class="panel-name">K-tier<span class="jp">黒の段階</span></div>
           <div class="panel-body">
-            <p>Three buttons that progressively unlock darker colors. Click higher tiers to reveal deeper swatches.</p>
+            <p>
+              <span data-en>Three buttons that progressively unlock darker colors. Click higher tiers to reveal deeper swatches.</span>
+              <span data-ja>3つのボタンで段階的に暗い色を解放。上位階層を押すほど深い色が現れる。</span>
+              <span data-zh>三個按鈕逐步解鎖更深的顏色。點擊更高階層即可顯示更深的色塊。</span>
+            </p>
             <div class="demo" data-demo="ktier">
               <div class="demo-controls">
                 <button data-tier="1">Tier 1 · Brand</button>
@@ -2155,8 +2199,11 @@
                 <span class="demo-count" id="d-tier-count">8 / 8 visible</span>
               </div>
               <div class="demo-output" id="d-tier-out"></div>
-              <div class="demo-hint">Tier 1 = K under 25% (clean brand). Tier 2 adds K 25 to 50%. Tier 3 unlocks true
-                blacks.</div>
+              <div class="demo-hint">
+                <span data-en>Tier 1 = K under 25% (clean brand). Tier 2 adds K 25 to 50%. Tier 3 unlocks true blacks.</span>
+                <span data-ja>階層1 = K 25%未満（クリーンなブランド）。階層2 = Kを25-50%まで追加。階層3 = 真の黒まで解放。</span>
+                <span data-zh>階層 1 = K 低於 25%（純淨品牌）。階層 2 加入 K 25-50%。階層 3 解鎖真正的黑。</span>
+              </div>
             </div>
           </div>
         </div>
@@ -2164,8 +2211,11 @@
         <div class="panel">
           <div class="panel-name">Named filter<span class="jp">名前で絞る</span></div>
           <div class="panel-body">
-            <p>Tick which corpora the "Any named" filter considers. Only swatches matching at least one checked library
-              survive.</p>
+            <p>
+              <span data-en>Tick which corpora the "Any named" filter considers. Only swatches matching at least one checked library survive.</span>
+              <span data-ja>「Any named」フィルターが参照する辞書をチェック。少なくとも1つにマッチするスウォッチだけが残る。</span>
+              <span data-zh>勾選「Any named」要納入的資料庫。只有匹配至少一個已勾選資料庫的色塊會留下。</span>
+            </p>
             <div class="demo" data-demo="namefilter">
               <div class="demo-controls demo-check">
                 <label><input type="checkbox" value="jp-trad" checked> jp-trad</label>
@@ -2174,8 +2224,11 @@
                 <span class="demo-count" id="d-nf-count">5 / 8 named</span>
               </div>
               <div class="demo-output" id="d-nf-out"></div>
-              <div class="demo-hint">Each tile carries match data from each corpus. The filter is independent of which
-                name you actually display.</div>
+              <div class="demo-hint">
+                <span data-en>Each tile carries match data from each corpus. The filter is independent of which name you actually display.</span>
+                <span data-ja>各タイルは各辞書のマッチ情報を保持。表示する名前とフィルターは独立。</span>
+                <span data-zh>每個色塊都帶有各資料庫的配對資料。篩選與你實際顯示哪個名稱無關。</span>
+              </div>
             </div>
           </div>
         </div>
@@ -2183,8 +2236,11 @@
         <div class="panel">
           <div class="panel-name">Naming · per library<span class="jp">命名 ・ 各辞書</span></div>
           <div class="panel-body">
-            <p>Per corpus: pick which field appears on the swatch label, and pick whether matching anchors against hex
-              or CMYK.</p>
+            <p>
+              <span data-en>Per corpus: pick which field appears on the swatch label, and pick whether matching anchors against hex or CMYK.</span>
+              <span data-ja>辞書ごとに、スウォッチラベルに表示する項目と、マッチングのアンカー（hex または CMYK）を選ぶ。</span>
+              <span data-zh>逐個資料庫設定：選擇要在色塊上顯示哪個欄位，以及配對錨點是 hex 或 CMYK。</span>
+            </p>
             <div class="demo" data-demo="naming">
               <div class="demo-controls demo-radio">
                 <span class="demo-label">show:</span>
@@ -2198,8 +2254,11 @@
                 <span class="demo-label">anchor:</span>
                 <button data-anchor="hex">hex</button>
                 <button data-anchor="cmyk" class="on">cmyk</button>
-                <span class="demo-hint" style="margin-left:auto">hex anchors against #RRGGBB. cmyk routes through the
-                  active profile first.</span>
+                <span class="demo-hint" style="margin-left:auto">
+                  <span data-en>hex anchors against #RRGGBB. cmyk routes through the active profile first.</span>
+                  <span data-ja>hex は #RRGGBB を直接アンカー。cmyk はアクティブプロファイル経由でルーティング。</span>
+                  <span data-zh>hex 直接以 #RRGGBB 為錨點；cmyk 先經由目前的描述檔路由。</span>
+                </span>
               </div>
               <div class="demo-output">
                 <div class="demo-swatch-big">
@@ -2210,8 +2269,11 @@
                   </div>
                 </div>
               </div>
-              <div class="demo-hint">Flip the anchor: the matched DIC entry can change, because the CMYK route lands at
-                a slightly different Lab than the raw hex.</div>
+              <div class="demo-hint">
+                <span data-en>Flip the anchor: the matched DIC entry can change, because the CMYK route lands at a slightly different Lab than the raw hex.</span>
+                <span data-ja>アンカーを切り替えると、CMYK経路はraw hexとは少し異なるLabに着地するため、マッチするDICエントリーが変わることがある。</span>
+                <span data-zh>切換錨點，匹配的 DIC 條目可能改變，因為 CMYK 路徑落到的 Lab 與 raw hex 略有差異。</span>
+              </div>
             </div>
           </div>
         </div>
@@ -2219,8 +2281,11 @@
         <div class="panel">
           <div class="panel-name">Accessibility<span class="jp">可読性</span></div>
           <div class="panel-body">
-            <p>Toggle contrast filters and watch the set narrow. Each tile here is annotated with the WCAG grade earned
-              against white text.</p>
+            <p>
+              <span data-en>Toggle contrast filters and watch the set narrow. Each tile here is annotated with the WCAG grade earned against white text.</span>
+              <span data-ja>コントラストフィルターを切り替えて、表示色が絞られる様子を確認。各タイルには白テキストに対するWCAG等級を表示。</span>
+              <span data-zh>切換對比度篩選，觀察可見集合縮小。每個色塊都標示了對白色文字的 WCAG 等級。</span>
+            </p>
             <div class="demo" data-demo="a11y">
               <div class="demo-controls demo-check">
                 <label><input type="checkbox" id="d-a11y-aa"> WCAG AA only</label>
@@ -2229,7 +2294,11 @@
                 <span class="demo-count" id="d-a11y-count">8 / 8 pass</span>
               </div>
               <div class="demo-output" id="d-a11y-out"></div>
-              <div class="demo-hint">AA = 4.5:1 contrast minimum. AAA = 7:1. Combine toggles to narrow further.</div>
+              <div class="demo-hint">
+                <span data-en>AA = 4.5:1 contrast minimum. AAA = 7:1. Combine toggles to narrow further.</span>
+                <span data-ja>AA = コントラスト4.5:1以上。AAA = 7:1以上。切替を組み合わせるとさらに絞り込み。</span>
+                <span data-zh>AA = 對比度至少 4.5:1。AAA = 7:1。同時開啟多個切換可進一步縮小範圍。</span>
+              </div>
             </div>
           </div>
         </div>
@@ -2237,8 +2306,11 @@
         <div class="panel">
           <div class="panel-name">Search + sort<span class="jp">検索・並び替え</span></div>
           <div class="panel-body">
-            <p>Type into the search to filter across all corpus fields (kanji, romaji, hex, DIC code). Click sort
-              buttons to reorder live.</p>
+            <p>
+              <span data-en>Type into the search to filter across all corpus fields (kanji, romaji, hex, DIC code). Click sort buttons to reorder live.</span>
+              <span data-ja>検索ボックスに入力すると、全辞書のフィールド（漢字・ローマ字・hex・DICコード）を横断して絞り込み。ソートボタンで即時並び替え。</span>
+              <span data-zh>在搜尋框輸入即可跨資料庫所有欄位（漢字、羅馬字、hex、DIC 編號）篩選。點按排序按鈕即時重排。</span>
+            </p>
             <div class="demo" data-demo="searchsort">
               <div class="demo-controls">
                 <input type="text" id="d-search" placeholder="桜 · coral · #FDC · N804">
@@ -2249,7 +2321,11 @@
                 <span class="demo-count" id="d-ss-count">8 visible</span>
               </div>
               <div class="demo-output" id="d-ss-out"></div>
-              <div class="demo-hint">Try typing "桜", "N804", or "#FCC". Sorting reorders without re-filtering.</div>
+              <div class="demo-hint">
+                <span data-en>Try typing "桜", "N804", or "#FCC". Sorting reorders without re-filtering.</span>
+                <span data-ja>「桜」「N804」「#FCC」と入力してみる。ソートは再フィルタリングなしで並び替え。</span>
+                <span data-zh>試著輸入「櫻」、「N804」或「#FCC」。排序只會重新排列，不會重新篩選。</span>
+              </div>
             </div>
           </div>
         </div>
@@ -2257,17 +2333,22 @@
         <div class="panel">
           <div class="panel-name">Palettes panel + Hue x Light<span class="jp">パレット枠</span></div>
           <div class="panel-body">
-            <p>The Palettes panel sits between the top bar and the swatch grid as a collapsable button row (no chevron
-              - a clear "Open palettes" / "Close palettes" accent button). The Hue x Light sort option renders the 18
-              x 10 hue-by-light bucket map inside the same panel; selecting it auto-opens the panel.</p>
+            <p>
+              <span data-en>The Palettes panel sits between the top bar and the swatch grid as a collapsable button row (no chevron - a clear "Open palettes" / "Close palettes" accent button). The Hue x Light sort renders directly inside the swatch grid area and behaves like every other sort option.</span>
+              <span data-ja>パレットパネルはトップバーとスウォッチグリッドの間に、折りたためるボタン行として配置（シェブロンなし、明確な「パレットを開く / 閉じる」アクセントボタン）。色相×明度ソートはスウォッチグリッド内に直接描画され、他のソートオプションと同じ振る舞い。</span>
+              <span data-zh>調色盤面板位於頂列與色塊網格之間，是一個可收合的按鈕列（無箭頭，採用清晰的「展開調色盤 / 收起調色盤」強調按鈕）。色相 × 明度排序直接在色塊網格區渲染，與其他排序選項行為一致。</span>
+            </p>
           </div>
         </div>
 
         <div class="panel">
           <div class="panel-name">Palette export<span class="jp">書き出し</span></div>
           <div class="panel-body">
-            <p>Click tiles below to build a 4-color palette, then download as a real GPL or JSON file. These are the
-              same formats Mixo Swatch exports (alongside ASE, PNG labelled, PNG pure, and a per-swatch ZIP).</p>
+            <p>
+              <span data-en>Click tiles below to build a 4-color palette, then download as a real GPL or JSON file. These are the same formats Mixo Swatch exports (alongside ASE, PNG labelled, PNG pure, and a per-swatch ZIP).</span>
+              <span data-ja>下のタイルをクリックして4色パレットを組み、本物のGPLまたはJSONファイルとしてダウンロード。Mixo Swatchが書き出すのと同じフォーマット（他にASE、ラベル付きPNG、ピュアPNG、1色ずつのZIP）。</span>
+              <span data-zh>點按下方色塊組成 4 色調色盤，再下載成真實的 GPL 或 JSON 檔。這正是 Mixo Swatch 的匯出格式（另有 ASE、含標籤 PNG、純色 PNG 及逐色 ZIP）。</span>
+            </p>
             <div class="demo" data-demo="palette">
               <div class="demo-controls">
                 <span class="demo-label">click to add / remove:</span>
@@ -2283,8 +2364,11 @@
                 <button data-export="json">↓ JSON</button>
                 <button data-export="clear">Clear</button>
               </div>
-              <div class="demo-hint">GPL imports into GIMP, Krita, Inkscape. JSON is the lossless interchange format
-                Mixo Swatch reads back via "Import .json".</div>
+              <div class="demo-hint">
+                <span data-en>GPL imports into GIMP, Krita, Inkscape. JSON is the lossless interchange format Mixo Swatch reads back via "Import .json".</span>
+                <span data-ja>GPLはGIMP、Krita、Inkscapeに読み込み可能。JSONはMixo Swatchが「.jsonを読み込み」で再取り込みできる、ロスレス交換フォーマット。</span>
+                <span data-zh>GPL 可匯入 GIMP、Krita、Inkscape。JSON 是 Mixo Swatch 透過「匯入 .json」可重新讀回的無損交換格式。</span>
+              </div>
             </div>
           </div>
         </div>
@@ -2292,15 +2376,25 @@
         <div class="panel">
           <div class="panel-name">Reset to defaults<span class="jp">初期化</span></div>
           <div class="panel-body">
-            <p>Click below to restore every demo above to its factory state. In the real explorers this clears the
-              localStorage UI keys; saved palettes are untouched.</p>
+            <p>
+              <span data-en>Click below to restore every demo above to its factory state. In the real app this clears the localStorage UI keys; saved palettes are untouched.</span>
+              <span data-ja>下を押すと、このページ上のすべてのデモが初期状態に戻る。実際のアプリではlocalStorageのUIキーをクリアするが、保存済みパレットには触れない。</span>
+              <span data-zh>點按下方按鈕，將本頁所有示範還原為出廠狀態。在實際應用中，這會清除 localStorage 的 UI 鍵，但已儲存的調色盤不會被動到。</span>
+            </p>
             <div class="demo" data-demo="reset">
               <div class="demo-controls">
-                <button id="d-reset" class="on">↺ Reset every demo on this page</button>
+                <button id="d-reset" class="on">
+                  <span data-en>↺ Reset every demo on this page</span>
+                  <span data-ja>↺ このページのデモを全てリセット</span>
+                  <span data-zh>↺ 重置本頁所有示範</span>
+                </button>
                 <span class="demo-hint" id="d-reset-msg" style="margin-left:auto"></span>
               </div>
-              <div class="demo-hint">Reads <code>data/ui_defaults.json</code> in the real tools. Palettes survive
-                because they live under a separate localStorage key.</div>
+              <div class="demo-hint">
+                <span data-en>Reads <code>data/ui_defaults.json</code> in the real app. Palettes survive because they live under a separate localStorage key.</span>
+                <span data-ja>実際のアプリでは <code>data/ui_defaults.json</code> を読み込む。パレットは別のlocalStorageキーに保存されているため、リセットしても残る。</span>
+                <span data-zh>實際應用會讀取 <code>data/ui_defaults.json</code>。調色盤儲存於不同的 localStorage 鍵，因此重置後依然存在。</span>
+              </div>
             </div>
           </div>
         </div>
@@ -2401,13 +2495,27 @@
     <div class="rule"></div>
 
     <section class="section">
-      <div class="eyebrow">a quiet promise</div>
-      <h3>Local only. No accounts. No tracking.</h3>
-      <p>Everything runs in your browser. ICC profiles and lookup tables sit on your disk. Palettes save to local
-        storage. There is no server to call, no account to make, no analytics. If you close the tab the only state that
-        survives is what your browser saved for you.</p>
+      <div class="eyebrow">
+        <span data-en>a quiet promise</span>
+        <span data-ja>静かな約束</span>
+        <span data-zh>低聲承諾</span>
+      </div>
+      <h3>
+        <span data-en>Local only. No accounts. No tracking.</span>
+        <span data-ja>すべてローカル動作。アカウント不要。トラッキングなし。</span>
+        <span data-zh>純本地運行。無需帳號。無任何追蹤。</span>
+      </h3>
+      <p>
+        <span data-en>Everything runs in your browser. ICC profiles and lookup tables sit on your disk. Palettes save to local storage. There is no server to call, no account to make, no analytics. If you close the tab the only state that survives is what your browser saved for you.</span>
+        <span data-ja>すべてブラウザ内で動作。ICCプロファイルとLUTはあなたのディスク上に存在。パレットはローカルストレージに保存。呼び出すサーバなし、作成するアカウントなし、解析なし。タブを閉じれば、ブラウザがあなたのために保存した状態だけが残ります。</span>
+        <span data-zh>所有運算都在你的瀏覽器內進行。ICC 描述檔與查找表存放在你的硬碟。色票組儲存於 localStorage。沒有要連線的伺服器、沒有要註冊的帳號、沒有任何分析。關掉分頁，留下的就只是瀏覽器替你儲存的那些狀態。</span>
+      </p>
       <div class="callout">
-        <div class="who">honest framing</div>
+        <div class="who">
+          <span data-en>honest framing</span>
+          <span data-ja>正直に言うと</span>
+          <span data-zh>實話實說</span>
+        </div>
         <p>
           <span data-zh>色差 ΔE 小於 1.0 僅代表「低於肉眼辨識度」，並不等於「完全精準」。列印機終究是列印機。這些工具的作用是在「你所選的顏色」與「數位、紙本印刷、立體3D列印呈現出來的顏色」之間的取得平衡。面對關鍵作品，請務必在最終的實體紙材/材質上進行打樣。</span>
           <span data-en>A ΔE under 1.0 just means it's "below the limit of human perception". It doesn't mean it's a 100% perfect match. A printer is still a printer. The whole point of these tools is simply to help you find a beautiful balance between the colors you choose on screen and how they actually turn out in digital, flat print, and 3D print formats. For critical work, always do a test print on your final material.</span>
