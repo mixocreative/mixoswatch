@@ -1713,18 +1713,17 @@
     <div class="rule"></div>
 
     <section class="section" id="how">
-      <div class="eyebrow"><span data-en>4-step workflow</span><span data-ja>4工程ワークフロー</span><span data-zh>四步驟流程</span>
+      <div class="eyebrow"><span data-en>5-step workflow</span><span data-ja>5工程ワークフロー</span><span data-zh>五步驟流程</span>
       </div>
       <h3>
-        <span data-en>Four steps to a print-ready palette.</span>
-        <span data-ja>プリント可能なパレットへの4工程。</span>
-        <span data-zh>四步建立可印刷的色票組。</span>
+        <span data-en>Five steps to a print-ready palette.</span>
+        <span data-ja>プリント可能なパレットへの5工程。</span>
+        <span data-zh>五步建立可印刷的色票組。</span>
       </h3>
       <p>
-        <span data-en>Open either tool and the workflow is the same: pick the press profile, narrow what you can see,
-          choose what you like, export. The whole thing runs in your browser, never sends data anywhere.</span>
-        <span data-ja>どちらのツールでも流れは同じ。プリントプロファイルを選び、表示を絞り、好みを選び、書き出す。全てブラウザ内で動き、データはどこにも送らない。</span>
-        <span data-zh>兩個工具流程相同：選印刷描述檔、縮窄可見範圍、挑你想要的、匯出。整個流程在你瀏覽器內進行，不傳輸任何資料到任何地方。</span>
+        <span data-en>The sidebar in Mixo Swatch is organised into four numbered groups; export is the fifth and final step. Pick the press profile, narrow what you can see, pick + name your colors, choose how to sort and view them, then export. Everything runs in your browser. No upload, no telemetry.</span>
+        <span data-ja>Mixo Swatchのサイドバーは番号付き4グループに整理され、書き出しが5番目の最終工程。プリントプロファイルを選び、表示を絞り、選んで命名し、並び順と表示を決め、最後に書き出す。全てブラウザ内で動作。アップロード・計測なし。</span>
+        <span data-zh>Mixo Swatch 側欄分為四個編號區，匯出為第五個也是最後一個步驟。選描述檔、縮小範圍、挑選與命名、決定排序與檢視，然後匯出。整個流程在瀏覽器內運作，不上傳、不追蹤。</span>
       </p>
       <div class="steps">
         <div class="step">
@@ -1735,10 +1734,9 @@
             <span data-zh>選擇描述檔</span>
           </h5>
           <p>
-            <span data-en>Choose the press you are printing on: FOGRA39 for European coated, Japan Color for Japanese
-              coated, SWOP for US web.</span>
-            <span data-ja>使うプリンターを指定する。欧州コート紙ならFOGRA39、日本コート紙ならJapan Color、米国ウェブならSWOP。</span>
-            <span data-zh>挑你即將印刷的機台：歐洲塗佈紙選 FOGRA39，日本塗佈紙選 Japan Color，美國捲筒紙選 SWOP。</span>
+            <span data-en>Choose the press or printer: FOGRA39 for European coated, Japan Color for Japanese coated, SWOP for US web, UncoatedFOGRA29 as the closest bundled Mimaki 3DUJ proxy. Pick the Lab mode (Print D50 for ICC parity with Photoshop, Screen D65 for pure sRGB work).</span>
+            <span data-ja>使うプリンタを指定。欧州コート紙ならFOGRA39、日本コート紙ならJapan Color、米国ウェブならSWOP、Mimaki 3DUJの近似プロキシならUncoatedFOGRA29。Labモードも選択（Print D50はPhotoshopのICC値と一致、Screen D65は純sRGB作業向け）。</span>
+            <span data-zh>挑你即將使用的印刷機或印表機：歐洲塗佈紙 FOGRA39、日本塗佈紙 Japan Color、美國捲筒紙 SWOP、Mimaki 3DUJ 最接近代理 UncoatedFOGRA29。同時選 Lab 模式（Print D50 與 Photoshop ICC 對齊；Screen D65 適合純 sRGB 工作）。</span>
           </p>
         </div>
         <div class="step">
@@ -1746,13 +1744,12 @@
           <h5>
             <span data-en>Narrow the set</span>
             <span data-ja>表示を絞り込む</span>
-            <span data-zh>縮窄範圍</span>
+            <span data-zh>縮小範圍</span>
           </h5>
           <p>
-            <span data-en>Use K-tier, TAC limit, and accessibility toggles to hide colors that will not behave on your
-              stock.</span>
-            <span data-ja>K段階・TAC上限・アクセシビリティ切替で、用紙に合わない色を隠す。</span>
-            <span data-zh>用 K 階層、TAC 上限與可讀性切換，把不適合你紙張的顏色隱藏起來。</span>
+            <span data-en>Set CMYK range + TAC limit + round-trip dE max + K-tier + accessibility toggles. Anything the chosen profile cannot hold within tolerance disappears from the grid before you even see it.</span>
+            <span data-ja>CMYK範囲・TAC上限・往復ΔE上限・K階層・アクセシビリティ切替を設定。選んだプロファイルで保持できない色は表示前に非表示。</span>
+            <span data-zh>設定 CMYK 範圍、TAC 上限、往返 dE 門檻、K 階層、可讀性切換。所選描述檔無法保留的色塊在你看到前就被排除。</span>
           </p>
         </div>
         <div class="step">
@@ -1760,27 +1757,38 @@
           <h5>
             <span data-en>Pick + name</span>
             <span data-ja>選んで命名</span>
-            <span data-zh>選色與命名</span>
+            <span data-zh>挑選與命名</span>
           </h5>
           <p>
-            <span data-en>Click swatches to add to a palette. Turn on Japanese, HTML, or DIC name labels so a color has
-              a vocabulary.</span>
-            <span data-ja>スウォッチを押してパレットに追加。日本伝統色・HTML・DICのラベルを有効にして、色に語彙を持たせる。</span>
-            <span data-zh>點選色塊加入色票組。開啟日本傳統色、HTML、DIC 命名標籤，給每個顏色一個詞彙。</span>
+            <span data-en>Enable corpora (Japanese traditional, W3C CSS, Chinese traditional). Choose anchor (hex or CMYK) and naming-accuracy dE. Click swatches in Selection mode to add them to the active palette.</span>
+            <span data-ja>名前辞書（日本伝統色・W3C CSS・中国伝統色）を有効化。アンカー（hexまたはCMYK）と命名精度ΔEを選び、選択モードでスウォッチをクリックしてアクティブパレットに追加。</span>
+            <span data-zh>啟用名稱資料庫（日本傳統色、W3C CSS、中國傳統色）。選錨點（hex 或 CMYK）與命名精度 dE，於選取模式下點按色塊加入使用中的調色盤。</span>
           </p>
         </div>
         <div class="step">
           <span class="pythonstep">STEP 04</span>
+          <h5>
+            <span data-en>Sort + view</span>
+            <span data-ja>並び順と表示</span>
+            <span data-zh>排序與檢視</span>
+          </h5>
+          <p>
+            <span data-en>Re-order the grid by hue, lightness, TAC, chroma, cyan-only, round-trip safety, or switch to the Hue x Light bucket map to see one representative per (hue, lightness) cell. Cell size is a separate slider that controls how much detail each tile shows.</span>
+            <span data-ja>グリッドを色相・明度・TAC・彩度・シアン単独・往復安全度で並び替え、または色相×明度バケットマップに切り替えて（色相,明度）セルごとの代表色を一覧。セルサイズは別スライダーで詳細度を調整。</span>
+            <span data-zh>依色相、明度、TAC、彩度、純青、往返安全度重排，或切換到 色相 × 明度 桶圖逐格觀察。色塊尺寸由獨立滑桿控制，決定每個色塊顯示多少資訊。</span>
+          </p>
+        </div>
+        <div class="step">
+          <span class="pythonstep">STEP 05</span>
           <h5>
             <span data-en>Export</span>
             <span data-ja>書き出し</span>
             <span data-zh>匯出</span>
           </h5>
           <p>
-            <span data-en>Send the palette to Photoshop, Illustrator, Affinity, GIMP, or Krita as ASE, GPL, PNG, or
-              JSON.</span>
-            <span data-ja>Photoshop、Illustrator、Affinity、GIMP、KritaへASE / GPL / PNG / JSONで送る。</span>
-            <span data-zh>輸出 ASE / GPL / PNG / JSON 給 Photoshop、Illustrator、Affinity、GIMP 或 Krita。</span>
+            <span data-en>Top-bar Export menu: CSV (UTF-8 with name fields), labelled PNG, 4096-px pure-color PNG, ZIP (per-swatch + manifest). Per-palette Download menu in Palettes view adds ASE, GPL and JSON so Photoshop, Illustrator, Affinity, GIMP, Krita, or Inkscape can read it directly.</span>
+            <span data-ja>トップバーのExportメニュー：CSV（UTF-8、名前付き）、ラベル付きPNG、4096pxピュアカラーPNG、ZIP（1色ずつ + マニフェスト）。パレット表示の各パレットDownloadメニューはASE / GPL / JSONも追加し、Photoshop / Illustrator / Affinity / GIMP / Krita / Inkscapeで直接読み込める。</span>
+            <span data-zh>頂列 Export 選單：CSV（UTF-8 含名稱欄位）、含標籤 PNG、4096 px 純色 PNG、ZIP（逐色 + 清單）。在「調色盤」檢視中，每張調色盤的 Download 選單再加上 ASE / GPL / JSON，可直接給 Photoshop、Illustrator、Affinity、GIMP、Krita 或 Inkscape 使用。</span>
           </p>
         </div>
       </div>
