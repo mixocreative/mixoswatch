@@ -6,6 +6,8 @@
 <title>Mixo Swatch</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+JP:wght@400;500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hina+Mincho&display=swap" rel="stylesheet">
 <style>
 :root {
   --bg:#1A1918; --bg2:#222120; --surface:#2A2928;
@@ -14,6 +16,7 @@
   --accent:#5A9FE0; --accent-rgb:90 159 224;
   --font-mono:'IBM Plex Mono','Fira Mono',monospace;
   --font-sans:'Noto Sans JP',system-ui,sans-serif;
+  --font-jpn-serif:'Hina Mincho','Yu Mincho',serif;
   --r:6px; --rl:10px;
   color-scheme:dark;
 }
@@ -220,10 +223,11 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
 .palette-panel{
   border-bottom:1px solid var(--border);background:var(--surface);
   display:flex;flex-direction:column;
-  padding:6px 10px 0;
+  padding:6px 10px 4px;
+  margin-bottom:6px;
 }
 @media (max-width: 767px) {
-  .palette-panel { padding: 4px 6px 0; }
+  .palette-panel { padding: 4px 6px 4px; }
   .palette-panel-header { padding: 8px 12px; }
   .palette-panel-header .pp-title { font-size: 12px; letter-spacing: .06em; }
 }
@@ -479,7 +483,7 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
 }
 .cell-jpn{
   position:absolute;left:0;right:0;
-  font-family:var(--font-sans);
+  font-family:var(--font-jpn-serif);
   padding:0 3px;line-height:1.3;pointer-events:none;
   overflow:hidden;white-space:nowrap;text-overflow:ellipsis;
 }
@@ -508,9 +512,16 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
 .gs-wrap{padding:0 12px 12px;background:var(--bg)}
 .gs-divider{
   font-size:10px;color:var(--muted);letter-spacing:.06em;
-  padding:8px 0 5px;border-top:1px solid var(--border2);margin-top:2px;
+  padding:8px 0 3px;border-top:1px solid var(--border2);margin-top:2px;
   text-transform:uppercase;
 }
+.gs-sub{
+  font-size:10.5px;color:var(--faint);font-family:var(--font-sans);
+  letter-spacing:0;text-transform:none;
+  line-height:1.45;padding:0 0 6px;
+  max-width:84ch;
+}
+.gs-sub b{color:var(--text);font-weight:500}
 .gs-strip{display:flex;gap:3px;flex-wrap:wrap}
 .gs-cell{
   aspect-ratio:1;border-radius:3px;cursor:pointer;
@@ -1023,9 +1034,15 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
     <div class="grid-scroll" id="gridScroll">
       <div class="swatch-grid" id="swatchGrid"></div>
       <div class="gs-wrap" id="gsWrap">
-        <div class="gs-divider" title="Greys built via the active ICC profile from RGB-grayscale input. Reflects the printer's GCR / UCR - mixes CMY + K to hit the neutral axis.">Neutral ramp (ICC) · how the press hits a real grey</div>
+        <div class="gs-divider" data-i18n="gs.neutral_title" title="Greys built via the active ICC profile from RGB-grayscale input. Reflects the printer's GCR / UCR rules - mixes CMY + K to hit the neutral axis.">Neutral ramp (ICC) · how the press actually hits a grey</div>
+        <div class="gs-sub" data-i18n="gs.neutral_sub">
+          Each cell starts from a target sRGB grey (e.g. 50&#37; grey), gets reverse-routed to CMYK through the active profile (the press's <b>GCR / UCR rules pick the CMY + K mix</b>), then forward-routed back to screen sRGB. This is the grey the RIP gives you when you ask the press for a neutral.
+        </div>
         <div class="gs-strip" id="gsStripNeutral"></div>
-        <div class="gs-divider" style="margin-top:10px" title="Greys built with K ink only - CMYK(0,0,0,K) at K = 0,10,...,100. Shows what the press does without CMY mixing. Usually shows hue drift vs the ICC-neutral row above.">Pure K-only sweep · CMYK(0,0,0,K = 0 to 100)</div>
+        <div class="gs-divider" style="margin-top:10px" data-i18n="gs.purek_title" title="Greys built with K ink only - CMYK(0,0,0,K) at K = 0, 10, ..., 100. Shows what the press does without any CMY mixing. Usually drifts warm or cool vs the ICC-neutral row above.">Pure K-only sweep · CMYK(0, 0, 0, K = 0&#8594;100)</div>
+        <div class="gs-sub" data-i18n="gs.purek_sub">
+          Each cell is <b>CMYK(0, 0, 0, K)</b> with no cyan, magenta, or yellow added. Forward-routed through the active profile, this shows the K-ink-alone signature: most presses (especially 3DUJ resin + uncoated stock) drift warm or cool, because K ink has its own hue and there's no CMY mix balancing it. Compare the two rows to see how far the K-only path is from the GCR-routed neutral above.
+        </div>
         <div class="gs-strip" id="gsStripPureK"></div>
       </div>
     </div>
@@ -4486,6 +4503,10 @@ const I18N = {
     'pm.clear':      'Clear all swatches',
     'pm.del':        'Delete palette',
     'pm.download':   'Download',
+    'gs.neutral_title': 'Neutral ramp (ICC) · how the press actually hits a grey',
+    'gs.neutral_sub':   "Each cell starts from a target sRGB grey (e.g. 50% grey), gets reverse-routed to CMYK through the active profile (the press's <b>GCR / UCR rules pick the CMY + K mix</b>), then forward-routed back to screen sRGB. This is the grey the RIP gives you when you ask the press for a neutral.",
+    'gs.purek_title':   'Pure K-only sweep · CMYK(0, 0, 0, K = 0→100)',
+    'gs.purek_sub':     "Each cell is <b>CMYK(0, 0, 0, K)</b> with no cyan, magenta, or yellow added. Forward-routed through the active profile, this shows the K-ink-alone signature: most presses (especially 3DUJ resin + uncoated stock) drift warm or cool because K ink has its own hue and there's no CMY mix balancing it. Compare the two rows to see how far the K-only path is from the GCR-routed neutral above.",
   },
   ja: {
     'badge.mode_d50': 'モード: 印刷 (D50)',
@@ -4571,6 +4592,10 @@ const I18N = {
     'pm.clear':      'スウォッチをクリア',
     'pm.del':        'パレット削除',
     'pm.download':   'ダウンロード',
+    'gs.neutral_title': 'ニュートラルランプ (ICC) · プリンタが実際にグレーを再現する経路',
+    'gs.neutral_sub':   '各セルは目標sRGBグレー（例: 50%グレー）から出発し、アクティブプロファイルで逆方向ルーティングしてCMYKを得る（<b>プリンタのGCR / UCRルールがCMY + Kの配合を決める</b>）。そのあと順方向で画面sRGBに戻す。RIPに「ニュートラル」を頼んだときに実際に得られるグレー。',
+    'gs.purek_title':   '純K（黒）のみのスイープ · CMYK(0, 0, 0, K = 0→100)',
+    'gs.purek_sub':     '各セルは <b>CMYK(0, 0, 0, K)</b>。シアン・マゼンタ・イエローは加えない。アクティブプロファイルで順方向ルーティングし、K単独のインク特性を可視化する。多くのプリンタ（特に3DUJレジンや非塗工紙）はK単独だと暖色寄りまたは寒色寄りに振れる。Kインク自体に色相があり、CMYでバランスを取らないため。上のGCRニュートラルとどれだけ離れているかを比較できる。',
   },
   zh: {
     'badge.mode_d50': '模式：印刷 (D50)',
@@ -4656,6 +4681,10 @@ const I18N = {
     'pm.clear':      '清空色塊',
     'pm.del':        '刪除調色盤',
     'pm.download':   '下載',
+    'gs.neutral_title': '中性灰階 (ICC) · 印刷機實際走出灰色的路徑',
+    'gs.neutral_sub':   '每個色塊都從目標 sRGB 灰（例如 50% 灰）出發，先反向經由目前的描述檔路由成 CMYK（<b>由印刷機的 GCR / UCR 規則決定 CMY 與 K 的混合比例</b>），再正向回到螢幕 sRGB。這就是你叫 RIP「給我中性灰」時實際拿到的灰。',
+    'gs.purek_title':   '純 K（黑）掃描 · CMYK(0, 0, 0, K = 0→100)',
+    'gs.purek_sub':     '每個色塊是 <b>CMYK(0, 0, 0, K)</b>，完全不加青、洋紅、黃。正向經由目前的描述檔路由，呈現純 K 墨單獨的特性。多數印刷機（特別是 3DUJ 樹脂與非塗佈紙）的純 K 灰會偏暖或偏冷，因為 K 墨本身帶色相，沒有 CMY 來平衡。對比上方 GCR 路徑的中性灰，可以看出兩條路徑差多遠。',
   }
 };
 let UI_LANG = 'en';
@@ -4681,7 +4710,13 @@ function applyI18n() {
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.getAttribute('data-i18n');
     const txt = t(key, null);
-    if (txt) el.textContent = txt;
+    if (txt == null) return;
+    // If the translated string contains inline tags (e.g. <b>), render as
+    // HTML so the markup survives the swap. Plain text uses textContent
+    // so we don't accidentally let user-translatable strings inject DOM.
+    // Tag set is intentionally tight: only <b>, <i>, <em>, <strong>, <code>.
+    if (/<\s*(b|i|em|strong|code)\b/i.test(txt)) el.innerHTML = txt;
+    else                                         el.textContent = txt;
   });
   // Placeholder text on form inputs (kept separate from textContent so the
   // input value is not clobbered when language switches).
