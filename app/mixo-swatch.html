@@ -28,7 +28,7 @@
   --bg:#F8F6F1; --bg2:#F0EDE6; --surface:#FFFFFF;
   --border:rgba(0,0,0,0.14); --border2:rgba(0,0,0,0.07);
   --text:#1A1916; --muted:#6E6C66; --faint:#A39F97;
-  --accent:#6E6648; --accent-rgb:110 102 72;
+  --accent:#6E6648;--accent-light:#B2A88D; --accent-rgb:110 102 72;
   color-scheme:light;
 }
 *{box-sizing:border-box;margin:0;padding:0}
@@ -246,7 +246,7 @@ input[type=range]{accent-color:var(--accent)}
 
 /* ── Palette panel (collapsible, sits between topbar and grid-scroll) ── */
 .palette-panel{
-  border-bottom:1px solid var(--border);background:var(--surface);
+  
   display:flex;flex-direction:column;
   padding:6px 10px 4px;
   margin-bottom:6px;
@@ -260,7 +260,7 @@ input[type=range]{accent-color:var(--accent)}
   display:flex;align-items:center;justify-content:space-between;gap:12px;
   padding:10px 16px;cursor:pointer;user-select:none;
   background:var(--bg2);
-  border:1.5px solid var(--accent);border-radius:var(--rl);
+  border:1.5px solid var(--accent-light);border-radius:var(--rl);
   box-shadow:0 0 0 1px rgb(var(--accent-rgb) / .25), 0 2px 10px rgb(var(--accent-rgb) / .12);
   transition:background .15s, border-color .15s, box-shadow .15s;
   position:relative;
@@ -301,6 +301,31 @@ input[type=range]{accent-color:var(--accent)}
   background:var(--surface);
 }
 .palette-panel.open .palette-panel-body{display:flex}
+
+/* ── 3D-print preset toggle (sidebar) ── */
+.threed-toggle{
+  display:inline-flex;align-items:center;gap:10px;
+  background:transparent;border:0;padding:2px 0;cursor:pointer;
+  color:var(--text);font-family:inherit;font-size:12px;line-height:1;
+}
+.threed-toggle .threed-toggle-track{
+  position:relative;display:inline-block;width:34px;height:18px;
+  border:1px solid var(--border);border-radius:999px;background:var(--bg2);
+  transition:background .15s ease,border-color .15s ease;
+  flex-shrink:0;
+}
+.threed-toggle .threed-toggle-thumb{
+  position:absolute;top:1px;left:1px;width:14px;height:14px;border-radius:50%;
+  background:var(--faint);transition:left .15s ease,background .15s ease;
+}
+.threed-toggle[aria-checked="true"] .threed-toggle-track{
+  background:var(--accent);border-color:var(--accent);
+}
+.threed-toggle[aria-checked="true"] .threed-toggle-thumb{
+  left:17px;background:var(--bg);
+}
+.threed-toggle[aria-checked="true"]{cursor:default}
+.threed-toggle:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
 
 /* ── Theme toggle (topbar) ── */
 .theme-toggle{
@@ -868,12 +893,14 @@ input[type=range]{accent-color:var(--accent)}
         <button class="preset-btn" onclick="setTACPreset(220,'3D-print')" title="3D color print (PolyJet / MJF) - low TAC, clean voxel mix">220</button>
       </div>
       <div class="match-row" style="margin-top:8px">
-        <label class="match-radio">
-          <input type="checkbox" id="tog3D" onchange="set3DPreset(this.checked)">
-          <span data-i18n="threed.label">3D-print preset</span>
-        </label>
+        <button type="button" id="tog3D" class="threed-toggle"
+                role="switch" aria-checked="false" aria-pressed="false"
+                onclick="onClick3DToggle()" title="One-way force button + live indicator.">
+          <span class="threed-toggle-track"><span class="threed-toggle-thumb"></span></span>
+          <span class="threed-toggle-label" data-i18n="threed.label">3D-print preset</span>
+        </button>
       </div>
-      <div class="match-help" data-i18n="threed.help">Two-way toggle. Auto-checks when every constraint is already met (TAC&lt;=240%, dE&lt;=2.0, 3DUJ-safe profile). Click off to force the inverse: switch to a coated offset profile (FOGRA39 / SWOP) with wider TAC and lax dE, moving the grid out of 3D-print territory.</div>
+      <div class="match-help" data-i18n="threed.help">Indicator + one-way force button. Auto-lights when current settings already meet every 3D-print requirement (Color mode = Print / D50, TAC &lt;= 240%, dE &lt;= 2.0, 3DUJ-safe profile). Click while off to force-fit every setting at once. Click while on does nothing - change a slider or profile to leave the 3D-print envelope.</div>
     </div>
 
 
@@ -3264,9 +3291,9 @@ function snapTACToProfile() {
   document.getElementById('vTACMax').textContent = sl.max;
   if (typeof onFilter === 'function') onFilter();
 }
-let _3D_PREV_TAC = null;
-let _3D_PREV_DEMAX = null;
-let _3D_PREV_PROFILE = null;
+// 3D-print preset is a one-way force button (see onClick3DToggle).
+// No snapshot of prior state is kept: the user changes settings to
+// leave the envelope, and the indicator auto-untoggles.
 
 // Match a "3D-print-safe" profile by filename. Uncoated/newspaper/Mimaki
 // proxies have small enough gamut and conservative enough TAC to behave
@@ -3281,13 +3308,27 @@ function _3DSatisfied() {
   const slTAC = document.getElementById('slTAC');
   const slDEmax = document.getElementById('slDEmax');
   if (!slTAC || !slDEmax) return false;
-  return _is3DSafeProfile(ACTIVE_PROFILE) && +slTAC.value <= 240 && +slDEmax.value <= 20;
+  return LAB_MODE === 'd50'
+      && _is3DSafeProfile(ACTIVE_PROFILE)
+      && +slTAC.value <= 240
+      && +slDEmax.value <= 20;
 }
-// Reflect the live state on the checkbox without firing set3DPreset.
+// Reflect the live state on the toggle button without firing set3DPreset.
 function _sync3DCheckbox() {
   const cb = document.getElementById('tog3D');
   if (!cb) return;
-  cb.checked = _3DSatisfied();
+  const on = _3DSatisfied();
+  cb.setAttribute('aria-checked', on ? 'true' : 'false');
+  cb.setAttribute('aria-pressed', on ? 'true' : 'false');
+}
+// Toggle click handler. Only acts when going OFF -> ON. Clicking while
+// already ON is a no-op (the toggle only indicates state; settings must
+// drift out of the envelope on their own to flip it off).
+function onClick3DToggle() {
+  const cb = document.getElementById('tog3D');
+  if (!cb) return;
+  if (cb.getAttribute('aria-checked') === 'true') return;
+  set3DPreset(true);
 }
 // Pick a 3D-safe profile from ICC_INDEX. Order: factory default, first
 // uncoated, first newspaper, first profile.
@@ -3300,20 +3341,14 @@ function _pick3DProfile() {
       || ICC_INDEX.profiles.find(p => /Newspaper/i.test(p.filename))
       || ICC_INDEX.profiles[0];
 }
-// Inverse of _pick3DProfile: pick a coated/offset profile so toggling off
-// from an auto-satisfied state actually moves settings out of the
-// 3D-print envelope. Order: FOGRA39 -> SWOP -> JapanColor -> any
-// not-3D-safe -> first profile.
-function _pickNon3DProfile() {
-  if (!ICC_INDEX || !Array.isArray(ICC_INDEX.profiles) || !ICC_INDEX.profiles.length) return null;
-  return ICC_INDEX.profiles.find(p => /FOGRA39/i.test(p.filename))
-      || ICC_INDEX.profiles.find(p => /SWOP/i.test(p.filename))
-      || ICC_INDEX.profiles.find(p => /JapanColor|Japan_Color/i.test(p.filename))
-      || ICC_INDEX.profiles.find(p => !_is3DSafeProfile(p))
-      || ICC_INDEX.profiles[0];
-}
 
 async function set3DPreset(on) {
+  // One-way force-fit. The `on` argument is accepted for backward
+  // compatibility but only the truthy path does work; clicking the
+  // toggle while it is already on is filtered out earlier by
+  // onClick3DToggle. The auto-watch path (_sync3DCheckbox) handles
+  // the "off" direction by re-evaluating _3DSatisfied().
+  if (!on) return;
   const slTAC = document.getElementById('slTAC');
   const slDEmax = document.getElementById('slDEmax');
   const vTAC = document.getElementById('vTAC');
@@ -3321,48 +3356,26 @@ async function set3DPreset(on) {
   const tacOver = document.getElementById('tacOverride');
   const sel = document.getElementById('iccSel');
   if (!slTAC || !slDEmax) return;
-  if (on) {
-    // Snapshot what the user had so toggling off restores it.
-    if (_3D_PREV_TAC === null)     _3D_PREV_TAC = +slTAC.value;
-    if (_3D_PREV_DEMAX === null)   _3D_PREV_DEMAX = +slDEmax.value;
-    if (_3D_PREV_PROFILE === null && ACTIVE_PROFILE) _3D_PREV_PROFILE = ACTIVE_PROFILE.filename;
-    // Force-fit every constraint the 3D-print preset cares about.
-    const safe = _is3DSafeProfile(ACTIVE_PROFILE) ? ACTIVE_PROFILE : _pick3DProfile();
-    if (safe && (!ACTIVE_PROFILE || safe.filename !== ACTIVE_PROFILE.filename)) {
-      ACTIVE_PROFILE = safe;
-      ACTIVE_LUT_META = safe;
-      if (sel) sel.value = safe.filename;
-      TAC_USER_OVERRIDE = false;
-      snapTACToProfile();
-      await rebuildAll();
-    }
-    if (+slTAC.value > 240)   slTAC.value = 240;
-    if (+slDEmax.value > 20)  slDEmax.value = 20;
-    TAC_USER_OVERRIDE = false;
-    if (tacOver) tacOver.style.display = 'inline-block';
-  } else {
-    // Toggle off: if the user had explicitly turned the preset on
-    // earlier, restore their snapshot. Otherwise (preset was satisfied
-    // organically by slider/profile drift) leave the page alone -
-    // _sync3DCheckbox will re-check the box on the next event if
-    // conditions still match. This keeps the toggle a clean indicator.
-    if (_3D_PREV_TAC !== null)   { slTAC.value = _3D_PREV_TAC; _3D_PREV_TAC = null; }
-    if (_3D_PREV_DEMAX !== null) { slDEmax.value = _3D_PREV_DEMAX; _3D_PREV_DEMAX = null; }
-    if (_3D_PREV_PROFILE && ICC_INDEX) {
-      const prev = ICC_INDEX.profiles.find(p => p.filename === _3D_PREV_PROFILE);
-      if (prev && (!ACTIVE_PROFILE || prev.filename !== ACTIVE_PROFILE.filename)) {
-        ACTIVE_PROFILE = prev;
-        ACTIVE_LUT_META = prev;
-        if (sel) sel.value = prev.filename;
-        TAC_USER_OVERRIDE = false;
-        snapTACToProfile();
-        await rebuildAll();
-      }
-    }
-    _3D_PREV_PROFILE = null;
-    TAC_USER_OVERRIDE = false;
-    if (tacOver) tacOver.style.display = 'none';
+  // Force color mode to Print (D50) - 3DUJ + ICC PCS both live here.
+  if (typeof LAB_MODE !== 'undefined' && LAB_MODE !== 'd50'
+      && typeof setLabMode === 'function') {
+    setLabMode('d50');
   }
+  // Force-fit profile to a 3D-print-safe proxy.
+  const safe = _is3DSafeProfile(ACTIVE_PROFILE) ? ACTIVE_PROFILE : _pick3DProfile();
+  if (safe && (!ACTIVE_PROFILE || safe.filename !== ACTIVE_PROFILE.filename)) {
+    ACTIVE_PROFILE = safe;
+    ACTIVE_LUT_META = safe;
+    if (sel) sel.value = safe.filename;
+    TAC_USER_OVERRIDE = false;
+    snapTACToProfile();
+    await rebuildAll();
+  }
+  // Clamp TAC + dE max into the 3D-print envelope.
+  if (+slTAC.value > 240)   slTAC.value = 240;
+  if (+slDEmax.value > 20)  slDEmax.value = 20;
+  TAC_USER_OVERRIDE = false;
+  if (tacOver) tacOver.style.display = 'inline-block';
   if (vTAC) vTAC.textContent = slTAC.value;
   if (vDEmax) {
     const raw = +slDEmax.value;
@@ -3596,6 +3609,7 @@ function setLabMode(mode) {
   document.querySelectorAll('#anchorGroup .mode-btn').forEach(b => {
     b.classList.toggle('active', b.dataset.anchor === newAnchor);
   });
+  if (typeof _sync3DCheckbox === 'function') _sync3DCheckbox();
 }
 
 // ── CSV export ───────────────────────────────────────────────────────────────
@@ -4604,7 +4618,7 @@ const I18N = {
     'theme.light':   'LIGHT',
     'theme.dark':    'DARK',
     'threed.label':  '3D-print preset',
-    'threed.help':   'Two-way toggle. Auto-checks when every constraint is already met (TAC <= 240%, dE <= 2.0, 3DUJ-safe profile). Click off to force the inverse: switch to a coated offset profile (FOGRA39 / SWOP) with wider TAC and lax dE, moving the grid out of 3D-print territory.',
+    'threed.help':   'Indicator + one-way force button. Auto-lights when current settings already meet every 3D-print requirement (Color mode = Print / D50, TAC <= 240%, dE <= 2.0, 3DUJ-safe profile). Click while off to force-fit every setting at once. Click while on does nothing - change a slider or profile to leave the 3D-print envelope.',
     'pal.sel_off':   'Selection: OFF',
     'pal.sel_on':    'Selection: ON',
     'pal.export':    'Export',
@@ -4695,7 +4709,7 @@ const I18N = {
     'theme.light':   '明',
     'theme.dark':    '暗',
     'threed.label':  '3Dプリント設定',
-    'threed.help':   '双方向トグル。全条件（TAC <= 240%、ΔE <= 2.0、3DUJ 安全プロファイル）を満たしている場合は自動的にオンになる。オフにすると逆方向に強制：FOGRA39 / SWOP 等のコート系プロファイルへ切替、TAC を広げ、ΔE 制限を緩和して 3D プリント領域から離脱する。',
+    'threed.help':   'インジケーター兼一方向の強制ボタン。色モード = 印刷 (D50)、TAC <= 240%、ΔE <= 2.0、3DUJ 安全プロファイル がすべて揃った時に自動点灯する。OFF 時にクリックすると、すべての設定を一括で 3D プリント条件に合わせる。ON 時のクリックは何もしない。3D プリント領域を離れるには、スライダーやプロファイルを手動で変更する。',
     'pal.sel_off':   '選択モード: OFF',
     'pal.sel_on':    '選択モード: ON',
     'pal.export':    '書き出し',
@@ -4786,7 +4800,7 @@ const I18N = {
     'theme.light':   '亮',
     'theme.dark':    '暗',
     'threed.label':  '3D 列印預設',
-    'threed.help':   '雙向切換。當所有條件（TAC <= 240%、dE <= 2.0、3DUJ 安全描述檔）皆已符合時自動勾選。取消勾選會反向強制：切到塗佈印刷描述檔（FOGRA39 / SWOP）、放寬 TAC 與 dE，把版面移出 3D 列印範圍。',
+    'threed.help':   '狀態指示燈兼單向強制按鈕。當色彩模式 = 印刷 (D50)、TAC <= 240%、dE <= 2.0、3DUJ 安全描述檔同時成立時自動亮起。關閉狀態下點擊會一次強制套用所有條件；開啟狀態下點擊不會有任何動作。要離開 3D 列印範圍，請手動調整滑桿或切換描述檔。',
     'pal.sel_off':   '選取模式：關',
     'pal.sel_on':    '選取模式：開',
     'pal.export':    '匯出',
