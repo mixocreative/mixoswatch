@@ -446,15 +446,17 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
 }
 .pm-name:hover{color:var(--accent)}
 .pm-meta{font-family:var(--font-mono);font-size:11px;color:var(--muted)}
-.pm-actions{display:flex;gap:5px;flex-wrap:wrap}
+.pm-actions{display:flex;gap:4px;flex-wrap:wrap;align-items:center}
 .pm-act{
-  font-size:11px;padding:4px 9px;border:1px solid var(--border);
+  font-size:11px;padding:5px 9px;border:1px solid var(--border);
   background:transparent;color:var(--text);border-radius:4px;cursor:pointer;
-  font-family:var(--font-sans);
+  font-family:var(--font-sans);min-width:28px;
 }
 .pm-act:hover{background:var(--bg2)}
-.pm-act.danger:hover{background:#fde2e2;color:#a02020;border-color:#a02020}
-.pm-act.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.pm-act.danger:hover{background:rgba(255,80,80,.18);color:#ff8080;border-color:#ff8080}
+.pm-act.primary{background:var(--accent);color:#fff;border-color:var(--accent);font-weight:500}
+.pm-act.primary:hover{filter:brightness(1.1);background:var(--accent)}
+.pm-actions .pal-dropdown{margin-left:auto}
 .pm-row{display:flex;flex-wrap:wrap;gap:4px}
 .pm-empty{
   padding:18px;text-align:center;color:var(--faint);
@@ -974,53 +976,46 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
         <span class="pp-action" id="ppAction" data-i18n="palette.open">Open palettes</span>
       </div>
       <div class="palette-panel-body" id="palettePanelBody">
-        <!-- Compact toolbar -->
+        <!--
+          Top toolbar = GLOBAL palette controls only. Per-palette edits
+          (rename, duplicate, clear, delete) and per-palette downloads
+          (PNG, ZIP, ASE, GPL, JSON) live ONLY on the palette card in
+          the Palettes view below, so there is exactly one source of
+          truth and no risk of two buttons editing the same palette
+          out of sync.
+        -->
         <div class="pal-toolbar">
           <select class="pal-sel" id="palSel" onchange="onPalChange()" title="Switch between saved palettes."></select>
-          <div class="pal-dropdown">
-            <button class="pal-mini-btn" onclick="_togglePalMenu('newMenu')" title="Create palette">+ &#9662;</button>
-            <div class="pal-menu pal-menu-left" id="newMenu" hidden>
-              <button onclick="newPalette();_closeAllPalMenus()">New empty palette</button>
-              <button onclick="duplicatePalette(activeId);_closeAllPalMenus()">Duplicate active</button>
-            </div>
-          </div>
-          <button class="pal-mini-btn" onclick="renamePalette()" title="Rename active palette">&#9998;</button>
-          <button class="pal-mini-btn danger" onclick="deletePalette()" title="Delete active palette">&#x1F5D1;</button>
+          <button class="pal-mini-btn" onclick="newPalette()" title="Create a new empty palette." data-i18n="pal.new_short">+ New</button>
           <button type="button" class="pal-mini-btn pal-select-btn" id="togSelBtn"
                   onclick="toggleSelectMode()"
-                  title="Toggle selection mode. When ON, clicking a swatch in the grid adds or removes it from the active palette instead of opening details. Click this button again to leave selection mode.">
+                  title="Toggle selection mode. When ON, clicking a swatch in the grid adds or removes it from the active palette instead of opening the detail card.">
             <span class="pal-select-dot"></span> <span id="togSelLabel" data-i18n="pal.sel_off">Selection: OFF</span>
           </button>
           <input type="hidden" id="togSel" value="0">
           <span class="pal-count-inline" title="Swatches in active palette"><span id="palCount">0</span>sw</span>
-          <div class="pal-dropdown">
-            <button class="pal-mini-btn" onclick="_togglePalMenu('exportMenu')" title="Export options"><span data-i18n="pal.export">Export</span> &#9662;</button>
-            <div class="pal-menu" id="exportMenu" hidden>
+          <div class="pal-dropdown" style="margin-left:auto">
+            <button class="pal-mini-btn" onclick="_togglePalMenu('palGlobalMenu')" title="Global palette actions" data-i18n="pal.more">More &#9662;</button>
+            <div class="pal-menu" id="palGlobalMenu" hidden>
               <div class="pal-menu-row">
-                <label>Image size</label>
-                <select id="palPngSize" title="Canvas size for the palette PNG.">
+                <label data-i18n="pal.png_size">PNG size</label>
+                <select id="palPngSize" title="Default canvas size used by every per-palette PNG export.">
                   <option value="1024">1024</option>
                   <option value="2048" selected>2048</option>
                   <option value="4096">4096</option>
                 </select>
               </div>
               <div class="pal-menu-sep"></div>
-              <button onclick="exportActivePalettePNGSized();_closeAllPalMenus()">PNG - labelled</button>
-              <button onclick="exportActivePalettePNGPure();_closeAllPalMenus()">PNG - pure color</button>
-              <button onclick="exportActivePaletteZIP();_closeAllPalMenus()">ZIP - per-swatch + manifest</button>
-              <button onclick="exportActivePaletteASE();_closeAllPalMenus()">ASE - Adobe / Affinity / Substance</button>
-              <button onclick="exportActivePaletteGPL();_closeAllPalMenus()">GPL - GIMP / Krita / Inkscape</button>
+              <button onclick="setViewMode('palettes');_closeAllPalMenus()" data-i18n="pal.open_view">Open Palettes view (manage + download)</button>
               <div class="pal-menu-sep"></div>
-              <button onclick="exportPalettes();_closeAllPalMenus()">Backup all palettes (.json)</button>
-              <button onclick="document.getElementById('palFile').click();_closeAllPalMenus()">Import .json</button>
-              <div class="pal-menu-sep"></div>
-              <button class="danger" onclick="clearActivePalette();_closeAllPalMenus()">Clear active palette</button>
+              <button onclick="exportPalettes();_closeAllPalMenus()" data-i18n="pal.backup_all">Backup all palettes (.json)</button>
+              <button onclick="document.getElementById('palFile').click();_closeAllPalMenus()" data-i18n="pal.import_json">Import .json</button>
               <input type="file" id="palFile" accept=".json,.palettes" style="display:none" onchange="importPalettes(event)">
             </div>
           </div>
         </div>
-        <!-- Preview strip -->
-        <div class="pal-strip" id="palStrip" title="Click any swatch to remove from palette"></div>
+        <!-- Preview strip of the active palette -->
+        <div class="pal-strip" id="palStrip" title="Click any swatch chip to remove from the active palette"></div>
         <!-- Palettes view grid (rendered when viewMode='palettes') -->
         <div class="pm-wrap" id="pmWrap" style="display:none"></div>
       </div>
@@ -2386,39 +2381,43 @@ function renderPaletteMode() {
 
     const head = document.createElement('div');
     head.className = 'pm-head';
+    const dlMenuId = `dlMenu_${p.id}`;
+    const T = (key, fb) => (typeof t === 'function') ? t(key, fb) : fb;
     head.innerHTML = `
       <div class="pm-name" title="Set active / rename">${p.name}</div>
       <div class="pm-meta">${p.swatches.length} swatch${p.swatches.length===1?'':'es'}</div>
       <div class="pm-actions">
-        <button class="pm-act" data-act="active">${p.id===activeId?'★ Active':'Set active'}</button>
-        <button class="pm-act" data-act="rename">✎ Rename</button>
-        <button class="pm-act" data-act="dup">⎘ Duplicate</button>
-        <button class="pm-act primary" data-act="png">↓ PNG</button>
-        <button class="pm-act" data-act="png_pure">↓ PNG pure</button>
-        <button class="pm-act" data-act="zip">↓ ZIP</button>
-        <button class="pm-act" data-act="ase">↓ ASE</button>
-        <button class="pm-act" data-act="gpl">↓ GPL</button>
-        <button class="pm-act" data-act="json">↓ JSON</button>
-        <button class="pm-act" data-act="clear">Clear</button>
-        <button class="pm-act danger" data-act="del">✕ Delete</button>
+        <button class="pm-act" data-act="active">${p.id===activeId?'★ '+T('pm.active','Active'):T('pm.set_active','Set active')}</button>
+        <button class="pm-act" data-act="rename" title="${T('pm.rename','Rename')}">✎</button>
+        <button class="pm-act" data-act="dup" title="${T('pm.dup','Duplicate')}">⎘</button>
+        <button class="pm-act" data-act="clear" title="${T('pm.clear','Clear all swatches')}">⌫</button>
+        <button class="pm-act danger" data-act="del" title="${T('pm.del','Delete palette')}">✕</button>
+        <div class="pal-dropdown" style="display:inline-block">
+          <button class="pm-act primary" data-act="dl-toggle" title="${T('pm.download','Download this palette')}">↓ ${T('pm.download','Download')} ▾</button>
+          <div class="pal-menu" id="${dlMenuId}" hidden>
+            <button data-act="png"      onclick="exportPalettePNGSizedById('${p.id}');_closeAllPalMenus()">PNG - labelled</button>
+            <button data-act="png_pure" onclick="exportPalettePNGPureById('${p.id}');_closeAllPalMenus()">PNG - pure color</button>
+            <button data-act="zip"      onclick="exportPaletteZIPById('${p.id}');_closeAllPalMenus()">ZIP - per-swatch + manifest</button>
+            <div class="pal-menu-sep"></div>
+            <button data-act="ase"      onclick="exportPaletteASEById('${p.id}');_closeAllPalMenus()">ASE - Adobe / Affinity / Substance</button>
+            <button data-act="gpl"      onclick="exportPaletteGPLById('${p.id}');_closeAllPalMenus()">GPL - GIMP / Krita / Inkscape</button>
+            <button data-act="json"     onclick="exportPaletteJSONById('${p.id}');_closeAllPalMenus()">JSON - lossless interchange</button>
+          </div>
+        </div>
       </div>`;
     panel.appendChild(head);
 
     head.querySelector('.pm-name').onclick = () => setActivePalette(p.id);
     head.querySelectorAll('.pm-act').forEach(b => {
       const a = b.dataset.act;
-      b.onclick = () => {
-        if (a==='active') setActivePalette(p.id);
-        else if (a==='rename') renamePaletteById(p.id);
-        else if (a==='dup')    duplicatePalette(p.id);
-        else if (a==='png')      exportPalettePNGSizedById(p.id);
-        else if (a==='png_pure') exportPalettePNGPureById(p.id);
-        else if (a==='zip')      exportPaletteZIPById(p.id);
-        else if (a==='ase')      exportPaletteASEById(p.id);
-        else if (a==='gpl')      exportPaletteGPLById(p.id);
-        else if (a==='json')     exportPaletteJSONById(p.id);
-        else if (a==='clear')  clearPaletteById(p.id);
-        else if (a==='del')    deletePaletteById(p.id);
+      b.onclick = (ev) => {
+        ev.stopPropagation();
+        if      (a==='active')    setActivePalette(p.id);
+        else if (a==='rename')    renamePaletteById(p.id);
+        else if (a==='dup')       duplicatePalette(p.id);
+        else if (a==='clear')     clearPaletteById(p.id);
+        else if (a==='del')       deletePaletteById(p.id);
+        else if (a==='dl-toggle') _togglePalMenu(dlMenuId);
       };
     });
 
@@ -4474,6 +4473,19 @@ const I18N = {
     'export.png_pure':'PNG pure 4096 (color only)',
     'export.zip':    'ZIP (per-swatch + manifest)',
     'export.busy':   'Generating download…',
+    'pal.new_short': '+ New',
+    'pal.more':      'More',
+    'pal.png_size':  'PNG size',
+    'pal.open_view': 'Open Palettes view (manage + download)',
+    'pal.backup_all':'Backup all palettes (.json)',
+    'pal.import_json':'Import .json',
+    'pm.active':     'Active',
+    'pm.set_active': 'Set active',
+    'pm.rename':     'Rename',
+    'pm.dup':        'Duplicate',
+    'pm.clear':      'Clear all swatches',
+    'pm.del':        'Delete palette',
+    'pm.download':   'Download',
   },
   ja: {
     'badge.mode_d50': 'モード: 印刷 (D50)',
@@ -4546,6 +4558,19 @@ const I18N = {
     'export.png_pure':'PNG 純色 4096',
     'export.zip':    'ZIP (1色ずつ + マニフェスト)',
     'export.busy':   'ダウンロード生成中…',
+    'pal.new_short': '+ 新規',
+    'pal.more':      'その他',
+    'pal.png_size':  'PNGサイズ',
+    'pal.open_view': 'パレット一覧（編集 + 書き出し）',
+    'pal.backup_all':'全パレットを書き出し (.json)',
+    'pal.import_json':'.json を読み込み',
+    'pm.active':     '使用中',
+    'pm.set_active': '使用中にする',
+    'pm.rename':     '名称変更',
+    'pm.dup':        '複製',
+    'pm.clear':      'スウォッチをクリア',
+    'pm.del':        'パレット削除',
+    'pm.download':   'ダウンロード',
   },
   zh: {
     'badge.mode_d50': '模式：印刷 (D50)',
@@ -4618,6 +4643,19 @@ const I18N = {
     'export.png_pure':'PNG 純色 4096',
     'export.zip':    'ZIP（逐色 + 清單）',
     'export.busy':   '正在產生下載檔…',
+    'pal.new_short': '+ 新建',
+    'pal.more':      '更多',
+    'pal.png_size':  'PNG 尺寸',
+    'pal.open_view': '開啟調色盤檢視（管理 + 下載）',
+    'pal.backup_all':'備份全部調色盤 (.json)',
+    'pal.import_json':'匯入 .json',
+    'pm.active':     '使用中',
+    'pm.set_active': '設為使用中',
+    'pm.rename':     '重新命名',
+    'pm.dup':        '複製',
+    'pm.clear':      '清空色塊',
+    'pm.del':        '刪除調色盤',
+    'pm.download':   '下載',
   }
 };
 let UI_LANG = 'en';
