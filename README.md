@@ -11,7 +11,6 @@ Cross-media color swatches for **2D commercial print**, **screen**, and **3D col
 
 ### [→ Open the live site](https://mixocreative.github.io/mixoswatch/)
 
-[Landing](https://mixocreative.github.io/mixoswatch/) · [Mixo Swatch (explorer)](https://mixocreative.github.io/mixoswatch/app/mixo-swatch.html)
 
 </div>
 
