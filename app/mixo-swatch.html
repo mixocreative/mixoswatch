@@ -4937,12 +4937,11 @@ function toggleTheme() {
   _applyTheme(next);
 }
 (function _initTheme() {
+  // First-run default is dark. User OS preference is ignored; explicit
+  // topbar toggle persists under ui_theme and wins on next load.
   let saved = null;
   try { saved = localStorage.getItem('ui_theme'); } catch {}
-  if (!saved) {
-    saved = (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) ? 'light' : 'dark';
-  }
-  _applyTheme(saved);
+  _applyTheme(saved === 'light' ? 'light' : 'dark');
 })();
 
 /* ── Hue x Light + Palettes views auto-open the palette panel ─────────── */
