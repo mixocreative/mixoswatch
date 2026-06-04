@@ -35,8 +35,14 @@ input[type=range]{accent-color:var(--accent)}
 .topbar{
   display:flex;align-items:center;gap:8px;padding:0 16px;
   border-bottom:1px solid var(--border);background:var(--surface);z-index:10;
-  flex-wrap:nowrap;overflow:hidden;
+  /* flex-wrap stays nowrap so items don't collapse onto a 2nd row.
+     overflow MUST be visible so the topbar dropdowns (Export menu and
+     language picker) can escape the bar; narrow viewports hide the
+     non-essential topbar items via the responsive media queries below
+     instead of relying on overflow:hidden. */
+  flex-wrap:nowrap;overflow:visible;min-width:0;
 }
+.topbar > *{min-width:0}
 .topbar-logo{height:28px;width:28px;flex-shrink:0;display:block}
 .topbar-title{font-size:14px;font-weight:500;letter-spacing:-.02em;white-space:nowrap}
 .topbar-sep{flex:1}
@@ -712,7 +718,7 @@ input[type=range]{accent-color:var(--accent)}
   <button class="btn" onclick="resetUIToDefaults()" data-i18n="topbar.reset" title="Reset all UI controls (cell size, sort, filters, naming) to the values in data/ui_defaults.json. Saved palettes are kept.">&#x21BA; Reset UI to defaults</button>
   <div class="mode-group" id="modeGroup" role="tablist" aria-label="View mode"><button class="btn mode-btn active" id="mode-grid"     onclick="setViewMode('grid')" data-i18n="topbar.grid" title="Regular swatch grid - every filtered swatch as a cell.">Grid</button><button class="btn mode-btn"        id="mode-palettes" onclick="setViewMode('palettes')" data-i18n="topbar.palettes" title="Palettes mode - manage all saved palettes with per-palette actions.">Palettes</button></div>
   <div class="pal-dropdown" id="filteredExportDD">
-    <button class="btn" onclick="_togglePalMenu('filteredExportMenu')" data-i18n="topbar.export" title="Export the currently filtered swatches.">&#x2193; Export &#9662;</button>
+    <button class="btn" onclick="_togglePalMenu('filteredExportMenu')" title="Export the currently filtered swatches."><span data-i18n="topbar.export">&#x2193; Export</span> &#9662;</button>
     <div class="pal-menu" id="filteredExportMenu" hidden>
       <button onclick="exportCSV();_closeAllPalMenus()" data-i18n="export.csv" title="UTF-8 CSV of every filtered swatch (Excel-ready, keeps kanji + hanzi).">CSV (UTF-8 BOM)</button>
       <button onclick="exportPNG();_closeAllPalMenus()" data-i18n="export.png" title="Square PNG board with title band + per-cell CMYK / hex / name / AA labels.">PNG (with title band + labels)</button>
@@ -4219,14 +4225,20 @@ async function _solidPngBytes(hex, size = 128) {
 // -- Per-swatch ZIP export with manifests mirroring swatches.py --------
 // Reusable worker: builds a ZIP from any swatch list.
 // `label` is used in the manifest.txt header (palette name or "filtered").
-async function _buildSwatchZip(swatches, label) {
+async function _buildSwatchZip(swatches, label, onProgress) {
   // Apply unique-name suffix (-02 etc) like swatches.py
   assignUniqueNames(swatches);
   const enc = new TextEncoder();
 
-  // 1. Individual swatch PNGs - 128x128 pure-color
+  // 1. Individual swatch PNGs - 128x128 pure-color. The PNG step is the
+  // slow part (~5000 swatches => ~3 seconds on a midrange laptop). Yield
+  // every CHUNK iterations so the progress bar can paint and the UI
+  // thread breathes.
+  const N = swatches.length;
+  const CHUNK = 32;
   const entries = [];
-  for (const sw of swatches) {
+  for (let i = 0; i < N; i++) {
+    const sw = swatches[i];
     const hex = sw.hex.replace('#','').toLowerCase();
     const C = String(sw.C).padStart(3,'0');
     const M = String(sw.M).padStart(3,'0');
@@ -4235,6 +4247,13 @@ async function _buildSwatchZip(swatches, label) {
     const fn = `${hex}_C${C}M${M}Y${Y}K${K}.png`;
     const data = await _solidPngBytes(sw.hex, 128);
     entries.push({ name: fn, data });
+    if (onProgress && (i % CHUNK === CHUNK - 1 || i === N - 1)) {
+      // Map PNG-build progress into the 30-90 range so withExportBusy's
+      // pre-set 30% start and post-set 100% finish remain meaningful.
+      const pct = 30 + ((i + 1) / N) * 60;
+      onProgress(pct, `${i + 1} / ${N}`);
+      await new Promise(r => requestAnimationFrame(r));
+    }
   }
 
   // 2. manifest.txt - header + columns (mirror swatches.py:1078-1093)
@@ -4331,7 +4350,7 @@ async function _buildSwatchZip(swatches, label) {
 
 // Thin wrapper kept for backwards compatibility with per-palette ZIP calls.
 async function _buildPaletteZip(palette, swatches) {
-  return _buildSwatchZip(swatches, palette.name);
+  return _buildSwatchZip(swatches, palette.name, _setProgress);
 }
 
 // Top-level: export all currently-filtered swatches as a ZIP.
@@ -4342,7 +4361,7 @@ async function exportFilteredSwatchZIP() {
     const mb = (swatches.length * 0.6 / 1024).toFixed(0);
     if (!confirm(`You are about to download ${swatches.length} swatches as individual PNGs (~${mb} MB ZIP). Continue?`)) return;
   }
-  const zipBytes = await _buildSwatchZip(swatches, `filtered-${swatches.length}`);
+  const zipBytes = await _buildSwatchZip(swatches, `filtered-${swatches.length}`, _setProgress);
   downloadBlob(new Blob([zipBytes], { type: 'application/zip' }),
     `mixo-swatch-filtered-${swatches.length}.zip`);
 }
