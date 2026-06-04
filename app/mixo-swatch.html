@@ -13,7 +13,7 @@
   --bg:#1A1918; --bg2:#222120; --surface:#2A2928;
   --border:rgba(255,255,255,0.12); --border2:rgba(255,255,255,0.06);
   --text:#E8E6E0; --muted:#9B9A94; --faint:#6B6A64;
-  --accent:#5A9FE0; --accent-rgb:90 159 224;
+  --accent:#B2A88D; --accent-rgb:90 159 224;
   --font-mono:'IBM Plex Mono','Fira Mono',monospace;
   --font-sans:'Noto Sans JP',system-ui,sans-serif;
   --font-jpn-serif:'Hina Mincho','Yu Mincho',serif;
@@ -22,6 +22,13 @@
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:100vh;overflow:hidden}
+
+/* Tint every native form control with the brand accent so checkboxes /
+   radios / range sliders match the rest of the UI (browsers otherwise
+   default to OS blue or, on some Linux Chromium builds, a purple). */
+input[type=checkbox],
+input[type=radio],
+input[type=range]{accent-color:var(--accent)}
 
 /* ── Layout ── */
 .app{display:grid;grid-template-rows:52px 1fr;height:100vh}
@@ -47,7 +54,7 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
   font-family:var(--font-sans);
 }
 .btn:hover{background:var(--bg2)}
-.btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.btn.active{background:var(--accent);color:var(--bg);border-color:var(--accent)}
 .btn:disabled,
 .pal-mini-btn:disabled,
 .pal-menu button:disabled,
@@ -60,7 +67,7 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
   color:var(--muted);font-family:var(--font-sans);cursor:pointer;border-right:1px solid var(--border);
 }
 .mode-group .mode-btn:last-child{border-right:none}
-.mode-group .mode-btn.active{background:var(--accent);color:#fff}
+.mode-group .mode-btn.active{background:var(--accent);color:var(--bg)}
 .mode-group .mode-btn:hover:not(.active){background:var(--bg2)}
 
 
@@ -75,7 +82,7 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
   scrollbar-gutter:stable;
 }
 .sidebar > *{min-width:0}
-.sidebar input[type=range]{min-width:0}
+.sidebar input[type=range]{min-width:0; accent-color: var(--accent);}
 /* 4-step workflow grouping in the sidebar */
 .step-group-header{
   display:flex;align-items:baseline;gap:10px;
@@ -111,7 +118,7 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
   background:transparent;color:var(--muted);border:none;font-family:var(--font-sans);
   transition:background .12s,color .12s;
 }
-.pill.active{background:var(--accent);color:#fff}
+.pill.active{background:var(--accent);color:var(--bg)}
 
 /* Grid size selector */
 .grid-size-row{display:flex;align-items:center;gap:8px}
@@ -127,7 +134,7 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
   transition:background .1s,color .1s,border-color .1s;
 }
 .preset-btn:hover{background:var(--bg2);color:var(--text)}
-.preset-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.preset-btn.active{background:var(--accent);color:var(--bg);border-color:var(--accent)}
 .tac-presets{display:flex;gap:4px;margin-top:5px;flex-wrap:wrap}
 .tac-presets .preset-btn{font-size:10px;padding:3px 8px;border:1px solid var(--border);background:transparent;color:var(--muted);border-radius:var(--r);cursor:pointer}
 .tac-presets .preset-btn:hover{background:var(--bg2);color:var(--text)}
@@ -211,7 +218,7 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
   transition:background .12s,color .12s;width:100%;
 }
 .ktier-pill:last-child{border-bottom:none}
-.ktier-pill.active{background:var(--accent);color:#fff}
+.ktier-pill.active{background:var(--accent);color:var(--bg)}
 .ktier-pill .kt-name{font-weight:500}
 .ktier-pill .kt-range{font-family:var(--font-mono);font-size:10px;opacity:.8}
 
@@ -254,7 +261,7 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
 .palette-panel-header .pp-action{
   font-size:11px;font-family:var(--font-mono);font-weight:600;
   padding:6px 16px;border-radius:var(--r);
-  background:var(--accent);color:#fff;
+  background:var(--accent);color:var(--bg);
   letter-spacing:.08em;text-transform:uppercase;
   border:1px solid transparent;
   transition:filter .12s, background .15s;
@@ -344,7 +351,7 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
 }
 .pal-mini-btn:hover{background:var(--bg2)}
 .pal-mini-btn.danger:hover{background:#fde2e2;color:#a02020;border-color:#a02020}
-.pal-mini-btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.pal-mini-btn.primary{background:var(--accent);color:var(--bg);border-color:var(--accent)}
 .pal-mini-btn.primary:hover{filter:brightness(1.08)}
 .pal-tog-row{
   display:flex;align-items:center;gap:8px;padding:6px 8px;
@@ -462,7 +469,7 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
 }
 .pm-act:hover{background:var(--bg2)}
 .pm-act.danger:hover{background:rgba(255,80,80,.18);color:#ff8080;border-color:#ff8080}
-.pm-act.primary{background:var(--accent);color:#fff;border-color:var(--accent);font-weight:500}
+.pm-act.primary{background:var(--accent);color:var(--bg);border-color:var(--accent);font-weight:500}
 .pm-act.primary:hover{filter:brightness(1.1);background:var(--accent)}
 .pm-actions .pal-dropdown{margin-left:auto}
 .pm-row{display:flex;flex-wrap:wrap;gap:4px}
@@ -622,7 +629,7 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
 .ax-switch{display:inline-flex;border:1px solid var(--border);border-radius:999px;overflow:hidden;background:var(--bg2);padding:2px}
 .ax-opt{font-family:var(--font-mono);font-size:10.5px;padding:3px 10px;border:none;background:transparent;color:var(--muted);cursor:pointer;border-radius:999px;line-height:1.3}
 .ax-opt:hover{color:var(--text)}
-.ax-opt.active{background:var(--accent);color:#fff;font-weight:500}
+.ax-opt.active{background:var(--accent);color:var(--bg);font-weight:500}
 
 /* Loading progress overlay */
 #loadProgress{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:center;justify-content:center;z-index:9999;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
