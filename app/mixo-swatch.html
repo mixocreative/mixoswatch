@@ -210,29 +210,55 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
 .grid-scroll{overflow-y:auto;overflow-x:hidden;flex:1;min-height:0}
 
 /* ── Palette panel (collapsible, sits between topbar and grid-scroll) ── */
-.palette-panel{border-bottom:1px solid var(--border);background:var(--surface);display:flex;flex-direction:column}
+.palette-panel{
+  border-bottom:1px solid var(--border);background:var(--surface);
+  display:flex;flex-direction:column;
+  padding:8px 12px 0;
+}
 .palette-panel-header{
   display:flex;align-items:center;justify-content:space-between;gap:12px;
   padding:10px 16px;cursor:pointer;user-select:none;
-  background:var(--bg2);border-bottom:1px solid transparent;
-  transition:background .15s;
+  background:var(--bg2);
+  border:1.5px solid var(--accent);border-radius:var(--rl);
+  box-shadow:0 0 0 1px rgb(var(--accent-rgb) / .25), 0 2px 10px rgb(var(--accent-rgb) / .12);
+  transition:background .15s, border-color .15s, box-shadow .15s;
+  position:relative;
 }
-.palette-panel-header:hover{background:rgb(var(--accent-rgb) / .12)}
+.palette-panel-header:hover{
+  background:rgb(var(--accent-rgb) / .14);
+  box-shadow:0 0 0 1px rgb(var(--accent-rgb) / .45), 0 4px 16px rgb(var(--accent-rgb) / .22);
+}
+.palette-panel-header:focus-visible{
+  outline:2px solid var(--accent);outline-offset:2px;
+}
 .palette-panel-header .pp-title{
-  font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
-  color:var(--text);display:inline-flex;align-items:center;gap:8px;
+  font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--text);display:inline-flex;align-items:center;gap:10px;
 }
 .palette-panel-header .pp-action{
   font-size:11px;font-family:var(--font-mono);font-weight:600;
-  padding:5px 14px;border-radius:var(--r);
+  padding:6px 16px;border-radius:var(--r);
   background:var(--accent);color:#fff;
-  letter-spacing:.06em;text-transform:uppercase;
-  transition:filter .12s;
+  letter-spacing:.08em;text-transform:uppercase;
+  border:1px solid transparent;
+  transition:filter .12s, background .15s;
 }
 .palette-panel-header:hover .pp-action{filter:brightness(1.12)}
-.palette-panel.open .palette-panel-header{border-bottom-color:var(--border)}
-.palette-panel.open .palette-panel-header .pp-action{background:var(--bg);color:var(--muted);border:1px solid var(--border)}
-.palette-panel-body{display:none;padding:6px 10px 8px;gap:0;flex-direction:column;max-height:60vh;overflow:auto}
+.palette-panel.open .palette-panel-header{
+  background:rgb(var(--accent-rgb) / .08);
+  border-radius:var(--rl) var(--rl) 0 0;
+  border-bottom-color:var(--accent);
+}
+.palette-panel.open .palette-panel-header .pp-action{
+  background:transparent;color:var(--accent);
+  border:1px solid var(--accent);
+}
+.palette-panel-body{
+  display:none;padding:10px 14px;gap:0;flex-direction:column;
+  max-height:60vh;overflow:auto;
+  border:1.5px solid var(--accent);border-top:0;border-radius:0 0 var(--rl) var(--rl);
+  background:var(--surface);
+}
 .palette-panel.open .palette-panel-body{display:flex}
 
 /* ── Language picker (topbar) ── */
@@ -632,10 +658,15 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
   <span class="count-tag" id="countLabel" title="How many swatches the filters currently allow.">- swatches</span>
   <button class="btn" onclick="resetUIToDefaults()" data-i18n="topbar.reset" title="Reset all UI controls (cell size, sort, filters, naming) to the values in data/ui_defaults.json. Saved palettes are kept.">&#x21BA; Reset UI to defaults</button>
   <div class="mode-group" id="modeGroup" role="tablist" aria-label="View mode"><button class="btn mode-btn active" id="mode-grid"     onclick="setViewMode('grid')" data-i18n="topbar.grid" title="Regular swatch grid - every filtered swatch as a cell.">Grid</button><button class="btn mode-btn"        id="mode-palettes" onclick="setViewMode('palettes')" data-i18n="topbar.palettes" title="Palettes mode - manage all saved palettes with per-palette actions.">Palettes</button></div>
-  <button class="btn" onclick="exportCSV()" data-i18n="topbar.csv" title="Save the currently filtered swatches as a UTF-8 CSV (Excel-ready, keeps kanji).">&#x2193; CSV</button>
-  <button class="btn" onclick="exportPNG()" data-i18n="topbar.png" title="Save the currently filtered swatches as a square PNG board with title band.">&#x2193; PNG</button>
-  <button class="btn" onclick="exportFilteredPurePNG()" data-i18n="topbar.png_pure" title="Save the currently filtered swatches as a 4096x4096 pure-color PNG. No title band, no labels, no borders, no gap between cells.">&#x2193; PNG pure</button>
-  <button class="btn" onclick="exportFilteredSwatchZIP()" data-i18n="topbar.zip" title="Download a .zip with one 128x128 pure-color PNG per currently-filtered swatch plus manifest.csv/json.">&#x2193; ZIP (per-swatch)</button>
+  <div class="pal-dropdown" id="filteredExportDD">
+    <button class="btn" onclick="_togglePalMenu('filteredExportMenu')" data-i18n="topbar.export" title="Export the currently filtered swatches.">&#x2193; Export &#9662;</button>
+    <div class="pal-menu" id="filteredExportMenu" hidden>
+      <button onclick="exportCSV();_closeAllPalMenus()" data-i18n="export.csv" title="UTF-8 CSV of every filtered swatch (Excel-ready, keeps kanji + hanzi).">CSV (UTF-8 BOM)</button>
+      <button onclick="exportPNG();_closeAllPalMenus()" data-i18n="export.png" title="Square PNG board with title band + per-cell CMYK / hex / name / AA labels.">PNG (with title band + labels)</button>
+      <button onclick="exportFilteredPurePNG();_closeAllPalMenus()" data-i18n="export.png_pure" title="4096x4096 pure-color PNG. No title band, no labels, no borders, no gap.">PNG pure 4096 (color only)</button>
+      <button onclick="exportFilteredSwatchZIP();_closeAllPalMenus()" data-i18n="export.zip" title="ZIP with one 128x128 pure-color PNG per filtered swatch plus manifest.csv/json.">ZIP (per-swatch + manifest)</button>
+    </div>
+  </div>
   <div class="lang-picker">
     <button type="button" class="lang-picker-btn" id="langPickerBtn" onclick="toggleLangMenu()" title="Change interface language">
       <span id="langCurrent">EN</span><span aria-hidden="true">&#9662;</span>
@@ -1755,18 +1786,20 @@ function buildNamingUI() {
   if (!root) return;
   root.innerHTML = '';
   if (!CORPORA.libraries.length) { root.textContent = 'No corpora loaded.'; return; }
+  const L = (typeof UI_LANG === 'string' && UI_LANG) ? UI_LANG : 'en';
   for (const lib of CORPORA.libraries) {
     const pref = _libPref(lib.id);
     const div = document.createElement('div');
     div.className = 'corp-card';
     const h = document.createElement('div');
     h.className = 'corp-label';
-    h.textContent = `${lib.label.en} (${lib.entries.length})`;
+    const libLabel = (lib.label && (lib.label[L] || lib.label.en)) || lib.id;
+    h.textContent = `${libLabel} (${lib.entries.length})`;
     div.appendChild(h);
     const row = document.createElement('div');
     row.className = 'corp-display-row';
     for (const f of lib.fields) {
-      const labelText = (f.label && f.label.en) ? f.label.en : (f.label || f.id);
+      const labelText = (f.label && (f.label[L] || f.label.en)) || f.label || f.id;
       const lab = document.createElement('label');
       lab.className = 'corp-radio';
       const input = document.createElement('input');
@@ -1851,10 +1884,14 @@ function buildFilterUI() {
   };
   all.appendChild(allBox);
   const allTxt = document.createElement('span');
-  allTxt.textContent = ' All libraries';
+  // i18n: master toggle text uses the active UI language.
+  allTxt.textContent = ' ' + ((typeof t === 'function') ? t('flt.all_libs', 'All libraries') : 'All libraries');
   all.appendChild(allTxt);
   wrap.appendChild(all);
-  // Per-lib checkboxes.
+  // Per-lib checkboxes. Corpus label is itself tri-lingual in
+  // data/corpora/name_corpora.json (label.{en,ja,zh}); render the one
+  // matching the active UI language and fall back to en.
+  const L = (typeof UI_LANG === 'string' && UI_LANG) ? UI_LANG : 'en';
   for (const lib of CORPORA.libraries) {
     const row = document.createElement('label');
     row.className = 'flt-row';
@@ -1870,7 +1907,7 @@ function buildFilterUI() {
     };
     row.appendChild(cb);
     const txt = document.createElement('span');
-    txt.textContent = ' ' + lib.label.en;
+    txt.textContent = ' ' + ((lib.label && (lib.label[L] || lib.label.en)) || lib.id);
     row.appendChild(txt);
     wrap.appendChild(row);
   }
@@ -4404,6 +4441,12 @@ const I18N = {
     'pal.sel_on':    'Selection: ON',
     'pal.export':    'Export',
     'search.placeholder': 'mizuiro, coral, 桜, #A9CBE8…',
+    'flt.all_libs':  'All libraries',
+    'topbar.export': '↓ Export',
+    'export.csv':    'CSV (UTF-8 BOM)',
+    'export.png':    'PNG (with title band + labels)',
+    'export.png_pure':'PNG pure 4096 (color only)',
+    'export.zip':    'ZIP (per-swatch + manifest)',
   },
   ja: {
     'badge.mode_d50': 'モード: 印刷 (D50)',
@@ -4469,6 +4512,12 @@ const I18N = {
     'pal.sel_on':    '選択モード: ON',
     'pal.export':    '書き出し',
     'search.placeholder': '水色、coral、桜、#A9CBE8…',
+    'flt.all_libs':  '全ライブラリ',
+    'topbar.export': '↓ 書き出し',
+    'export.csv':    'CSV (UTF-8 BOM)',
+    'export.png':    'PNG (タイトル帯 + ラベル付き)',
+    'export.png_pure':'PNG 純色 4096',
+    'export.zip':    'ZIP (1色ずつ + マニフェスト)',
   },
   zh: {
     'badge.mode_d50': '模式：印刷 (D50)',
@@ -4534,6 +4583,12 @@ const I18N = {
     'pal.sel_on':    '選取模式：開',
     'pal.export':    '匯出',
     'search.placeholder': '水色、coral、櫻、#A9CBE8…',
+    'flt.all_libs':  '全部資料庫',
+    'topbar.export': '↓ 匯出',
+    'export.csv':    'CSV（UTF-8 BOM）',
+    'export.png':    'PNG（含標題列與標籤）',
+    'export.png_pure':'PNG 純色 4096',
+    'export.zip':    'ZIP（逐色 + 清單）',
   }
 };
 let UI_LANG = 'en';
