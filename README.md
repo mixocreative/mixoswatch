@@ -1,11 +1,26 @@
+<div align="center">
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="app/img/logo.svg">
+  <img src="app/img/logo-black.svg" alt="mixoswatch" width="112">
+</picture>
+
 # mixoswatch
 
-One browser tool for designing print-safe colors against real ICC profiles, plus a small Python script that prepares the lookup tables it consumes. Built for designers who work across **2D commercial print** and **3D color printing** (Mimaki 3DUJ, Stratasys J55, Cura material libraries, etc.).
+Cross-media color swatches for **2D commercial print**, **screen**, and **3D color printing** (Mimaki 3DUJ, Stratasys J55, Cura material libraries). Every swatch routed through a real CMYK ICC profile, not naive subtractive math.
+
+### [→ Open the live site](https://mixocreative.github.io/mixoswatch/)
+
+[Landing](https://mixocreative.github.io/mixoswatch/) · [Mixo Swatch (explorer)](https://mixocreative.github.io/mixoswatch/app/mixo-swatch.html)
+
+</div>
+
+---
+
+## What's in the box
 
 - **`app/mixo-swatch.html`** (Mixo Swatch) · live grid of every CMYK value at a chosen step, rendered through a CMYK ICC profile of your choice. Filter by total area coverage, by named-color closeness (Japanese traditional + Chinese traditional + W3C CSS), by **dE max** for round-trip safety, build palettes, export ASE / GPL / PNG / JSON / ZIP. Hue × Light sort renders an 18 × 10 bucket map inline in the full grid area. **3D-print preset** is a one-way force button: it auto-lights when current settings already satisfy every 3D-print requirement (Color mode = Print / D50, TAC ≤ 240%, dE ≤ 2.0, Mimaki 3DUJ-safe profile); clicking while off force-fits all four at once; clicking while on is a no-op (move a slider or change profile to leave the envelope and the indicator auto-untoggles). Interface localised to **English / 日本語 / 繁體中文** with browser-language auto-detect + an in-app language picker, and a topbar **light / dark theme toggle** (defaults to dark on first run, OS `prefers-color-scheme` is intentionally ignored).
 - **`index.html`** · zen landing with live interactive demos for every sidebar control, tri-lingual (EN / 日本語 / 繁中).
-
-**Live site:** <https://mixocreative.github.io/mixoswatch/> · Landing is `index.html`; the explorer link in the landing topbar opens `app/mixo-swatch.html`.
 
 ## Why
 
