@@ -263,6 +263,37 @@ Detailed budget + the lag-prevention rationale (rAF-coalesced render scheduler, 
 
 `ARCHITECTURE.md` is the full pipeline contract: color theory (CMYK / Lab / LCh, dE variants, GCR / UCR, K-tier philosophy, gamut, Bradford D50/D65 CAT), the LUT binary format (magic header, quadrilinear interpolation pseudocode), the round-trip safety gate, the corpora schema v3 (tri-lingual fields, dynamic library IDs, per-(lib,entry) tiebreak), the HTML pipeline (lifecycle, virtualization, two greyscale strips, view modes, palette panel + Hue x Light placement, palette format), per-profile TAC defaults, the i18n contract (en / ja / zh-Hant, `data-i18n` keys, auto-detect rule), and a step-by-step rebuild guide. Read it if you want to reproduce, extend, or audit the toolchain.
 
+## Verifying color math (when editing kernels)
+
+The browser tool ships JS ports of `srgb_to_linear`, `rgb2lab_d50`, `rgb2lab_d65`, and `deltaE2000` (see `ARCHITECTURE.md §3`). Identical math runs Python-side in `scripts/test_color_math_truth.py` against Pillow + LittleCMS, so any drift between the two sides is a regression.
+
+Workflow when you touch any kernel in `app/mixo-swatch.html`:
+
+```bash
+# 1. Regenerate ground truth from the LittleCMS reference (writes _verify/color_math_truth.json).
+python scripts/test_color_math_truth.py
+```
+
+```js
+// 2. In the app's DevTools console, run the same 10 fixtures through the JS kernels.
+const TEST = ["#FF0000","#00FF00","#0000FF","#FFFFFF","#7F7F7F","#000000",
+              "#FEDFE1","#1C3563","#CD071E","#6495ED"];
+TEST.map(hx => {
+  const [r,g,b] = [1,3,5].map(i => parseInt(hx.slice(i, i+2), 16));
+  return { hex: hx, d50: rgb2lab_d50(r,g,b), d65: rgb2lab_d65(r,g,b) };
+});
+```
+
+Compare row-for-row against `_verify/color_math_truth.json`. Tolerances:
+
+| Comparison | Pass threshold |
+|---|---|
+| `lab_d50` (JS vs LittleCMS via Pillow) | each of L*/a*/b* within **±0.5** |
+| `lab_d65` (JS vs analytic) | each of L*/a*/b* within **±1e-6** (bit-for-bit) |
+| `deltaE2000(a, a)` self-consistency | `< 0.01` |
+
+Any failure means a kernel changed semantics. The `_verify/` folder is regenerated on demand and is gitignored after first run; nothing in the app pipeline depends on it.
+
 ## License
 
 Code: GPL-3.0 (see `LICENSE.txt`). ICC profiles, DIC color guides, and Pantone are not redistributed.

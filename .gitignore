@@ -17,6 +17,10 @@ icc/*.ICM
 # data/libraries/*.ase
 # data/libraries/*.gpl
 
+# Color-math regression fixture (rebuilt on demand by
+# scripts/test_color_math_truth.py; see README "Verifying color math").
+_verify/
+
 # ─── Python ────────────────────────────────────────────────────────────────
 
 __pycache__/
