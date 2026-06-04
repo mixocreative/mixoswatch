@@ -961,7 +961,7 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
         <button class="btn sort-btn" id="sort-C"      onclick="setSort('C')"        data-i18n="sort.cyan"     title="Order by Cyan ink % only.">Cyan</button>
         <button class="btn sort-btn" id="sort-chroma" onclick="setSort('chroma')"   data-i18n="sort.chroma"   title="Order by saturation. Dull/neutral colors first, vivid last.">Chroma</button>
         <button class="btn sort-btn" id="sort-safety" onclick="setSort('safety')"   data-i18n="sort.safety"   title="Order by round-trip reliability. Most-reliable first; riskier (near gamut boundary) last.">Safety</button>
-        <button class="btn sort-btn" id="sort-huelight" onclick="setSort('huelight')" data-i18n="sort.huelight" title="2D map (renders inside the Palettes panel): one representative cell per (hue, lightness) bucket.">Hue x Light</button>
+        <button class="btn sort-btn" id="sort-huelight" onclick="setSort('huelight')" data-i18n="sort.huelight" title="2D map (renders in the swatch grid area): one representative cell per (hue, lightness) bucket. Auto-rotates orientation on narrow viewports.">Hue x Light</button>
       </div>
     </div>
 
@@ -1205,7 +1205,12 @@ function applyUIState(s) {
   const $ = id => document.getElementById(id);
   if (typeof s.step           === 'number') curStep   = s.step;
   if (typeof s.cell_size      === 'number') curCell   = s.cell_size;
-  if (typeof s.view_mode      === 'string') viewMode  = s.view_mode;
+  if (typeof s.view_mode      === 'string') {
+    // Legacy: pre-spec view_mode='huelight' is now a sortMode. Promote so
+    // stored state from old sessions still does the right thing.
+    if (s.view_mode === 'huelight') { viewMode = 'grid'; sortMode = 'huelight'; }
+    else                            { viewMode = s.view_mode; }
+  }
   if (typeof s.sort_mode      === 'string') sortMode  = s.sort_mode;
   if (typeof s.k_tier         === 'number') curKTier  = s.k_tier;
   if (typeof s.named_filter   === 'string') curNamed  = s.named_filter;
@@ -1258,7 +1263,7 @@ function applyUIState(s) {
   document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
   $('sort-' + sortMode)?.classList.add('active');
   // View mode buttons
-  ['grid','huelight','palettes'].forEach(v =>
+  ['grid','palettes'].forEach(v =>
     $('mode-'+v)?.classList.toggle('active', viewMode === v));
   paletteMode = (viewMode === 'palettes');
   // Tolerance label + slider
@@ -2126,7 +2131,7 @@ let curKTier = 3;   // default: show all K tiers - user narrows via the Tier 1/2
 let curNamed = 'any'; // all|any - factory default = any (matches a named swatch in >=1 enabled corpus)
 let curTol   = 5.5;   // dE tolerance for name display/filter (factory default 5.5; 0 = closest only)
 let paletteMode = false;
-let viewMode = 'grid';   // 'grid' | 'huelight' | 'palettes' 
+let viewMode = 'grid';   // 'grid' | 'palettes'  (huelight is a sortMode, not a viewMode)
 
 // ── Palette state ────────────────────────────────────────────────────────────
 const PAL_KEY    = 'cmykPalettes_v1';
@@ -2289,21 +2294,15 @@ function toggleSelectMode() {
 }
 
 function setViewMode(m) {
-  if (!['grid','huelight','palettes'].includes(m)) return;
+  if (!['grid','palettes'].includes(m)) return;
   viewMode = m;
   paletteMode = (m === 'palettes');
   ['grid','palettes'].forEach(k => {
     document.getElementById('mode-' + k)?.classList.toggle('active', k === m);
   });
-  if (m !== 'huelight') {
-    document.getElementById('sort-huelight')?.classList.remove('active');
-  } else {
-    document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
-    document.getElementById('sort-huelight')?.classList.add('active');
-  }
-  // Non-grid views (palettes + huelight) render INSIDE the palette panel body.
-  // Auto-open the panel so the rendered content is visible.
-  if (m !== 'grid' && typeof _ensurePalettePanelOpen === 'function') _ensurePalettePanelOpen();
+  // Palettes view renders INSIDE the palette panel body. Auto-open the
+  // panel so the rendered content is visible.
+  if (m === 'palettes' && typeof _ensurePalettePanelOpen === 'function') _ensurePalettePanelOpen();
   // Update topbar count: palette mode swaps to palette-count, else clear
   if (m === 'palettes')
     document.getElementById('countLabel').textContent =
@@ -2852,13 +2851,16 @@ function _fitCellTexts(root) {
 }
 
 function render() {
-  // route by viewMode (grid | huelight | palettes)
-  const isGrid = (viewMode === 'grid');
-  document.getElementById('swatchGrid').style.display = isGrid ? '' : 'none';
-  document.getElementById('gsWrap').style.display    = isGrid ? '' : 'none';
-  document.getElementById('pmWrap').style.display    = isGrid ? 'none' : 'flex';
-  if (viewMode === 'palettes') { renderPaletteMode(); return; }
-  if (viewMode === 'huelight') { renderHueLightMap(); return; }
+  // Two view modes: 'grid' (default - renders the swatch lattice or, when
+  // sortMode === 'huelight', the bucket map - both inside #swatchGrid)
+  // and 'palettes' (renders palette cards inside the palette panel body).
+  const isPalettes = (viewMode === 'palettes');
+  const isHueLight = !isPalettes && (sortMode === 'huelight');
+  document.getElementById('swatchGrid').style.display = isPalettes ? 'none' : '';
+  document.getElementById('gsWrap').style.display    = (isPalettes || isHueLight) ? 'none' : '';
+  document.getElementById('pmWrap').style.display    = isPalettes ? 'flex' : 'none';
+  if (isPalettes) { renderPaletteMode(); return; }
+  if (isHueLight) { renderHueLightMap(document.getElementById('swatchGrid')); return; }
 
   const data = sorted(filtered());
   const grid = document.getElementById('swatchGrid');
@@ -3480,17 +3482,18 @@ function setStep(s) {
 }
 
 function setSort(m) {
-  if (m === 'huelight') {
-    setViewMode('huelight');
-    document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
-    document.getElementById('sort-huelight')?.classList.add('active');
-    return;
-  }
-  if (viewMode === 'huelight') setViewMode('grid');
+  // Hue x Light is now a sort option that renders inside the regular
+  // swatch grid area. It is NOT a separate viewMode - which means
+  // switching away from a huelight sort doesn't need to touch viewMode,
+  // and selecting it while in the palettes view does nothing visible
+  // (the grid lives behind the palettes view).
   sortMode = m;
-  document.querySelectorAll('.sort-btn').forEach(b=>b.classList.remove('active'));
-  document.getElementById('sort-'+m).classList.add('active');
-  _scheduleRender();
+  document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('sort-' + m)?.classList.add('active');
+  // If user picked a sort while in palettes mode, hop back to grid view
+  // so they actually see the new sort take effect.
+  if (viewMode !== 'grid') setViewMode('grid');
+  else _scheduleRender();
 }
 
 function setLabMode(mode) {
@@ -3872,9 +3875,16 @@ function pickHLBucket(s) {
   return [hb, lb];
 }
 
-function renderHueLightMap() {
-  const wrap = document.getElementById('pmWrap');
+function renderHueLightMap(target) {
+  // target defaults to the main swatch grid so Hue x Light behaves as
+  // an alternate sort/layout INSIDE the same scroll area as the regular
+  // grid - not as a takeover of the palettes panel.
+  const wrap = target || document.getElementById('swatchGrid');
   wrap.innerHTML = '';
+  // The main swatch grid container carries inline styles from the
+  // virtualized renderer (display:block, height, width, margin). Wipe
+  // those so the hl-grid below can lay out via CSS Grid + fr.
+  wrap.style.cssText = '';
   const data = sorted(filtered());
   // Pick best swatch per (hue,light) cell - lowest delta_e_print wins ties
   const grid = new Map();
