@@ -9,8 +9,7 @@
 
 Cross-media color swatches for **2D commercial print**, **screen**, and **3D color printing** (Mimaki 3DUJ, Stratasys J55, Cura material libraries). Every swatch routed through a real CMYK ICC profile, not naive subtractive math.
 
-### [→ Open the live site](https://mixocreative.github.io/mixoswatch/)
-
+### [→ Try me 立刻使用 詳細を見る](https://mixocreative.github.io/mixoswatch/)
 
 </div>
 
