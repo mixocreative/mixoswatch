@@ -12,41 +12,30 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+JP:wght@300;400&display=swap"
     rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@200..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #141312;
-      --bg2: #1B1A18;
-      --surface: #1F1E1C;
-      --line: rgba(255, 255, 255, .09);
-      --line2: rgba(255, 255, 255, .16);
-      --text: #EEEBE4;
-      --muted: #A6A39B;
-      --faint: #7E7C75;
-      --accent: #B2A88D;
-      --accent-rgb: 178 168 141;
-      --accent-dim: #6E6648;
+      --bg: #F8F6F1;
+      --bg2: #F0EDE6;
+      --surface: #FFFFFF;
+      --line: rgba(0, 0, 0, .07);
+      --line2: rgba(0, 0, 0, .14);
+      --text: #1A1916;
+      --muted: #6E6C66;
+      --faint: #A39F97;
+      --accent: #6E6648;
+      --accent-rgb: 110 102 72;
+      --accent-dim: #B2A88D;
       --display: 'Outfit', -apple-system, system-ui, serif;
       --mono: 'IBM Plex Mono', ui-monospace, monospace;
       --jp: 'Noto Sans JP', -apple-system, sans-serif;
-      color-scheme: dark;
+      --tc: 'Noto Serif TC', -apple-system, serif;
+      --tcsans: 'Noto Sans TC', -apple-system, sans-serif;
+      color-scheme: light;
     }
 
-    @media (prefers-color-scheme:light) {
-      :root {
-        --bg: #F8F6F1;
-        --bg2: #F0EDE6;
-        --surface: #FFFFFF;
-        --line: rgba(0, 0, 0, .07);
-        --line2: rgba(0, 0, 0, .14);
-        --text: #1A1916;
-        --muted: #6E6C66;
-        --faint: #A39F97;
-        --accent: #6E6648;
-        --accent-rgb: 110 102 72;
-        --accent-dim: #B2A88D;
-        color-scheme: light;
-      }
-    }
+    
 
     * {
       box-sizing: border-box;
@@ -96,11 +85,18 @@
       background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.7 0 0 0 0 0.66 0 0 0 0 0.55 0 0 0 0.08 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
       mix-blend-mode: overlay;
     }
-    @media (prefers-reduced-transparency: reduce) {
-      body::before, body::after { display: none; }
-    }
+    
     .shell { position: relative; z-index: 1; }
     footer { position: relative; z-index: 1; }
+
+    .h4-icon {
+      display: inline-block;
+      width: 1em;
+      height: 1em;
+      vertical-align: -0.125em;
+      margin-right: 0.25em;
+      fill: currentColor;
+    }
 
     ::selection {
       background: var(--accent);
@@ -111,7 +107,7 @@
       width: 100%;
       max-width: 880px;
       margin: 0 auto;
-      padding: 56px 28px 80px;
+      padding: 1.5em 28px 80px;
       flex: 1;
       display: flex;
       flex-direction: column;
@@ -120,7 +116,7 @@
 
     @media (max-width:640px) {
       .shell {
-        padding: 36px 22px 56px;
+        padding: 1.5em 22px 56px;
         gap: 64px
       }
     }
@@ -129,7 +125,14 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 24px
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--bg);
+      padding-top: 20px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: -1px;
     }
 
     .mark {
@@ -168,7 +171,8 @@
       font-size: 11px;
       color: var(--muted);
       text-decoration: none;
-      letter-spacing: .06em
+      letter-spacing: .06em;
+      transition: color .15s ease;
     }
 
     .nav-mini a:hover {
@@ -189,8 +193,8 @@
     }
 
     .hero h1 {
-      font-family: var(--display);
-      font-weight: bolder;
+      font-family: var(--tc);
+      font-weight: 800;
       font-size: clamp(36px, 6vw, 60px);
       line-height: 1.05;
       letter-spacing: -.025em;
@@ -199,7 +203,6 @@
 
     .hero h1 em {
       font-style: italic;
-      font-weight: 300;
       color: var(--accent)
     }
 
@@ -225,15 +228,11 @@
 
     /* Reversed CTA tiles: washi-paper fill on dark, sumi-ink on light. */
     .tool {
-      --tool-bg: #ECE7DA;
-      /* washi cream */
-      --tool-ink: #1A1916;
-      /* sumi ink */
-      --tool-micro: #8C7E60;
-      /* aged brass */
-      --tool-muted: #5B544A;
-      /* faded ink */
-      --tool-rule: rgba(26, 25, 22, .18);
+      --tool-bg: var(--surface);
+      --tool-ink: var(--text);
+      --tool-micro: var(--muted);
+      --tool-muted: var(--faint);
+      --tool-rule: var(--line);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -248,7 +247,7 @@
       min-height: 170px;
       position: relative;
       overflow: hidden;
-      box-shadow: 0 1px 0 rgba(255, 255, 255, .04) inset, 0 8px 24px rgba(0, 0, 0, .32);
+      box-shadow: 0 1px 0 rgba(0, 0, 0, .04) inset, 0 10px 26px rgba(0, 0, 0, .08);
     }
 
     .tool::after {
@@ -266,8 +265,8 @@
 
     .tool:hover {
       transform: translateY(-3px);
-      background: #F4F0E4;
-      box-shadow: 0 1px 0 rgba(255, 255, 255, .06) inset, 0 18px 40px rgba(0, 0, 0, .48);
+      background: var(--bg2);
+      box-shadow: 0 1px 0 rgba(0, 0, 0, .06) inset, 0 18px 40px rgba(0, 0, 0, .12);
     }
 
     .tool:hover::after {
@@ -328,22 +327,7 @@
       width: 30px
     }
 
-    /* Light-mode fallback: invert so tiles still pop on the cream page bg. */
-    @media (prefers-color-scheme:light) {
-      .tool {
-        --tool-bg: #1A1916;
-        --tool-ink: #F5F2EA;
-        --tool-micro: #A89881;
-        --tool-muted: #A6A097;
-        --tool-rule: rgba(245, 242, 234, .22);
-        box-shadow: 0 1px 0 rgba(255, 255, 255, .04) inset, 0 10px 26px rgba(0, 0, 0, .18);
-      }
-
-      .tool:hover {
-        background: #262320;
-        box-shadow: 0 1px 0 rgba(255, 255, 255, .06) inset, 0 18px 40px rgba(0, 0, 0, .28)
-      }
-    }
+    
 
     .section {
       display: flex;
@@ -424,7 +408,7 @@
     }
 
     .split .col h4 {
-      font-family: var(--display);
+      font-family: var(--tc);
       font-weight: 400;
       font-size: 15px;
       letter-spacing: -.01em;
@@ -670,7 +654,7 @@
 
     .panel-name {
       font-family: var(--mono);
-      font-size: 11px;
+      font-size: 14px;
       color: var(--accent);
       text-transform: uppercase;
       letter-spacing: .14em;
@@ -680,8 +664,9 @@
     .panel-name .jp {
       display: block;
       font-family: var(--jp);
-      font-size: 10.5px;
-      color: var(--faint);
+      font-size: 12px;
+      color: var(--accent);
+      font-weight: 500 !important;
       letter-spacing: .04em;
       margin-top: 4px;
       text-transform: none;
@@ -1149,17 +1134,22 @@
       border-radius: 999px;
       cursor: pointer;
       letter-spacing: .04em;
-      transition: all .15s ease
+      transition: all .15s ease;
+      position: relative;
     }
 
     .lang-switch button:hover {
-      color: var(--text)
+      color: var(--text);
+      transform: translateY(-1px);
+      box-shadow: 0 2px 6px rgba(0,0,0,.1);
     }
 
     .lang-switch button.on {
       background: var(--accent);
       color: var(--bg);
-      font-weight: 500
+      font-weight: 500;
+      transform: translateY(0);
+      box-shadow: none;
     }
 
     /* hide other-language siblings */
@@ -1183,7 +1173,7 @@
     }
 
     html[lang="zh"] body {
-      font-family: var(--jp)
+      font-family: var(--display)
     }
 
     .demo-row {
@@ -1396,10 +1386,10 @@
       font-family: var(--mono);
       font-size: 11px;
       color: var(--faint);
-      padding: 22px 28px;
+      padding: 28px 28px;
       display: flex;
       flex-wrap: wrap;
-      gap: 20px;
+      gap: 30px;
       justify-content: center;
       align-items: center;
     }
@@ -1474,10 +1464,8 @@
 
 <body>
 
-  <main class="shell">
-
     <header class="mark-row">
-      <div class="mark"><img src="app/img/logo.svg" alt="" class="brand-logo" aria-hidden="true">mixoswatch<span class="mark-jp">墨色見本</span></div>
+      <div class="mark" style="padding: 0 1em;"><img src="app/img/logo-black.svg" alt="" class="brand-logo" aria-hidden="true">mixoswatch<span class="mark-jp">墨色見本</span></div>
       <div style="display:flex;gap:18px;align-items:center">
         <nav class="nav-mini">
           <a href="#why" data-en="why" data-ja="趣旨" data-zh="緣由">why</a>
@@ -1494,41 +1482,36 @@
         </div>
       </div>
     </header>
+  <main class="shell">
+
 
     <section class="hero">
-      <img src="app/img/logo.svg" alt="Mixo Swatch" class="hero-logo">
       <h1>
-        <span data-en>Honest cross-media color, <em><b>from screen to press to 3D print</b></em>.</span>
-        <span data-ja>画面から印刷、3Dプリントまで。<em><b>クロスメディアで信頼できる色</b></em>。</span>
-        <span data-zh>從螢幕、印刷到 3D 列印，<em><b>跨媒材的可信賴色彩</b></em>。</span>
+        <span data-en>Screen ✕ Press ✕ 3D Print <em  style="display:inline-block;"><b>Cross-Media Color Swatch</b></em></span>
+        <span data-ja>スクリーン✕印刷✕3Dプリント <em  style="display:inline-block;"><b>クロスメディア・カラースウォッチ</b></em></span>
+        <span data-zh><span style="display:inline-block;">螢幕</span> ✕ <span style="display:inline-block;">印刷</span> ✕ <span style="display:inline-block;">3D列印</span>  <em  style="display:inline-block;"><b>跨媒介色版</b></em></span>
       </h1>
       <p class="lede">
-        <span data-en><b>Mixo Swatch</b> is a browser tool for designers who choose colors that must survive a real print process. It samples every CMYK value at the step you pick, routes them through the same ICC color engine that prepress tools and color-managed RIPs use (LittleCMS via Pillow), and shows you exactly what each cell will look like on the press you selected. A round-trip dE gate hides anything the profile cannot hold, so press-unsafe colors never reach your palette.</span>
-        <span data-ja><b>Mixo Swatch</b> は、実際のプリント工程で色を再現できる必要があるデザイナーのためのブラウザツール。指定ステップごとに全CMYK値を生成し、印刷現場や色管理RIPと同じICCエンジン（Pillow経由のLittleCMS）でルーティングし、選んだ出力機での見え方を画面上に示します。往復ΔEゲートが保持できない色を非表示にするため、パレットに不安全な色が混入しません。</span>
-        <span data-zh><b>Mixo Swatch</b> 是專為印刷流程設計師打造的瀏覽器工具。它依照你選的步距生成所有 CMYK 值，並透過印前工具與色彩管理 RIP 共用的 ICC 引擎（Pillow 內建 LittleCMS）路由，於螢幕上直接呈現你選定的印刷機台會印出的顏色。往返 dE 門檻會自動隱藏該描述檔無法保留的色塊，確保不可印的顏色不會進入你的色票組。</span>
+        <span data-en><b>Mixo Swatch</b> is a color generation tool specifically designed for cross-media print workflows. It generates CMYK values based on defined steps and calculates safe, printable colors using a designated ICC engine (Pillow LittleCMS). The ΔE threshold calculates color accuracy bi-directionally, automatically hiding color swatches that cannot be preserved by the specific profile.</span>
+        <span data-ja><b>Mixo Swatch</b> は、クロスメディアな印刷ワークフローに特化して設計されたカラー生成ツールです。設定されたステップ（刻み幅）に基づいて CMYK 値を生成し、指定された ICC エンジン（Pillow LittleCMS）を介して印刷安全圏のカラーを算出します。ΔE 閾値（しきいち）により色精度を双方向から検証し、該当するプロファイルでは再現（保持）できない色ベタを自動的に非表示にします。</span>
+        <span data-zh><b>Mixo Swatch</b> 是專為跨媒介印刷流程使用的色彩生成工具。依照步距生成 CMYK 值，並透過指定用的 ICC 引擎（Pillow LittleCMS），計算安全的可列印顏色。 ΔE 門檻會雙向計算色準，並自動隱藏該描述檔無法保留的色塊。</span>
       </p>
       <p class="lede" style="font-size:14px;color:var(--faint)">
-        <span data-en>Works offline. No upload, no telemetry, no account. Interface in English / 日本語 / 繁體中文, auto-detected from your browser language and switchable in the top-right corner.</span>
-        <span data-ja>オフライン動作。アップロード・計測・アカウント不要。UIは English / 日本語 / 繁體中文 に対応し、ブラウザ言語から自動判定、右上で手動切替可能。</span>
-        <span data-zh>離線運作。不上傳、不追蹤、不需註冊。介面支援 English / 日本語 / 繁體中文，依瀏覽器語言自動判定，可於右上角手動切換。</span>
+        <span data-en>Works in browser. No upload, no telemetry, no account.</span>
+        <span data-ja>Webベース。アップロード・計測・アカウント不要。</span>
+        <span data-zh>瀏覽器運行。不上傳、不追蹤、不需註冊。</span>
       </p>
       <nav class="tools" aria-label="Choose a tool">
         <a class="tool" href="app/mixo-swatch.html">
           <div>
             <div class="micro">live</div>
-            <h2>Mixo Swatch</h2>
-            <h3 data-en> Digital-to-print swatches</h3>
-            <h3 data-zh>平面數位與紙品印刷用專用色票對照表</h3>
-            <h3 data-ja>デジタルからプリントへの專用色見本</h3>
+            <h2><img src="app/img/logo-black.svg" style="display:inline-block; height:1em; width:1em; margin: 0 0 -0.15em 0; " alt="Mixo Swatch" class="hero-logo"> Mixo Swatch</h2>
+            <h3 data-en>Digital, Press & 3D Print Dedicated Color Swatches</h3>
+            <h3 data-zh>平面數位、紙品與3D印刷用專用色票對照表</h3>
+            <h3 data-ja>デジタル・紙媒体・3Dプリント専用色票対照表</h3>
           </div>
-          <p class="desc">
-            <span data-en>Every CMYK value at your chosen step, rendered through the press profile you pick. Compare
-              FOGRA against Japan Color. Find named colors. Build palettes.</span>
-            <span data-ja>選択したステップごとの全CMYK値を、指定したプリントプロファイルで描画。FOGRAとJapan Colorを比較、命名色を探し、パレットを構築。</span>
-            <span data-zh>以你選定的步距產生全部 CMYK 值，並透過你挑選的印刷描述檔渲染。比較 FOGRA 與 Japan Color，找出命名色，建立色票組。</span>
-          </p>
           </div>
-          <span class="go">open</span>
+          <span class="go" style="text-align: end; display: inline-block;">GO</span>
         </a>
       </nav>
     </section>
@@ -1541,195 +1524,142 @@
         <span data-zh>螢幕色準無法保證，靠流程縮小落差。</span>
       </h3>
       <p>
-        <span data-en>Be honest: no monitor renders a print result exactly. Substrate, ink, lighting, and the human eye
-          are not in the browser. What we can do is close the gap with real ICC math instead of fake CMYK-to-RGB
-          shortcuts, surface the trade-offs a press has, and let you tune how close is close enough.</span>
+        <span data-en>Be honest: no monitor renders a print result exactly.</span>
         <span
-          data-ja>正直に言いましょう。プリント結果を完全に再現できるモニターは存在しません。被プリント体（用紙）、インク、照明、そして人間の眼はブラウザの中にはないからです。私たちができるのは、嘘のCMYK-RGB簡易変換ショートカットを排し、本物のICC数学でそのギャップを埋めること。プリンターが抱えるトレードオフを可視化し、「どこまで近づければ十分か」をあなた自身が調整できるようにすることです。</span>
-        <span data-zh>真相：沒有任何螢幕能完全精確地呈現印刷結果。紙張材質、油墨、照明環境以及人眼的感知，都是瀏覽器無法模擬的。我們能做的是，捨棄虛假的 CMYK 轉 RGB 簡化公式，改用真實的 ICC
-          描述檔數學運算來縮小這層差距，忠實呈現列印機的物理限制，並讓你自行調整多接近才算「足夠接近」。</span>
+          data-ja>正直に言いましょう。プリント結果を完全に再現できるモニターは存在しません。</span>
+        <span data-zh>真相：沒有任何螢幕能完全精確地呈現印刷結果。</span>
       </p>
-
+<!-- //////////////////////////// -->
       <div class="split">
+
         <div class="col">
           <h4>
-            <span data-en>What this solves</span>
-            <span data-ja>解決する痛点</span>
-            <span data-zh>針對痛點</span>
-            <span class="tag"><span data-en>advantages</span><span data-ja>強み</span><span data-zh>優勢</span></span>
-          </h4>
-          <p>
-            <span data-en>Compare presses side by side. Flip from FOGRA39 to Japan Color 2001 to SWOP to see how the
-              same CMYK shifts. The naïve picker cannot show this because it never knew what a press was.</span>
-            <span data-ja>プリント条件を並べて比較。FOGRA39からJapan Color
-              2001、SWOPへと切り替えて、同じCMYK値がどうシフトするかを確認できます。一般的なカラーピッカーはプリンターの仕組みを考慮していないため、この変化を表示できません。</span>
-            <span data-zh>並列對比不同的列印機條件。在 FOGRA39、Japan Color 2001 與 SWOP 之間自由切換，一目了然相同的 CMYK
-              數值會如何產生色偏。一般的簡易選色器根本無法呈現這點，因為它從未納入列印機的物理考量。</span>
-          </p><br />
-
-
-          <h4>
-            <span data-en>Real RIP math</span>
-            <span data-ja>実際のプリント用デジタルデータ</span>
+            <svg class="h4-icon" viewBox="0 0 16 16"><path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0ZM7.5 3.5a.5.5 0 0 1 1 0V4a.5.5 0 0 1-1 0V3.5Zm0 2a.5.5 0 0 1 1 0V6a.5.5 0 0 1-1 0V5.5Zm0 2a.5.5 0 0 1 1 0V8a.5.5 0 0 1-1 0V7.5Zm0 2a.5.5 0 0 1 1 0V10a.5.5 0 0 1-1 0V9.5Zm0 2a.5.5 0 0 1 1 0V12a.5.5 0 0 1-1 0V11.5ZM4 7.5a.5.5 0 0 1 0-1h.5a.5.5 0 0 1 0 1H4Zm2 0a.5.5 0 0 1 0-1h.5a.5.5 0 0 1 0 1H6Zm2 0a.5.5 0 0 1 0-1h.5a.5.5 0 0 1 0 1H8Zm2 0a.5.5 0 0 1 0-1h.5a.5.5 0 0 1 0 1H10Zm2 0a.5.5 0 0 1 0-1h.5a.5.5 0 0 1 0 1H12Z"/></svg>
+            <span data-en>Real ICC math</span>
+            <span data-ja>本物のICC演算</span>
             <span data-zh>更貼近真實的轉換算式</span>
-            <span class="tag"><span data-en>real math</span><span data-ja>実数学</span><span data-zh>真實演算</span></span>
+            <span class="tag"><span data-en>real math</span><span data-ja>実数学</span><span data-zh>貼近真實</span></span>
           </h4>
           <p>
-            <span data-en><b>Real ICC math, not Photoshop guesses.</b> Our lookup tables sample sRGB → CMYK at LittleCMS, the open-source color engine inside GIMP, Scribus, Krita, and many prepress tools. The data layer matches what a LittleCMS prepress flow computes. What your monitor renders is still sRGB, and what your press lays down still depends on stock, ink, and lighting.</span>
-            <span data-ja>本物のICC演算、Photoshopの推測ではない。当ツールのLUTは、GIMP、Scribus、Krita、多くのプリプレスツールの内部で動いているオープンソースの色エンジン「LittleCMS」でsRGB → CMYKを標本化している。データ層はLittleCMSベースのプリプレスフローと同じ計算結果を返す。モニタに映る色はsRGBのレンダリング、プリンターに乗る色は依然として用紙・インク・照明に依存する。</span>
-            <span data-zh>真實的 ICC 演算，不是 Photoshop 的猜測。我們的查找表在 LittleCMS 取樣 sRGB → CMYK。LittleCMS 是 GIMP、Scribus、Krita 與許多印前工具內部使用的開源色彩引擎。資料層計算結果與 LittleCMS 印前流程一致。螢幕呈現的仍是 sRGB，印刷機落紙的顏色仍受紙張、油墨與光照影響。</span>
+            <span data-en>Our lookup tables sample sRGB → CMYK at LittleCMS, the open-source color engine inside GIMP, Scribus, Krita, and many prepress tools. The data layer matches what a LittleCMS prepress flow computes.</span>
+            <span data-ja>当ツールのLUTは、GIMP、Scribus、Krita、多くのプリプレスツールの内部で動いているオープンソースの色エンジン「LittleCMS」でsRGB → CMYKを標本化している。データ層はLittleCMSベースのプリプレスフローと同じ計算結果を返す。</span>
+            <span data-zh>我們的查找表（LUT）在使用 LittleCMS 進行雙向取樣（sRGB ⇄ CMYK）。LittleCMS 是 GIMP、Scribus、Krita 等眾多專業印前工具內部核心使用的開源色彩引擎。資料層計算結果與標準印前流程一致，能反應印刷的色彩邊界。</span>
           </p><br />
+       </div>
+        <div class="col">
           <h4>
+            <svg class="h4-icon" viewBox="0 0 16 16"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14Zm0-2A5 5 1 0 0 8 3a5 5 0 0 0 0 10Zm0-2a3 3 0 1 1 0-6 3 3 0 0 1 0 6Z"/></svg>
             <span data-en>You set the tolerance</span>
             <span data-ja>許容差は自分で決める</span>
             <span data-zh>容差由你定</span>
-            <span class="tag"><span data-en>real math</span><span data-ja>実数学</span><span data-zh>真實演算</span></span>
+            <span class="tag"><span data-en>delta-E</span><span data-ja>ΔE制御</span><span data-zh>ΔE 控制值</span></span>
           </h4>
           <p>
-            <span data-en>The ΔE slider decides how close a match has to be. 1.0 strict, 3 forgiving, 6 brand-only.
-              Honest about what "close enough" means instead of pretending one number fits everything.</span>
-            <span data-ja>ΔEスライダーで一致の厳しさを設定。1.0で厳格、3で寛容、6でブランド許容。「十分近い」を一つの数値で押し付けず、自分で決められる。</span>
-            <span data-zh>ΔE 滑桿決定匹配多嚴格。1.0 嚴格、3 寬鬆、6 僅限品牌可接受。不假裝一個數字適用於所有情境。</span>
-          </p>
-        </div>
-
+            <span data-en>The ΔE slider decides how close a match has to be. Honest about what "close enough" means instead of pretending one number fits everything.</span>
+            <span data-ja>ΔEスライダーで一致の厳しさを設定。「十分近い」を一つの数値で押し付けず、自分で決められる。</span>
+            <span data-zh>可調整 ΔE 值決定顏色命名和轉換容差值的嚴謹度。不假裝一個數字適用於所有情境。</span>
+          </p><br />
+       </div>
         <div class="col">
           <h4>
-            <span data-en>Color name dictionary</span>
-            <span data-zh>顏色名稱對照</span>
-            <span data-ja>名前照合</span>
-            <span class="tag"><span data-en>exchange anchoring</span><span data-ja>アンカー切替</span><span data-zh>錨點切換</span></span>
+            <svg class="h4-icon" viewBox="0 0 16 16"><path d="M2 11h12a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1Zm0 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-1a1 1 0 0 0-1-1H2Zm10.5-4a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0Z"/></svg>
+            <span data-en>Profiles for different presses</span>
+            <span data-ja>各種プリンターのプロファイル</span>
+            <span data-zh>對應不同列印機的描述檔</span>
+            <span class="tag"><span data-en>profiles</span><span data-ja>プロファイル</span><span data-zh>描述檔對應</span></span>
           </h4>
           <p>
-            <span data-en>Per-dictionary anchor for name matching. A swatch can match against a name corpus by its hex
-              value OR by routing the corpus's CMYK through the active profile first. Independent per library: keep HTML
-              CSS names anchored on hex, keep DIC Japanese / Chinese anchored on CMYK, plug in your own dictionary
-              anchored either way.</span>
-            <span
-              data-ja>名前照合のための辞書単位のアンカー設定。スウォッチは、そのHex値、またはコーパスのCMYKを有効なプロファイルに先に通す方法のいずれかで名前コーパスと一致させることができます。ライブラリごとに独立：HTML
-              CSS名はHexにアンカー、DIC（日本/伝統色）はCMYKにアンカーさせ、自作の辞書もどちらの方法でも接続可能です。</span>
-            <span data-zh>名稱比對支援獨立詞典錨點設定。色票可直接透過螢幕 Hex 值比對，或者將語料庫中的 CMYK 先經由當前選定的描述檔進行轉換。各詞典完全獨立運作：可讓 HTML CSS 名稱錨定在
-              Hex，而 DIC 日本/中國傳統色彩則錨定在 CMYK，你亦可插入自己的詞典並自由指定任一種錨定基準。</span>
-          </p>
-          <br />
+            <span data-en>Switch freely between international standards like FOGRA39, Japan Color 2001, and SWOP, or add your own printer's profile. See how the same CMYK values shift across different processes. Basic pickers can't show this because they ignore printer physics.</span>
+            <span data-ja>FOGRA39、Japan Color 2001、SWOPなどの国際標準プロファイルを自由に切り替え、あるいは独自のプロファイルを追加可能。同じCMYK値でも製程によって色がどう変わるかが一目瞭然。物理的な制約を無視した一般的なカラーピッカーでは不可能な検証ができます。</span>
+            <span data-zh>你可以在 FOGRA39、Japan Color 2001 與 SWOP 等國際標準描述檔之間自由切換，或者添加你自己機器的描述檔。相同的 CMYK 數值在不同製程下色偏一目了然。一般的簡易選色器根本無法呈現這點，因為它們從未納入列印機的物理考量。</span>
+          </p><br />
+       </div>
+        <div class="col">
           <h4>
-            <span data-en>Batch export with multi-process compatibility</span>
-            <span data-ja>各種3Dプリント・製造プロセスに合わせた一括書き出し</span>
+            <svg class="h4-icon" viewBox="0 0 16 16"><path d="M0 14.5a1.5 1.5 0 0 0 1.5 1.5h13a1.5 1.5 0 0 0 1.5-1.5v-13A1.5 1.5 0 0 0 14.5 0h-13A1.5 1.5 0 0 0 0 1.5v13ZM1.5 1a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 .5.5v13a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5V1.5ZM3 3h2v2H3V3Zm0 3h2v2H3V6Zm0 3h2v2H3V9Zm0 3h2v2H3v12Zm3-9h2v2H6V3Zm0 3h2v2H6V6Zm0 3h2v2H6V9Zm0 3h2v2H6v12Zm3-9h2v2H9V3Zm0 3h2v2H9V6Zm0 3h2v2H9V9Zm0 3h2v2H9v12Zm3-9h2v2h-2V3Zm0 3h2v2h-2V6Zm0 3h2v2h-2V9Zm0 3h2v2h-2v12Z"/></svg>
+            <span data-en>CMYK color steps</span>
+            <span data-ja>CMYK着色ステップ</span>
+            <span data-zh>CMYK 著色步距</span>
+            <span class="tag"><span data-en>prepress</span><span data-ja>プリプレス</span><span data-zh>步距控制</span></span>
+          </h4>
+          <p>
+            <span data-en>Commercial print and material calibration often require fixed steps (e.g., 5% or 10%). Smooth screen gradients hide physical deviations and dot gain issues. This tool lets you adjust steps manually to observe hue shifts across patches, perfect for picking highly reproducible colors.</span>
+            <span data-ja>商業印刷やキャリブレーションでは、しばしば固定のステップ（5%や10%刻み）が要求されます。画面上の滑らかなグラデーションは物理的な偏差やドットゲインの異常を隠してしまいます。本ツールはステップを手動調整でき、パッチ間の色相変化を直接観察できるため、再現性の高い色選びに最適です。</span>
+            <span data-zh>在商業印刷實務與材料校準中，印刷廠往往明確要求固定步距（如 5% 或 10% 的跳階）。這是因為數位螢幕上平滑的連續漸層容易掩蓋物理偏差與網點擴大（Dot Gain）的異常。本工具將步距設成可手動調較，直接觀察同跳階色塊產生的色相偏移，最適合用來手選具高重現性的色票。</span>
+          </p><br />
+       </div>
+        <div class="col">
+          <h4>
+            <svg class="h4-icon" viewBox="0 0 16 16"><path d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3.5a1.5 1.5 0 0 1 1.5 1.5v3.5a1.5 1.5 0 0 1-1.5 1.5H2.5A1.5 1.5 0 0 1 1 6V2.5ZM2.5 2a.5.5 0 0 0-.5.5v3.5a.5.5 0 0 0 .5.5h3.5a.5.5 0 0 0 .5-.5V2.5a.5.5 0 0 0-.5-.5H2.5ZM1 9.5A1.5 1.5 0 0 1 2.5 8h3.5a1.5 1.5 0 0 1 1.5 1.5v3.5a1.5 1.5 0 0 1-1.5 1.5H2.5A1.5 1.5 0 0 1 1 13V9.5ZM2.5 9a.5.5 0 0 0-.5.5v3.5a.5.5 0 0 0 .5.5h3.5a.5.5 0 0 0 .5-.5V9.5a.5.5 0 0 0-.5-.5H2.5ZM9 2.5A1.5 1.5 0 0 1 10.5 1h3.5a1.5 1.5 0 0 1 1.5 1.5v3.5a1.5 1.5 0 0 1-1.5 1.5h-3.5A1.5 1.5 0 0 1 9 6V2.5ZM10.5 2a.5.5 0 0 0-.5.5v3.5a.5.5 0 0 0 .5.5h3.5a.5.5 0 0 0 .5-.5V2.5a.5.5 0 0 0-.5-.5h-3.5ZM9 9.5A1.5 1.5 0 0 1 10.5 8h3.5a1.5 1.5 0 0 1 1.5 1.5v3.5a1.5 1.5 0 0 1-1.5 1.5h-3.5A1.5 1.5 0 0 1 9 13V9.5ZM10.5 9a.5.5 0 0 0-.5.5v3.5a.5.5 0 0 0 .5.5h3.5a.5.5 0 0 0 .5-.5V9.5a.5.5 0 0 0-.5-.5h-3.5Z"/></svg>
+            <span data-en>Color naming and anchor toggle</span>
+            <span data-ja>名前照合とアンカー切り替え</span>
+            <span data-zh>顏色名稱對照與獨立錨點切換</span>
+            <span class="tag"><span data-en>naming</span><span data-ja>名前照合</span><span data-zh>名稱對照</span></span>
+          </h4>
+          <p>
+            <span data-en>Pre-loaded color naming databases: Japanese Traditional, Chinese Traditional, and W3C web colors. You can insert custom dictionaries and set CMYK or Hex as the naming anchor. Adjust ΔE tolerance to find the closest matches.</span>
+            <span data-ja>日本の伝統色、中国の伝統色、W3Cウェブカラーの名称データベースを搭載。カスタム辞書の追加や、CMYK/Hexを命名アンカー基準に設定可能。ΔE許容値を調整して、最も近い色名を検索できます。</span>
+            <span data-zh>預載色彩名稱對照資料庫：日本傳統色、W3C網頁色，亦可插入自訂詞典，並指定任以CMYK還是HEX作為命名錨定基準。色彩命名可以透過調整ΔE容差值查找最接近色版。</span>
+          </p><br />
+        </div>
+        <div class="col">
+          <h4>
+            <span data-en>Bi-directional safety check</span>
+            <span data-ja>双方向の安全検証</span>
+            <span data-zh>雙向安全檢驗</span>
+            <span class="tag"><span data-en>cross-media</span><span data-ja>クロスメディア</span><span data-zh>跨媒介應用</span></span>
+          </h4>
+          <p>
+            <span data-en>2D ✕ 3D cross-media application with real-time bi-directional safety checks under specific profiles. Rigorous math combined with physical color tolerance. Pick once, sync across both ends.</span>
+            <span data-ja>2D ✕ 3Dのクロスメディア対応。特定のプロファイル下での双方向安全検証をリアルタイムで実行。物理的な許容誤差と厳密な数学的計算を組み合わせ、一度の選色で両端を同期させます。</span>
+            <span data-zh>2D ✕ 3D 的雙端跨媒介應用，通過該特定描述檔下的雙向安全檢驗，運算即時執行。以物理色彩容差，配合數學嚴密計算。一次選色，雙端同步。</span>
+          </p><br />
+        </div>
+        <div class="col">
+          <h4>
+            <svg class="h4-icon" viewBox="0 0 16 16"><path d="M11.5 7.986a.5.5 0 0 1 .5.5v3.5a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5v-3.5a.5.5 0 0 1 .5-.5h7Zm-7-1a.5.5 0 0 0-.5.5v3.5a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5v-3.5a.5.5 0 0 0-.5-.5h-7ZM8 0a.5.5 0 0 1 .5.5v1.5a.5.5 0 0 1-1 0V.5a.5.5 0 0 1 .5-.5ZM4 2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v1.5a.5.5 0 0 1-1 0V3H5v-.5a.5.5 0 0 1-.5-.5ZM1 4.5a.5.5 0 0 1 .5-.5h1.5a.5.5 0 0 1 0 1H2v1.5a.5.5 0 0 1-1 0v-2ZM14 4.5a.5.5 0 0 1 .5-.5h.5a.5.5 0 0 1 0 1h-.5v1.5a.5.5 0 0 1-1 0v-2ZM1 11.5a.5.5 0 0 1 .5-.5h1.5a.5.5 0 0 1 0 1H2v.5a.5.5 0 0 1-1 0v-1ZM14 11.5a.5.5 0 0 1 .5-.5h.5a.5.5 0 0 1 0 1h-.5v.5a.5.5 0 0 1-1 0v-1Z"/></svg>
+            <span data-en>Built for 3D modeling ✕ 3D print</span>
+            <span data-ja>3Dモデリング×3Dプリント専用設計</span>
+            <span data-zh>為 3D 建模 ✕ 3D 彩色列印量身訂造</span>
+            <span class="tag"><span data-en>3D print</span><span data-ja>3Dプリント</span><span data-zh>3D專用</span></span>
+          </h4>
+          <p>
+            <span data-en>Reduces out-of-gamut clipping when entering the prepress stage for 3D color printers (such as powder or full-color photopolymer systems).</span>
+            <span data-ja>3Dカラープリンター（粉末造形やフルカラー光造形など）のプリプレス段階で発生する色域外（Out of Gamut）のクリッピングを抑制するために設計されています。</span>
+            <span data-zh>減低進入 3D 彩色列印機（如粉末、全彩光固化）印前製程（Prepress）的瞬間，發生色域外裁切（Out of Gamut）的狀況。</span>
+          </p><br />
+        </div>
+        <div class="col">
+          <h4>
+            <svg class="h4-icon" viewBox="0 0 16 16"><path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13Zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13ZM4 12a1 1 0 1 1 0-2 1 1 0 0 1 0 2Zm0-3a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1Zm0-3a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1Zm0-3a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1Zm3 9a1 1 0 1 1 0-2 1 1 0 0 1 0 2Zm0-3a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1Zm0-3a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1Zm0-3a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1Zm3 9a1 1 0 1 1 0-2 1 1 0 0 1 0 2Zm0-3a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1Zm0-3a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1Zm0-3a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1Zm3 9a1 1 0 1 1 0-2 1 1 0 0 1 0 2Zm0-3a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1Zm0-3a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1Zm0-3a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1Z"/></svg>
+            <span data-en>Batch export for all processes</span>
+            <span data-ja>各種製程への一括書き出し</span>
             <span data-zh>支援各種製程的批次匯出</span>
-            <span class="tag"><span data-en>multi purpose</span><span data-ja>多用途</span><span data-zh>多用途</span></span>
+            <span class="tag"><span data-en>export</span><span data-ja>多用途</span><span data-zh>多用途</span></span>
           </h4>
           <p>
-            <span data-en><i>Direct:</i> ASE for Photoshop / Illustrator / Affinity / Substance, GPL for GIMP / Krita
-              / Inkscape / Blender (via the GPL Palette Importer add-on), PNG sheet for any visual reference.
-              <i>Indirect:</i> copy CMYK or hex values out of the JSON into Mimaki RasterLink spot tables, Stratasys
-              GrabCAD pickers, Cura material profiles, or your CAD's color manager. The swatch files target design apps;
-              the JSON is the bridge to 3D-print pipelines.</span>
-            <span data-ja>直接層：Photoshop / Illustrator / Affinity / SubstanceにASE、GIMP / Krita / Inkscape /
-              Blender（GPL Palette
-              Importerアドオン経由）にGPL、視覚参照用にPNGシート。間接層：JSONからCMYKまたはhex値をコピーし、Mimaki
-              RasterLinkのスポットテーブル、Stratasys GrabCADのピッカー、Curaのマテリアルプロファイル、CADのカラーマネージャに入れる。スウォッチファイルはデザインアプリ向け、JSONは3Dプリントパイプラインへの橋渡し。</span>
-            <span data-zh>直接層：ASE 給 Photoshop / Illustrator / Affinity / Substance，GPL 給 GIMP / Krita / Inkscape /
-              Blender（透過 GPL Palette Importer 外掛）、PNG 圖片做視覺參考。間接層：從 JSON 複製 CMYK 或 hex 數值，填入 Mimaki RasterLink 專色表、Stratasys GrabCAD
-              取色器、Cura 材料描述檔，或你 CAD 的色彩管理器。色票檔針對設計軟體，JSON 是進入 3D 列印流程的橋樑。</span>
-          </p>
-          <br />
-          <h4>
-            <span data-en>One swatch, two worlds</span>
-            <span data-ja>1スウォッチで2世界対応</span>
-            <span data-zh>一套色票，兩個世界</span>
-            <span class="tag"><span data-en>best of both worlds</span><span data-ja>両方の良さ</span><span data-zh>兩全其美</span></span>
-          </h4>
-          <p>
-            <span data-en>One tool serves 2D print and 3D-print color matching. The colors are rough by physics but
-              tight by math: hex for screen and web mockups, CMYK + profile for the press or printer. Pick once, ship to
-              both.</span>
-            <span
-              data-ja>一つのツールで2Dプリントと3Dプリントのカラーマッチングを両方支えます。物理的には大まかでも、数学的には厳密。画面とウェブのモックアップにはHexを、プリンタにはCMYK＋プロファイルを使用。一度選べば、両方の環境へシームレスに出荷できます。</span>
-            <span data-zh>單一工具同時滿足 2D 傳統印刷與 3D 印刷的色彩整合。在物理表現上或許留有容差，但在數學計算上絕對嚴密：Hex 用於螢幕與網頁原型開發，CMYK
-              加上描述檔則直通列印機或印表機。一次選色，雙端同步。</span>
-          </p>
+            <span data-en>Export .ASE for Photoshop / Illustrator / Affinity / Substance; .GPL for GIMP / Krita / Inkscape / Blender (via GPL Palette Importer); or .PNG for reference. Copy CMYK/Hex from .JSON into Mimaki RasterLink, Stratasys GrabCAD, Ultimaker Cura, or industrial CAD color managers.</span>
+            <span data-ja>.ASE（Photoshop / Illustrator / Affinity / Substance）、.GPL（GIMP / Krita / Inkscape / Blender ※プラグイン経由）、視覚参照用の.PNGに対応。.JSONからCMYKやHex値を抽出し、Mimaki RasterLink、Stratasys GrabCAD、Ultimaker Cura、各種産業用CADのカラー管理へ入力できます。</span>
+            <span data-zh>匯出 .ASE 供 Photoshop / Illustrator / Affinity / Substance 使用；.GPL 供 GIMP / Krita / Inkscape / Blender（透過 GPL Palette Importer 外掛）使用；亦可匯出 .PNG 圖片做視覺參考。從 .JSON 複製 CMYK 或 Hex 數值，直接填入 Mimaki RasterLink 專色表、Stratasys GrabCAD 取色器、Ultimaker Cura 材料描述檔，或各類工業 CAD 的色彩管理器。</span>
+          </p><br />
         </div>
+        <div class="col">
+          <h4>
+            <svg class="h4-icon" viewBox="0 0 16 16"><path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13Zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13ZM4 12a1 1 0 1 1 0-2 1 1 0 0 1 0 2Zm0-3a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1Zm0-3a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1Zm0-3a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1Zm3 9a1 1 0 1 1 0-2 1 1 0 0 1 0 2Zm0-3a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1Zm0-3a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1Zm0-3a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1Zm3 9a1 1 0 1 1 0-2 1 1 0 0 1 0 2Zm0-3a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1Zm0-3a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1Zm0-3a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1Zm3 9a1 1 0 1 1 0-2 1 1 0 0 1 0 2Zm0-3a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1Zm0-3a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1Zm0-3a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1Z"/></svg>
+            <span data-en>Custom printer ICC profiles</span>
+            <span data-ja>独自のプリンターICCプロファイル</span>
+            <span data-zh>自訂列印機 ICC 色彩描述檔</span>
+            <span class="tag"><span data-en>local</span><span data-ja>ローカル拡張</span><span data-zh>在地端擴充</span></span>
+          </h4>
+          <p>
+            <span data-en>If your factory's specific profile isn't built-in, just drop the .icc / .icm file into the icc/ folder and run the Python script (scripts/gen_luts.py). It uses Pillow + LittleCMS to sample the profile on a $17^4$ grid and output a browser-readable LUT. Detailed algorithm logic is in ARCHITECTURE.md.</span>
+            <span data-ja>内蔵されていないプロファイルも、.icc / .icm ファイルを icc/ フォルダに入れ、Pythonスクリプト（scripts/gen_luts.py）を実行するだけで追加可能。Pillow + LittleCMSで $17^4$ グリッドをサンプリングし、ブラウザ用のLUTを出力します。詳細は ARCHITECTURE.md を参照。</span>
+            <span data-zh>若工具未內建你工廠或配合廠商的特定描述檔，只需把 .icc / .icm 檔案放進 icc/ 資料夾，執行單支 Python 腳本（scripts/gen_luts.py）即可。該腳本同樣使用 Pillow + LittleCMS 引擎，以 $17^4$ 網格精確取樣描述檔，並輸出瀏覽器可讀的查找表（LUT）。演算法原理詳述於 ARCHITECTURE.md。</span>
+          </p><br />
+        </div>
+      </div>
       </div>
 
-      <div class="split">
-        <div class="col">
-          <h4>
-            <span data-en>CMYK Color Steps</span>
-            <span data-ja>CMYK着色ステップ（歩距）</span>
-            <span data-zh>CMYK 着色步距</span>
-            <span class="tag"><span data-en>for print</span><span data-ja>印刷向け</span><span data-zh>給印刷的</span></span>
-          </h4>
-          <p>
-            <span data-en>In commercial printing practices and material calibration, printing houses and plate-making
-              personnel explicitly require fixed step intervals (such as 5% or 10% jumps) because smooth, continuous
-              digital gradients easily mask physical deviations and dot gain anomalies on the press. Sampling colors
-              through fixed steps ensures that each ink coverage performance is completely predictable, verifiable, and
-              safe under physical limits. Our tool generates the full multi-dimensional grid of every CMYK value at step
-              10 or step 5, rendering them in real time based on your selected profile. Trying to switch from FOGRA39 to
-              Japan Color 2001 allows you to observe the hue shift of the exact same stepped swatch, making it ideal for
-              hand-picking highly reproducible swatches and deeply understanding the true behavior of a press under
-              strict manufacturing conditions.</span>
-            <span
-              data-ja>商業プリントの実務や材料の校正において、プリント会社や製版担当者は固定されたステップ（5%や10%刻みのジャンプなど）を明確に要求します。これは、デジタル画面上の滑らかで連続的なグラデーションが、プリンターの物理的な偏差やドットゲイン（網点拡大）の異常を容易に隠してしまうためです。固定されたステップを通じて取色（サンプリング）を行うことで、各油墨の物理的限界におけるパフォーマンスが完全に予測可能で検証可能、かつ安全なものになります。当ツールは、ステップ10またはステップ5における全CMYK値の完全な多次元グリッドを、選択されたプロファイルに基づいてリアルタイムにレンダリングします。FOGRA39からJapan
-              Color
-              2001に切り替えてみることで、まったく同じステップ色塊が引き起こす色相のズレ（色偏）を観察することができ、高い再現性を持つ色票を手動で選択し、厳格な製造プロセスにおけるプリンターの真の挙動を深く理解するのに最適です。</span>
-            <span data-zh>在商業印刷實務與材料校准中，印刷廠與開版人員往往明確要求固定步距（如 5% 或 10% 的跳階），這是因為數位螢幕上平滑的連續漸層容易掩蓋物理偏差與網點擴大（Dot
-              Gain）異常。透過固定步距取色確保每種油墨在物理極限下具備完全可預測、可驗證且安全的表現。本工具將步距 10 或 5 的完整 CMYK 全維度網格，依你選定的描述檔進行即時渲染。試著從 FOGRA39 切換到
-              Japan Color 2001，即可觀察同一個跳階色塊產生的色相偏移，最適合用來手選具高重現性的色票，並深入了解列印機在嚴格製程下的真實行為。</span>
-          </p>
-        </div>
-        <div class="col">
-          <h4>
-            <span data-zh>為 3D 建模 × 3D 彩色列印量身訂造</span>
-            <span data-ja>3Dモデリング×3Dカラープリント専用</span>
-            <span data-en>Curated for 3D Modeling × 3D Coloured Print</span>
-            <span class="tag"><span data-en>curated</span><span data-ja>厳選</span><span data-zh>精選</span></span>
-          </h4>
-          <p>
-            <span data-en>Most 3D modeling tools render skin textures and product colors that look fine on screen but
-              clip violently out of gamut when the 3D color printer ingests them in prepress. To prevent these
-              industrial translation failures before they ever happen, load your printer's ICC profile (Mimaki 3DUJ,
-              your bureau's measured profile, anything Pillow recognises) and pull the ΔE max slider down. Every cell
-              still visible has already passed a round-trip safety check under that exact profile. The math runs live,
-              so swapping profiles instantly reshapes the safe set.</span>
-            <span
-              data-ja>一般的な3Dツールでは画面上では問題なく見える皮膚テクスチャや製品色が、3Dカラープリンタの印前処理（プリプレス）に入った瞬間に色域外で激しくクリップされがちです。本ツールはプリンタのICCプロファイル（Mimaki
-              3DUJ、ビューローで実測したプロファイル、Pillowが読み込める任意のCMYKプロファイル）を読み込み、ΔE上限スライダを下げるだけ。表示されている色塊はすべて、その特定プロファイルでの往復安全テスト合格済み。演算はライブで走るため、プロファイルを切り替えれば安全色の集合も即時に再構成されます。</span>
-            <span
-              data-zh>多數 3D 設計工具產生的皮膚貼圖與產品色彩在螢幕上看似正常，但在 3D
-              彩色列印機進入印前製程（Prepress）的瞬間，會發生劇烈的色域外裁切。為了在生產前就杜絕這類工業轉換失敗，載入你列印機的 ICC 描述檔（Mimaki 3DUJ、配合廠商實測的描述檔、任何
-              Pillow 可讀的描述檔皆可），把 ΔE 上限滑桿往下拉。所有仍然顯示的色塊都已通過該特定描述檔下的往返安全檢驗。運算即時執行，切換描述檔可即刻重塑安全色集。</span>
-          </p>
-        </div>
-      </div>
-      <div class="split">
-        <div class="col">
-          <h4>
-            <span data-en>Customizable Printer ICC Profile</span>
-            <span data-ja>カスタムプリンターICCプロファイル</span>
-            <span data-zh>自訂列印機ICC色彩I描述檔</span>
-            <span class="tag"><span data-en>for print</span><span data-ja>印刷向け</span><span data-zh>給印刷的</span></span>
-          </h4>
-          
-          <p>
-            <span data-en>If your printing ICC profile is not bundled here, drop the <code>.icc</code>
-              / <code>.icm</code> file in <code>icc/</code> and run the single Python script
-              (<code>scripts/gen_luts.py</code>). It uses the same Pillow + LittleCMS engine many prepress tools share,
-              samples the profile at a 17⁴ grid, and writes the lookup tables the browser reads. Full Python pipeline
-              rationale + binary format spec is in <a
-                href="https://github.com/mixocreative/mixoswatch/blob/main/ARCHITECTURE.md" target="_blank" rel="noopener">ARCHITECTURE.md</a>.</span>
-            <span data-ja>当ツールに同梱されていないICC プロファイルがあれば、<code>.icc</code> /
-              <code>.icm</code>を<code>icc/</code>に入れて、単一のPythonスクリプト（<code>scripts/gen_luts.py</code>）を実行するだけ。多くのプリプレスツールが共有するPillow
-              + LittleCMSエンジンを使い、17⁴グリッドでプロファイルを標本化し、ブラウザが読むLUTを書き出す。アルゴリズムの仕組み<a
-                href="https://github.com/mixocreative/mixoswatch/blob/main/ARCHITECTURE.md" target="_blank" rel="noopener">ARCHITECTURE.md</a>に詳述。</span>
-            <span data-zh>若本工具未內建你工廠的描述檔，把 <code>.icc</code> / <code>.icm</code> 放進 <code>icc/</code>，執行單支
-              Python 腳本（<code>scripts/gen_luts.py</code>）即可。它使用許多印前工具共用的 Pillow + LittleCMS
-              引擎，以 17⁴ 網格取樣描述檔，並輸出瀏覽器讀取的查找表。演算法原理詳述於 <a
-                href="https://github.com/mixocreative/mixoswatch/blob/main/ARCHITECTURE.md" target="_blank" rel="noopener">ARCHITECTURE.md</a>。</span>
-          </p>
-        </div>
-
-      </div>
     </section>
 
 
@@ -1740,14 +1670,14 @@
       <div class="eyebrow"><span data-en>5-step workflow</span><span data-ja>5工程ワークフロー</span><span data-zh>五步驟流程</span>
       </div>
       <h3>
-        <span data-en>Five steps to a print-ready palette.</span>
-        <span data-ja>プリント可能なパレットへの5工程。</span>
-        <span data-zh>五步建立可印刷的色票組。</span>
+        <span data-en><span style="font-size: 1.2em;"> 5 </span> steps to create a print-ready palette.</span>
+        <span data-ja>プリント可能な色票組への<span style="font-size: 1.2em;"> 5 </span>工程。</span>
+        <span data-zh><span style="font-size: 1.2em;"> 5 </span>步建立可印刷的色票組</span>
       </h3>
       <p>
-        <span data-en>The sidebar in Mixo Swatch is organised into four numbered groups; export is the fifth and final step. Pick the press profile, narrow what you can see, pick + name your colors, choose how to sort and view them, then export. Everything runs in your browser. No upload, no telemetry.</span>
-        <span data-ja>Mixo Swatchのサイドバーは番号付き4グループに整理され、書き出しが5番目の最終工程。プリントプロファイルを選び、表示を絞り、選んで命名し、並び順と表示を決め、最後に書き出す。全てブラウザ内で動作。アップロード・計測なし。</span>
-        <span data-zh>Mixo Swatch 側欄分為四個編號區，匯出為第五個也是最後一個步驟。選描述檔、縮小範圍、挑選與命名、決定排序與檢視，然後匯出。整個流程在瀏覽器內運作，不上傳、不追蹤。</span>
+        <span data-en>Pick the press profile, narrow what you can see, pick + name your colors, choose how to sort and view them, or create separate color swatch sets, then export.</span>
+        <span data-ja>プリントプロファイルを選び、表示を絞り、選んで命名し、並び順と表示を決め、または色票組を個別に作成し、最後に書き出す。</span>
+        <span data-zh>選描述檔、縮小範圍、挑選與命名、決定排序與檢視，或分別製作色票組，然後匯出。</span>
       </p>
       <div class="steps">
         <div class="step">
@@ -1760,7 +1690,7 @@
           <p>
             <span data-en>Choose the press or printer: FOGRA39 for European coated, Japan Color for Japanese coated, SWOP for US web, UncoatedFOGRA29 as the closest bundled Mimaki 3DUJ proxy. Pick the Lab mode (Print D50 for ICC parity with Photoshop, Screen D65 for pure sRGB work).</span>
             <span data-ja>使うプリンタを指定。欧州コート紙ならFOGRA39、日本コート紙ならJapan Color、米国ウェブならSWOP、Mimaki 3DUJの近似プロキシならUncoatedFOGRA29。Labモードも選択（Print D50はPhotoshopのICC値と一致、Screen D65は純sRGB作業向け）。</span>
-            <span data-zh>挑你即將使用的印刷機或印表機：歐洲塗佈紙 FOGRA39、日本塗佈紙 Japan Color、美國捲筒紙 SWOP、Mimaki 3DUJ 最接近代理 UncoatedFOGRA29。同時選 Lab 模式（Print D50 與 Photoshop ICC 對齊；Screen D65 適合純 sRGB 工作）。</span>
+            <span data-zh>挑你即將使用的印刷機或印表機：歐洲塗佈紙 FOGRA39、日本塗佈紙 Japan Color、美國捲筒紙 SWOP、Mimaki 3DUJ 最接近的 UncoatedFOGRA29。同時選 Lab 模式（Print D50 與 Photoshop ICC 對齊；Screen D65 適合純 sRGB 工作）。</span>
           </p>
         </div>
         <div class="step">
@@ -1810,9 +1740,9 @@
             <span data-zh>匯出</span>
           </h5>
           <p>
-            <span data-en>Top-bar Export menu: CSV (UTF-8 with name fields), labelled PNG, 4096-px pure-color PNG, ZIP (per-swatch + manifest). Per-palette Download menu in Palettes view adds ASE, GPL and JSON so Photoshop, Illustrator, Affinity, GIMP, Krita, or Inkscape can read it directly.</span>
-            <span data-ja>トップバーのExportメニュー：CSV（UTF-8、名前付き）、ラベル付きPNG、4096pxピュアカラーPNG、ZIP（1色ずつ + マニフェスト）。パレット表示の各パレットDownloadメニューはASE / GPL / JSONも追加し、Photoshop / Illustrator / Affinity / GIMP / Krita / Inkscapeで直接読み込める。</span>
-            <span data-zh>頂列 Export 選單：CSV（UTF-8 含名稱欄位）、含標籤 PNG、4096 px 純色 PNG、ZIP（逐色 + 清單）。在「調色盤」檢視中，每張調色盤的 Download 選單再加上 ASE / GPL / JSON，可直接給 Photoshop、Illustrator、Affinity、GIMP、Krita 或 Inkscape 使用。</span>
+            <span data-en>Create color swatch sets, or from the top-bar Export menu: CSV (UTF-8 with name fields), labelled PNG, 4096-px pure-color PNG, ZIP (per-swatch + manifest). Per-palette Download menu in Palettes view adds ASE, GPL and JSON so Photoshop, Illustrator, Affinity, GIMP, Krita, or Inkscape can read it directly.</span>
+            <span data-ja>色票組を製作、またはトップバーのExportメニューから：CSV（UTF-8、名前付き）、ラベル付きPNG、4096pxピュアカラーPNG、ZIP（1色ずつ + マニフェスト）。パレット表示の各パレットDownloadメニューはASE / GPL / JSONも追加し、Photoshop / Illustrator / Affinity / GIMP / Krita 或いは Inkscapeで直接読み込める。</span>
+            <span data-zh>製作色票組，或頂列 Export 選單整個色彩資料庫輸出：CSV（UTF-8 含名稱欄位）、含標籤 PNG、4096 px 純色 PNG、ZIP（逐色 + 清單）。在「調色盤」檢視中，每張調色盤的 Download 選單再加上 ASE / GPL / JSON，可直接給 Photoshop、Illustrator、Affinity、GIMP、Krita 或 Inkscape 使用。</span>
           </p>
         </div>
       </div>
@@ -1827,17 +1757,17 @@
       <h3>
         <span data-en>Why print-first beats "give Mimaki a CMYK number" or "let the RIP decide from RGB".</span>
         <span data-ja>なぜ「印刷ファースト」が、生のCMYK指定や、RGBをRIPに任せる方式より優れているのか。</span>
-        <span data-zh>為什麼「印刷優先」勝過直接給 Mimaki 一組 CMYK 數值或交給 RIP 自行從 RGB 決定。</span>
+        <span data-zh>為什麼選擇轉化好的色票勝過直接給 3D列印機 CMYK 數值或 RIP 自行從 RGB 決定。</span>
       </h3>
       <p>
-        <span data-en>Raw CMYK numbers mean nothing without an ICC. Hand RGB to the 3DUJ RIP and it silently compresses the gamut. Mixo routes every swatch through the Mimaki proxy ICC on screen first, so what you pick is what cures on the build plate.</span>
+        <span data-en>Raw CMYK numbers mean nothing without an ICC. Hand RGB to the  RIP and it silently compresses the gamut. Mixo routes every swatch through the Mimaki proxy ICC on screen first, so what you pick is what cures on the build plate.</span>
         <span data-ja>生のCMYK数値はICCなしでは意味を持たない。RGBを3DUJ RIPに渡せば、ガモットは静かに圧縮される。Mixoは全スウォッチをMimakiプロキシICC経由で先に画面に描画する。選んだ色がそのまま造形プラテンで硬化する。</span>
-        <span data-zh>沒有 ICC，原始 CMYK 數值毫無意義。把 RGB 丟給 3DUJ RIP，色域會被靜默壓縮。Mixo 先把每個色塊透過 Mimaki 代理 ICC 渲染到螢幕上，挑到的就是固化在造型平台上的顏色。</span>
+        <span data-zh>沒有 ICC，原始 CMYK 數值毫無意義。把 RGB 丟給列印機的 RIP，色域會被靜默壓縮。Mixo 先把每個色塊透過 ICC 渲染到螢幕上，挑出物理平台上的相近色。</span>
       </p>
       <p style="margin-top:8px;font-size:12.5px;color:var(--muted);line-height:1.6">
-        <span data-en><b>"But Mimaki says use sRGB IEC61966-2.1."</b> True - for texture-map authoring (Substance Painter, ZBrush, Blender, Maya). RasterLink / MPM3 compresses sRGB textures into 3DUJ ink space with its proprietary multi-channel engine, which is the right tool there. Mixo is for the other workflow: spot-color brand palettes where the RIP's perceptual conversion would silently shift your brand cyan to "close enough". Mixo pre-routes CMYK through a Mimaki proxy, gates with round-trip dE, and lays the exact ink you specified.</span>
-        <span data-ja><b>「Mimaki公式はsRGB IEC61966-2.1推奨」</b> その通り。テクスチャマップ制作（Substance Painter、ZBrush、Blender、Maya）の場合。RasterLink / MPM3が独自のマルチチャンネルエンジンでsRGBテクスチャを3DUJインク空間へ圧縮する。Mixoはもう一方のワークフロー、つまりブランドのスポットカラー選定向け。RIPの知覚的変換はブランドシアンを「ほぼ近い色」に静かにずらしてしまう。MixoはCMYKをMimakiプロキシで先回しし、往復ΔEで門番し、指定したインクをそのまま下ろす。</span>
-        <span data-zh><b>「但 Mimaki 官方建議用 sRGB IEC61966-2.1」</b> 沒錯，前提是 3D 紋理貼圖製作（Substance Painter、ZBrush、Blender、Maya）。RasterLink / MPM3 用自家多通道引擎把 sRGB 紋理壓縮到 3DUJ 墨水空間，這在那個流程裡是對的。Mixo 服務的是另一個流程：品牌定色，RIP 的感知壓縮會把你的品牌青色靜悄悄挪到「差不多」。Mixo 先用 Mimaki 代理把 CMYK 預先路由，再用往返 dE 把關，然後下出你指定的那組墨。</span>
+        <span data-en>For texture-map authoring (Substance Painter, ZBrush, Blender, Maya), sRGB IEC61966-2.1 is recommended. RasterLink / MPM3 compresses sRGB textures into 3DUJ ink space with its proprietary multi-channel engine, which is the right tool there. Mixo is for the other workflow: spot-color brand palettes where the RIP's perceptual conversion would silently shift your brand cyan to "close enough". Mixo pre-routes CMYK through a Mimaki proxy, gates with round-trip dE, and lays the exact ink you specified.</span>
+        <span data-ja>テクスチャマップ制作（Substance Painter、ZBrush、Blender、Maya）にはsRGB IEC61966-2.1が推奨されます。RasterLink / MPM3が独自のマルチチャンネルエンジンでsRGBテクスチャを3DUJインク空間へ圧縮する。Mixoはもう一方のワークフロー、つまりブランドのスポットカラー選定向け。RIPの知覚的変換はブランドシアンを「ほぼ近い色」に静かにずらしてしまう。MixoはCMYKをMimakiプロキシで先回しし、往復ΔEで門番し、指定したインクをそのまま下ろす。</span>
+        <span data-zh>一般 3D軟體在紋理貼圖製作（Substance Painter、ZBrush、Blender、Maya）上可以使用 sRGB IEC61966-2.1 等純粹的sRGB着色管理，RasterLink / MPM3 等列印機用自家多通道引擎把 sRGB 紋理壓縮到3D列印使用的墨水空間，這在那個流程裡是對的。Mixo 服務的是另一個流程：品牌定色，初步甄選出指定色彩，快速查找接近的可列印與螢幕用對照色票，及其接近名稱。先用列印機ICC色彩描述檔作基調，再用雙向 dE 對顏色精準度把關。</span>
       </p>
       <div class="steps">
         <div class="step">
@@ -1845,12 +1775,12 @@
           <h5>
             <span data-en>Forward ICC routing on screen</span>
             <span data-ja>画面上のICC順方向ルーティング</span>
-            <span data-zh>螢幕上的 ICC 正向路由</span>
+            <span data-zh>國際照明委員會標準的顯示色彩</span>
           </h5>
           <p>
-            <span data-en>Every cell is rendered through the Mimaki ICC's A2B0 table, so the displayed sRGB equals what the RIP will emit.</span>
-            <span data-ja>各セルをMimaki ICCのA2B0テーブル経由で描画。画面のsRGBはRIPが出力する色そのもの。</span>
-            <span data-zh>每個色塊都經由 Mimaki ICC 的 A2B0 表渲染，螢幕 sRGB 就等於 RIP 將要輸出的顏色。</span>
+            <span data-en>Choose between <span style="font-weight:900; color:var(--accent);">D50 standard</span> for print-first accuracy or <span style="font-weight:900; color:var(--accent);">D65 standard</span> for screen-first display.</span>
+            <span data-ja>印刷優先の<span style="font-weight:900; color:var(--accent);">D50標準</span>、または画面表示優先の<span style="font-weight:900; color:var(--accent);">D65標準</span>から表示方式を選択可能。</span>
+            <span data-zh>可選擇以印刷用優先的 <span style="font-weight:900; color:var(--accent);">D50標準</span> 或以螢幕顯示用優先的 <span style="font-weight:900; color:var(--accent);">D65標準</span> 顯示。</span>
           </p>
         </div>
         <div class="step">
@@ -1871,12 +1801,12 @@
           <h5>
             <span data-en>Round-trip dE gate</span>
             <span data-ja>往復ΔEゲート</span>
-            <span data-zh>往返 dE 門檻</span>
+            <span data-zh>雙向 ΔE 容差值門檻</span>
           </h5>
           <p>
-            <span data-en>The 0.6 dE filter hides swatches the profile cannot hold. Unprintable colors never appear in the picker.</span>
-            <span data-ja>0.6 dEフィルタが、プロファイルで保持できない色を非表示にする。プリント不能な色はピッカーに現れない。</span>
-            <span data-zh>0.6 dE 篩選會隱藏描述檔無法保留的色塊。不可印的顏色根本不會出現在挑色器中。</span>
+            <span data-en>The dE filter hides swatches the profile cannot hold. Unprintable colors never appear in the picker.</span>
+            <span data-ja>ΔEフィルタが、プロファイルで保持できない色を非表示にする。プリント不能な色はピッカーに現れない。</span>
+            <span data-zh>ΔE 篩選會隱藏描述檔無法保留的色塊。不可印的顏色根本不會出現在挑色器中。</span>
           </p>
         </div>
         <div class="step">
@@ -1884,12 +1814,12 @@
           <h5>
             <span data-en>TAC tuned for resin droplets</span>
             <span data-ja>樹脂液滴向けTAC調整</span>
-            <span data-zh>針對樹脂液滴的 TAC</span>
+            <span data-zh>針對樹脂列印與多色列印的 TAC 總墨量調整</span>
           </h5>
           <p>
             <span data-en>240% default + a 3D-print preset protect 3DUJ from pooling and cracking that offset presets (300-350%) would cause.</span>
             <span data-ja>240%デフォルト＋3Dプリントプリセットが、オフセット用プリセット（300-350%）で起こる液溜まりや割れから3DUJを守る。</span>
-            <span data-zh>240% 預設值加上 3D 列印預設組，避免膠著與龜裂。套用平印預設（300-350%）才會引發那些問題。</span>
+            <span data-zh>240% 預設值加上 3D 列印預設組，避免總墨量過高、樹脂散熱反應不平均及色彩混濁。</span>
           </p>
         </div>
         <div class="step">
@@ -1897,12 +1827,12 @@
           <h5>
             <span data-en>Two greyscale strips</span>
             <span data-ja>2本のグレースケールストリップ</span>
-            <span data-zh>兩條灰階條帶</span>
+            <span data-zh>黑白灰階色票</span>
           </h5>
           <p>
-            <span data-en>The GCR-routed neutral ramp and the pure-K-only sweep diverge visibly on 3DUJ. See the difference before committing ink.</span>
-            <span data-ja>GCR経由のニュートラルランプと、純Kのみのスイープは3DUJ上で目に見えて乖離する。インクを決める前に違いを確認できる。</span>
-            <span data-zh>GCR 路徑的中性灰階與純 K 掃描在 3DUJ 上明顯分歧。下墨前先看清差異。</span>
+            <span data-en>Pure black and neutral grayscale display in print.</span>
+            <span data-ja>純黒と中性グレースケールの印刷表示。</span>
+            <span data-zh>純黑色與中性灰階在列印上的顯示。</span>
           </p>
         </div>
         <div class="step">
@@ -1910,20 +1840,15 @@
           <h5>
             <span data-en>Corpus names anchored on Mimaki</span>
             <span data-ja>Mimakiに固定された名前辞書</span>
-            <span data-zh>命名以 Mimaki 為錨</span>
+            <span data-zh>對照可以列印的最接近色</span>
           </h5>
           <p>
-            <span data-en>With anchor=cmyk on the 3DUJ profile, "苅安色" is the closest entry Mimaki can actually print, not the closest entry on a coated offset press.</span>
-            <span data-ja>3DUJプロファイル＋anchor=cmykでは、「苅安色」はMimakiが実際にプリント可能な最近接エントリ。コートオフセットの最近接ではない。</span>
-            <span data-zh>在 3DUJ 描述檔上 anchor=cmyk 時，「苅安色」是 Mimaki 實際可印的最接近項，不是塗佈平印機上的最接近項。</span>
+            <span data-en>When selecting a printer profile or naming database, we can find the closest printable entry for a specified color.</span>
+            <span data-ja>プリンタープロファイルまたは命名データベースを選択する際、指定された色に最も近い印刷可能なエントリを見つけることができます。</span>
+            <span data-zh>在選擇列印機描述檔或者命名資料庫時，我們可以抓出某指定色最實際可印的最接近項。</span>
           </p>
         </div>
       </div>
-      <p style="margin-top:18px">
-        <span data-en><b>The headline.</b> Raw CMYK is a device-dependent number with no meaning. RGB-let-RIP-decide is silent perceptual compression with no visibility. Print-first Mixo runs the Mimaki LUT on screen so the color you pick is the color Mimaki prints, gated by round-trip dE so unprintable colors never appear.</span>
-        <span data-ja><b>要点。</b> 生のCMYKはデバイス依存の意味のない数値。RGBをRIPに任せれば静かなパーセプチュアル圧縮で可視性ゼロ。印刷ファーストのMixoは画面上でMimaki LUTを走らせ、選んだ色がMimakiの出力色になり、往復ΔEで非プリント色を排除する。</span>
-        <span data-zh><b>核心。</b> 原始 CMYK 是裝置相依、無意義的數值。把 RGB 丟給 RIP 等於靜默感知壓縮，毫無可視性。印刷優先的 Mixo 在螢幕上跑 Mimaki LUT，挑到的就是 Mimaki 印出的色，再由往返 dE 攔下不可印的色。</span>
-      </p>
     </section>
 
     <div class="rule"></div>
@@ -1932,9 +1857,9 @@
       <div class="eyebrow"><span data-en>terms in plain language</span><span data-ja>用語の平易な解説</span><span
           data-zh>術語白話解釋</span></div>
       <h3>
-        <span data-en>Quick glossary before the panels.</span>
-        <span data-ja>パネルの前に、用語集。</span>
-        <span data-zh>進入面板前的詞彙須知。</span>
+        <span data-en>UI Terms to Know.</span>
+        <span data-ja>UI用語の注意。</span>
+        <span data-zh>UI 詞彙須知。</span>
       </h3>
       <p>
         <span data-en>The tools borrow terminology from standard commercial press houses and advanced colorimetry. Here
@@ -1943,7 +1868,7 @@
         <span data-zh>此工具沿用了商業印刷與色彩科學的標準術語。以下是它們在實際操作中的具體含意：</span>
       </p>
 
-      <div class="panels">
+      <div class="panels" id="panels">
 
         <div class="panel">
           <div class="panel-name">TAC (Total Area Coverage)<span class="jp">総インク量 ／ 總油墨覆蓋率</span></div>
@@ -1969,7 +1894,7 @@
                 press you target.</span>
               <span
                 data-ja>特定のプリンター・用紙・インク組合せが実際にどう刷るかを記述する小さなファイル。抽象的なCMYK値を実測色にマッピングする。プロファイルを読み込む＝対象のプリンターを指定すること。</span>
-              <span data-zh>一個描述特定列印機、紙張與油墨組合實際印出來如何的小檔案。把抽象的 CMYK 數值對應到實測的顏色。載入描述檔＝告訴工具你目標的列印機是哪一台。</span>
+              <span data-zh>一個描述特定列印機、紙張與油墨組合實際印出來如何的設定檔案。把抽象的 CMYK 數值對應到實測的顏色。載入描述檔＝以哪一台機器為調色目標。</span>
             </p>
           </div>
         </div>
@@ -1983,7 +1908,7 @@
                 too much K crushes mid-tones and makes brand colors look muddy on press.</span>
               <span data-ja>許容する黒（K）インク量の三段階ショートカット。Tier 1＝K 25%未満（クリーンなブランド）、Tier 2＝K 50%まで（深み追加）、Tier 3＝K
                 100%まで（真の墨色）。なぜ段階化？K過多は中間調を潰し、ブランド色を濁らせるから。</span>
-              <span data-zh>允許多少黑墨（K）的三段捷徑。第一階＝K 低於 25%（乾淨品牌）。第二階＝K 至 50%（增加深度）。第三階＝K 至 100%（真正炭黑）。為何分層？因為 K
+              <span data-zh>允許多少黑墨（K）的三段捷徑。第一階＝K 低於 25%（品牌鮮豔）。第二階＝K 至 50%（追加深度）。第三階＝K 至 100%（黑色用墨全開）。為何分層？因為 K
                 太多會壓垮中間調，讓品牌色在印刷上看起來髒。</span>
             </p>
           </div>
@@ -2030,7 +1955,7 @@
                 before checking the match; this is a more honest reflection of real press output.</span>
               <span
                 data-ja>命名辞書がグリッドの色とどのように一致するかを決定します。Hexアンカーは生の表示コードをチェックします（CSS/ウェブ名に最適）。CMYKアンカーは、一致をチェックする前に、まず有効なICCプロファイルに辞書のCMYKを通します。これは実際のプリント出力をより正確に反映します。</span>
-              <span data-zh>決定命名詞典如何與網格色彩進行比對。Hex 錨點比對原始螢幕顯示代碼（最適合 CSS / 網頁名稱）。CMYK 錨點則會在比對前，先將詞典中的 CMYK 經由當前選定的 ICC
+              <span data-zh>決定命名詞典如何與網格色彩進行比對。以 Hex 作為錨點對應原始螢幕顯示代碼（最適合 CSS / 網頁名稱）。以 CMYK 作為錨點則會在比對前，先將詞典中的 CMYK 經由當前選定的 ICC
                 描述檔轉換，這能更真實地反映列印機的實際產出。</span>
             </p>
           </div>
