@@ -1174,6 +1174,9 @@ input[type=range]{accent-color:var(--accent)}
 </div>
 
 <script>
+// ── DOM shortcut (module-scope, replaces per-function $ helpers) ──────────
+const $ = id => document.getElementById(id);
+
 // ── Dynamic data pipeline (CMYK lattice + LUT + corpora + name match) ──────
 let RAW = [];           // current generated lattice (all swatches)
 let DEDUP = [];         // dedupe-by-CMYK view, all derivations attach here
@@ -1257,7 +1260,6 @@ function _resolvedUI() {
 }
 // Snapshot live state (vars + DOM) for persistence.
 function _snapshotUI() {
-  const $ = id => document.getElementById(id);
   const numv = (id, dflt) => { const el = $(id); return el ? +el.value : dflt; };
   return {
     step: curStep, cell_size: curCell, view_mode: viewMode,
@@ -1285,7 +1287,6 @@ function _snapshotUI() {
 function persistUI() { _writeUIState(_snapshotUI()); }
 // Apply a state object to the live vars + DOM (no fetch / no rebuild here).
 function applyUIState(s) {
-  const $ = id => document.getElementById(id);
   if (typeof s.step           === 'number') curStep   = s.step;
   if (typeof s.cell_size      === 'number') curCell   = s.cell_size;
   if (typeof s.view_mode      === 'string') {
