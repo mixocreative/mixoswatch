@@ -144,9 +144,15 @@ TAC as a UI filter in the Mixo Swatch.
 | JapanColor | 320% | Japanese offset coated |
 | 3D-print (Mimaki 3DUJ) | 300% | Profile-specific; checkbox in UI |
 
-The **3D-print preset** checkbox is a two-way toggle. It auto-checks itself whenever the live state already satisfies every 3D-print constraint (TAC <= 240%, dE max <= 2.0, profile filename matches `Uncoated | Newspaper | 3DUJ | Mimaki`). A manual click flips state:
-- **Click on** (when conditions are not met): snapshot the current TAC / dE / profile, then force-fit the constraints (cap TAC, tighten dE, switch to a 3DUJ-safe proxy profile).
-- **Click off** (when conditions are met): if a snapshot exists from a prior click-on, restore it. Otherwise the user reached the satisfied state organically by adjusting sliders and has no snapshot; in that case the toggle forces the inverse - switch to a coated offset profile (FOGRA39 / SWOP / JapanColor), open TAC to ~330%, and relax dE max to ~3.0 - so the toggle is always a meaningful two-way control.
+The **3D-print preset** is a **one-way force button + live satisfaction indicator**. It auto-lights whenever the live state already satisfies every 3D-print requirement:
+- `LAB_MODE === 'd50'` (Color mode = Print)
+- profile filename matches `Uncoated | Newspaper | 3DUJ | Mimaki`
+- TAC slider <= 240%
+- dE max slider <= 2.0
+
+Click behaviour:
+- **Click while off** (conditions not met): force-fit every constraint at once - switch `LAB_MODE` to `d50`, swap `ACTIVE_PROFILE` to a 3D-safe proxy (`_pick3DProfile()` order: factory default match, first Uncoated, first Newspaper, first profile), clamp TAC to 240% and dE max to 2.0. No snapshot is kept.
+- **Click while on**: no-op. The indicator only flips off when the user organically leaves the envelope (moves a slider, switches profile, flips `LAB_MODE`) - `_sync3DCheckbox()` re-evaluates on every relevant input.
 
 ### 2.5 K-tier philosophy (project-specific)
 
@@ -996,13 +1002,16 @@ Several UI changes were bundled in Spec 6 to reduce sidebar surface area:
 - **Per-swatch ZIP**: previously export required selecting a palette. The
   per-swatch ZIP lets the user export a single color directly from its
   detail card without creating a palette.
-- **Light + dark theme with topbar toggle**: the app ships both themes and
-  honors `prefers-color-scheme` on first run; an explicit topbar toggle
-  (`#themeToggleBtn`) overrides and persists under
-  `localStorage['ui_theme']`. The light palette mirrors `index.html` token
-  for token (warm paper / brand-tan accent / espresso text). The topbar
-  logo swaps between `img/logo.svg` (white-on-dark) and `img/logo-black.svg`
-  (black-on-light) so the mark stays legible across themes.
+- **Light + dark theme with topbar toggle**: the app ships both themes.
+  **First-run default is dark**; OS `prefers-color-scheme` is intentionally
+  ignored (the app's brand surface is the dark palette, the landing page
+  brings its own warm-paper light surface for editorial reading - mixing
+  them on first load reads as broken). The topbar toggle (`#themeToggleBtn`)
+  flips between dark and light and persists under `localStorage['ui_theme']`,
+  which wins on every subsequent load. The light palette mirrors
+  `index.html` token for token (warm paper / brand-tan accent / espresso
+  text). The topbar logo swaps between `img/logo.svg` (white-on-dark) and
+  `img/logo-black.svg` (black-on-light) so the mark stays legible.
 - **Responsive breakpoints (1024 / 768 / 480)**: sidebar becomes a
   drawer at 1024px, triggered by a hamburger button. At 768px the grid
   columns narrow. At 480px single-column layout with full-width controls.
@@ -1099,9 +1108,11 @@ so `file://` won't work (security restriction).
 
 ### 10.7 Deploy
 
-Drop the folder onto GitHub Pages or any static host. ICCs stay
-`.gitignore`d (license reasons); LUTs can be committed with `git add -f`
-if you want them served alongside the HTML.
+Drop the folder onto GitHub Pages or any static host. The reference
+deployment is <https://mixocreative.github.io/mixoswatch/> - the landing
+is `/`, the explorer is `/app/mixo-swatch.html`. ICCs stay `.gitignore`d
+(license reasons); LUTs can be committed with `git add -f` if you want
+them served alongside the HTML.
 
 For password protection on a self-hosted Apache box, use cPanel
 Directory Privacy (`.htaccess` / `.htpasswd`). No HTML changes needed.

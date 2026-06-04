@@ -2,8 +2,10 @@
 
 One browser tool for designing print-safe colors against real ICC profiles, plus a small Python script that prepares the lookup tables it consumes. Built for designers who work across **2D commercial print** and **3D color printing** (Mimaki 3DUJ, Stratasys J55, Cura material libraries, etc.).
 
-- **`app/mixo-swatch.html`** (Mixo Swatch) · live grid of every CMYK value at a chosen step, rendered through a CMYK ICC profile of your choice. Filter by total area coverage, by named-color closeness (Japanese traditional + Chinese traditional + W3C CSS), by **dE max** for round-trip safety, build palettes, export ASE / GPL / PNG / JSON / ZIP. Hue × Light sort renders an 18 × 10 bucket map inline in the full grid area. **3D-print toggle** auto-checks when current settings already satisfy 3D-print constraints (TAC ≤ 240%, ΔE ≤ 2.0, Mimaki 3DUJ-safe profile); a manual click force-fits them. Interface localised to **English / 日本語 / 繁體中文** with browser-language auto-detect + an in-app language picker, and a topbar **light / dark theme toggle** that mirrors the landing page tokens.
+- **`app/mixo-swatch.html`** (Mixo Swatch) · live grid of every CMYK value at a chosen step, rendered through a CMYK ICC profile of your choice. Filter by total area coverage, by named-color closeness (Japanese traditional + Chinese traditional + W3C CSS), by **dE max** for round-trip safety, build palettes, export ASE / GPL / PNG / JSON / ZIP. Hue × Light sort renders an 18 × 10 bucket map inline in the full grid area. **3D-print preset** is a one-way force button: it auto-lights when current settings already satisfy every 3D-print requirement (Color mode = Print / D50, TAC ≤ 240%, dE ≤ 2.0, Mimaki 3DUJ-safe profile); clicking while off force-fits all four at once; clicking while on is a no-op (move a slider or change profile to leave the envelope and the indicator auto-untoggles). Interface localised to **English / 日本語 / 繁體中文** with browser-language auto-detect + an in-app language picker, and a topbar **light / dark theme toggle** (defaults to dark on first run, OS `prefers-color-scheme` is intentionally ignored).
 - **`index.html`** · zen landing with live interactive demos for every sidebar control, tri-lingual (EN / 日本語 / 繁中).
+
+**Live site:** <https://mixocreative.github.io/mixoswatch/> · Landing is `index.html`; the explorer link in the landing topbar opens `app/mixo-swatch.html`.
 
 ## Why
 
@@ -69,7 +71,7 @@ python scripts/gen_luts.py
 run.bat         # Windows
 ```
 
-Open <http://localhost:8765/> in a browser.
+`run.bat` / `run.sh` start `python -m http.server 8765` from the project root and pop the landing page in your default browser. Close the terminal window (or Ctrl+C) to stop the server.
 
 ---
 
@@ -207,6 +209,8 @@ run.bat         # Windows
 
 Both call `python -m http.server 8765` from the project root and open the landing page in your default browser. The HTML fetches JSON and LUT files via `fetch()`, so `file://` will not work (browser CORS/security). If you prefer a different server (`npx serve`, nginx, etc.) any plain static-file host works.
 
+The landing is `/`, the explorer is `/app/mixo-swatch.html`. Same paths apply on the live site.
+
 ---
 
 ## Hosting on GitHub Pages
@@ -246,4 +250,4 @@ Detailed budget + the lag-prevention rationale (rAF-coalesced render scheduler, 
 
 ## License
 
-Code: MIT. ICC profiles, DIC color guides, and Pantone are not redistributed.
+Code: GPL-3.0 (see `LICENSE.txt`). ICC profiles, DIC color guides, and Pantone are not redistributed.
