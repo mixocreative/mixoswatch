@@ -46,7 +46,6 @@ cmyk/
 |-- icc/                           Gitignored: user supplies their own
 |   |-- *.icc / *.icm              Source ICC profiles
 |   `-- README.md                  Drop-zone explanation
-|-- run.bat / run.sh               Local HTTP server launcher
 |-- README.md                      Setup + usage
 |-- ARCHITECTURE.md                This file
 `-- .gitignore
@@ -698,7 +697,7 @@ one before adding swatches. Deleting the last palette leaves
 ### 7.1 Lifecycle
 
 1. **Page load**: bootstrap `window.addEventListener('load', ...)`:
-   - Detect `file://` protocol; if so, show error pointing to `run.bat`
+   - Detect `file://` protocol; if so, show error pointing the user at `python -m http.server 8765`
    - `loadPalettes()`: pull saved palettes from `localStorage['cmykPalettes_v1']`
    - `loadIndex()`: fetch `data/luts/index.json`, populate profile dropdown
    - `loadCorpora()`: fetch `data/corpora/name_corpora.json`, precompute Lab for each entry
@@ -1096,15 +1095,12 @@ The HTML is self-contained, no build step. Compose:
 ### 10.6 Run the stack locally
 
 ```bash
-# Windows
-run.bat
-# Mac / Linux
-bash run.sh
+python -m http.server 8765
+# open http://localhost:8765/ in a browser
 ```
 
-Starts `python -m http.server 8765` and opens `index.html` (the zen
-landing) in the default browser. The HTML fetches its config via HTTP
-so `file://` won't work (security restriction).
+The HTML fetches its config via HTTP so `file://` won't work (security
+restriction). Any static-file server works (`npx serve`, nginx, etc.).
 
 ### 10.7 Deploy
 
@@ -1130,7 +1126,7 @@ Directory Privacy (`.htaccess` / `.htpasswd`). No HTML changes needed.
 | ZIP corrupt | CRC-32 buggy | Verify table-based impl, EOCD offsets |
 | ASE rejected by Photoshop | UTF-16BE name length wrong | Ensure char count INCLUDES null terminator |
 | Hue x Light overflows | Fixed `cs px` columns | Compute `fitCs = floor((avail - gaps)/18)`, use min |
-| `file://` blocks fetch | Wrong launch path | Use `run.bat` / `run.sh` |
+| `file://` blocks fetch | Wrong launch path | Serve via `python -m http.server 8765` |
 | Console: "palSet already declared" | Same `const` twice in `renderGS` | Reuse the outer declaration; don't redeclare in the pure-K block |
 
 ---
