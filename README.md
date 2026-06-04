@@ -2,7 +2,7 @@
 
 One browser tool for designing print-safe colors against real ICC profiles, plus a small Python script that prepares the lookup tables it consumes. Built for designers who work across **2D commercial print** and **3D color printing** (Mimaki 3DUJ, Stratasys J55, Cura material libraries, etc.).
 
-- **`app/mixo-swatch.html`** (Mixo Swatch) · live grid of every CMYK value at a chosen step, rendered through a CMYK ICC profile of your choice. Filter by total area coverage, by named-color closeness (Japanese traditional + Chinese traditional + W3C CSS), by **dE max** for round-trip safety, build palettes, export ASE / GPL / PNG / JSON / ZIP. Interface localised to **English / 日本語 / 繁體中文** with browser-language auto-detect + an in-app language picker.
+- **`app/mixo-swatch.html`** (Mixo Swatch) · live grid of every CMYK value at a chosen step, rendered through a CMYK ICC profile of your choice. Filter by total area coverage, by named-color closeness (Japanese traditional + Chinese traditional + W3C CSS), by **dE max** for round-trip safety, build palettes, export ASE / GPL / PNG / JSON / ZIP. Hue × Light sort renders an 18 × 10 bucket map inline in the full grid area. **3D-print toggle** auto-checks when current settings already satisfy 3D-print constraints (TAC ≤ 240%, ΔE ≤ 2.0, Mimaki 3DUJ-safe profile); a manual click force-fits them. Interface localised to **English / 日本語 / 繁體中文** with browser-language auto-detect + an in-app language picker, and a topbar **light / dark theme toggle** that mirrors the landing page tokens.
 - **`index.html`** · zen landing with live interactive demos for every sidebar control, tri-lingual (EN / 日本語 / 繁中).
 
 ## Why

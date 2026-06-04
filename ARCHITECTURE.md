@@ -52,7 +52,7 @@ cmyk/
 `-- .gitignore
 ```
 
-`.git/`, `.claude/`, `icc/*.icc`, and `data/luts/*.lut` are gitignored.
+`.git/`, `icc/*.icc`, and `data/luts/*.lut` are gitignored.
 ICC profile binaries are not redistributable; the LUTs are derived from
 them and can be either committed (for GitHub Pages hosting) or kept local.
 
@@ -144,7 +144,9 @@ TAC as a UI filter in the Mixo Swatch.
 | JapanColor | 320% | Japanese offset coated |
 | 3D-print (Mimaki 3DUJ) | 300% | Profile-specific; checkbox in UI |
 
-The **3D-print preset** checkbox sets a special mode: the TAC slider maximum caps at the profile's `tac_max` and the recommended default is applied, reflecting the stricter ink-load constraints of resin-based 3D color printing.
+The **3D-print preset** checkbox is a two-way toggle. It auto-checks itself whenever the live state already satisfies every 3D-print constraint (TAC <= 240%, dE max <= 2.0, profile filename matches `Uncoated | Newspaper | 3DUJ | Mimaki`). A manual click flips state:
+- **Click on** (when conditions are not met): snapshot the current TAC / dE / profile, then force-fit the constraints (cap TAC, tighten dE, switch to a 3DUJ-safe proxy profile).
+- **Click off** (when conditions are met): if a snapshot exists from a prior click-on, restore it. Otherwise the user reached the satisfied state organically by adjusting sliders and has no snapshot; in that case the toggle forces the inverse - switch to a coated offset profile (FOGRA39 / SWOP / JapanColor), open TAC to ~330%, and relax dE max to ~3.0 - so the toggle is always a meaningful two-way control.
 
 ### 2.5 K-tier philosophy (project-specific)
 
@@ -750,10 +752,14 @@ Below the main grid. See §5 for the renderer details.
 
 **Hue x Light** is not a separate view mode. It is a sort option in the
 **Sort by** row: selecting "Hue x Light" renders the 18 hue x 10 light
-bucket map inline into the Palettes panel body (`#pmWrap`). Both
-non-grid views (Palettes + Hue x Light) auto-open the Palettes panel via
-`_ensurePalettePanelOpen()` so the rendered content is visible. Cells are
-responsive and shrink-to-fit when the viewport is narrow.
+bucket map inline into the main swatch grid area (`#swatchGrid`), using
+the full available width of `#gridScroll`. The renderer overrides the
+default `.swatch-grid` padding / justify so the bucket grid fills the
+container; columns are `repeat(10, minmax(0, 1fr))` and inner padding
+collapses on narrow viewports (4 px under 768 px, 10 px otherwise).
+Cells use `aspect-ratio: 1/1`, so they shrink-to-fit responsively as
+the viewport changes; the resize listener (§7.5) debounces re-render
+to 120 ms.
 
 **Palettes panel.** The Palettes block and the palette-manager (`pm-wrap`)
 are merged into a single collapsable panel that sits above the grid. The
@@ -762,12 +768,12 @@ the left, a high-contrast accent button (`#ppAction`) on the right
 labelled "Open palettes" / "Close palettes" - the legacy disclosure
 triangle (`.chev`) was removed because the affordance was too subtle.
 
-**Hue x Light lives inside the Palettes panel body.** The Hue x Light sort
-option renders into `#pmWrap`, which sits inside `palettePanelBody`.
-Selecting the "Hue x Light" sort button (or the Palettes view) auto-opens
-the palette panel via `_ensurePalettePanelOpen()` so the rendered map is
-visible. The grid swatch area + greyscale strips are hidden while
-viewMode is `huelight` or `palettes`.
+**Hue x Light lives inside the main swatch grid area.** The Hue x Light
+sort option renders into `#swatchGrid` (full grid-area width). When the
+sort is active, `gsWrap` (the two greyscale strips block) is hidden so
+the bucket map gets the entire vertical real estate. The Palettes panel
+above the grid is left in whatever state the user last set it - there
+is no auto-open coupling between Hue x Light and the Palettes panel.
 
 ### 7.5 Filters
 
@@ -990,8 +996,13 @@ Several UI changes were bundled in Spec 6 to reduce sidebar surface area:
 - **Per-swatch ZIP**: previously export required selecting a palette. The
   per-swatch ZIP lets the user export a single color directly from its
   detail card without creating a palette.
-- **Dark-only theme**: light mode was rarely used, required double-testing,
-  and produced lower contrast for the CMYK color work. Locked to dark.
+- **Light + dark theme with topbar toggle**: the app ships both themes and
+  honors `prefers-color-scheme` on first run; an explicit topbar toggle
+  (`#themeToggleBtn`) overrides and persists under
+  `localStorage['ui_theme']`. The light palette mirrors `index.html` token
+  for token (warm paper / brand-tan accent / espresso text). The topbar
+  logo swaps between `img/logo.svg` (white-on-dark) and `img/logo-black.svg`
+  (black-on-light) so the mark stays legible across themes.
 - **Responsive breakpoints (1024 / 768 / 480)**: sidebar becomes a
   drawer at 1024px, triggered by a hamburger button. At 768px the grid
   columns narrow. At 480px single-column layout with full-width controls.

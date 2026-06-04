@@ -7,7 +7,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+JP:wght@400;500&display=swap" rel="stylesheet">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Hina+Mincho&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Zen+Antique+Soft&display=swap" rel="stylesheet">
+
 <style>
 :root {
   --bg:#1A1918; --bg2:#222120; --surface:#2A2928;
@@ -16,9 +17,19 @@
   --accent:#B2A88D; --accent-rgb:178 168 141;
   --font-mono:'IBM Plex Mono','Fira Mono',monospace;
   --font-sans:'Noto Sans JP',system-ui,sans-serif;
-  --font-jpn-serif:'Hina Mincho','Yu Mincho',serif;
+  --font-jpn-serif:"Zen Antique Soft",serif;
   --r:6px; --rl:10px;
   color-scheme:dark;
+}
+/* Light theme - mirrors index.html tokens exactly so the landing page
+   and tool surface share one visual identity. Activated by
+   document.documentElement[data-theme="light"]. */
+:root[data-theme="light"] {
+  --bg:#F8F6F1; --bg2:#F0EDE6; --surface:#FFFFFF;
+  --border:rgba(0,0,0,0.14); --border2:rgba(0,0,0,0.07);
+  --text:#1A1916; --muted:#6E6C66; --faint:#A39F97;
+  --accent:#6E6648; --accent-rgb:110 102 72;
+  color-scheme:light;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:100vh;overflow:hidden}
@@ -290,6 +301,16 @@ input[type=range]{accent-color:var(--accent)}
   background:var(--surface);
 }
 .palette-panel.open .palette-panel-body{display:flex}
+
+/* ── Theme toggle (topbar) ── */
+.theme-toggle{
+  font-size:11px;padding:5px 9px;border:1px solid var(--border);border-radius:var(--r);
+  background:transparent;color:var(--text);cursor:pointer;
+  font-family:var(--font-mono);letter-spacing:.06em;
+  display:inline-flex;align-items:center;gap:5px;line-height:1;
+}
+.theme-toggle:hover{background:var(--bg2)}
+.theme-toggle .tt-glyph{font-size:13px;line-height:1}
 
 /* ── Language picker (topbar) ── */
 .lang-picker{
@@ -710,7 +731,7 @@ input[type=range]{accent-color:var(--accent)}
 <!-- Top bar -->
 <header class="topbar">
   <button class="hamburger-btn" id="hamburger" onclick="toggleSidebar()" aria-label="Toggle sidebar" title="Show / hide sidebar (mobile)">&#8801;</button>
-  <img src="img/logo.svg" alt="" class="topbar-logo" aria-hidden="true">
+  <img src="img/logo.svg" alt="" class="topbar-logo" id="topbarLogo" aria-hidden="true">
   <span class="topbar-title">Mixo Swatch</span>
   <span class="lab-mode-badge" id="labModeBadge" data-i18n="badge.mode_d50" title="Active Lab whitepoint. Switch in sidebar under 'Color mode'.">Mode: Print (D50)</span>
   <div class="topbar-sep"></div>
@@ -726,6 +747,9 @@ input[type=range]{accent-color:var(--accent)}
       <button onclick="exportFilteredSwatchZIP();_closeAllPalMenus()" data-i18n="export.zip" title="ZIP with one 128x128 pure-color PNG per filtered swatch plus manifest.csv/json.">ZIP (per-swatch + manifest)</button>
     </div>
   </div>
+  <button type="button" class="theme-toggle" id="themeToggleBtn" onclick="toggleTheme()" title="Switch between light and dark theme">
+    <span class="tt-glyph" id="themeGlyph" aria-hidden="true">&#9789;</span><span id="themeLabel" data-i18n="theme.dark">DARK</span>
+  </button>
   <div class="lang-picker">
     <button type="button" class="lang-picker-btn" id="langPickerBtn" onclick="toggleLangMenu()" title="Change interface language">
       <span id="langCurrent">EN</span><span aria-hidden="true">&#9662;</span>
@@ -849,7 +873,7 @@ input[type=range]{accent-color:var(--accent)}
           <span data-i18n="threed.label">3D-print preset</span>
         </label>
       </div>
-      <div class="match-help" data-i18n="threed.help">When on: TAC&lt;=240%, hide swatches with round-trip dE&gt;2, snap profile to a Mimaki 3DUJ-safe proxy. Auto-detects when current settings already satisfy the requirement.</div>
+      <div class="match-help" data-i18n="threed.help">Two-way toggle. Auto-checks when every constraint is already met (TAC&lt;=240%, dE&lt;=2.0, 3DUJ-safe profile). Click off to force the inverse: switch to a coated offset profile (FOGRA39 / SWOP) with wider TAC and lax dE, moving the grid out of 3D-print territory.</div>
     </div>
 
 
@@ -2792,7 +2816,7 @@ function _makeSwatchCell(sw, ctx) {
       const e  = document.createElement('div');
       e.className = isJpn ? 'cell-jpn' : 'cell-html';
       e.style.cssText = `color:${sw.text_color};font-size:${fz}px;top:${yCursor}px`
-                      + (isJpn ? ';font-weight:600' : '');
+                      + (isJpn ? ';font-weight:300' : '');
       e.textContent = text;
       cell.appendChild(e);
       yCursor += fz + 2;
@@ -2932,6 +2956,9 @@ function render() {
   const gridContentW = cols * cs + Math.max(0, cols - 1) * gap;
   grid.style.display = 'block';
   grid.style.position = 'relative';
+  // Clear HL-mode overrides if user just left Hue x Light sort.
+  grid.style.padding = '';
+  grid.style.justifyContent = '';
   grid.style.height = totalH + 'px';
   grid.style.width = gridContentW + 'px';
   grid.style.maxWidth = '100%';
@@ -3273,6 +3300,18 @@ function _pick3DProfile() {
       || ICC_INDEX.profiles.find(p => /Newspaper/i.test(p.filename))
       || ICC_INDEX.profiles[0];
 }
+// Inverse of _pick3DProfile: pick a coated/offset profile so toggling off
+// from an auto-satisfied state actually moves settings out of the
+// 3D-print envelope. Order: FOGRA39 -> SWOP -> JapanColor -> any
+// not-3D-safe -> first profile.
+function _pickNon3DProfile() {
+  if (!ICC_INDEX || !Array.isArray(ICC_INDEX.profiles) || !ICC_INDEX.profiles.length) return null;
+  return ICC_INDEX.profiles.find(p => /FOGRA39/i.test(p.filename))
+      || ICC_INDEX.profiles.find(p => /SWOP/i.test(p.filename))
+      || ICC_INDEX.profiles.find(p => /JapanColor|Japan_Color/i.test(p.filename))
+      || ICC_INDEX.profiles.find(p => !_is3DSafeProfile(p))
+      || ICC_INDEX.profiles[0];
+}
 
 async function set3DPreset(on) {
   const slTAC = document.getElementById('slTAC');
@@ -3302,7 +3341,11 @@ async function set3DPreset(on) {
     TAC_USER_OVERRIDE = false;
     if (tacOver) tacOver.style.display = 'inline-block';
   } else {
-    // Restore the snapshot the user had before the preset took over.
+    // Toggle off: if the user had explicitly turned the preset on
+    // earlier, restore their snapshot. Otherwise (preset was satisfied
+    // organically by slider/profile drift) leave the page alone -
+    // _sync3DCheckbox will re-check the box on the next event if
+    // conditions still match. This keeps the toggle a clean indicator.
     if (_3D_PREV_TAC !== null)   { slTAC.value = _3D_PREV_TAC; _3D_PREV_TAC = null; }
     if (_3D_PREV_DEMAX !== null) { slDEmax.value = _3D_PREV_DEMAX; _3D_PREV_DEMAX = null; }
     if (_3D_PREV_PROFILE && ICC_INDEX) {
@@ -3899,8 +3942,11 @@ function renderHueLightMap(target) {
   wrap.innerHTML = '';
   // The main swatch grid container carries inline styles from the
   // virtualized renderer (display:block, height, width, margin). Wipe
-  // those so the hl-grid below can lay out via CSS Grid + fr.
-  wrap.style.cssText = '';
+  // those AND override the .swatch-grid class padding/justify so the
+  // hl-grid below can span the full grid-area width responsively.
+  wrap.style.cssText =
+    'display:block;width:100%;max-width:100%;margin:0;padding:0;'+
+    'justify-content:stretch;';
   const data = sorted(filtered());
   // Pick best swatch per (hue,light) cell - lowest delta_e_print wins ties
   const grid = new Map();
@@ -3918,7 +3964,9 @@ function renderHueLightMap(target) {
   // fully responsive via fr columns + aspect-ratio cells. Light reads
   // dark → light left → right; hue reads top → bottom.
   const wrapEl = document.getElementById('gridScroll');
-  const avail  = (wrapEl?.clientWidth || window.innerWidth) - 28;
+  // hl-grid inner padding (px each side). Narrow viewports get less.
+  const innerPad = (window.innerWidth < 768) ? 4 : 10;
+  const avail  = (wrapEl?.clientWidth || window.innerWidth) - innerPad * 2;
   const reqGap = Math.max(2, Math.round(curCell * 0.05));
   const ROTATE = true;
   const cols   = HL_LIGHT_BINS;   // 10 - lightness across
@@ -3933,9 +3981,9 @@ function renderHueLightMap(target) {
   const container = document.createElement('div');
   container.className = 'hl-grid';
   container.style.cssText =
-    `display:grid;width:100%;`+
-    `grid-template-columns:repeat(${cols}, 1fr);`+
-    `gap:${gap}px;padding:14px 16px;box-sizing:border-box;`;
+    `display:grid;width:100%;box-sizing:border-box;`+
+    `grid-template-columns:repeat(${cols}, minmax(0, 1fr));`+
+    `gap:${gap}px;padding:${innerPad}px;`;
 
   // Header row: orientation-aware legend
   const head = document.createElement('div');
@@ -4553,8 +4601,10 @@ const I18N = {
     'tier.t3.name': '+ Tier 3 · Deep',
     'lab.d50':       'Print (D50)',
     'lab.d65':       'Screen (D65)',
+    'theme.light':   'LIGHT',
+    'theme.dark':    'DARK',
     'threed.label':  '3D-print preset',
-    'threed.help':   'When on: TAC <= 240%, hide swatches with round-trip dE > 2, snap profile to a Mimaki 3DUJ-safe proxy. Auto-detects when current settings already satisfy the requirement.',
+    'threed.help':   'Two-way toggle. Auto-checks when every constraint is already met (TAC <= 240%, dE <= 2.0, 3DUJ-safe profile). Click off to force the inverse: switch to a coated offset profile (FOGRA39 / SWOP) with wider TAC and lax dE, moving the grid out of 3D-print territory.',
     'pal.sel_off':   'Selection: OFF',
     'pal.sel_on':    'Selection: ON',
     'pal.export':    'Export',
@@ -4642,8 +4692,10 @@ const I18N = {
     'tier.t3.name': '+ 階層3 · 深色',
     'lab.d50':       '印刷 (D50)',
     'lab.d65':       '画面 (D65)',
+    'theme.light':   '明',
+    'theme.dark':    '暗',
     'threed.label':  '3Dプリント設定',
-    'threed.help':   'オン時: TAC <= 240%、往復ΔE > 2 を非表示、プロファイルを Mimaki 3DUJ 安全プロキシに固定。現在の設定が条件を満たしていれば自動検出。',
+    'threed.help':   '双方向トグル。全条件（TAC <= 240%、ΔE <= 2.0、3DUJ 安全プロファイル）を満たしている場合は自動的にオンになる。オフにすると逆方向に強制：FOGRA39 / SWOP 等のコート系プロファイルへ切替、TAC を広げ、ΔE 制限を緩和して 3D プリント領域から離脱する。',
     'pal.sel_off':   '選択モード: OFF',
     'pal.sel_on':    '選択モード: ON',
     'pal.export':    '書き出し',
@@ -4731,8 +4783,10 @@ const I18N = {
     'tier.t3.name': '+ 階3 · 深暗',
     'lab.d50':       '印刷 (D50)',
     'lab.d65':       '螢幕 (D65)',
+    'theme.light':   '亮',
+    'theme.dark':    '暗',
     'threed.label':  '3D 列印預設',
-    'threed.help':   '開啟時：TAC <= 240%、隱藏往返 dE > 2 的色塊、把描述檔切到 Mimaki 3DUJ 安全代理。若目前設定已符合條件，會自動勾選。',
+    'threed.help':   '雙向切換。當所有條件（TAC <= 240%、dE <= 2.0、3DUJ 安全描述檔）皆已符合時自動勾選。取消勾選會反向強制：切到塗佈印刷描述檔（FOGRA39 / SWOP）、放寬 TAC 與 dE，把版面移出 3D 列印範圍。',
     'pal.sel_off':   '選取模式：關',
     'pal.sel_on':    '選取模式：開',
     'pal.export':    '匯出',
@@ -4841,6 +4895,41 @@ function _closeLangMenu() {
 document.addEventListener('click', (e) => {
   if (!e.target.closest('.lang-picker')) _closeLangMenu();
 });
+
+/* ── Theme switch (light / dark) ─────────────────────────────────────── */
+function _applyTheme(theme) {
+  const t = (theme === 'light') ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', t);
+  const glyph = document.getElementById('themeGlyph');
+  const label = document.getElementById('themeLabel');
+  if (glyph) glyph.innerHTML = (t === 'light') ? '&#9728;' : '&#9789;';
+  if (label) {
+    const key = (t === 'light') ? 'theme.light' : 'theme.dark';
+    label.setAttribute('data-i18n', key);
+    label.textContent = t_label(key, (t === 'light') ? 'LIGHT' : 'DARK');
+  }
+  // Logo swap: dark theme uses the white-on-dark mark, light theme uses
+  // the black-on-light variant. Both share the brand-tan accent path.
+  const logo = document.getElementById('topbarLogo');
+  if (logo) logo.src = (t === 'light') ? 'img/logo-black.svg' : 'img/logo.svg';
+}
+function t_label(key, fallback) {
+  try { return (typeof t === 'function') ? t(key, fallback) : fallback; } catch { return fallback; }
+}
+function toggleTheme() {
+  const cur = document.documentElement.getAttribute('data-theme') || 'dark';
+  const next = (cur === 'light') ? 'dark' : 'light';
+  try { localStorage.setItem('ui_theme', next); } catch {}
+  _applyTheme(next);
+}
+(function _initTheme() {
+  let saved = null;
+  try { saved = localStorage.getItem('ui_theme'); } catch {}
+  if (!saved) {
+    saved = (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) ? 'light' : 'dark';
+  }
+  _applyTheme(saved);
+})();
 
 /* ── Hue x Light + Palettes views auto-open the palette panel ─────────── */
 function _ensurePalettePanelOpen() {
