@@ -34,6 +34,18 @@
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:100vh;overflow:hidden}
 
+/* ── Small utility classes (used to replace repeated inline styles) ── */
+.hidden{display:none !important}
+.mt-6{margin-top:6px}
+.mt-8{margin-top:8px}
+.mt-10{margin-top:10px}
+.pill-col{flex-direction:column;border-radius:var(--r)}
+.icc-status{
+  font-size:10px;color:var(--muted);
+  font-family:var(--font-mono);margin-top:2px;
+}
+.flt-empty{font-size:10.5px;color:var(--faint)}
+
 /* Tint every native form control with the brand accent so checkboxes /
    radios / range sliders match the rest of the UI (browsers otherwise
    default to OS blue or, on some Linux Chromium builds, a purple). */
@@ -808,15 +820,16 @@ input[type=range]{accent-color:var(--accent)}
     <!-- ICC Profile -->
     <div class="sec">
       <div class="sec-label" data-i18n="sec.icc_profile">ICC profile (CMYK output)</div>
-      <select class="pal-sel" id="iccSel" onchange="onProfileChange()" title="Choose how to render the colors. Each profile (FOGRA39, Japan Color, SWOP…) is a real-world press behavior. Switch to see how the SAME CMYK values look on different print conditions."></select>
-      <div id="iccStatus" style="font-size:10px;color:var(--muted);font-family:var(--font-mono);margin-top:2px" title="Active profile + how many colors it has.">-</div>
+      <select class="pal-sel" id="iccSel" aria-label="ICC profile" onchange="onProfileChange()" title="Choose how to render the colors. Each profile (FOGRA39, Japan Color, SWOP…) is a real-world press behavior. Switch to see how the SAME CMYK values look on different print conditions."></select>
+      <div id="iccStatus" class="icc-status" role="status" aria-live="polite" aria-atomic="true" title="Active profile + how many colors it has.">-</div>
       <div style="font-size:10px;color:var(--faint);line-height:1.45;margin-top:6px">
         To add a profile: drop the <code>.icc</code> into <code>icc/</code>,
         run <code>python scripts/gen_luts.py</code>, refresh.
       </div>
       <!-- Round-trip safety slider - lives here so it's tied to the active profile -->
-      <div class="sec-label" style="margin-top:8px"><span data-i18n="sec.round_trip">Round-trip safety</span> &middot; <span id="vDEmax">dE &lt;= 2.0</span></div>
+      <div class="sec-label mt-8"><span data-i18n="sec.round_trip">Round-trip safety</span> &middot; <span id="vDEmax">dE &lt;= 2.0</span></div>
       <input type="range" min="0" max="20" value="6" step="1" id="slDEmax"
+             aria-label="Round-trip dE max"
              oninput="onFilter()"
              title="Hide swatches whose round-trip color drift exceeds this dE on the active profile. Max 2.0 dE (industry print tolerance). Lower = safer; higher = more swatches shown. Default 0.6.">
     </div>
@@ -851,6 +864,7 @@ input[type=range]{accent-color:var(--accent)}
       </div>
       <div class="grid-size-row">
         <input type="range" id="cellSlider" min="16" max="200" step="4" value="80"
+               aria-label="Swatch cell size (px)"
                oninput="setCellSlider(this.value)" title="Drag to resize every swatch in pixels. Bigger swatches show more labels (CMYK, hex, name); smaller ones fit more on screen.">
         <span class="grid-size-val" id="cellVal" title="Current cell size in pixels.">80 px</span>
       </div>
@@ -872,18 +886,18 @@ input[type=range]{accent-color:var(--accent)}
     <input type="hidden" id="slYmx" value="100">
     <!-- K range factory default: 0-80 (defined here so first paint reflects it before applyUIState fires) -->
     <!-- Display labels kept as hidden spans so onFilter() .textContent writes don't throw -->
-    <span id="vCmn" style="display:none">0</span><span id="vCmx" style="display:none">100</span>
-    <span id="vMmn" style="display:none">0</span><span id="vMmx" style="display:none">100</span>
-    <span id="vYmn" style="display:none">0</span><span id="vYmx" style="display:none">100</span>
+    <span id="vCmn" class="hidden">0</span><span id="vCmx" class="hidden">100</span>
+    <span id="vMmn" class="hidden">0</span><span id="vMmx" class="hidden">100</span>
+    <span id="vYmn" class="hidden">0</span><span id="vYmx" class="hidden">100</span>
 
     <div class="divider"></div>
 
     <div class="sec">
       <div class="sec-label">
         <span data-i18n="sec.tac">TAC limit</span> &middot; <span id="vTAC">240</span>% / max <span id="vTACMax">400</span>%
-        <span class="user-override-badge" id="tacOverride" style="display:none" title="You manually set TAC. Click a preset to reset.">user override</span>
+        <span class="user-override-badge hidden" id="tacOverride" title="You manually set TAC. Click a preset to reset.">user override</span>
       </div>
-      <input type="range" min="0" max="400" value="240" step="10" id="slTAC" oninput="onTACInput()" title="Total ink limit (C+M+Y+K %). Real presses usually handle 240-330 depending on paper.">
+      <input type="range" min="0" max="400" value="240" step="10" id="slTAC" aria-label="Total area coverage max (%)" oninput="onTACInput()" title="Total ink limit (C+M+Y+K %). Real presses usually handle 240-330 depending on paper.">
       <div class="tac-presets">
         <button class="preset-btn" onclick="setTACPreset(240,'Newspaper')" title="Newspaper / newsprint">240</button>
         <button class="preset-btn" onclick="setTACPreset(260,'Uncoated')" title="Uncoated office paper">260</button>
@@ -892,7 +906,7 @@ input[type=range]{accent-color:var(--accent)}
         <button class="preset-btn" onclick="setTACPreset(350,'JapanColor')" title="Japan Color 2001 coated">350</button>
         <button class="preset-btn" onclick="setTACPreset(220,'3D-print')" title="3D color print (PolyJet / MJF) - low TAC, clean voxel mix">220</button>
       </div>
-      <div class="match-row" style="margin-top:8px">
+      <div class="match-row mt-8">
         <button type="button" id="tog3D" class="threed-toggle"
                 role="switch" aria-checked="false" aria-pressed="false"
                 onclick="onClick3DToggle()" title="One-way force button + live indicator.">
@@ -910,7 +924,7 @@ input[type=range]{accent-color:var(--accent)}
     <!-- K-tier (black-channel) filter -->
     <div class="sec">
       <div class="sec-label" data-i18n="sec.k_tier">Black (K) tier</div>
-      <div class="pill-row" style="flex-direction:column;border-radius:var(--r)">
+      <div class="pill-row pill-col">
         <button class="ktier-pill" id="kt1" onclick="setKTier(1)" title="Brand zone: K (black ink) under 25%. Clean, premium, easy to reproduce. Where most logo + brand colors should live.">
           <span class="kt-name" data-i18n="tier.t1.name">Tier 1 · Brand</span><span class="kt-range">K 0-25</span></button>
         <button class="ktier-pill" id="kt2" onclick="setKTier(2)" title="Adds Tier 2 (K up to 50%). Secondary darks for added depth.">
@@ -919,7 +933,7 @@ input[type=range]{accent-color:var(--accent)}
           <span class="kt-name" data-i18n="tier.t3.name">+ Tier 3 · Deep</span><span class="kt-range">K 0-100</span></button>
       </div>
       <!-- K range fine-tune slider (complements the tier pills above). Default max 80. -->
-      <div class="rd-label-row" style="margin-top:6px">
+      <div class="rd-label-row mt-6">
         <span class="sk k" style="font-size:11px;font-family:var(--font-mono);font-weight:500" data-i18n="sec.k_range">K range</span>
         <span class="rd-vals"><span id="vKmn">0</span><span style="color:var(--faint)">-</span><span id="vKmx">80</span></span>
       </div>
@@ -927,8 +941,10 @@ input[type=range]{accent-color:var(--accent)}
         <div class="rd-track"></div>
         <div class="rd-fill" id="rfK"></div>
         <input type="range" min="0" max="100" value="0"   step="5" id="slKmn"
+               aria-label="K (black) range minimum (%)"
                oninput="_clampDual('rng-k', this);_syncKTierFromRange();onFilter()" title="Black min (%)">
         <input type="range" min="0" max="100" value="80" step="5" id="slKmx"
+               aria-label="K (black) range maximum (%)"
                oninput="_clampDual('rng-k', this);_syncKTierFromRange();onFilter()" title="Black max (%). Default 80.">
       </div>
       <div style="font-size:10px;color:var(--faint);line-height:1.5;margin-top:2px">
@@ -944,13 +960,13 @@ input[type=range]{accent-color:var(--accent)}
 
     <div class="sec">
       <div class="sec-label" data-i18n="sec.named">Named swatches &middot; filter</div>
-      <div class="pill-row" style="flex-direction:column;border-radius:var(--r)">
+      <div class="pill-row pill-col">
         <button class="ktier-pill" id="nm-all"  onclick="setNamed('all')" title="Show every swatch - no name filter.">
           <span class="kt-name" data-i18n="pill.all">All swatches</span><span class="kt-range" data-i18n="pill.no_filter">no filter</span></button>
         <button class="ktier-pill active" id="nm-any"  onclick="setNamed('any')" title="Show only swatches that match a name in at least one checked library below. Default.">
           <span class="kt-name" data-i18n="pill.any">Any named</span><span class="kt-range" data-i18n="pill.checked">checked libs</span></button>
       </div>
-      <div id="filterCheckboxes" style="margin-top:6px" title="When 'Any named' is on, only swatches that match a name in at least one of these checked libraries pass the filter. Independent of which name each library is set to display."></div>
+      <div id="filterCheckboxes" class="mt-6" title="When 'Any named' is on, only swatches that match a name in at least one of these checked libraries pass the filter. Independent of which name each library is set to display."></div>
       <div class="sec">
         <div class="sec-label">
           <span class="link-badge" data-i18n="sec.match" title="These controls apply to all libraries.">&#x1F517; Match settings (all libraries)</span>
@@ -963,9 +979,9 @@ input[type=range]{accent-color:var(--accent)}
           </div>
         </div>
         <div class="match-help">Match by CMYK-Lab (print) or hex-Lab (screen). html corpus falls back to hex when anchor=cmyk.</div>
-        <div class="match-row" style="margin-top:6px">
+        <div class="match-row mt-6">
           <div class="match-label"><span data-i18n="sec.accuracy">Naming Accuracy</span> &middot; <span id="vTol">5.5</span></div>
-          <input type="range" min="0" max="20" step="0.5" value="5.5" id="slTol" oninput="onTol(this.value)" title="Show a corpus name when swatch is within this dE of a named entry. Smaller value = stricter name match (only exact closest). Larger = more permissive (more swatches show names). Default 5.5.">
+          <input type="range" min="0" max="20" step="0.5" value="5.5" id="slTol" aria-label="Naming dE tolerance" oninput="onTol(this.value)" title="Show a corpus name when swatch is within this dE of a named entry. Smaller value = stricter name match (only exact closest). Larger = more permissive (more swatches show names). Default 5.5.">
         </div>
         <div class="match-help">Higher = more swatches show names. Set to 0 to show only literal closest matches per library.</div>
       </div>
@@ -1008,7 +1024,7 @@ input[type=range]{accent-color:var(--accent)}
 
     <div class="sec">
       <div class="sec-label" data-i18n="search.label">Search</div>
-      <input class="search-inp" id="searchQ" placeholder="mizuiro, coral, &#26716;, #A9CBE8&#8230;"
+      <input class="search-inp" id="searchQ" aria-label="Search swatches by name or hex" placeholder="mizuiro, coral, &#26716;, #A9CBE8&#8230;"
              data-i18n-placeholder="search.placeholder"
              oninput="_debouncedSearch()" title="Type to filter by name (en: coral, ja: &#26716;&#33394;), romaji, or hex (#3B...).">
     </div>
@@ -1067,7 +1083,7 @@ input[type=range]{accent-color:var(--accent)}
           out of sync.
         -->
         <div class="pal-toolbar">
-          <select class="pal-sel" id="palSel" onchange="onPalChange()" title="Switch between saved palettes."></select>
+          <select class="pal-sel" id="palSel" aria-label="Active palette" onchange="onPalChange()" title="Switch between saved palettes."></select>
           <button class="pal-mini-btn" onclick="newPalette()" title="Create a new empty palette." data-i18n="pal.new_short">+ New</button>
           <button type="button" class="pal-mini-btn pal-select-btn" id="togSelBtn"
                   onclick="toggleSelectMode()"
@@ -1080,7 +1096,7 @@ input[type=range]{accent-color:var(--accent)}
             <button class="pal-mini-btn" onclick="_togglePalMenu('palGlobalMenu')" title="Global palette actions" data-i18n="pal.more">More &#9662;</button>
             <div class="pal-menu" id="palGlobalMenu" hidden>
               <div class="pal-menu-row">
-                <label data-i18n="pal.png_size">PNG size</label>
+                <label for="palPngSize" data-i18n="pal.png_size">PNG size</label>
                 <select id="palPngSize" title="Default canvas size used by every per-palette PNG export.">
                   <option value="1024">1024</option>
                   <option value="2048" selected>2048</option>
@@ -1092,14 +1108,14 @@ input[type=range]{accent-color:var(--accent)}
               <div class="pal-menu-sep"></div>
               <button onclick="exportPalettes();_closeAllPalMenus()" data-i18n="pal.backup_all">Backup all palettes (.json)</button>
               <button onclick="document.getElementById('palFile').click();_closeAllPalMenus()" data-i18n="pal.import_json">Import .json</button>
-              <input type="file" id="palFile" accept=".json,.palettes" style="display:none" onchange="importPalettes(event)">
+              <input type="file" id="palFile" accept=".json,.palettes" class="hidden" onchange="importPalettes(event)">
             </div>
           </div>
         </div>
         <!-- Preview strip of the active palette -->
         <div class="pal-strip" id="palStrip" title="Click any swatch chip to remove from the active palette"></div>
         <!-- Palettes view grid (rendered when viewMode='palettes') -->
-        <div class="pm-wrap" id="pmWrap" style="display:none"></div>
+        <div class="pm-wrap hidden" id="pmWrap"></div>
       </div>
     </div>
     <div class="grid-scroll" id="gridScroll">
@@ -1110,7 +1126,7 @@ input[type=range]{accent-color:var(--accent)}
           Each cell starts from a target sRGB grey (e.g. 50&#37; grey), gets reverse-routed to CMYK through the active profile (the press's <b>GCR / UCR rules pick the CMY + K mix</b>), then forward-routed back to screen sRGB. This is the grey the RIP gives you when you ask the press for a neutral.
         </div>
         <div class="gs-strip" id="gsStripNeutral"></div>
-        <div class="gs-divider" style="margin-top:10px" data-i18n="gs.purek_title" title="Greys built with K ink only - CMYK(0,0,0,K) at K = 0, 10, ..., 100. Shows what the press does without any CMY mixing. Usually drifts warm or cool vs the ICC-neutral row above.">Pure K-only sweep · CMYK(0, 0, 0, K = 0&#8594;100)</div>
+        <div class="gs-divider mt-10" data-i18n="gs.purek_title" title="Greys built with K ink only - CMYK(0,0,0,K) at K = 0, 10, ..., 100. Shows what the press does without any CMY mixing. Usually drifts warm or cool vs the ICC-neutral row above.">Pure K-only sweep · CMYK(0, 0, 0, K = 0&#8594;100)</div>
         <div class="gs-sub" data-i18n="gs.purek_sub">
           Each cell is <b>CMYK(0, 0, 0, K)</b> with no cyan, magenta, or yellow added. Forward-routed through the active profile, this shows the K-ink-alone signature: most presses (especially 3DUJ resin + uncoated stock) drift warm or cool, because K ink has its own hue and there's no CMY mix balancing it. Compare the two rows to see how far the K-only path is from the GCR-routed neutral above.
         </div>
@@ -1901,6 +1917,9 @@ function buildNamingUI() {
   root.innerHTML = '';
   if (!CORPORA.libraries.length) { root.textContent = 'No corpora loaded.'; return; }
   const L = (typeof UI_LANG === 'string' && UI_LANG) ? UI_LANG : 'en';
+  // Build all cards into a fragment so the live DOM gets a single
+  // append instead of one append per library card.
+  const frag = document.createDocumentFragment();
   for (const lib of CORPORA.libraries) {
     const pref = _libPref(lib.id);
     const div = document.createElement('div');
@@ -1953,13 +1972,13 @@ function buildNamingUI() {
         b.className = 'ax-opt' + (pref.anchor === v ? ' active' : '');
         b.dataset.val = v;
         b.textContent = t;
-        b.onclick = async () => {
+        b.addEventListener('click', async () => {
           if (b.classList.contains('active')) return;
           swc.querySelectorAll('.ax-opt').forEach(x => x.classList.toggle('active', x === b));
           _setLibPref(lib.id, 'anchor', v);
           await rematchOne(lib.id);
           render();
-        };
+        });
         swc.appendChild(b);
       }
       const wrap2 = document.createElement('div');
@@ -1971,8 +1990,9 @@ function buildNamingUI() {
       wrap2.appendChild(swc);
       div.appendChild(wrap2);
     }
-    root.appendChild(div);
+    frag.appendChild(div);
   }
+  root.appendChild(frag);
 }
 
 function buildFilterUI() {
@@ -1980,9 +2000,14 @@ function buildFilterUI() {
   if (!wrap) return;
   wrap.innerHTML = '';
   if (!CORPORA.libraries.length) {
-    wrap.innerHTML = '<div style="font-size:10.5px;color:var(--faint)">No corpora loaded.</div>';
+    const empty = document.createElement('div');
+    empty.className = 'flt-empty';
+    empty.textContent = 'No corpora loaded.';
+    wrap.appendChild(empty);
     return;
   }
+  // Build all rows into a fragment for one batched DOM append.
+  const frag = document.createDocumentFragment();
   // Master "all" toggle.
   const all = document.createElement('label');
   all.className = 'flt-row flt-all';
@@ -1991,17 +2016,17 @@ function buildFilterUI() {
   allBox.id   = 'flt-all';
   const allOn = CORPORA.libraries.every(l => _libFilterEnabled(l.id));
   allBox.checked = allOn;
-  allBox.onchange = () => {
+  allBox.addEventListener('change', () => {
     for (const lib of CORPORA.libraries) _setLibFilter(lib.id, allBox.checked);
     buildFilterUI();
     _scheduleRender();
-  };
+  });
   all.appendChild(allBox);
   const allTxt = document.createElement('span');
   // i18n: master toggle text uses the active UI language.
   allTxt.textContent = ' ' + ((typeof t === 'function') ? t('flt.all_libs', 'All libraries') : 'All libraries');
   all.appendChild(allTxt);
-  wrap.appendChild(all);
+  frag.appendChild(all);
   // Per-lib checkboxes. Corpus label is itself tri-lingual in
   // data/corpora/name_corpora.json (label.{en,ja,zh}); render the one
   // matching the active UI language and fall back to en.
@@ -2012,19 +2037,20 @@ function buildFilterUI() {
     const cb = document.createElement('input');
     cb.type = 'checkbox';
     cb.checked = _libFilterEnabled(lib.id);
-    cb.onchange = () => {
+    cb.addEventListener('change', () => {
       _setLibFilter(lib.id, cb.checked);
       const masterOn = CORPORA.libraries.every(l => _libFilterEnabled(l.id));
       const m = document.getElementById('flt-all');
       if (m) m.checked = masterOn;
       _scheduleRender();
-    };
+    });
     row.appendChild(cb);
     const txt = document.createElement('span');
     txt.textContent = ' ' + ((lib.label && (lib.label[L] || lib.label.en)) || lib.id);
     row.appendChild(txt);
-    wrap.appendChild(row);
+    frag.appendChild(row);
   }
+  wrap.appendChild(frag);
 }
 
 // -- Profile manifest ----------------------------------------------------
@@ -2273,7 +2299,7 @@ function refreshPalUI() {
       c.className = 'pal-chip';
       c.style.background = sw.hex;
       c.title = `C${sw.C} M${sw.M} Y${sw.Y} K${sw.K} · ${sw.hex} - click to remove`;
-      c.onclick = () => { removeFromPalette(sw); };
+      c.addEventListener('click', () => { removeFromPalette(sw); });
       strip.appendChild(c);
     });
   }
@@ -2493,10 +2519,10 @@ function renderPaletteMode() {
       </div>`;
     panel.appendChild(head);
 
-    head.querySelector('.pm-name').onclick = () => setActivePalette(p.id);
+    head.querySelector('.pm-name').addEventListener('click', () => setActivePalette(p.id));
     head.querySelectorAll('.pm-act').forEach(b => {
       const a = b.dataset.act;
-      b.onclick = (ev) => {
+      b.addEventListener('click', (ev) => {
         ev.stopPropagation();
         if      (a==='active')    setActivePalette(p.id);
         else if (a==='rename')    renamePaletteById(p.id);
@@ -2504,7 +2530,7 @@ function renderPaletteMode() {
         else if (a==='clear')     clearPaletteById(p.id);
         else if (a==='del')       deletePaletteById(p.id);
         else if (a==='dl-toggle') _togglePalMenu(dlMenuId);
-      };
+      });
     });
 
     if (!p.swatches.length) {
@@ -3232,11 +3258,11 @@ function openDetail(sw) {
     const b = document.createElement('button');
     b.className = 'copy-btn';
     b.textContent = lbl;
-    b.onclick = () => {
+    b.addEventListener('click', () => {
       navigator.clipboard.writeText(val).catch(()=>{});
       b.textContent = '✓'; b.classList.add('ok');
       setTimeout(()=>{ b.textContent=lbl; b.classList.remove('ok'); }, 1100);
-    };
+    });
     row.appendChild(b);
   });
 
@@ -3246,7 +3272,7 @@ function openDetail(sw) {
   palBtn.textContent = inPal ? '− Remove from palette' : '+ Add to palette';
   palBtn.style.background = inPal ? '#a02020' : 'var(--accent)';
   palBtn.style.color = '#fff';
-  palBtn.onclick = () => { toggleSwatchInPalette(sw); closeDetail(); };
+  palBtn.addEventListener('click', () => { toggleSwatchInPalette(sw); closeDetail(); });
   row.appendChild(palBtn);
 
   document.getElementById('overlay').classList.add('open');
