@@ -661,8 +661,8 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
     <div class="sec">
       <div class="sec-label" data-i18n="sec.color_mode" title="Color mode picks the Lab whitepoint used for corpus matching. Print mode (D50) aligns with ICC-standard swatch books. Screen mode (D65) is pure sRGB-native.">Color mode</div>
       <div class="mode-group lab-mode-group" id="labModeGroup">
-        <button type="button" class="mode-btn active" data-lab="d50" onclick="setLabMode('d50')">Print (D50)</button>
-        <button type="button" class="mode-btn" data-lab="d65" onclick="setLabMode('d65')">Screen (D65)</button>
+        <button type="button" class="mode-btn active" data-lab="d50" onclick="setLabMode('d50')" data-i18n="lab.d50">Print (D50)</button>
+        <button type="button" class="mode-btn" data-lab="d65" onclick="setLabMode('d65')" data-i18n="lab.d65">Screen (D65)</button>
       </div>
     </div>
 
@@ -756,10 +756,10 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
       <div class="match-row" style="margin-top:8px">
         <label class="match-radio">
           <input type="checkbox" id="tog3D" onchange="set3DPreset(this.checked)">
-          3D-print preset
+          <span data-i18n="threed.label">3D-print preset</span>
         </label>
       </div>
-      <div class="match-help">When on: TAC&lt;=240%, hide swatches with round-trip dE&gt;2, filter to gamut-safe palette for color 3D printers (PolyJet, MJF, binder jet).</div>
+      <div class="match-help" data-i18n="threed.help">When on: TAC&lt;=240%, hide swatches with round-trip dE&gt;2, snap profile to a Mimaki 3DUJ-safe proxy. Auto-detects when current settings already satisfy the requirement.</div>
     </div>
 
 
@@ -868,6 +868,7 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
     <div class="sec">
       <div class="sec-label" data-i18n="search.label">Search</div>
       <input class="search-inp" id="searchQ" placeholder="mizuiro, coral, &#26716;, #A9CBE8&#8230;"
+             data-i18n-placeholder="search.placeholder"
              oninput="_debouncedSearch()" title="Type to filter by name (en: coral, ja: &#26716;&#33394;), romaji, or hex (#3B...).">
     </div>
 
@@ -931,12 +932,12 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
           <button type="button" class="pal-mini-btn pal-select-btn" id="togSelBtn"
                   onclick="toggleSelectMode()"
                   title="Toggle selection mode. When ON, clicking a swatch in the grid adds or removes it from the active palette instead of opening details. Click this button again to leave selection mode.">
-            <span class="pal-select-dot"></span> Selection: OFF
+            <span class="pal-select-dot"></span> <span id="togSelLabel" data-i18n="pal.sel_off">Selection: OFF</span>
           </button>
           <input type="hidden" id="togSel" value="0">
           <span class="pal-count-inline" title="Swatches in active palette"><span id="palCount">0</span>sw</span>
           <div class="pal-dropdown">
-            <button class="pal-mini-btn" onclick="_togglePalMenu('exportMenu')" title="Export options">Export &#9662;</button>
+            <button class="pal-mini-btn" onclick="_togglePalMenu('exportMenu')" title="Export options"><span data-i18n="pal.export">Export</span> &#9662;</button>
             <div class="pal-menu" id="exportMenu" hidden>
               <div class="pal-menu-row">
                 <label>Image size</label>
@@ -1228,6 +1229,24 @@ async function resetUIToDefaults() {
   CORPORA_PREFS = {};
   const fresh = (UI_DEFAULTS && UI_DEFAULTS[UI_TOOL_KEY]) || {};
   applyUIState(fresh);
+  // Also reset the ICC profile to the factory default (applyUIState does
+  // not touch ACTIVE_PROFILE / #iccSel). Honours UI_DEFAULTS.default_profile_match.
+  if (ICC_INDEX && Array.isArray(ICC_INDEX.profiles) && ICC_INDEX.profiles.length) {
+    const wanted = fresh.default_profile_match || '';
+    const matchByDefault = wanted
+      ? ICC_INDEX.profiles.find(p => new RegExp(wanted, 'i').test(p.filename))
+      : null;
+    const fallback = ICC_INDEX.profiles.find(p => /FOGRA39/i.test(p.filename));
+    const chosen = matchByDefault || fallback || ICC_INDEX.profiles[0];
+    const sel = document.getElementById('iccSel');
+    if (chosen && sel) {
+      sel.value = chosen.filename;
+      ACTIVE_PROFILE = chosen;
+      ACTIVE_LUT_META = chosen;
+      TAC_USER_OVERRIDE = false;
+      snapTACToProfile();
+    }
+  }
   buildNamingUI();
   buildFilterUI();
   await rebuildAll();   // re-derive everything against current profile
@@ -1912,6 +1931,7 @@ async function onProfileChange() {
   TAC_USER_OVERRIDE = false;
   snapTACToProfile();
   await rebuildAll();
+  if (typeof _sync3DCheckbox === 'function') _sync3DCheckbox();
 }
 
 // -- Master rebuild ------------------------------------------------------
@@ -2176,9 +2196,13 @@ function clearActivePalette() {
 function toggleSelectMode() {
   selectMode = !selectMode;
   const btn = document.getElementById('togSelBtn');
-  if (btn) {
-    btn.classList.toggle('on', selectMode);
-    btn.innerHTML = '<span class="pal-select-dot"></span> Selection: ' + (selectMode ? 'ON' : 'OFF');
+  if (btn) btn.classList.toggle('on', selectMode);
+  // Replace just the label, keep the dot + i18n marker intact.
+  const lbl = document.getElementById('togSelLabel');
+  if (lbl) {
+    const key = selectMode ? 'pal.sel_on' : 'pal.sel_off';
+    lbl.setAttribute('data-i18n', key);
+    lbl.textContent = (typeof t === 'function') ? t(key) : (selectMode ? 'Selection: ON' : 'Selection: OFF');
   }
   // Keep hidden input in sync for any legacy code reading #togSel
   const cb = document.getElementById('togSel');
@@ -3106,30 +3130,93 @@ function snapTACToProfile() {
 }
 let _3D_PREV_TAC = null;
 let _3D_PREV_DEMAX = null;
-function set3DPreset(on) {
+let _3D_PREV_PROFILE = null;
+
+// Match a "3D-print-safe" profile by filename. Uncoated/newspaper/Mimaki
+// proxies have small enough gamut and conservative enough TAC to behave
+// like a 3DUJ build plate. Coated offset profiles (FOGRA39, SWOP coated,
+// JapanColor coated, sheetfed coated) over-promise gamut and TAC and
+// therefore fail the 3D-print test.
+function _is3DSafeProfile(p) {
+  if (!p || !p.filename) return false;
+  return /Uncoated|Newspaper|3DUJ|Mimaki/i.test(p.filename);
+}
+function _3DSatisfied() {
+  const slTAC = document.getElementById('slTAC');
+  const slDEmax = document.getElementById('slDEmax');
+  if (!slTAC || !slDEmax) return false;
+  return _is3DSafeProfile(ACTIVE_PROFILE) && +slTAC.value <= 240 && +slDEmax.value <= 20;
+}
+// Reflect the live state on the checkbox without firing set3DPreset.
+function _sync3DCheckbox() {
+  const cb = document.getElementById('tog3D');
+  if (!cb) return;
+  cb.checked = _3DSatisfied();
+}
+// Pick a 3D-safe profile from ICC_INDEX. Order: factory default, first
+// uncoated, first newspaper, first profile.
+function _pick3DProfile() {
+  if (!ICC_INDEX || !Array.isArray(ICC_INDEX.profiles) || !ICC_INDEX.profiles.length) return null;
+  const wanted = (UI_DEFAULTS && UI_DEFAULTS[UI_TOOL_KEY] && UI_DEFAULTS[UI_TOOL_KEY].default_profile_match) || '';
+  const byDefault = wanted ? ICC_INDEX.profiles.find(p => new RegExp(wanted, 'i').test(p.filename)) : null;
+  return byDefault
+      || ICC_INDEX.profiles.find(p => /Uncoated/i.test(p.filename))
+      || ICC_INDEX.profiles.find(p => /Newspaper/i.test(p.filename))
+      || ICC_INDEX.profiles[0];
+}
+
+async function set3DPreset(on) {
   const slTAC = document.getElementById('slTAC');
   const slDEmax = document.getElementById('slDEmax');
   const vTAC = document.getElementById('vTAC');
   const vDEmax = document.getElementById('vDEmax');
+  const tacOver = document.getElementById('tacOverride');
+  const sel = document.getElementById('iccSel');
   if (!slTAC || !slDEmax) return;
   if (on) {
-    if (_3D_PREV_TAC === null) _3D_PREV_TAC = +slTAC.value;
-    if (_3D_PREV_DEMAX === null) _3D_PREV_DEMAX = +slDEmax.value;
-    if (+slTAC.value > 240) slTAC.value = 240;
-    if (+slDEmax.value > 20) slDEmax.value = 20;
+    // Snapshot what the user had so toggling off restores it.
+    if (_3D_PREV_TAC === null)     _3D_PREV_TAC = +slTAC.value;
+    if (_3D_PREV_DEMAX === null)   _3D_PREV_DEMAX = +slDEmax.value;
+    if (_3D_PREV_PROFILE === null && ACTIVE_PROFILE) _3D_PREV_PROFILE = ACTIVE_PROFILE.filename;
+    // Force-fit every constraint the 3D-print preset cares about.
+    const safe = _is3DSafeProfile(ACTIVE_PROFILE) ? ACTIVE_PROFILE : _pick3DProfile();
+    if (safe && (!ACTIVE_PROFILE || safe.filename !== ACTIVE_PROFILE.filename)) {
+      ACTIVE_PROFILE = safe;
+      ACTIVE_LUT_META = safe;
+      if (sel) sel.value = safe.filename;
+      TAC_USER_OVERRIDE = false;
+      snapTACToProfile();
+      await rebuildAll();
+    }
+    if (+slTAC.value > 240)   slTAC.value = 240;
+    if (+slDEmax.value > 20)  slDEmax.value = 20;
     TAC_USER_OVERRIDE = false;
-    document.getElementById('tacOverride').style.display = 'inline-block';
+    if (tacOver) tacOver.style.display = 'inline-block';
   } else {
-    if (_3D_PREV_TAC !== null) { slTAC.value = _3D_PREV_TAC; _3D_PREV_TAC = null; }
+    // Restore the snapshot the user had before the preset took over.
+    if (_3D_PREV_TAC !== null)   { slTAC.value = _3D_PREV_TAC; _3D_PREV_TAC = null; }
     if (_3D_PREV_DEMAX !== null) { slDEmax.value = _3D_PREV_DEMAX; _3D_PREV_DEMAX = null; }
+    if (_3D_PREV_PROFILE && ICC_INDEX) {
+      const prev = ICC_INDEX.profiles.find(p => p.filename === _3D_PREV_PROFILE);
+      if (prev && (!ACTIVE_PROFILE || prev.filename !== ACTIVE_PROFILE.filename)) {
+        ACTIVE_PROFILE = prev;
+        ACTIVE_LUT_META = prev;
+        if (sel) sel.value = prev.filename;
+        TAC_USER_OVERRIDE = false;
+        snapTACToProfile();
+        await rebuildAll();
+      }
+    }
+    _3D_PREV_PROFILE = null;
     TAC_USER_OVERRIDE = false;
-    document.getElementById('tacOverride').style.display = 'none';
+    if (tacOver) tacOver.style.display = 'none';
   }
   if (vTAC) vTAC.textContent = slTAC.value;
   if (vDEmax) {
     const raw = +slDEmax.value;
     vDEmax.textContent = 'dE <= ' + (raw / 10).toFixed(1);
   }
+  _sync3DCheckbox();
   if (typeof onFilter === 'function') onFilter();
 }
 
@@ -3150,6 +3237,7 @@ function onFilter() {
   }
   // Keep dual-handle fill bar in sync (only K range remains as a visible slider)
   _updateRangeFill('rng-k');
+  if (typeof _sync3DCheckbox === 'function') _sync3DCheckbox();
   _scheduleRender();
 }
 
@@ -3340,8 +3428,14 @@ function setLabMode(mode) {
     _scheduleRender();
   });
   persistUI();
-  document.getElementById('labModeBadge').textContent =
-    mode === 'd50' ? 'Mode: Print (D50)' : 'Mode: Screen (D65)';
+  {
+    const badge = document.getElementById('labModeBadge');
+    const key = mode === 'd50' ? 'badge.mode_d50' : 'badge.mode_d65';
+    if (badge) {
+      badge.setAttribute('data-i18n', key);
+      badge.textContent = (typeof t === 'function') ? t(key) : (mode === 'd50' ? 'Mode: Print (D50)' : 'Mode: Screen (D65)');
+    }
+  }
   // Reflect both button groups
   document.querySelectorAll('#labModeGroup .mode-btn').forEach(b => {
     b.classList.toggle('active', b.dataset.lab === mode);
@@ -4168,8 +4262,14 @@ window.addEventListener('load', async () => {
     restorePalettePanelState();
     // Reflect persisted lab_mode onto badge + button groups (applyUIState sets
     // LAB_MODE but cannot touch DOM elements added after HTML parse).
-    document.getElementById('labModeBadge').textContent =
-      LAB_MODE === 'd50' ? 'Mode: Print (D50)' : 'Mode: Screen (D65)';
+    {
+      const badge = document.getElementById('labModeBadge');
+      const key = LAB_MODE === 'd50' ? 'badge.mode_d50' : 'badge.mode_d65';
+      if (badge) {
+        badge.setAttribute('data-i18n', key);
+        badge.textContent = (typeof t === 'function') ? t(key) : (LAB_MODE === 'd50' ? 'Mode: Print (D50)' : 'Mode: Screen (D65)');
+      }
+    }
     document.querySelectorAll('#labModeGroup .mode-btn').forEach(b => {
       b.classList.toggle('active', b.dataset.lab === LAB_MODE);
     });
@@ -4193,6 +4293,7 @@ window.addEventListener('load', async () => {
       sb.addEventListener('input',  _schedulePersist);
     }
     await rebuildAll();
+    if (typeof _sync3DCheckbox === 'function') _sync3DCheckbox();
   } catch (e) {
     console.error(e);
     document.getElementById('iccStatus').textContent = 'Error: ' + e.message;
@@ -4295,6 +4396,14 @@ const I18N = {
     'tier.t1.name': 'Tier 1 · Brand',
     'tier.t2.name': '+ Tier 2 · Support',
     'tier.t3.name': '+ Tier 3 · Deep',
+    'lab.d50':       'Print (D50)',
+    'lab.d65':       'Screen (D65)',
+    'threed.label':  '3D-print preset',
+    'threed.help':   'When on: TAC <= 240%, hide swatches with round-trip dE > 2, snap profile to a Mimaki 3DUJ-safe proxy. Auto-detects when current settings already satisfy the requirement.',
+    'pal.sel_off':   'Selection: OFF',
+    'pal.sel_on':    'Selection: ON',
+    'pal.export':    'Export',
+    'search.placeholder': 'mizuiro, coral, 桜, #A9CBE8…',
   },
   ja: {
     'badge.mode_d50': 'モード: 印刷 (D50)',
@@ -4352,6 +4461,14 @@ const I18N = {
     'tier.t1.name': '階層1 · ブランド',
     'tier.t2.name': '+ 階層2 · サポート',
     'tier.t3.name': '+ 階層3 · 深色',
+    'lab.d50':       '印刷 (D50)',
+    'lab.d65':       '画面 (D65)',
+    'threed.label':  '3Dプリント設定',
+    'threed.help':   'オン時: TAC <= 240%、往復ΔE > 2 を非表示、プロファイルを Mimaki 3DUJ 安全プロキシに固定。現在の設定が条件を満たしていれば自動検出。',
+    'pal.sel_off':   '選択モード: OFF',
+    'pal.sel_on':    '選択モード: ON',
+    'pal.export':    '書き出し',
+    'search.placeholder': '水色、coral、桜、#A9CBE8…',
   },
   zh: {
     'badge.mode_d50': '模式：印刷 (D50)',
@@ -4409,6 +4526,14 @@ const I18N = {
     'tier.t1.name': '階1 · 品牌',
     'tier.t2.name': '+ 階2 · 輔助',
     'tier.t3.name': '+ 階3 · 深暗',
+    'lab.d50':       '印刷 (D50)',
+    'lab.d65':       '螢幕 (D65)',
+    'threed.label':  '3D 列印預設',
+    'threed.help':   '開啟時：TAC <= 240%、隱藏往返 dE > 2 的色塊、把描述檔切到 Mimaki 3DUJ 安全代理。若目前設定已符合條件，會自動勾選。',
+    'pal.sel_off':   '選取模式：關',
+    'pal.sel_on':    '選取模式：開',
+    'pal.export':    '匯出',
+    'search.placeholder': '水色、coral、櫻、#A9CBE8…',
   }
 };
 let UI_LANG = 'en';
@@ -4435,6 +4560,13 @@ function applyI18n() {
     const key = el.getAttribute('data-i18n');
     const txt = t(key, null);
     if (txt) el.textContent = txt;
+  });
+  // Placeholder text on form inputs (kept separate from textContent so the
+  // input value is not clobbered when language switches).
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    const key = el.getAttribute('data-i18n-placeholder');
+    const txt = t(key, null);
+    if (txt) el.setAttribute('placeholder', txt);
   });
   // Lab mode badge has a state-dependent key
   const badge = document.getElementById('labModeBadge');
