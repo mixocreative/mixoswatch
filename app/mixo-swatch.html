@@ -13,7 +13,7 @@
   --bg:#1A1918; --bg2:#222120; --surface:#2A2928;
   --border:rgba(255,255,255,0.12); --border2:rgba(255,255,255,0.06);
   --text:#E8E6E0; --muted:#9B9A94; --faint:#6B6A64;
-  --accent:#B2A88D; --accent-rgb:90 159 224;
+  --accent:#B2A88D; --accent-rgb:178 168 141;
   --font-mono:'IBM Plex Mono','Fira Mono',monospace;
   --font-sans:'Noto Sans JP',system-ui,sans-serif;
   --font-jpn-serif:'Hina Mincho','Yu Mincho',serif;
@@ -37,6 +37,7 @@ input[type=range]{accent-color:var(--accent)}
   border-bottom:1px solid var(--border);background:var(--surface);z-index:10;
   flex-wrap:nowrap;overflow:hidden;
 }
+.topbar-logo{height:28px;width:28px;flex-shrink:0;display:block}
 .topbar-title{font-size:14px;font-weight:500;letter-spacing:-.02em;white-space:nowrap}
 .topbar-sep{flex:1}
 .count-tag{font-size:11px;color:var(--muted);font-family:var(--font-mono);white-space:nowrap}
@@ -681,7 +682,8 @@ input[type=range]{accent-color:var(--accent)}
   .swatch-cell { min-width: 36px; min-height: 36px; }
   .topbar { gap: 5px; padding: 0 8px; }
   .topbar .lab-mode-badge,
-  .topbar .topbar-title { display: none; }
+  .topbar .topbar-title,
+  .topbar .topbar-logo { display: none; }
   .topbar .mode-group { margin: 0 2px; }
   .topbar .btn { padding: 4px 7px; font-size: 10.5px; }
 }
@@ -702,6 +704,7 @@ input[type=range]{accent-color:var(--accent)}
 <!-- Top bar -->
 <header class="topbar">
   <button class="hamburger-btn" id="hamburger" onclick="toggleSidebar()" aria-label="Toggle sidebar" title="Show / hide sidebar (mobile)">&#8801;</button>
+  <img src="img/logo.svg" alt="" class="topbar-logo" aria-hidden="true">
   <span class="topbar-title">Mixo Swatch</span>
   <span class="lab-mode-badge" id="labModeBadge" data-i18n="badge.mode_d50" title="Active Lab whitepoint. Switch in sidebar under 'Color mode'.">Mode: Print (D50)</span>
   <div class="topbar-sep"></div>

@@ -22,8 +22,9 @@
       --text: #EEEBE4;
       --muted: #A6A39B;
       --faint: #7E7C75;
-      --accent: #d1d1b3;
-      --accent-dim: #6E869C;
+      --accent: #B2A88D;
+      --accent-rgb: 178 168 141;
+      --accent-dim: #6E6648;
       --display: 'Outfit', -apple-system, system-ui, serif;
       --mono: 'IBM Plex Mono', ui-monospace, monospace;
       --jp: 'Noto Sans JP', -apple-system, sans-serif;
@@ -40,8 +41,9 @@
         --text: #1A1916;
         --muted: #6E6C66;
         --faint: #A39F97;
-        --accent: #3B5A75;
-        --accent-dim: #7E94A8;
+        --accent: #6E6648;
+        --accent-rgb: 110 102 72;
+        --accent-dim: #B2A88D;
         color-scheme: light;
       }
     }
@@ -51,6 +53,13 @@
       margin: 0;
       padding: 0
     }
+
+    /* Tint every native form control with the brand accent so the
+       checkboxes, radios and range sliders in the panel demos pick
+       up the warm tan instead of the OS default blue / purple. */
+    input[type=checkbox],
+    input[type=radio],
+    input[type=range] { accent-color: var(--accent); }
 
     html,
     body {
@@ -105,17 +114,16 @@
       letter-spacing: .22em;
       text-transform: lowercase;
       color: var(--muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
     }
 
-    .mark .dot {
-      display: inline-block;
-      width: 6px;
-      height: 6px;
-      background: var(--accent);
-      border-radius: 50%;
-      vertical-align: middle;
-      margin-right: 8px;
-      opacity: .7
+    .mark .brand-logo {
+      width: 22px;
+      height: 22px;
+      flex-shrink: 0;
+      display: block;
     }
 
     .mark-jp {
@@ -147,6 +155,13 @@
       display: flex;
       flex-direction: column;
       gap: 28px
+    }
+
+    .hero-logo {
+      width: clamp(64px, 9vw, 96px);
+      height: clamp(64px, 9vw, 96px);
+      display: block;
+      margin-bottom: 4px;
     }
 
     .hero h1 {
@@ -1438,7 +1453,7 @@
   <main class="shell">
 
     <header class="mark-row">
-      <div class="mark"><span class="dot"></span>mixoswatch<span class="mark-jp">墨色見本</span></div>
+      <div class="mark"><img src="app/img/logo.svg" alt="" class="brand-logo" aria-hidden="true">mixoswatch<span class="mark-jp">墨色見本</span></div>
       <div style="display:flex;gap:18px;align-items:center">
         <nav class="nav-mini">
           <a href="#why" data-en="why" data-ja="趣旨" data-zh="緣由">why</a>
@@ -1457,17 +1472,21 @@
     </header>
 
     <section class="hero">
+      <img src="app/img/logo.svg" alt="Mixo Swatch" class="hero-logo">
       <h1>
-        <span data-en>Screen × Flat Print × 3D Print <em><b>Balanced Cross-Media</b></em> Color Calibration</span>
-        <span data-ja>デジタル × 紙媒体 × 3Dプリント<em><b>クロスメディア</b></em> カラーマッチング</span>
-        <span data-zh>數位 × 紙本 × 3D列印中<em><b>平衡對照</b></em> 的色彩</span>
+        <span data-en>Honest cross-media color, <em><b>from screen to press to 3D print</b></em>.</span>
+        <span data-ja>画面から印刷、3Dプリントまで。<em><b>クロスメディアで信頼できる色</b></em>。</span>
+        <span data-zh>從螢幕、印刷到 3D 列印，<em><b>跨媒材的可信賴色彩</b></em>。</span>
       </h1>
       <p class="lede">
-        <span data-en>One browser tool for designing with CMYK through real ICC profiles. Live exploration with a
-          dE max filter for round-trip safety. Interface in English / 日本語 / 繁體中文 (auto-detected, switchable in
-          the top-right). No upload. No telemetry.</span>
-        <span data-ja>実際のICCプロファイルを通してCMYK設計を行う、小さなブラウザツール。ライブ探索と、往復安全性のためのΔE上限フィルタ。UIはEnglish / 日本語 / 繁體中文に対応（自動判定、右上で切替）。アップロード不要、計測なし。</span>
-        <span data-zh>單一輕量瀏覽器工具，透過真實 ICC 描述檔處理 CMYK 設計。可即時探索並提供 dE 上限篩選確保往返色彩安全。介面支援 English / 日本語 / 繁體中文（自動偵測，可於右上切換）。不上傳、不追蹤。</span>
+        <span data-en><b>Mixo Swatch</b> is a browser tool for designers who choose colors that must survive a real print process. It samples every CMYK value at the step you pick, routes them through the same ICC color engine that prepress tools and color-managed RIPs use (LittleCMS via Pillow), and shows you exactly what each cell will look like on the press you selected. A round-trip dE gate hides anything the profile cannot hold, so press-unsafe colors never reach your palette.</span>
+        <span data-ja><b>Mixo Swatch</b> は、実際のプリント工程で色を再現できる必要があるデザイナーのためのブラウザツール。指定ステップごとに全CMYK値を生成し、印刷現場や色管理RIPと同じICCエンジン（Pillow経由のLittleCMS）でルーティングし、選んだ出力機での見え方を画面上に示します。往復ΔEゲートが保持できない色を非表示にするため、パレットに不安全な色が混入しません。</span>
+        <span data-zh><b>Mixo Swatch</b> 是專為印刷流程設計師打造的瀏覽器工具。它依照你選的步距生成所有 CMYK 值，並透過印前工具與色彩管理 RIP 共用的 ICC 引擎（Pillow 內建 LittleCMS）路由，於螢幕上直接呈現你選定的印刷機台會印出的顏色。往返 dE 門檻會自動隱藏該描述檔無法保留的色塊，確保不可印的顏色不會進入你的色票組。</span>
+      </p>
+      <p class="lede" style="font-size:14px;color:var(--faint)">
+        <span data-en>Works offline. No upload, no telemetry, no account. Interface in English / 日本語 / 繁體中文, auto-detected from your browser language and switchable in the top-right corner.</span>
+        <span data-ja>オフライン動作。アップロード・計測・アカウント不要。UIは English / 日本語 / 繁體中文 に対応し、ブラウザ言語から自動判定、右上で手動切替可能。</span>
+        <span data-zh>離線運作。不上傳、不追蹤、不需註冊。介面支援 English / 日本語 / 繁體中文，依瀏覽器語言自動判定，可於右上角手動切換。</span>
       </p>
       <nav class="tools" aria-label="Choose a tool">
         <a class="tool" href="app/mixo-swatch.html">
