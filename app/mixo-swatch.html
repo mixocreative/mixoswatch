@@ -17,7 +17,7 @@
   --accent:#B2A88D; --accent-rgb:178 168 141;
   --font-mono:'IBM Plex Mono','Fira Mono',monospace;
   --font-sans:'Noto Sans JP',system-ui,sans-serif;
-  --font-jpn-serif:"Zen Antique Soft",serif;
+  --font-jpn-serif:"Zen Antique Soft",serif;--accent-light:#6E6648;
   --r:6px; --rl:10px;
   color-scheme:dark;
 }
@@ -297,7 +297,7 @@ input[type=range]{accent-color:var(--accent)}
 .palette-panel-body{
   display:none;padding:10px 14px;gap:0;flex-direction:column;
   max-height:60vh;overflow:auto;
-  border:1.5px solid var(--accent);border-top:0;border-radius:0 0 var(--rl) var(--rl);
+  border:1.5px solid var(--accent-light);border-top:0;border-radius:0 0 var(--rl) var(--rl);
   background:var(--surface);
 }
 .palette-panel.open .palette-panel-body{display:flex}
@@ -2407,11 +2407,10 @@ function renamePaletteById(id) {
 }
 
 function deletePaletteById(id) {
-  if (palettes.length === 1) { alert('Cannot delete last palette.'); return; }
   const p = palettes.find(x => x.id === id); if (!p) return;
   if (!confirm(`Delete palette "${p.name}"? This cannot be undone.`)) return;
   palettes = palettes.filter(x => x.id !== id);
-  if (activeId === id) activeId = palettes[0].id;
+  if (activeId === id) activeId = palettes[0]?.id || null;   // null is a valid state
   savePalettes(); refreshPalUI(); render();
 }
 
