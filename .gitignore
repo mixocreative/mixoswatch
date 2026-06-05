@@ -40,6 +40,10 @@ manifest.csv
 phase*.png
 cmyk-current-state.png
 
+# Allow brand assets (logos + certification badges) committed under
+# app/img/ even though the *.png blanket above blocks PNGs by default.
+!app/img/*.png
+
 # ─── Tool dirs ─────────────────────────────────────────────────────────────
 
 .claude/

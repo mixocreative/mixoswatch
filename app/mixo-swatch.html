@@ -781,6 +781,22 @@ html[lang^="zh"] .intro-btn .intro-zh{display:inline}
 .intro-btn svg{width:16px;height:16px}
 .intro-btn.primary{background:var(--accent);color:var(--bg);border-color:var(--accent)}
 .intro-btn.primary:hover{filter:brightness(1.08)}
+.intro-brand{
+  display:flex;flex-wrap:wrap;align-items:center;justify-content:center;
+  gap:14px;margin:18px 0 6px;padding-top:14px;
+  border-top:1px solid var(--border);
+}
+.intro-mark{height:32px;width:auto;display:block;opacity:.92}
+.intro-mark-wide{height:24px}
+.intro-brand-sep{display:inline-block;width:1px;height:24px;background:var(--border);margin:0 4px}
+.intro-cert{height:44px;width:auto;display:block}
+@media (max-width:480px){
+  .intro-brand{gap:10px}
+  .intro-mark{height:26px}
+  .intro-mark-wide{height:20px}
+  .intro-cert{height:36px}
+}
+
 .intro-foot{
   text-align:center;font-size:11px;color:var(--faint);font-family:var(--font-mono);
   letter-spacing:.04em;margin-top:6px;
@@ -1315,7 +1331,15 @@ html[lang^="zh"] .intro-btn .intro-zh{display:inline}
       </a>
     </div>
 
-    <div class="intro-foot">mixocreative.com</div>
+    <div class="intro-brand">
+      <img src="img/logo3d.png"          alt="Mixo Creative 3D mark"          class="intro-mark">
+      <img src="img/logotype.svg"        alt="Mixo Creative logotype"         class="intro-mark intro-mark-wide">
+      <span class="intro-brand-sep" aria-hidden="true"></span>
+      <img src="img/cults-cert-gold.png"   alt="Cults3D Selected Designer"      class="intro-cert" title="Cults3D Selected Designer (France)">
+      <img src="img/behance-cert-gold.png" alt="Adobe Behance featured designer" class="intro-cert" title="Adobe Behance featured designer">
+    </div>
+
+    <div class="intro-foot">brought to you by Mixo Creative Ltd. · 明上堂有限公司 · mixocreative.com</div>
   </div>
 </div>
 
