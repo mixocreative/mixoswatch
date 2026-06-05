@@ -25,27 +25,9 @@ In graphic design, unless expensive spot colors are used, reconciling screen col
 
 Whether your company is planning a new brand identity system or exploring ambitious frontiers in physical 3D art, we look forward to partnering with you — transforming ideas into reality with confidence, clarity, and technical reliability. We sincerely look forward to hearing about your next project.
 
-<details>
-<summary><b>讓事物變得有趣</b> · 客製化文化商品與激發想像力的 3D 列印藝術工作者 (繁體中文)</summary>
+[真相] 沒有任何螢幕能完全精確地呈現印刷結果。在平面或紙品印刷上，沒有使用昂貴專色的品牌設計，設計師與客户溝通時總得面對選色導致校對螢幕色與列印色版相當耗時的問題。在跨足平面與立體設計的過程中，3D建模軟體不支援實體色彩管理，列印成 3D 實體模型往往難以控制色差。為了一定程度省去生產端的反覆盲測，明上堂自主研發了 Mixo Swatch 色彩工程預測系統。
 
-明上堂 Mixo Creative 是一家扎根於台灣、兼具國際視野的專業設計公司。香港教育大學文化及創新設計系講師、英國伯明罕藝術設計學院設計管理學一級榮譽碩士 **Adrian Li** 的工作室。明上堂歷年作品榮獲 Adobe Behance 官方平台認證、法國 Cults3D 精選推薦。深耕品牌識別幾何學、3D 造型設計與印刷。
-
-在跨足平面與立體設計的過程中，3D 建模軟體不支援實體色彩管理，列印成 3D 實體模型往往難以控制色差。在平面或紙品印刷上，沒有使用專色的品牌設計，設計師與客戶溝通時也面對選色導致校對螢幕色與列印色版相當耗時的問題。為了替省去生產端的反覆盲測，明上堂自主研發了 **Mixo Swatch 色彩工程預測系統**。
-
-不論您的企業正在規劃全新的品牌識別，還是想挑戰前沿的 3D 實體藝術創作，我們都期待能與您攜手，用最讓人安心的專業，陪伴您的創意行穩致遠。誠摯期待與您聊聊您的下一個企劃。
-
-</details>
-
-<details>
-<summary><b>平面から立体まで、あらゆる領域の視覚的美を構築する</b> · 想像力をかき立てるフィギュアデザインと 3D プリントアート (日本語)</summary>
-
-明上堂（Mixo Creative）は、台湾に拠点を置きながら国際的な視野を併せ持つプロフェッショナルなデザイン会社です。香港教育大学の文化・イノベーションデザイン学科講師であり、英国バーミンガム芸術デザイン大学院にてデザインマネジメント学の一級栄誉修士（First Class Honours）を取得した **Adrian Li** のスタジオでもあります。明上堂のこれまでの作品は、Adobe Behance の公式プラットフォームでの認定や、フランスの Cults3D での厳選推奨を獲得しています。ブランドアイデンティティの幾何学、3D モデリングデザイン、そして印刷技術の分野を深く追求しています。
-
-印刷結果を完全に再現できる画面は存在しません。グラフィック印刷では、高価な特色を使わない限り、画面と印刷サンプルの色合わせに多大な時間がかかります。さらに、平面から立体デザインへの展開において、3D ソフトは実物のカラーマネジメントに対応していないため、3D プリント模型の色ブレ管理は極めて困難です。製造現場での手探りの試作を省くため、明上堂は色彩予測システム **「Mixo Swatch」** を自社開発しました。
-
-貴社の全く新しいブランドアイデンティティ（CI/VI）の構築から、最先端の 3D 立体アート作品への挑戦まで、私たちは最も安心できる専門知識をもって寄り添い、皆様のクリエイティブが着実に、そして遠くまで届くようサポートいたします。皆様の次なるプロジェクトについて、お話しできることを心より楽しみにしております。
-
-</details>
+【真実】印刷結果を完全に再現できる画面は存在しません。グラフィック印刷では、高価な特色を使わない限り、画面と印刷サンプルの色合わせに多大な時間がかかります。さらに、平面から立体デザインへの展開において、3Dソフトは実物のカラーマネジメントに対応していないため、3Dプリント模型の色ブレ管理は極めて困難です。製造現場での手探りの試作を省くため、明上堂は色彩予測システム「Mixo Swatch」を自社開発しました。
 
 <div align="center">
 
@@ -63,7 +45,7 @@ Whether your company is planning a new brand identity system or exploring ambiti
 
 </div>
 
-**Find us:** [Instagram](https://www.instagram.com/mixocreative) · [Facebook](https://www.facebook.com/mixocreative) · [Behance](https://www.behance.net/mixocreative) · [GitHub](https://github.com/mixocreative) · [twsy (TEAM TAIWAN Open Source Initiative · 台灣尚勇開源計劃)](https://github.com/mixocreative/twsy) · [About us →](https://mixocreative.com/about/)
+**Find us:** [Instagram](https://www.instagram.com/mixocreative) · [Facebook](https://www.facebook.com/mixocreative) · [Behance](https://www.behance.net/mixocreative) · [GitHub](https://github.com/mixocreative) · [TEAM TAIWAN Open Source Initiative · 台灣尚勇開源計劃)](https://github.com/mixocreative/twsy) · [About us →](https://mixocreative.com/about/)
 
 ---
 
