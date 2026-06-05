@@ -17,6 +17,7 @@ In graphic design, unless expensive spot colors are used, reconciling screen col
 【真実】印刷結果を完全に再現できる画面は存在しません。グラフィック印刷では、高価な特色を使わない限り、画面と印刷サンプルの色合わせに多大な時間がかかります。さらに、平面から立体デザインへの展開において、3Dソフトは実物のカラーマネジメントに対応していないため、3Dプリント模型の色ブレ管理は極めて困難です。製造現場での手探りの試作を省くため、明上堂は色彩予測システム「Mixo Swatch」を自社開発しました。
 </div>
 <div align="center">
+
 ### [→ Try me 立刻使用 詳細を見る](https://mixocreative.github.io/mixoswatch/)
 
 </div>
