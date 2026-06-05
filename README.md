@@ -27,19 +27,14 @@ In graphic design, unless expensive spot colors are used, reconciling screen col
 ## About the studio
 
 > **Create. Make. Innovate.** — _Designing joy in every layer: custom toys and 3D-printed art that spark imagination._
-<sub >
+<div style="font-size:small;">
 Mixo Creative is a Taiwan-based professional design studio with an international outlook, specializing in brand-identity geometry, 3D form design, and print production. Founded by **Adrian Li** — lecturer in the Department of Cultural and Creative Arts at The Education University of Hong Kong, and First-Class Honours Master's graduate in Design Management from the Birmingham Institute of Art and Design, UK. The studio's works have been officially recognized by Adobe Behance and featured by Cults3D in France.
 
 Whether your company is planning a new brand identity system or exploring ambitious frontiers in physical 3D art, we look forward to partnering with you — transforming ideas into reality with confidence, clarity, and technical reliability. We sincerely look forward to hearing about your next project.
-</sub>
-<sub >
-
 明上堂 Mixo Creative 是一家扎根於台灣、兼具國際視野的專業設計公司。香港教育大學文化及創新設計系講師、英國伯明罕藝術設計學院設計管理學一級榮譽碩士 Adrian Li 的工作室。明上堂歷年作品榮獲 Adobe Behance 官方平台認證、法國 Cults3D 精選推薦。深耕品牌識別幾何學、 3D 造型設計與印刷。
-</sub>
-<sub >
 
 明上堂（Mixo Creative）は、台湾に拠点を置きながら国際的な視野を併せ持つプロフェッショナルなデザイン会社です。香港教育大学の文化・イノベーションデザイン学科講師であり、英国バーミンガム芸術デザイン大学院にてデザインマネジメント学の一級栄誉修士（First Class Honours）を取得した Adrian Li のスタジオでもあります。明上堂のこれまでの作品は、Adobe Behanceの公式プラットフォームでの認定や、フランスのCults3Dでの厳選推奨を獲得しています。ブランドアイデンティティの幾何学、3Dモデリングデザイン、そして印刷技術の分野を深く追求しています。
-</sub>
+</div>
 <div align="center">
 <p>
   <img width="60" src="app/img/logo3d.png" alt="Mixo Creative 3D mark" />
