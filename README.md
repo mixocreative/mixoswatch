@@ -6,9 +6,17 @@
 </picture>
 
 # mixoswatch
-
+</div>
+<div>
 Cross-media color swatches for **2D commercial print**, **screen**, and **3D color printing** (Mimaki 3DUJ, Stratasys J55, Cura material libraries). Every swatch routed through a real CMYK ICC profile, not naive subtractive math.
 
+In graphic design, unless expensive spot colors are used, reconciling screen colors with physical proofs is incredibly time-consuming. As designs transition from 2D to 3D, the absence of physical color management in 3D modeling software makes controlling color discrepancies on 3D-printed models exceptionally difficult. To reduce costly production guesswork, we built the **Mixo Swatch Color Engineering Prediction System** — a professional "color translator" engineered to bridge digital design and physical output. Meaningful creativity deserves disciplined technical precision.
+
+[真相] 沒有任何螢幕能完全精確地呈現印刷結果。在平面或紙品印刷上，沒有使用昂貴專色的品牌設計，設計師與客户溝通時總得面對選色導致校對螢幕色與列印色版相當耗時的問題。在跨足平面與立體設計的過程中，3D建模軟體不支援實體色彩管理，列印成 3D 實體模型往往難以控制色差。為了一定程度省去生產端的反覆盲測，明上堂自主研發了 Mixo Swatch 色彩工程預測系統。
+
+【真実】印刷結果を完全に再現できる画面は存在しません。グラフィック印刷では、高価な特色を使わない限り、画面と印刷サンプルの色合わせに多大な時間がかかります。さらに、平面から立体デザインへの展開において、3Dソフトは実物のカラーマネジメントに対応していないため、3Dプリント模型の色ブレ管理は極めて困難です。製造現場での手探りの試作を省くため、明上堂は色彩予測システム「Mixo Swatch」を自社開発しました。
+</div>
+<div align="center">
 ### [→ Try me 立刻使用 詳細を見る](https://mixocreative.github.io/mixoswatch/)
 
 </div>
@@ -19,15 +27,13 @@ Cross-media color swatches for **2D commercial print**, **screen**, and **3D col
 
 > **Create. Make. Innovate.** — _Designing joy in every layer: custom toys and 3D-printed art that spark imagination._
 
-Mixo Creative (明上堂) is a Taiwan-based professional design studio with an international outlook, specializing in brand-identity geometry, 3D form design, and print production. Founded by **Adrian Li** — lecturer in the Department of Cultural and Creative Arts at The Education University of Hong Kong, and First-Class Honours Master's graduate in Design Management from the Birmingham Institute of Art and Design, UK. The studio's works have been officially recognized by Adobe Behance and featured by Cults3D in France.
-
-In graphic design, unless expensive spot colors are used, reconciling screen colors with physical proofs is incredibly time-consuming. As designs transition from 2D to 3D, the absence of physical color management in 3D modeling software makes controlling color discrepancies on 3D-printed models exceptionally difficult. To reduce costly production guesswork, we built the **Mixo Swatch Color Engineering Prediction System** — a professional "color translator" engineered to bridge digital design and physical output. Meaningful creativity deserves disciplined technical precision.
+Mixo Creative is a Taiwan-based professional design studio with an international outlook, specializing in brand-identity geometry, 3D form design, and print production. Founded by **Adrian Li** — lecturer in the Department of Cultural and Creative Arts at The Education University of Hong Kong, and First-Class Honours Master's graduate in Design Management from the Birmingham Institute of Art and Design, UK. The studio's works have been officially recognized by Adobe Behance and featured by Cults3D in France.
 
 Whether your company is planning a new brand identity system or exploring ambitious frontiers in physical 3D art, we look forward to partnering with you — transforming ideas into reality with confidence, clarity, and technical reliability. We sincerely look forward to hearing about your next project.
 
-[真相] 沒有任何螢幕能完全精確地呈現印刷結果。在平面或紙品印刷上，沒有使用昂貴專色的品牌設計，設計師與客户溝通時總得面對選色導致校對螢幕色與列印色版相當耗時的問題。在跨足平面與立體設計的過程中，3D建模軟體不支援實體色彩管理，列印成 3D 實體模型往往難以控制色差。為了一定程度省去生產端的反覆盲測，明上堂自主研發了 Mixo Swatch 色彩工程預測系統。
+明上堂 Mixo Creative 是一家扎根於台灣、兼具國際視野的專業設計公司。香港教育大學文化及創新設計系講師、英國伯明罕藝術設計學院設計管理學一級榮譽碩士 Adrian Li 的工作室。明上堂歷年作品榮獲 Adobe Behance 官方平台認證、法國 Cults3D 精選推薦。深耕品牌識別幾何學、 3D 造型設計與印刷。
 
-【真実】印刷結果を完全に再現できる画面は存在しません。グラフィック印刷では、高価な特色を使わない限り、画面と印刷サンプルの色合わせに多大な時間がかかります。さらに、平面から立体デザインへの展開において、3Dソフトは実物のカラーマネジメントに対応していないため、3Dプリント模型の色ブレ管理は極めて困難です。製造現場での手探りの試作を省くため、明上堂は色彩予測システム「Mixo Swatch」を自社開発しました。
+明上堂（Mixo Creative）は、台湾に拠点を置きながら国際的な視野を併せ持つプロフェッショナルなデザイン会社です。香港教育大学の文化・イノベーションデザイン学科講師であり、英国バーミンガム芸術デザイン大学院にてデザインマネジメント学の一級栄誉修士（First Class Honours）を取得した Adrian Li のスタジオでもあります。明上堂のこれまでの作品は、Adobe Behanceの公式プラットフォームでの認定や、フランスのCults3Dでの厳選推奨を獲得しています。ブランドアイデンティティの幾何学、3Dモデリングデザイン、そして印刷技術の分野を深く追求しています。
 
 <div align="center">
 
