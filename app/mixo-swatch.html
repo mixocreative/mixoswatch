@@ -8,6 +8,7 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+JP:wght@400;500&display=swap" rel="stylesheet">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Zen+Antique+Soft&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@200..900&display=swap" rel="stylesheet">
 
 <style>
 :root {
@@ -17,6 +18,7 @@
   --accent:#B2A88D; --accent-rgb:178 168 141;
   --font-mono:'IBM Plex Mono','Fira Mono',monospace;
   --font-sans:'Noto Sans JP',system-ui,sans-serif;
+  --font-tc: 'Noto Serif TC', -apple-system, serif;
   --font-jpn-serif:"Zen Antique Soft",serif;--accent-light:#6E6648;
   --r:6px; --rl:10px;
   color-scheme:dark;
@@ -68,6 +70,9 @@ input[type=range]{accent-color:var(--accent)}
 .topbar > *{min-width:0}
 .topbar-logo{height:28px;width:28px;flex-shrink:0;display:block}
 .topbar-title{font-size:14px;font-weight:500;letter-spacing:-.02em;white-space:nowrap}
+.topbar-home{display:flex;align-items:center;gap:10px;color:inherit;background:transparent;border:none;cursor:pointer;font:inherit;padding:2px 4px;margin:-2px -4px;border-radius:6px;transition:background .12s}
+.topbar-home:hover{background:rgb(var(--accent-rgb) / .12)}
+.topbar-home:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .topbar-sep{flex:1}
 .count-tag{font-size:11px;color:var(--muted);font-family:var(--font-mono);white-space:nowrap}
 .lab-mode-badge{
@@ -696,6 +701,21 @@ input[type=range]{accent-color:var(--accent)}
 .ax-opt:hover{color:var(--text)}
 .ax-opt.active{background:var(--accent);color:var(--bg);font-weight:500}
 
+/* Sidebar footer (links back to landing, README, GitHub, About) */
+.sidebar-foot{
+  margin-top:18px;padding:14px 0 8px;border-top:1px solid var(--border);
+  display:flex;flex-direction:column;gap:8px;
+}
+.sidebar-links{display:flex;flex-wrap:wrap;gap:6px 10px}
+.sidebar-links a{
+  font-family:var(--font-sans);font-size:11.5px;color:var(--muted);
+  text-decoration:none;padding:3px 8px;border-radius:5px;
+  border:1px solid var(--border);background:var(--bg2);
+  transition:background .12s,color .12s,border-color .12s;
+}
+.sidebar-links a:hover{background:var(--accent);color:var(--bg);border-color:var(--accent)}
+.sidebar-foot-meta{font-family:var(--font-mono);font-size:10px;color:var(--faint);letter-spacing:.04em}
+
 /* Loading progress overlay */
 #loadProgress{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:center;justify-content:center;z-index:9999;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
 .lp-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:24px 28px;min-width:320px;max-width:80vw;display:flex;flex-direction:column;gap:10px;box-shadow:0 12px 40px rgba(0,0,0,.4)}
@@ -703,6 +723,69 @@ input[type=range]{accent-color:var(--accent)}
 .lp-bar{height:6px;background:var(--bg2);border-radius:3px;overflow:hidden}
 .lp-fill{height:100%;background:var(--accent);width:0%;transition:width .15s ease-out}
 .lp-sub{font-size:11px;color:var(--muted);font-family:var(--font-mono)}
+
+/* ── Intro overlay (first-run welcome card) ── */
+#introOverlay{position:fixed;inset:0;z-index:9000;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.52);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+#introOverlay.open{display:flex}
+.intro-card{
+  background:var(--surface);border:1px solid var(--border);border-radius:14px;
+  width:min(520px,94vw);max-height:88vh;overflow:auto;padding:34px 32px 28px;
+  box-shadow:0 28px 80px rgba(0,0,0,.42);position:relative;
+  animation:popIn .18s ease-out;
+}
+.intro-close{
+  position:absolute;top:10px;right:12px;background:transparent;border:none;
+  color:var(--muted);width:30px;height:30px;border-radius:50%;cursor:pointer;
+  font-size:16px;display:flex;align-items:center;justify-content:center;
+}
+.intro-close:hover{background:var(--bg2);color:var(--text)}
+.intro-logo{display:block;margin:0 auto 18px;width:112px;height:auto}
+
+/* All 3 languages stay inline inside the same block for easy editing.
+   The <html lang="..."> attribute (set by applyI18n) gates which line
+   actually paints. Default html[lang] in the page boot is "en" via the
+   <html> tag, so EN shows pre-init; applyI18n flips it to ja / zh-Hant
+   when the user (or auto-detect) picks another language. */
+.intro-tag-block,.intro-sub-block,.intro-body-block{text-align:center;margin:0 auto 18px;max-width:44ch}
+.intro-tag-block{margin-bottom:14px}
+
+/* Hide-by-default; the matching html[lang] rule re-shows one line. */
+.intro-en,.intro-ja,.intro-zh{display:none}
+html[lang^="en"] .intro-en{display:block}
+html[lang^="ja"] .intro-ja{display:block}
+html[lang^="zh"] .intro-zh{display:block}
+/* Inside the action button, the visible span renders inline so the
+   icon + label stay on a single row. More specific selector wins. */
+html[lang^="en"] .intro-btn .intro-en,
+html[lang^="ja"] .intro-btn .intro-ja,
+html[lang^="zh"] .intro-btn .intro-zh{display:inline}
+
+.intro-tag{font-family:var(--font-sans);margin:0;line-height:1.3;font-size:22px;font-weight:600;color:var(--text);letter-spacing:-.01em}
+.intro-tag.intro-zh{font-family:var(--font-zh,var(--font-sans))}
+.intro-tag.intro-ja{font-family:var(--font-jpn,var(--font-sans));font-size:18px}
+.intro-sub{font-family:var(--font-sans);font-size:14px;line-height:1.55;margin:0;color:var(--muted)}
+.intro-sub.intro-zh{font-family:var(--font-zh,var(--font-sans))}
+.intro-sub.intro-ja{font-family:var(--font-jpn,var(--font-sans))}
+.intro-body{font-family:var(--font-sans);font-size:small;line-height:1.6;margin:1em 0;color:var(--text);text-align:left; text-wrap: pretty; font-weight:normal;}
+.intro-body.intro-zh{font-family:sans-serif;}
+.intro-body.intro-ja{font-family:var(--font-jpn,var(--font-sans))}
+.intro-actions{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:14px}
+.intro-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:10px 16px;border-radius:999px;border:1px solid var(--border);
+  background:var(--bg2);color:var(--text);text-decoration:none;
+  font-family:var(--font-sans);font-size:13px;cursor:pointer;
+  transition:background .12s,color .12s,border-color .12s;
+}
+.intro-btn:hover{background:var(--accent);color:var(--bg);border-color:var(--accent)}
+.intro-btn svg{width:16px;height:16px}
+.intro-btn.primary{background:var(--accent);color:var(--bg);border-color:var(--accent)}
+.intro-btn.primary:hover{filter:brightness(1.08)}
+.intro-foot{
+  text-align:center;font-size:11px;color:var(--faint);font-family:var(--font-mono);
+  letter-spacing:.04em;margin-top:6px;
+}
+
 /* ── Responsive breakpoints ── */
 .hamburger-btn{
   display:none;background:transparent;border:0;color:var(--text);
@@ -768,8 +851,10 @@ input[type=range]{accent-color:var(--accent)}
 <!-- Top bar -->
 <header class="topbar">
   <button class="hamburger-btn" id="hamburger" onclick="toggleSidebar()" aria-label="Toggle sidebar" title="Show / hide sidebar (mobile)">&#8801;</button>
-  <img src="img/logo.svg" alt="" class="topbar-logo" id="topbarLogo" aria-hidden="true">
-  <span class="topbar-title">Mixo Swatch</span>
+  <button type="button" class="topbar-home" onclick="openIntro()" title="About Mixo Swatch / mixocreative" data-i18n-title="topbar.home_title">
+    <img src="img/logo.svg" alt="" class="topbar-logo" id="topbarLogo" aria-hidden="true">
+    <span class="topbar-title">Mixo Swatch</span>
+  </button>
   <span class="lab-mode-badge" id="labModeBadge" data-i18n="badge.mode_d50" title="Active Lab whitepoint. Switch in sidebar under 'Color mode'.">Mode: Print (D50)</span>
   <div class="topbar-sep"></div>
   <span class="count-tag" id="countLabel" title="How many swatches the filters currently allow.">- swatches</span>
@@ -781,7 +866,9 @@ input[type=range]{accent-color:var(--accent)}
       <button onclick="exportCSV();_closeAllPalMenus()" data-i18n="export.csv" title="UTF-8 CSV of every filtered swatch (Excel-ready, keeps kanji + hanzi).">CSV (UTF-8 BOM)</button>
       <button onclick="exportPNG();_closeAllPalMenus()" data-i18n="export.png" title="Square PNG board with title band + per-cell CMYK / hex / name / AA labels.">PNG (with title band + labels)</button>
       <button onclick="exportFilteredPurePNG();_closeAllPalMenus()" data-i18n="export.png_pure" title="4096x4096 pure-color PNG. No title band, no labels, no borders, no gap.">PNG pure 4096 (color only)</button>
-      <button onclick="exportFilteredSwatchZIP();_closeAllPalMenus()" data-i18n="export.zip" title="ZIP with one 128x128 pure-color PNG per filtered swatch plus manifest.csv/json.">ZIP (per-swatch + manifest)</button>
+      <button onclick="exportFilteredTIFF();_closeAllPalMenus()" data-i18n="export.tiff" title="Labelled CMYK TIFF. Same layout as PNG but every pixel routed through the active profile's reverse LUT so Photoshop / RIPs read CMYK directly. ICC embedded when icc/<filename> is present.">TIFF (CMYK, labelled)</button>
+      <button onclick="exportFilteredPureTIFF();_closeAllPalMenus()" data-i18n="export.tiff_pure" title="4096x4096 lossless CMYK TIFF. Every tile carries the swatch's stored C/M/Y/K bytes - no sRGB round-trip. ICC embedded when icc/<filename> is present.">TIFF pure 4096 (CMYK, color only)</button>
+      <button onclick="exportFilteredSwatchZIP();_closeAllPalMenus()" data-i18n="export.zip" title="ZIP with one 128x128 sRGB PNG + one 128x128 CMYK TIFF per filtered swatch plus manifest.csv/json.">ZIP (per-swatch + manifest)</button>
     </div>
   </div>
   <button type="button" class="theme-toggle" id="themeToggleBtn" onclick="toggleTheme()" title="Switch between light and dark theme">
@@ -1064,6 +1151,19 @@ input[type=range]{accent-color:var(--accent)}
       </div>
     </div>
 
+    <div class="sidebar-foot">
+      <div class="sec-label" data-i18n="sec.links">Links</div>
+      <div class="sidebar-links">
+        <a href="../index.html" data-i18n="links.home" title="Mixo Swatch landing page">&#8592; Home</a>
+        <a href="https://github.com/mixocreative/mixoswatch#readme" target="_blank" rel="noopener" data-i18n="links.readme" title="Open the project README on GitHub">README &#x2197;</a>
+        <a href="https://github.com/mixocreative/mixoswatch" target="_blank" rel="noopener" data-i18n="links.github" title="View source on GitHub">GitHub &#x2197;</a>
+        <a href="https://mixocreative.com/about/" target="_blank" rel="noopener" data-i18n="links.about" title="About mixocreative">About us &#x2197;</a>
+      </div>
+      <div class="sidebar-foot-meta">
+        <span data-i18n="links.foot">mixocreative · Mixo Swatch</span>
+      </div>
+    </div>
+
     </aside>
 
   <!-- ── Grid ── -->
@@ -1136,6 +1236,87 @@ input[type=range]{accent-color:var(--accent)}
   </div>
 
 </div>
+</div>
+
+<!-- Intro overlay (mixocreative welcome card) -->
+<!-- All 3 languages are inlined in the same block on purpose. Intro is a
+     one-shot brand greeting; showing all 3 at once is friendlier than
+     forcing a language switch, and keeps the markup easy to edit. -->
+<div id="introOverlay" onclick="if(event.target===this) closeIntro()">
+  <div class="intro-card" role="dialog" aria-labelledby="introTag" aria-modal="true">
+    <button class="intro-close" onclick="closeIntro()" aria-label="Close intro">&#x2715;</button>
+    
+    <div>
+    <div class="badge-container" style="display: flex; text-align: center; align-items: center; justify-content: center;">
+    <span><img width="60" src="img/logo3d.png" alt="logo3d" style="vertical-align: middle;" /> <img width="60" src="img/logotype.svg" alt="logotype" style="vertical-align: middle;"/></span><br/>
+    </div>
+    </div>
+
+    <div class="intro-tag-block" id="introTag">
+      <p class="intro-tag intro-en">Create. Make. Innovate.</p>
+      <p class="intro-tag intro-zh" style="font-family: var(--font-tc);">讓事物變得有趣</p>
+      <p class="intro-tag intro-ja" style="font-family: var(--font-jpn-serif); font-weight: normal;">平面から立体まで、あらゆる領域の視覚的美を構築する</p>
+    </div>
+
+    <div class="intro-sub-block">
+      <p class="intro-sub intro-en">Designing joy in every layer - custom toys and 3D-printed art that spark imagination.</p>
+      <p class="intro-sub intro-zh">客製化文化商品與激發想像力的 3D 列印藝術工作者</p>
+      <p class="intro-sub intro-ja">想像力をかき立てるフィギュアデザインと3Dプリントアート</p>
+    </div>
+    <div class="badge-container" style="display: flex; text-align: center; align-items: center;justify-content: center;">
+    <span><img width="120" src="img/cults-cert-gold.png" alt="badges" style="vertical-align: middle;" /> <img width="120" src="img/behance-cert-gold.png" alt="badges" style="vertical-align: middle;"/></span><br/>
+    </div>
+
+    <div class="intro-body-block">
+      <p class="intro-body intro-en">Mixo Creative is a Taiwan-based professional design studio with an international outlook, specializing in brand identity geometry, 3D form design, and print production. Founded by Adrian Li, lecturer in the Department of Cultural and Creative Arts at The Education University of Hong Kong and First-Class Honours Master's graduate in Design Management from the Birmingham Institute of Art and Design, United Kingdom, the studio’s works have been officially recognized by Adobe Behance and featured by Cults3D in France.</p>
+      <p class="intro-body intro-zh">明上堂 Mixo Creative 是一家扎根於台灣、兼具國際視野的專業設計公司。香港教育大學文化及創新設計系講師、英國伯明罕藝術設計學院設計管理學一級榮譽碩士 Adrian Li 的工作室。明上堂歷年作品榮獲 Adobe Behance 官方平台認證、法國 Cults3D 精選推薦。深耕品牌識別幾何學、 3D 造型設計與印刷。</p>
+      <p class="intro-body intro-ja">明上堂（Mixo Creative）は、台湾に拠点を置きながら国際的な視野を併せ持つプロフェッショナルなデザイン会社です。香港教育大学の文化・イノベーションデザイン学科講師であり、英国バーミンガム芸術デザイン大学院にてデザインマネジメント学の一級栄誉修士（First Class Honours）を取得したアドリアン・リー（Adrian Li）のスタジオでもあります。明上堂のこれまでの作品は、Adobe Behanceの公式プラットフォームでの認定や、フランスのCults3Dでの厳選推奨を獲得しています。ブランドアイデンティティの幾何学、3Dモデリングデザイン、そして印刷技術の分野を深く追求しています。</p>
+
+ 
+
+      <p class="intro-body intro-zh">在跨足平面與立體設計的過程中，3D建模軟體不支援實體色彩管理，列印成 3D 實體模型往往難以控制色差。在平面或紙品印刷上，沒有使用專色的品牌設計，設計師與客户溝通時也面對選色導致校對螢幕色與列印色版相當耗時的問題。為了替省去生產端的反覆盲測，明上堂自主研發了 Mixo Swatch 色彩工程預測系統。</p>
+
+      <p class="intro-body intro-en">Whether your company is planning a new brand identity system or exploring ambitious frontiers in physical 3D art, we look forward to partnering with you — transforming ideas into reality with confidence, clarity, and technical reliability.We sincerely look forward to hearing about your next project.</p>
+      <p class="intro-body intro-zh">不論您的企業正在規劃全新的品牌識別，還是想挑戰前沿的 3D 實體藝術創作，我們都期待能與您攜手，用最讓人安心的專業，陪伴您的創意行穩致遠。誠摯期待與您聊聊您的下一個企劃。</p>
+      <p class="intro-body intro-ja">貴社の全く新しいブランドアイデンティティ（CI/VI）の構築から、最先端の3D立体アート作品への挑戦まで、私たちは最も安心できる専門知識をもって寄り添い、皆様のクリエイティブが着実に、そして遠くまで届くようサポートいたします。皆様の次なるプロジェクトについて、お話しできることを心より楽しみにしております。</p>
+    </div><div class="intro-actions">
+      <a class="intro-btn primary" href="../index.html" target="_blank" rel="noopener" title="Learn about this app">
+        <span class="intro-en">How to use ↗</span>
+        <span class="intro-zh">詳細教學 ↗</span>
+        <span class="intro-ja">使い方 ↗</span>
+      </a>
+      </div>
+    <div class="intro-actions">
+      
+      <a class="intro-btn" href="https://www.instagram.com/mixocreative" target="_blank" rel="noopener" title="Follow on Instagram">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+        <span>Instagram</span>
+      </a>
+      <a class="intro-btn" href="https://www.facebook.com/mixocreative" target="_blank" rel="noopener" title="Follow on Facebook">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+        <span>Facebook</span>
+      </a>
+      <a class="intro-btn" href="https://www.behance.net/mixocreative" target="_blank" rel="noopener" title="Portfolio on Behance">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22 7h-7v-2h7v2zm1.726 10c-.442 1.297-2.029 3-5.101 3-3.074 0-5.564-1.729-5.564-5.675 0-3.91 2.325-5.92 5.466-5.92 3.082 0 4.964 1.782 5.375 4.426.078.506.109 1.188.095 2.14h-8.027c.13 3.211 3.483 3.312 4.588 2.029h3.168zm-7.686-4h4.965c-.105-1.547-1.136-2.219-2.477-2.219-1.466 0-2.277.768-2.488 2.219zm-9.574 6.988h-6.466v-13.967h6.953c5.476.081 5.58 5.444 2.72 6.906 3.461 1.26 3.577 7.061-3.207 7.061zm-3.466-8.988h3.584c2.508 0 2.906-3-.312-3h-3.272v3zm3.391 3h-3.391v3.016h3.341c3.055 0 2.868-3.016.05-3.016z"/></svg>
+        <span>Behance</span>
+      </a>
+      <a class="intro-btn" href="https://github.com/mixocreative" target="_blank" rel="noopener" title="mixocreative on GitHub">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56 0-.27-.01-1-.01-1.95-3.2.7-3.88-1.54-3.88-1.54-.52-1.34-1.28-1.7-1.28-1.7-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.71 1.26 3.37.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.28 1.18-3.09-.12-.29-.51-1.46.11-3.05 0 0 .97-.31 3.18 1.18.92-.26 1.9-.39 2.88-.39.98 0 1.96.13 2.88.39 2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.12 3.05.74.81 1.18 1.83 1.18 3.09 0 4.42-2.7 5.39-5.27 5.68.41.36.78 1.06.78 2.14 0 1.55-.01 2.8-.01 3.18 0 .31.21.68.8.56C20.21 21.38 23.5 17.08 23.5 12 23.5 5.65 18.35.5 12 .5z"/></svg>
+        <span>GitHub</span>
+      </a>
+      <a class="intro-btn" href="https://github.com/mixocreative/twsy" target="_blank" rel="noopener" title="twsy repo on GitHub">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56 0-.27-.01-1-.01-1.95-3.2.7-3.88-1.54-3.88-1.54-.52-1.34-1.28-1.7-1.28-1.7-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.71 1.26 3.37.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.28 1.18-3.09-.12-.29-.51-1.46.11-3.05 0 0 .97-.31 3.18 1.18.92-.26 1.9-.39 2.88-.39.98 0 1.96.13 2.88.39 2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.12 3.05.74.81 1.18 1.83 1.18 3.09 0 4.42-2.7 5.39-5.27 5.68.41.36.78 1.06.78 2.14 0 1.55-.01 2.8-.01 3.18 0 .31.21.68.8.56C20.21 21.38 23.5 17.08 23.5 12 23.5 5.65 18.35.5 12 .5z"/></svg>
+        <span class="intro-en">TEAM TAIWAN Open Source Initiative</span><span class="intro-zh">台灣尚勇開源計劃</span><span class="intro-ja">台湾尚勇オープンソース計画</span>
+      </a>
+      <a class="intro-btn primary" href="https://mixocreative.com/about/" target="_blank" rel="noopener" title="Learn about mixocreative">
+        <span class="intro-en">About us &#x2192;</span>
+        <span class="intro-zh">關於我們 &#x2192;</span>
+        <span class="intro-ja">私たちについて &#x2192;</span>
+      </a>
+    </div>
+
+    <div class="intro-foot">mixocreative.com</div>
+  </div>
 </div>
 
 <!-- Detail overlay -->
@@ -2508,11 +2689,14 @@ function renderPaletteMode() {
         <div class="pal-dropdown" style="display:inline-block">
           <button class="pm-act primary" data-act="dl-toggle" title="${T('pm.download','Download this palette')}">↓ ${T('pm.download','Download')} ▾</button>
           <div class="pal-menu" id="${dlMenuId}" hidden>
-            <button data-act="png"      onclick="exportPalettePNGSizedById('${p.id}');_closeAllPalMenus()">PNG - labelled</button>
-            <button data-act="png_pure" onclick="exportPalettePNGPureById('${p.id}');_closeAllPalMenus()">PNG - pure color</button>
-            <button data-act="zip"      onclick="exportPaletteZIPById('${p.id}');_closeAllPalMenus()">ZIP - per-swatch + manifest</button>
+            <button data-act="png"       onclick="exportPalettePNGSizedById('${p.id}');_closeAllPalMenus()">PNG - labelled</button>
+            <button data-act="png_pure"  onclick="exportPalettePNGPureById('${p.id}');_closeAllPalMenus()">PNG - pure color</button>
+            <button data-act="tiff"      onclick="exportPaletteTIFFSizedById('${p.id}');_closeAllPalMenus()">TIFF - labelled (CMYK)</button>
+            <button data-act="tiff_pure" onclick="exportPaletteTIFFPureById('${p.id}');_closeAllPalMenus()">TIFF - pure color (CMYK)</button>
+            <button data-act="zip"       onclick="exportPaletteZIPById('${p.id}');_closeAllPalMenus()">ZIP - per-swatch + manifest</button>
             <div class="pal-menu-sep"></div>
-            <button data-act="ase"      onclick="exportPaletteASEById('${p.id}');_closeAllPalMenus()">ASE - Adobe / Affinity / Substance</button>
+            <button data-act="ase_cmyk" onclick="exportPaletteASEById_CMYK('${p.id}');_closeAllPalMenus()">ASE (CMYK) - prepress / RIP</button>
+            <button data-act="ase_rgb"  onclick="exportPaletteASEById_RGB('${p.id}');_closeAllPalMenus()">ASE (RGB) - Adobe / Affinity / Substance</button>
             <button data-act="gpl"      onclick="exportPaletteGPLById('${p.id}');_closeAllPalMenus()">GPL - GIMP / Krita / Inkscape</button>
             <button data-act="json"     onclick="exportPaletteJSONById('${p.id}');_closeAllPalMenus()">JSON - lossless interchange</button>
           </div>
@@ -3285,7 +3469,23 @@ function maybeClose(e) {
 function closeDetail() {
   document.getElementById('overlay').classList.remove('open');
 }
-document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeDetail(); });
+document.addEventListener('keydown', e=>{ if(e.key==='Escape') { closeDetail(); closeIntro(); } });
+
+// ── Intro overlay (mixocreative welcome card) ───────────────────────────
+// Surfaced on every page load. Topbar logo + brand text reopen it.
+// Dismissed via Esc, backdrop click, or the close button.
+function openIntro() {
+  const el = document.getElementById('introOverlay');
+  if (!el) return;
+  el.classList.add('open');
+}
+function closeIntro() {
+  const el = document.getElementById('introOverlay');
+  if (!el) return;
+  el.classList.remove('open');
+}
+// Shown on every page load. Topbar logo + brand text re-open it.
+function _maybeShowIntro() { openIntro(); }
 
 // ── TAC profile-aware state ───────────────────────────────────────────────────
 let TAC_USER_OVERRIDE = false;
@@ -3714,7 +3914,35 @@ function exportFilteredPurePNG() {
   );
 }
 
-function _renderSwatchPNG(data, filename, opts = {}) {
+// Pure-color filtered export as CMYK TIFF. Lossless - every output pixel
+// carries the swatch's stored s.C/M/Y/K (no sRGB round-trip). 4096^2.
+async function exportFilteredPureTIFF() {
+  const data = sorted(filtered());
+  if (!data.length) { alert('No swatches to export.'); return; }
+  await _renderPaletteCMYKTIFFPure(
+    data,
+    `cmyk_swatches_pure_${data.length}_step${curStep}_4096.tif`,
+    4096
+  );
+}
+
+// Labelled filtered export as CMYK TIFF. Renders the existing sRGB
+// canvas (title band + per-cell labels), then converts every pixel
+// through the reverse LUT to CMYK. Pure white short-circuits to (0,0,0,0)
+// and pure black to (0,0,0,100) so the title band stays clean ink.
+async function exportFilteredTIFF() {
+  const data = sorted(filtered());
+  if (!data.length) { alert('No swatches to export.'); return; }
+  await _renderSwatchTIFF(
+    data,
+    `cmyk_swatches_${data.length}_step${curStep}_${curCell}px.tif`,
+    { title: 'Mixo Swatch - filtered view' }
+  );
+}
+
+// Build the labelled filtered-view canvas (used by PNG + TIFF exporters).
+// Returns the populated <canvas> element; callers do the blob/encode step.
+function _drawFilteredSwatchCanvas(data, opts = {}) {
   const cs   = curCell;
   const n    = data.length;
   const cols = Math.ceil(Math.sqrt(n));
@@ -3812,13 +4040,73 @@ function _renderSwatchPNG(data, filename, opts = {}) {
   });
 
   ctx.restore();
+  return canvas;
+}
 
+function _renderSwatchPNG(data, filename, opts = {}) {
+  const canvas = _drawFilteredSwatchCanvas(data, opts);
   canvas.toBlob(blob => {
     const a = Object.assign(document.createElement('a'),
       {href:URL.createObjectURL(blob), download:filename});
     a.click();
     setTimeout(()=>URL.revokeObjectURL(a.href), 1000);
   }, 'image/png');
+}
+
+// Convert any RGBA canvas to chunky CMYK Uint8Array via the active rLUT.
+// Short-circuits pure white -> (0,0,0,0) and pure black -> (0,0,0,100)
+// so the title band and crisp black text stay clean ink. Yields to rAF
+// every 64 rows so the progress overlay can paint.
+async function _canvasToCMYKBytes(canvas, onProgress) {
+  if (!ACTIVE_RLUT) throw new Error('No reverse LUT loaded for this profile');
+  const w = canvas.width, h = canvas.height;
+  const ctx = canvas.getContext('2d');
+  const img = ctx.getImageData(0, 0, w, h).data;
+  const buf = new Uint8Array(w * h * 4);
+  let off = 0;
+  for (let y = 0; y < h; y++) {
+    const rowStart = y * w * 4;
+    for (let x = 0; x < w; x++) {
+      const p = rowStart + x * 4;
+      const R = img[p], G = img[p+1], B = img[p+2];
+      let C, M, Y, K;
+      if (R === 255 && G === 255 && B === 255) {
+        C = M = Y = K = 0;
+      } else if (R === 0 && G === 0 && B === 0) {
+        C = M = Y = 0; K = 255;
+      } else {
+        const [cp, mp, yp, kp] = rlutLookup(ACTIVE_RLUT, R, G, B);
+        C = Math.round(cp * 255 / 100);
+        M = Math.round(mp * 255 / 100);
+        Y = Math.round(yp * 255 / 100);
+        K = Math.round(kp * 255 / 100);
+      }
+      buf[off]   = C;
+      buf[off+1] = M;
+      buf[off+2] = Y;
+      buf[off+3] = K;
+      off += 4;
+    }
+    if (onProgress && (y & 63) === 63) {
+      onProgress(30 + (y / h) * 60, `${y} / ${h}`);
+      await new Promise(r => requestAnimationFrame(r));
+    }
+  }
+  return buf;
+}
+
+// Labelled filtered TIFF (CMYK). Reuses the PNG canvas builder so layout
+// matches exactly, then runs rLUT round-trip + ICC embed.
+async function _renderSwatchTIFF(data, filename, opts = {}) {
+  if (!ACTIVE_RLUT) {
+    alert('Labelled TIFF needs a reverse LUT for the active profile.');
+    return;
+  }
+  const canvas = _drawFilteredSwatchCanvas(data, opts);
+  const cmyk = await _canvasToCMYKBytes(canvas, _setProgress);
+  const icc = await fetchActiveICC();
+  const tif = buildTIFF(canvas.width, canvas.height, cmyk, icc);
+  downloadBlob(new Blob([tif], { type: 'image/tiff' }), filename);
 }
 
 // -- assignUniqueNames - group swatches by hex for dedup suffix logic ----
@@ -3857,7 +4145,11 @@ function buildGPL(swatches, title='palette') {
 }
 
 // -- ASE - Adobe Swatch Exchange binary --------------------------------
-function buildASE(swatches, title='palette') {
+// mode: 'rgb' emits "RGB " block (3 float32) for screen tools (Adobe,
+// Affinity, Substance, Figma plugins). 'cmyk' emits "CMYK" block (4
+// float32 0..1) so prepress / RIP software reads CMYK values directly
+// without double-converting through sRGB.
+function buildASE(swatches, title='palette', mode='rgb') {
   // Encode names as UTF-16BE + null terminator
   const enc = (name) => {
     const chars = name + '\0';
@@ -3869,20 +4161,33 @@ function buildASE(swatches, title='palette') {
     return buf;
   };
 
+  const isCmyk = (mode === 'cmyk');
+  const colorTag = isCmyk
+    ? [0x43, 0x4D, 0x59, 0x4B]   // "CMYK"
+    : [0x52, 0x47, 0x42, 0x20];  // "RGB "
+  const channelBytes = isCmyk ? 16 : 12;  // 4 float32 or 3 float32
+
   // Build blocks: [group start, ...colors, group end]
   const blocks = [];
   blocks.push({ type: 0xC001, body: enc(title) });
   for (const s of swatches) {
     const nameBytes = enc(s.export_name);
-    const total = nameBytes.length + 4 + 12 + 2;  // name + "RGB " + 3 floats + type
+    const total = nameBytes.length + 4 + channelBytes + 2;
     const body = new Uint8Array(total);
     let off = 0;
     body.set(nameBytes, off); off += nameBytes.length;
-    body.set([0x52, 0x47, 0x42, 0x20], off); off += 4;  // "RGB "
+    body.set(colorTag, off); off += 4;
     const dv = new DataView(body.buffer);
-    dv.setFloat32(off, s.R / 255, false); off += 4;
-    dv.setFloat32(off, s.G / 255, false); off += 4;
-    dv.setFloat32(off, s.B / 255, false); off += 4;
+    if (isCmyk) {
+      dv.setFloat32(off, s.C / 100, false); off += 4;
+      dv.setFloat32(off, s.M / 100, false); off += 4;
+      dv.setFloat32(off, s.Y / 100, false); off += 4;
+      dv.setFloat32(off, s.K / 100, false); off += 4;
+    } else {
+      dv.setFloat32(off, s.R / 255, false); off += 4;
+      dv.setFloat32(off, s.G / 255, false); off += 4;
+      dv.setFloat32(off, s.B / 255, false); off += 4;
+    }
     dv.setUint16(off, 2, false);  // type: normal
     blocks.push({ type: 0x0001, body });
   }
@@ -3907,6 +4212,137 @@ function buildASE(swatches, title='palette') {
   return out;
 }
 
+// -- ICC fetch (client-side, cached) -----------------------------------
+// Pulls the active profile's ICC bytes from icc/<filename> so they can be
+// embedded in TIFF tag 34675. Returns null if the file is not present
+// (icc/ is gitignored by default - users supply their own). Cached by
+// filename so repeat exports don't re-fetch.
+const _ICC_CACHE = new Map();
+async function fetchActiveICC() {
+  const p = (typeof ACTIVE_PROFILE !== 'undefined') ? ACTIVE_PROFILE : null;
+  if (!p || !p.filename) return null;
+  if (_ICC_CACHE.has(p.filename)) return _ICC_CACHE.get(p.filename);
+  try {
+    const r = await fetch('../icc/' + p.filename);
+    if (!r.ok) { _ICC_CACHE.set(p.filename, null); return null; }
+    const buf = new Uint8Array(await r.arrayBuffer());
+    _ICC_CACHE.set(p.filename, buf);
+    return buf;
+  } catch {
+    _ICC_CACHE.set(p.filename, null);
+    return null;
+  }
+}
+
+// -- TIFF - baseline 8-bit CMYK, single strip, no compression ----------
+// Photoshop / Affinity / RIPs read 8-bit CMYK TIFF natively. If iccBytes
+// is provided it is embedded in tag 34675 so the file is self-describing;
+// without it the receiver must assign a profile by hand. Little-endian
+// throughout ("II" + magic 42). Pixel data is chunky CMYK (CMYKCMYK...).
+function buildTIFF(width, height, cmykBytes, iccBytes) {
+  const stripBytes = width * height * 4;
+  if (cmykBytes.length !== stripBytes)
+    throw new Error('buildTIFF: pixel buffer size mismatch');
+
+  // IFD entry table - we write 15 or 16 entries depending on ICC.
+  // Each entry: tag(uint16) type(uint16) count(uint32) value/offset(uint32)
+  const entries = [];
+  const addEntry = (tag, type, count, value) => entries.push({ tag, type, count, value });
+  // Reserve placeholders; offsets resolved after we know external-data layout.
+  addEntry(256, 4, 1, width);            // ImageWidth (LONG)
+  addEntry(257, 4, 1, height);           // ImageLength (LONG)
+  addEntry(258, 3, 4, 0);                // BitsPerSample [8,8,8,8] - offset
+  addEntry(259, 3, 1, 1);                // Compression: none
+  addEntry(262, 3, 1, 5);                // Photometric: Separated (CMYK)
+  addEntry(273, 4, 1, 0);                // StripOffsets - patched
+  addEntry(274, 3, 1, 1);                // Orientation: top-left
+  addEntry(277, 3, 1, 4);                // SamplesPerPixel: 4
+  addEntry(278, 4, 1, height);           // RowsPerStrip = height (single strip)
+  addEntry(279, 4, 1, stripBytes);       // StripByteCounts
+  addEntry(282, 5, 1, 0);                // XResolution (RATIONAL) - offset
+  addEntry(283, 5, 1, 0);                // YResolution (RATIONAL) - offset
+  addEntry(284, 3, 1, 1);                // PlanarConfiguration: chunky
+  addEntry(296, 3, 1, 2);                // ResolutionUnit: inch
+  addEntry(332, 3, 1, 1);                // InkSet: CMYK
+  addEntry(333, 2, 24, 0);               // InkNames "Cyan\0Magenta\0Yellow\0Black\0" (24 bytes) - offset
+  if (iccBytes && iccBytes.length > 0) {
+    addEntry(34675, 7, iccBytes.length, 0);  // ICCProfile (UNDEFINED) - offset
+  }
+  // TIFF requires IFD entries sorted by tag ASC.
+  entries.sort((a, b) => a.tag - b.tag);
+
+  const ifdStart = 8;
+  const ifdSize  = 2 + entries.length * 12 + 4;  // count + entries + next-IFD
+  let extOff = ifdStart + ifdSize;
+
+  // Resolve external-data offsets.
+  const externals = [];
+  const placeExt = (entryTag, bytes, align = 2) => {
+    if (extOff % align !== 0) extOff += align - (extOff % align);
+    const here = extOff;
+    extOff += bytes.length;
+    externals.push({ at: here, bytes });
+    const e = entries.find(x => x.tag === entryTag);
+    e.value = here;
+  };
+
+  // BitsPerSample: 4 SHORTs - 8 bytes
+  placeExt(258, new Uint8Array([8,0, 8,0, 8,0, 8,0]));
+  // X / Y resolution: RATIONAL (uint32 num / uint32 den) = 300/1
+  const ratio = new Uint8Array(8);
+  new DataView(ratio.buffer).setUint32(0, 300, true);
+  new DataView(ratio.buffer).setUint32(4, 1,   true);
+  placeExt(282, new Uint8Array(ratio), 4);
+  placeExt(283, new Uint8Array(ratio), 4);
+  // InkNames: "Cyan\0Magenta\0Yellow\0Black\0" = 24 bytes
+  const inkNames = new Uint8Array([
+    0x43,0x79,0x61,0x6E,0x00,
+    0x4D,0x61,0x67,0x65,0x6E,0x74,0x61,0x00,
+    0x59,0x65,0x6C,0x6C,0x6F,0x77,0x00,
+    0x42,0x6C,0x61,0x63,0x6B,0x00,
+  ]);
+  placeExt(333, inkNames);
+  // ICC profile (optional). ICC spec wants 4-byte alignment.
+  if (iccBytes && iccBytes.length > 0) {
+    placeExt(34675, iccBytes, 4);
+  }
+  // Pixel strip - align to 2 bytes (TIFF spec).
+  if (extOff % 2) extOff += 1;
+  const stripOff = extOff;
+  extOff += cmykBytes.length;
+  entries.find(x => x.tag === 273).value = stripOff;
+
+  // Build the file
+  const total = extOff;
+  const out = new Uint8Array(total);
+  const dv  = new DataView(out.buffer);
+  // Header
+  out[0] = 0x49; out[1] = 0x49;          // "II" little-endian
+  dv.setUint16(2, 42, true);             // magic
+  dv.setUint32(4, ifdStart, true);       // IFD offset
+  // IFD
+  dv.setUint16(ifdStart, entries.length, true);
+  let p = ifdStart + 2;
+  for (const e of entries) {
+    dv.setUint16(p, e.tag,   true); p += 2;
+    dv.setUint16(p, e.type,  true); p += 2;
+    dv.setUint32(p, e.count, true); p += 4;
+    // value/offset field. If the data fits in 4 bytes by type, store inline;
+    // otherwise this is an offset. Our setup writes the right thing into
+    // `e.value` for both cases (small numerics stored inline; large data
+    // placed externally with offset returned).
+    dv.setUint32(p, e.value, true); p += 4;
+  }
+  dv.setUint32(p, 0, true);              // next IFD = 0
+  // External data
+  for (const ext of externals) {
+    out.set(ext.bytes, ext.at);
+  }
+  // Pixel strip
+  out.set(cmykBytes, stripOff);
+  return out;
+}
+
 // -- Download helpers --------------------------------------------------
 function downloadBlob(blob, filename) {
   const a = Object.assign(document.createElement('a'),
@@ -3921,15 +4357,21 @@ function paletteSwatchesFromActive() {
   return p.swatches.map(s => DEDUP.find(d => _swKey(d) === _swKey(s)) || s);
 }
 
-function exportActivePaletteASE() {
+function _exportActivePaletteASE(mode) {
   const p = _activePalette();
   if (!p || !p.swatches.length) { alert('Active palette is empty.'); return; }
   const sw = paletteSwatchesFromActive();
   assignUniqueNames(sw);
-  const buf = buildASE(sw, p.name);
+  const buf = buildASE(sw, p.name, mode);
+  const safe = p.name.replace(/[^\w\-]+/g,'_');
   downloadBlob(new Blob([buf], { type: 'application/octet-stream' }),
-               `palette_${p.name.replace(/[^\w\-]+/g,'_')}.ase`);
+               `palette_${safe}.${mode}.ase`);
 }
+function exportActivePaletteASE_CMYK() { _exportActivePaletteASE('cmyk'); }
+function exportActivePaletteASE_RGB()  { _exportActivePaletteASE('rgb'); }
+// Back-compat shim: any caller still using the old name gets the RGB
+// variant (matches behaviour shipped prior to the CMYK split).
+function exportActivePaletteASE() { _exportActivePaletteASE('rgb'); }
 
 function exportActivePaletteGPL() {
   const p = _activePalette();
@@ -3941,14 +4383,18 @@ function exportActivePaletteGPL() {
                `palette_${p.name.replace(/[^\w\-]+/g,'_')}.gpl`);
 }
 
-function exportPaletteASEById(id) {
+function _exportPaletteASEById(id, mode) {
   const p = palettes.find(x => x.id === id); if (!p || !p.swatches.length) { alert('Empty palette.'); return; }
   const sw = p.swatches.map(s => DEDUP.find(d => _swKey(d) === _swKey(s)) || s);
   assignUniqueNames(sw);
-  const buf = buildASE(sw, p.name);
+  const buf = buildASE(sw, p.name, mode);
+  const safe = p.name.replace(/[^\w\-]+/g,'_');
   downloadBlob(new Blob([buf], { type: 'application/octet-stream' }),
-               `palette_${p.name.replace(/[^\w\-]+/g,'_')}.ase`);
+               `palette_${safe}.${mode}.ase`);
 }
+function exportPaletteASEById_CMYK(id) { _exportPaletteASEById(id, 'cmyk'); }
+function exportPaletteASEById_RGB(id)  { _exportPaletteASEById(id, 'rgb'); }
+function exportPaletteASEById(id) { _exportPaletteASEById(id, 'rgb'); }
 
 function exportPaletteGPLById(id) {
   const p = palettes.find(x => x.id === id); if (!p || !p.swatches.length) { alert('Empty palette.'); return; }
@@ -4187,6 +4633,62 @@ function fitSquare(n, canvasSize) {
   return { cols, rows, cell };
 }
 
+// -- CMYK buffer helpers (TIFF backing) --------------------------------
+// Fills a w*h*4 chunky CMYK Uint8Array. Bytes are 0..255 where 0 = no
+// ink, 255 = max ink. The swatch's stored s.C/M/Y/K are 0..100 percent,
+// so map by *255/100.
+function _newCmykBuffer(w, h, fillC = 0, fillM = 0, fillY = 0, fillK = 0) {
+  const buf = new Uint8Array(w * h * 4);
+  if (!(fillC || fillM || fillY || fillK)) return buf;  // already zero
+  const c = Math.round(fillC * 255 / 100);
+  const m = Math.round(fillM * 255 / 100);
+  const y = Math.round(fillY * 255 / 100);
+  const k = Math.round(fillK * 255 / 100);
+  for (let i = 0; i < buf.length; i += 4) {
+    buf[i] = c; buf[i+1] = m; buf[i+2] = y; buf[i+3] = k;
+  }
+  return buf;
+}
+function _paintCmykRect(buf, bufW, x, y, w, h, sC, sM, sY, sK) {
+  const c = Math.round(sC * 255 / 100);
+  const m = Math.round(sM * 255 / 100);
+  const yk = Math.round(sY * 255 / 100);
+  const k = Math.round(sK * 255 / 100);
+  for (let yy = 0; yy < h; yy++) {
+    const row = (y + yy) * bufW * 4;
+    for (let xx = 0; xx < w; xx++) {
+      const off = row + (x + xx) * 4;
+      buf[off]   = c;
+      buf[off+1] = m;
+      buf[off+2] = yk;
+      buf[off+3] = k;
+    }
+  }
+}
+
+// -- Pure-TIFF palette export (lossless CMYK, no labels) ---------------
+async function _renderPaletteCMYKTIFFPure(swatches, filename, canvasSize) {
+  const n = swatches.length;
+  const { cols, rows, cell } = fitSquare(n, canvasSize);
+  // Paper white outside the swatch tiles - leaves room when n isn't a
+  // perfect square. (0,0,0,0) = no ink.
+  const buf = _newCmykBuffer(canvasSize, canvasSize, 0, 0, 0, 0);
+  swatches.forEach((sw, i) => {
+    const cx = (i % cols) * cell;
+    const cy = Math.floor(i / cols) * cell;
+    _paintCmykRect(buf, canvasSize, cx, cy, cell, cell, sw.C, sw.M, sw.Y, sw.K);
+  });
+  const icc = await fetchActiveICC();
+  const tif = buildTIFF(canvasSize, canvasSize, buf, icc);
+  downloadBlob(new Blob([tif], { type: 'image/tiff' }), filename);
+}
+
+// -- Single swatch CMYK TIFF bytes (used by ZIP) -----------------------
+async function _solidTiffBytes(sw, size = 128, iccBytes) {
+  const buf = _newCmykBuffer(size, size, sw.C, sw.M, sw.Y, sw.K);
+  return buildTIFF(size, size, buf, iccBytes);
+}
+
 // -- Pure-PNG (no text) palette export ---------------------------------
 function _renderPalettePurePNG(swatches, filename, canvasSize) {
   const n = swatches.length;
@@ -4207,8 +4709,8 @@ function _renderPalettePurePNG(swatches, filename, canvasSize) {
   }, 'image/png');
 }
 
-// -- Labelled palette PNG fit to a fixed canvas size --------------------
-function _renderPaletteLabelledPNG(swatches, filename, canvasSize, title) {
+// -- Labelled palette canvas (shared by PNG + TIFF) --------------------
+function _drawPaletteLabelledCanvas(swatches, canvasSize, title) {
   const n = swatches.length;
   const { cols, rows, cell } = fitSquare(n, canvasSize);
   const TITLE_BAND = Math.max(56, Math.round(canvasSize * 0.05));
@@ -4259,7 +4761,25 @@ function _renderPaletteLabelledPNG(swatches, filename, canvasSize, title) {
     }
   });
   ctx.restore();
+  return canvas;
+}
+
+function _renderPaletteLabelledPNG(swatches, filename, canvasSize, title) {
+  const canvas = _drawPaletteLabelledCanvas(swatches, canvasSize, title);
   canvas.toBlob(blob => downloadBlob(blob, filename), 'image/png');
+}
+
+// -- Labelled palette TIFF (CMYK via rLUT round-trip) ------------------
+async function _renderPaletteLabelledTIFF(swatches, filename, canvasSize, title) {
+  if (!ACTIVE_RLUT) {
+    alert('Labelled TIFF needs a reverse LUT for the active profile.');
+    return;
+  }
+  const canvas = _drawPaletteLabelledCanvas(swatches, canvasSize, title);
+  const cmyk = await _canvasToCMYKBytes(canvas, _setProgress);
+  const icc = await fetchActiveICC();
+  const tif = buildTIFF(canvas.width, canvas.height, cmyk, icc);
+  downloadBlob(new Blob([tif], { type: 'image/tiff' }), filename);
 }
 
 function _palettePngSize() {
@@ -4281,6 +4801,20 @@ function exportActivePalettePNGPure() {
   const sz = _palettePngSize();
   _renderPalettePurePNG(sw, `palette_${p.name.replace(/[^\w\-]+/g,'_')}_pure_${sz}.png`, sz);
 }
+async function exportActivePaletteTIFFSized() {
+  const p = _activePalette();
+  if (!p || !p.swatches.length) { alert('Active palette is empty.'); return; }
+  const sw = paletteSwatchesFromActive();
+  const sz = _palettePngSize();
+  await _renderPaletteLabelledTIFF(sw, `palette_${p.name.replace(/[^\w\-]+/g,'_')}_${sz}.tif`, sz, `Palette - ${p.name}`);
+}
+async function exportActivePaletteTIFFPure() {
+  const p = _activePalette();
+  if (!p || !p.swatches.length) { alert('Active palette is empty.'); return; }
+  const sw = paletteSwatchesFromActive();
+  const sz = _palettePngSize();
+  await _renderPaletteCMYKTIFFPure(sw, `palette_${p.name.replace(/[^\w\-]+/g,'_')}_pure_${sz}.tif`, sz);
+}
 
 // -- Per-id sized PNG exports for the palettes-mode panel --------------
 function _palSwatchesById(id) {
@@ -4297,6 +4831,16 @@ function exportPalettePNGPureById(id) {
   const r = _palSwatchesById(id); if (!r) { alert('Empty palette.'); return; }
   const sz = _palettePngSize();
   _renderPalettePurePNG(r.sw, `palette_${r.p.name.replace(/[^\w\-]+/g,'_')}_pure_${sz}.png`, sz);
+}
+async function exportPaletteTIFFSizedById(id) {
+  const r = _palSwatchesById(id); if (!r) { alert('Empty palette.'); return; }
+  const sz = _palettePngSize();
+  await _renderPaletteLabelledTIFF(r.sw, `palette_${r.p.name.replace(/[^\w\-]+/g,'_')}_${sz}.tif`, sz, `Palette - ${r.p.name}`);
+}
+async function exportPaletteTIFFPureById(id) {
+  const r = _palSwatchesById(id); if (!r) { alert('Empty palette.'); return; }
+  const sz = _palettePngSize();
+  await _renderPaletteCMYKTIFFPure(r.sw, `palette_${r.p.name.replace(/[^\w\-]+/g,'_')}_pure_${sz}.tif`, sz);
 }
 
 // -- Single-color PNG bytes (128x128 default) for ZIP entries ----------
@@ -4318,13 +4862,16 @@ async function _buildSwatchZip(swatches, label, onProgress) {
   assignUniqueNames(swatches);
   const enc = new TextEncoder();
 
-  // 1. Individual swatch PNGs - 128x128 pure-color. The PNG step is the
-  // slow part (~5000 swatches => ~3 seconds on a midrange laptop). Yield
-  // every CHUNK iterations so the progress bar can paint and the UI
-  // thread breathes.
+  // 1. Per-swatch raster tiles - 128x128 each, two formats per swatch:
+  //    png/<name>.png   sRGB display proxy (fast preview, RIP-unfriendly)
+  //    tiff/<name>.tif  lossless CMYK (assign profile in RIP / Photoshop)
+  // The PNG step is the slow part (~5000 swatches => ~3 s on a midrange
+  // laptop). Yield every CHUNK iterations so the progress bar paints and
+  // the UI thread breathes.
   const N = swatches.length;
   const CHUNK = 32;
   const entries = [];
+  const iccBytes = await fetchActiveICC();
   for (let i = 0; i < N; i++) {
     const sw = swatches[i];
     const hex = sw.hex.replace('#','').toLowerCase();
@@ -4332,11 +4879,13 @@ async function _buildSwatchZip(swatches, label, onProgress) {
     const M = String(sw.M).padStart(3,'0');
     const Y = String(sw.Y).padStart(3,'0');
     const K = String(sw.K).padStart(3,'0');
-    const fn = `${hex}_C${C}M${M}Y${Y}K${K}.png`;
-    const data = await _solidPngBytes(sw.hex, 128);
-    entries.push({ name: fn, data });
+    const base = `${hex}_C${C}M${M}Y${Y}K${K}`;
+    const pngData  = await _solidPngBytes(sw.hex, 128);
+    const tiffData = await _solidTiffBytes(sw, 128, iccBytes);
+    entries.push({ name: `png/${base}.png`,  data: pngData });
+    entries.push({ name: `tiff/${base}.tif`, data: tiffData });
     if (onProgress && (i % CHUNK === CHUNK - 1 || i === N - 1)) {
-      // Map PNG-build progress into the 30-90 range so withExportBusy's
+      // Map raster-build progress into the 30-90 range so withExportBusy's
       // pre-set 30% start and post-set 100% finish remain meaningful.
       const pct = 30 + ((i + 1) / N) * 60;
       onProgress(pct, `${i + 1} / ${N}`);
@@ -4372,7 +4921,7 @@ async function _buildSwatchZip(swatches, label, onProgress) {
   for (const lib of CORPORA.libraries) {
     libHeaders.push(`${lib.id}_name_en`, `${lib.id}_deltaE`);
   }
-  const csvRows = [['filename','hex','r','g','b','c','m','y','k',
+  const csvRows = [['png_file','tiff_file','hex','r','g','b','c','m','y','k',
     'L_star','a_star','b_star','delta_e_print', ...libHeaders]];
   for (const sw of swatches) {
     const hex = sw.hex.replace('#','').toLowerCase();
@@ -4380,14 +4929,14 @@ async function _buildSwatchZip(swatches, label, onProgress) {
     const M = String(sw.M).padStart(3,'0');
     const Y = String(sw.Y).padStart(3,'0');
     const K = String(sw.K).padStart(3,'0');
-    const fn = `${hex}_C${C}M${M}Y${Y}K${K}.png`;
+    const base = `${hex}_C${C}M${M}Y${Y}K${K}`;
     const libCols = [];
     for (const lib of CORPORA.libraries) {
       const entry = sw[`${lib.id}__name`];
       libCols.push(entry?.name_en || '', sw[`${lib.id}__deltaE`] ?? '');
     }
     csvRows.push([
-      fn, '#' + hex.toUpperCase(),
+      `png/${base}.png`, `tiff/${base}.tif`, '#' + hex.toUpperCase(),
       sw.R, sw.G, sw.B, sw.C, sw.M, sw.Y, sw.K,
       sw.L_star == null ? '' : (+sw.L_star).toFixed(3),
       sw.a_star == null ? '' : (+sw.a_star).toFixed(3),
@@ -4414,8 +4963,10 @@ async function _buildSwatchZip(swatches, label, onProgress) {
       const M = String(s.M).padStart(3,'0');
       const Y = String(s.Y).padStart(3,'0');
       const K = String(s.K).padStart(3,'0');
+      const base = `${hex}_C${C}M${M}Y${Y}K${K}`;
       const row = {
-        filename: `${hex}_C${C}M${M}Y${Y}K${K}.png`,
+        png_file:  `png/${base}.png`,
+        tiff_file: `tiff/${base}.tif`,
         hex,
         rgb: [s.R, s.G, s.B],
         cmyk: [s.C, s.M, s.Y, s.K],
@@ -4537,6 +5088,7 @@ window.addEventListener('load', async () => {
     }
     await rebuildAll();
     if (typeof _sync3DCheckbox === 'function') _sync3DCheckbox();
+    _maybeShowIntro();
   } catch (e) {
     console.error(e);
     document.getElementById('iccStatus').textContent = 'Error: ' + e.message;
@@ -4643,6 +5195,20 @@ const I18N = {
     'lab.d65':       'Screen (D65)',
     'theme.light':   'LIGHT',
     'theme.dark':    'DARK',
+    'intro.tag':     'Create. Make. Innovate.',
+    'intro.tag_sub': 'Designing joy in every layer - custom toys and 3D-printed art that spark imagination.',
+    'intro.body':    'Mixo Swatch is a print-faithful CMYK color picker by mixocreative - a design studio working across 2D, 3D-printed art, and branded toys.',
+    'intro.ig':      'Instagram',
+    'intro.fb':      'Facebook',
+    'intro.about':   'About us →',
+    'intro.foot':    'mixocreative.com',
+    'topbar.home_title': 'About Mixo Swatch / mixocreative',
+    'sec.links':     'Links',
+    'links.home':    '← Home',
+    'links.readme':  'README ↗',
+    'links.github':  'GitHub ↗',
+    'links.about':   'About us ↗',
+    'links.foot':    'mixocreative · Mixo Swatch',
     'threed.label':  '3D-print preset',
     'threed.help':   'Indicator + one-way force button. Auto-lights when current settings already meet every 3D-print requirement (Color mode = Print / D50, TAC <= 240%, dE <= 2.0, 3DUJ-safe profile). Click while off to force-fit every setting at once. Click while on does nothing - change a slider or profile to leave the 3D-print envelope.',
     'pal.sel_off':   'Selection: OFF',
@@ -4654,6 +5220,8 @@ const I18N = {
     'export.csv':    'CSV (UTF-8 BOM)',
     'export.png':    'PNG (with title band + labels)',
     'export.png_pure':'PNG pure 4096 (color only)',
+    'export.tiff':   'TIFF (CMYK, labelled)',
+    'export.tiff_pure':'TIFF pure 4096 (CMYK, color only)',
     'export.zip':    'ZIP (per-swatch + manifest)',
     'export.busy':   'Generating download…',
     'pal.new_short': '+ New',
@@ -4734,6 +5302,20 @@ const I18N = {
     'lab.d65':       '画面 (D65)',
     'theme.light':   '明',
     'theme.dark':    '暗',
+    'intro.tag':     '平面・立体などあらゆるモノの視覚的美を追求する',
+    'intro.tag_sub': '想像力をかき立てるフィギュアデザインと3Dプリントアート。',
+    'intro.body':    'Mixo Swatch は、平面・立体・3Dプリント・キャラクターグッズを手がける mixocreative による、印刷忠実な CMYK カラーピッカーです。',
+    'intro.ig':      'Instagram',
+    'intro.fb':      'Facebook',
+    'intro.about':   '私たちについて →',
+    'intro.foot':    'mixocreative.com',
+    'topbar.home_title': 'Mixo Swatch / mixocreative について',
+    'sec.links':     'リンク',
+    'links.home':    '← ホーム',
+    'links.readme':  'README ↗',
+    'links.github':  'GitHub ↗',
+    'links.about':   '私たちについて ↗',
+    'links.foot':    'mixocreative · Mixo Swatch',
     'threed.label':  '3Dプリント設定',
     'threed.help':   'インジケーター兼一方向の強制ボタン。色モード = 印刷 (D50)、TAC <= 240%、ΔE <= 2.0、3DUJ 安全プロファイル がすべて揃った時に自動点灯する。OFF 時にクリックすると、すべての設定を一括で 3D プリント条件に合わせる。ON 時のクリックは何もしない。3D プリント領域を離れるには、スライダーやプロファイルを手動で変更する。',
     'pal.sel_off':   '選択モード: OFF',
@@ -4745,6 +5327,8 @@ const I18N = {
     'export.csv':    'CSV (UTF-8 BOM)',
     'export.png':    'PNG (タイトル帯 + ラベル付き)',
     'export.png_pure':'PNG 純色 4096',
+    'export.tiff':   'TIFF (CMYK・ラベル付き)',
+    'export.tiff_pure':'TIFF 純色 4096 (CMYK)',
     'export.zip':    'ZIP (1色ずつ + マニフェスト)',
     'export.busy':   'ダウンロード生成中…',
     'pal.new_short': '+ 新規',
@@ -4825,6 +5409,20 @@ const I18N = {
     'lab.d65':       '螢幕 (D65)',
     'theme.light':   '亮',
     'theme.dark':    '暗',
+    'intro.tag':     '讓事物變得有趣',
+    'intro.tag_sub': '客製化文化商品與激發想像力的 3D 列印藝術。',
+    'intro.body':    'Mixo Swatch 是 mixocreative 推出的印刷忠實 CMYK 配色工具 — 我們是一家橫跨平面、3D 列印藝術與品牌玩具的設計工作室。',
+    'intro.ig':      'Instagram',
+    'intro.fb':      'Facebook',
+    'intro.about':   '關於我們 →',
+    'intro.foot':    'mixocreative.com',
+    'topbar.home_title': '關於 Mixo Swatch / mixocreative',
+    'sec.links':     '相關連結',
+    'links.home':    '← 首頁',
+    'links.readme':  'README ↗',
+    'links.github':  'GitHub ↗',
+    'links.about':   '關於我們 ↗',
+    'links.foot':    'mixocreative · Mixo Swatch',
     'threed.label':  '3D 列印預設',
     'threed.help':   '狀態指示燈兼單向強制按鈕。當色彩模式 = 印刷 (D50)、TAC <= 240%、dE <= 2.0、3DUJ 安全描述檔同時成立時自動亮起。關閉狀態下點擊會一次強制套用所有條件；開啟狀態下點擊不會有任何動作。要離開 3D 列印範圍，請手動調整滑桿或切換描述檔。',
     'pal.sel_off':   '選取模式：關',
@@ -4836,6 +5434,8 @@ const I18N = {
     'export.csv':    'CSV（UTF-8 BOM）',
     'export.png':    'PNG（含標題列與標籤）',
     'export.png_pure':'PNG 純色 4096',
+    'export.tiff':   'TIFF（CMYK・含標籤）',
+    'export.tiff_pure':'TIFF 純色 4096（CMYK）',
     'export.zip':    'ZIP（逐色 + 清單）',
     'export.busy':   '正在產生下載檔…',
     'pal.new_short': '+ 新建',
@@ -4895,6 +5495,11 @@ function applyI18n() {
     const txt = t(key, null);
     if (txt) el.setAttribute('placeholder', txt);
   });
+  document.querySelectorAll('[data-i18n-title]').forEach(el => {
+    const key = el.getAttribute('data-i18n-title');
+    const txt = t(key, null);
+    if (txt) el.setAttribute('title', txt);
+  });
   // Lab mode badge has a state-dependent key
   const badge = document.getElementById('labModeBadge');
   if (badge) badge.textContent = t(LAB_MODE === 'd50' ? 'badge.mode_d50' : 'badge.mode_d65');
@@ -4952,6 +5557,8 @@ function _applyTheme(theme) {
   // the black-on-light variant. Both share the brand-tan accent path.
   const logo = document.getElementById('topbarLogo');
   if (logo) logo.src = (t === 'light') ? 'img/logo-black.svg' : 'img/logo.svg';
+  const introLogo = document.getElementById('introLogo');
+  if (introLogo) introLogo.src = (t === 'light') ? 'img/logo-black.svg' : 'img/logo.svg';
 }
 function t_label(key, fallback) {
   try { return (typeof t === 'function') ? t(key, fallback) : fallback; } catch { return fallback; }
@@ -5068,16 +5675,26 @@ document.addEventListener('click', (e) => {
     ['exportCSV',                     'Generating CSV'],
     ['exportPNG',                     'Rendering PNG'],
     ['exportFilteredPurePNG',         'Rendering 4096 PNG'],
+    ['exportFilteredTIFF',            'Rendering TIFF (CMYK)'],
+    ['exportFilteredPureTIFF',        'Rendering 4096 TIFF (CMYK)'],
     ['exportFilteredSwatchZIP',       'Building ZIP'],
     ['exportActivePaletteASE',        'Building ASE'],
+    ['exportActivePaletteASE_CMYK',   'Building ASE (CMYK)'],
+    ['exportActivePaletteASE_RGB',    'Building ASE (RGB)'],
     ['exportActivePaletteGPL',        'Building GPL'],
     ['exportActivePalettePNGSized',   'Rendering palette PNG'],
     ['exportActivePalettePNGPure',    'Rendering palette PNG'],
+    ['exportActivePaletteTIFFSized',  'Rendering palette TIFF (CMYK)'],
+    ['exportActivePaletteTIFFPure',   'Rendering palette TIFF (CMYK)'],
     ['exportActivePaletteZIP',        'Building palette ZIP'],
     ['exportPalettePNGSizedById',     'Rendering palette PNG'],
     ['exportPalettePNGPureById',      'Rendering palette PNG'],
+    ['exportPaletteTIFFSizedById',    'Rendering palette TIFF (CMYK)'],
+    ['exportPaletteTIFFPureById',     'Rendering palette TIFF (CMYK)'],
     ['exportPaletteZIPById',          'Building palette ZIP'],
     ['exportPaletteASEById',          'Building ASE'],
+    ['exportPaletteASEById_CMYK',     'Building ASE (CMYK)'],
+    ['exportPaletteASEById_RGB',      'Building ASE (RGB)'],
     ['exportPaletteGPLById',          'Building GPL'],
     ['exportPaletteJSONById',         'Building JSON'],
     ['exportPalettes',                'Building backup'],

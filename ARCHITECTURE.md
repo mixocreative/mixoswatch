@@ -598,22 +598,45 @@ workflow on a coated press:
   (case-insensitive) and falls back to FOGRA39 then the first profile
   if the match is absent.
 
-**Two Mimaki workflows, two right answers.** Mimaki's own RasterLink /
-MPM3 RIP documentation recommends sRGB IEC61966-2.1 input for
-**texture-map / 3D-asset** authoring (Substance Painter, ZBrush
+**Mixo Swatch is a picker, not a texture-authoring tool.** Mimaki's own
+RasterLink / MPM3 RIP documentation recommends sRGB IEC61966-2.1 input
+for **texture-map / 3D-asset** authoring (Substance Painter, ZBrush
 PolyPaint, Blender, Maya - everything that produces sRGB-tagged
 texture maps). The RIP's proprietary multi-channel engine (CMYK +
 White + Clear, optionally Lc / Lm) compresses sRGB into 3DUJ ink
-space intelligently and avoids the double-conversion you'd get from
-user-CMYK input. Mixo Swatch does **not** serve that workflow - it
-is not a texture authoring tool.
+space intelligently. For that workflow, send sRGB; Mixo Swatch is
+the wrong tool.
 
-Mixo Swatch serves the **spot-color / brand-palette** workflow:
-choosing a small set of named or branded colors that need explicit
-gamut decisions and visibility. For spot colors the sRGB path is
-wrong because the RIP's perceptual intent compresses brand colors
-silently. The correct path is CMYK pre-routed through a 3DUJ-like
-ICC + the round-trip dE gate, which is what Mixo Swatch does.
+For the **spot-color / brand-palette** workflow - choosing a small set
+of named or branded colors that need explicit gamut decisions - the
+sRGB path is lossy because the RIP's perceptual intent silently shifts
+brand colors. The tool helps in two ways:
+
+1. **On-screen preview accuracy.** Every cell is routed through the
+   chosen ICC profile via the forward LUT so what you see on the
+   monitor matches what the press will hit. The round-trip dE gate
+   (§7.5) hides swatches the profile cannot hold confidently. The
+   D50 LAB_MODE (§2.7) mirrors Photoshop's Info panel readings.
+2. **CMYK-tagged hand-off.** The picker writes ASE (CMYK) and TIFF
+   (CMYK) so prepress / RIP software reads CMYK ink values directly
+   without double-converting through sRGB. ASE (RGB) and PNG remain
+   available for screen tools (Adobe / Affinity / Substance / Figma).
+
+**Hand-off matrix.** Pick the format that matches the receiver:
+
+| Receiver | Format | Why |
+|---|---|---|
+| Mimaki RasterLink / MPM3 (spot) | TIFF (CMYK) + assign 3DUJ ICC | RIP reads CMYK directly, no perceptual compression |
+| Photoshop / InDesign prepress | TIFF (CMYK) - ICC embedded when `icc/<filename>` is present | Lossless CMYK, profile self-describing |
+| Adobe / Affinity / Substance / Figma | ASE (RGB) + PNG | Screen tools expect sRGB |
+| Other prepress swatch import | ASE (CMYK) | Same CMYK values without the raster baggage |
+| Texture-map authoring for 3DUJ | use sRGB workflow, not this tool | Mimaki RIP handles compression intelligently |
+
+For TIFF, the writer embeds the active profile's ICC bytes in tag
+34675 when `icc/<filename>` is reachable via fetch (`icc/` is
+gitignored - the user supplies their own copy). When the ICC is
+missing the file ships untagged and the receiver assigns the profile
+manually.
 - `ui_lang: "auto"` reads `navigator.language` on first run: `ja*` -> ja,
   `zh*` -> zh-Hant, anything else -> en. Persisted under
   `localStorage['ui_lang']` once the user picks from the topbar menu.
@@ -856,14 +879,18 @@ palette overwritten).
 | Button | Function | Output |
 |---|---|---|
 | CSV | `exportCSV()` | UTF-8 BOM CSV of filtered swatches |
-| PNG (topbar) | `exportPNG()` | Square fit-square PNG of filtered set with title band + per-cell labels |
-| PNG pure (topbar) | `exportFilteredPurePNG()` | 4096 x 4096 pure-color PNG of filtered set. No title band, no labels, no borders, no gap |
-| PNG (labelled) | `exportActivePalettePNGSized()` | Palette PNG at 1024/2048/4096, full labels |
-| PNG (pure) | `exportActivePalettePNGPure()` | Palette PNG at chosen size, swatches only |
-| ZIP (palette) | `exportActivePaletteZIP()` | Per-swatch 128x128 PNGs + manifest.txt/csv/json |
-| ZIP (swatch) | `exportSwatchZIP(sw)` | Single swatch: 128x128 PNG + name card, from the detail popover |
-| ASE | `exportActivePaletteASE()` | Adobe Swatch Exchange |
-| GPL | `exportActivePaletteGPL()` | GIMP Palette |
+| PNG (topbar) | `exportPNG()` | Square fit-square PNG of filtered set with title band + per-cell labels (sRGB) |
+| PNG pure (topbar) | `exportFilteredPurePNG()` | 4096 x 4096 pure-color PNG of filtered set. No title band, no labels, no borders, no gap (sRGB) |
+| TIFF (topbar) | `exportFilteredTIFF()` | Same layout as PNG but every pixel routed through the active reverse LUT to chunky 8-bit CMYK. ICC tag 34675 embedded when `icc/<filename>` is reachable |
+| TIFF pure (topbar) | `exportFilteredPureTIFF()` | 4096 x 4096 lossless CMYK TIFF of filtered set. Each tile carries the swatch's stored C/M/Y/K directly - no sRGB round-trip |
+| PNG (labelled, palette) | `exportActivePalettePNGSized()` | Palette PNG at 1024/2048/4096, full labels (sRGB) |
+| PNG (pure, palette) | `exportActivePalettePNGPure()` | Palette PNG at chosen size, swatches only (sRGB) |
+| TIFF (labelled, palette) | `exportActivePaletteTIFFSized()` | Palette TIFF at chosen size, CMYK via rLUT round-trip, ICC embedded when present |
+| TIFF (pure, palette) | `exportActivePaletteTIFFPure()` | Palette TIFF at chosen size, lossless CMYK |
+| ZIP (palette / filtered) | `exportActivePaletteZIP()` / `exportFilteredSwatchZIP()` | Per-swatch 128x128 raster tiles: `png/*.png` (sRGB) + `tiff/*.tif` (CMYK, ICC embedded when present) + manifest.txt/csv/json |
+| ASE (CMYK) | `exportActivePaletteASE_CMYK()` | Adobe Swatch Exchange with `"CMYK"` blocks (4 float32 0..1) for prepress / RIP |
+| ASE (RGB) | `exportActivePaletteASE_RGB()` | Adobe Swatch Exchange with `"RGB "` blocks (3 float32 0..1) for screen tools |
+| GPL | `exportActivePaletteGPL()` | GIMP Palette (RGB only by format) |
 
 ZIP writer is pure JS, STORE-only (no compression), ~150 LOC including
 CRC-32 table. PNG data is already deflate-compressed internally so
@@ -888,7 +915,7 @@ repeat: blocks
     for group start:
       uint16 name length (chars incl null)
       UTF-16BE name + null terminator
-    for color:
+    for color (RGB mode):
       uint16 name length (chars incl null)
       UTF-16BE name + null terminator
       "RGB "                       4 bytes
@@ -896,7 +923,23 @@ repeat: blocks
       float32 BE                   G [0..1]
       float32 BE                   B [0..1]
       uint16  color type (0=global, 1=spot, 2=normal)
+    for color (CMYK mode):
+      uint16 name length (chars incl null)
+      UTF-16BE name + null terminator
+      "CMYK"                       4 bytes
+      float32 BE                   C [0..1]
+      float32 BE                   M [0..1]
+      float32 BE                   Y [0..1]
+      float32 BE                   K [0..1]
+      uint16  color type (0=global, 1=spot, 2=normal)
 ```
+
+`buildASE(swatches, title, mode)` selects between the two block bodies
+via `mode = 'rgb' | 'cmyk'`. CMYK swatches export the stored 0..100
+percent values mapped to 0..1 floats so prepress / RIP software reads
+the ink mix the picker locked in - no sRGB intermediate, no
+double-conversion through the RIP's perceptual intent. Filename suffix
+is `.cmyk.ase` or `.rgb.ase` so the variant is identifiable on disk.
 
 The JS implementation uses `DataView` for big-endian writes and a manual
 UTF-16BE encoder.
@@ -916,6 +959,88 @@ Columns: 8
 ```
 
 Whitespace-separated R G B integers, tab, name.
+
+### 7.10 TIFF format (`buildTIFF`)
+
+Baseline TIFF 6.0, little-endian, 8-bit chunky CMYK, single strip, no
+compression. Hand-rolled in pure JS (~110 LOC) - no dependency. The
+writer guarantees the entries every CMYK consumer expects (Photoshop,
+Affinity Photo, GIMP with cmyk plugin, Mimaki RasterLink, Onyx, EFI
+Fiery, ColorGate).
+
+```
+offset  size      content
+0       2         "II" - little-endian byte order
+2       2         42  - TIFF magic
+4       4         uint32 IFD offset (= 8)
+
+8       2         uint16 IFD entry count
+10      N*12      IFD entries (sorted ascending by tag)
+10+N*12 4         uint32 next-IFD offset (= 0)
+
+then:           external-data blob (BitsPerSample[4], XRes, YRes,
+                InkNames "Cyan\0Magenta\0Yellow\0Black\0", optional
+                ICC profile bytes, pixel strip)
+```
+
+IFD entry layout (12 bytes, little-endian):
+
+```
+0   uint16  tag
+2   uint16  type (1=BYTE, 3=SHORT, 4=LONG, 5=RATIONAL, 7=UNDEFINED, ...)
+4   uint32  count (number of items of `type`)
+8   uint32  value (inline if total bytes <= 4) or offset to data
+```
+
+Entries written, in tag order:
+
+| Tag | Name | Type | Count | Value |
+|---|---|---|---|---|
+| 256 | ImageWidth | LONG | 1 | width |
+| 257 | ImageLength | LONG | 1 | height |
+| 258 | BitsPerSample | SHORT | 4 | offset to `[8,8,8,8]` |
+| 259 | Compression | SHORT | 1 | 1 (none) |
+| 262 | PhotometricInterpretation | SHORT | 1 | 5 (Separated / CMYK) |
+| 273 | StripOffsets | LONG | 1 | offset to pixel strip |
+| 274 | Orientation | SHORT | 1 | 1 (top-left) |
+| 277 | SamplesPerPixel | SHORT | 1 | 4 |
+| 278 | RowsPerStrip | LONG | 1 | height (single strip) |
+| 279 | StripByteCounts | LONG | 1 | width * height * 4 |
+| 282 | XResolution | RATIONAL | 1 | offset to `300/1` |
+| 283 | YResolution | RATIONAL | 1 | offset to `300/1` |
+| 284 | PlanarConfiguration | SHORT | 1 | 1 (chunky CMYKCMYK...) |
+| 296 | ResolutionUnit | SHORT | 1 | 2 (inch) |
+| 332 | InkSet | SHORT | 1 | 1 (CMYK) |
+| 333 | InkNames | ASCII | 24 | offset to `"Cyan\0Magenta\0Yellow\0Black\0"` |
+| 34675 | ICCProfile | UNDEFINED | N | offset to ICC bytes (omitted when ICC missing) |
+
+Pixel data is `width * height * 4` bytes. Each pixel = `(C, M, Y, K)`
+where `0 = no ink`, `255 = max ink`. The picker stores 0..100 percent
+per channel, so output bytes = `round(percent * 255 / 100)`.
+
+**ICC embedding.** `fetchActiveICC()` requests `icc/<filename>` at
+export time. The `icc/` directory is gitignored - users supply their
+own. When the fetch succeeds the bytes go into tag 34675 and the TIFF
+is self-describing (any receiver assigns the profile automatically).
+When the fetch returns 404 the tag is omitted and the user assigns the
+profile in their RIP / Photoshop by hand. Cached per-filename so repeat
+exports do not re-fetch.
+
+**Pure variants** (`*_pure_*.tif`, `tiff/<base>.tif` inside ZIPs) paint
+each swatch tile with the stored `s.C/M/Y/K` directly - no rLUT round
+trip - so the output is bit-exact CMYK.
+
+**Labelled variants** render the existing sRGB labelled canvas (title
+band + per-cell labels) and walk every pixel through the active
+reverse LUT via `_canvasToCMYKBytes`. Two short-circuits keep the
+title band and crisp black text clean:
+
+- `RGB == (255,255,255)` -> `CMYK = (0,0,0,0)` (paper white)
+- `RGB == (0,0,0)` -> `CMYK = (0,0,0,100)` (pure K)
+
+The rLUT pass yields to `requestAnimationFrame` every 64 rows so the
+existing export-progress overlay paints. Cost: ~0.8 s for a 4096^2
+labelled palette TIFF on a midrange laptop.
 
 ---
 
@@ -1088,7 +1213,7 @@ The HTML is self-contained, no build step. Compose:
    round-trip; pure-K via forward only
 8. **Hue x Light sort** (§7.4) rendered inline, responsive cell sizing (§8.6)
 9. **Palette CRUD + collapsable panel** (§7.6) with localStorage persistence
-10. **Exports** (§7.7): CSV, PNG sized, PNG pure, ZIP (palette + per-swatch), ASE, GPL
+10. **Exports** (§7.7): CSV, PNG (labelled + pure), TIFF (labelled + pure, CMYK + optional ICC embed), ZIP (per-swatch png/ + tiff/ + manifest), ASE (CMYK + RGB variants), GPL
 11. **Tooltips** on every control (laymen friendly, not jargon)
 12. **2-button mode switcher** (§8.9)
 
