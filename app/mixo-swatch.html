@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -318,7 +318,7 @@ input[type=range]{accent-color:var(--accent)}
   border:1.5px solid var(--accent-light);border-top:0;border-radius:0 0 var(--rl) var(--rl);
   background:var(--surface);
 }
-.palette-panel.open .palette-panel-body{display:flex}
+.palette-panel.open .palette-panel-body{display:flex; overflow: visible;}
 
 /* ── 3D-print preset toggle (sidebar) ── */
 .threed-toggle{
@@ -457,14 +457,20 @@ input[type=range]{accent-color:var(--accent)}
 .pal-toolbar{display:flex;align-items:center;gap:5px;padding:4px 0 2px;flex-wrap:wrap}
 .pal-toolbar .pal-sel{flex:1;min-width:110px;max-width:190px}
 .pal-toolbar .pal-mini-btn{padding:3px 7px;font-size:11px}
-.pal-select-btn{display:inline-flex;align-items:center;gap:6px;font-size:11px;margin-left:auto}
-.pal-select-btn.on{background:rgb(var(--accent-rgb) / .18);border-color:var(--accent);color:var(--accent)}
+.pal-select-btn{display:inline-flex;align-items:center;gap:6px;font-size:11px;margin-left:auto;
+    margin-left: 0;}
+
+.pal-select-btn.on {
+    background: var(--bg);
+    border-color: #d60000;
+    color: #d60000;
+}
 .pal-select-dot{
   width:8px;height:8px;border-radius:50%;
   background:var(--faint);transition:background .15s;
   box-shadow:0 0 0 1px var(--border) inset;flex-shrink:0;
 }
-.pal-select-btn.on .pal-select-dot{background:var(--accent);box-shadow:0 0 6px rgb(var(--accent-rgb) / .6)}
+.pal-select-btn.on .pal-select-dot{background:#ff0b0b;box-shadow:0 0 6px rgb(var(--accent-rgb) / .6);animation:palBlink 1.1s ease-in-out infinite}
 .pal-count-inline{font-size:11px;color:var(--accent);font-family:var(--font-mono);background:rgb(var(--accent-rgb,74,144,226) / .12);padding:1px 6px;border-radius:99px;white-space:nowrap}
 
 /* Dropdown menu */
@@ -544,7 +550,12 @@ input[type=range]{accent-color:var(--accent)}
 .pm-act.primary{background:var(--accent);color:var(--bg);border-color:var(--accent);font-weight:500}
 .pm-act.primary:hover{filter:brightness(1.1);background:var(--accent)}
 .pm-actions .pal-dropdown{margin-left:auto}
-.pm-row{display:flex;flex-wrap:wrap;gap:4px}
+.pm-row{display:flex;flex-wrap:wrap;gap:4px;overflow:visible;padding-bottom:4px}
+.palettes-active .pal-toolbar{display:none!important}
+.palettes-active .pal-strip{display:none!important}
+.pm-view-title{font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text);padding:4px 2px 10px;border-bottom:1px solid var(--border);margin-bottom:4px}
+.pm-act.edit{background:var(--text);color:var(--bg);border-color:var(--text);font-weight:500}
+.pm-act.edit:hover{filter:brightness(1.15);background:var(--text)}
 .pm-empty{
   padding:18px;text-align:center;color:var(--faint);
   font-size:12px;font-style:italic;
@@ -628,6 +639,7 @@ input[type=range]{accent-color:var(--accent)}
   animation:popIn .16s ease-out;
 }
 @keyframes popIn{from{transform:scale(.94) translateY(12px);opacity:0}to{transform:none;opacity:1}}
+@keyframes palBlink{0%,100%{opacity:1;box-shadow:0 0 6px rgb(var(--accent-rgb) / .6)}50%{opacity:.35;box-shadow:0 0 2px rgb(var(--accent-rgb) / .2)}}
 .d-preview{
   height:172px;display:flex;align-items:center;justify-content:center;
   flex-direction:column;gap:8px;position:relative;
@@ -883,10 +895,23 @@ html[lang^="zh"] .intro-btn .intro-zh{display:inline}
     <div class="pal-menu" id="filteredExportMenu" hidden>
       <button onclick="exportCSV();_closeAllPalMenus()" data-i18n="export.csv" title="UTF-8 CSV of every filtered swatch (Excel-ready, keeps kanji + hanzi).">CSV (UTF-8 BOM)</button>
       <button onclick="exportPNG();_closeAllPalMenus()" data-i18n="export.png" title="Square PNG board with title band + per-cell CMYK / hex / name / AA labels.">PNG (with title band + labels)</button>
-      <button onclick="exportFilteredPurePNG();_closeAllPalMenus()" data-i18n="export.png_pure" title="4096x4096 pure-color PNG. No title band, no labels, no borders, no gap.">PNG pure 4096 (color only)</button>
+      <button onclick="exportFilteredPurePNG();_closeAllPalMenus()" data-i18n="export.png_pure" title="Pure-color PNG sized by the Canvas size dropdown below. No title band, no labels, no borders, no gap.">PNG pure (color only)</button>
       <button onclick="exportFilteredTIFF();_closeAllPalMenus()" data-i18n="export.tiff" title="Labelled CMYK TIFF. Same layout as PNG but every pixel routed through the active profile's reverse LUT so Photoshop / RIPs read CMYK directly. ICC embedded when icc/<filename> is present.">TIFF (CMYK, labelled)</button>
-      <button onclick="exportFilteredPureTIFF();_closeAllPalMenus()" data-i18n="export.tiff_pure" title="4096x4096 lossless CMYK TIFF. Every tile carries the swatch's stored C/M/Y/K bytes - no sRGB round-trip. ICC embedded when icc/<filename> is present.">TIFF pure 4096 (CMYK, color only)</button>
+      <button onclick="exportFilteredPureTIFF();_closeAllPalMenus()" data-i18n="export.tiff_pure" title="Lossless CMYK TIFF sized by the Canvas size dropdown below. Every tile carries the swatch's stored C/M/Y/K bytes - no sRGB round-trip. ICC embedded when icc/<filename> is present.">TIFF pure (CMYK, color only)</button>
       <button onclick="exportFilteredSwatchZIP();_closeAllPalMenus()" data-i18n="export.zip" title="ZIP with one 128x128 sRGB PNG + one 128x128 CMYK TIFF per filtered swatch plus manifest.csv/json.">ZIP (per-swatch + manifest)</button>
+      <div class="pal-menu-sep"></div>
+      <button onclick="exportFilteredASE_CMYK();_closeAllPalMenus()" data-i18n="export.ase_cmyk" title="Adobe Swatch Exchange with CMYK blocks (4 float32 0..1) for prepress / RIP software.">ASE (CMYK) - prepress / RIP</button>
+      <button onclick="exportFilteredASE_RGB();_closeAllPalMenus()" data-i18n="export.ase_rgb" title="Adobe Swatch Exchange with RGB blocks (3 float32) for Adobe / Affinity / Substance / Figma.">ASE (RGB) - Adobe / Affinity / Substance</button>
+      <button onclick="exportFilteredGPL();_closeAllPalMenus()" data-i18n="export.gpl" title="GIMP Palette plain text for GIMP / Krita / Inkscape.">GPL - GIMP / Krita / Inkscape</button>
+      <div class="pal-menu-row">
+        <label for="filteredImgSize" data-i18n="export.img_size">PNG/TIFF size</label>
+        <select id="filteredImgSize" title="Target canvas size for all filtered exports (labelled PNG/TIFF, pure PNG/TIFF). Cell size is auto-calculated to fit all swatches.">
+          <option value="1024">1024</option>
+          <option value="2048">2048</option>
+          <option value="4096" selected>4096</option>
+          <option value="8192">8192</option>
+        </select>
+      </div>
     </div>
   </div>
   <button type="button" class="theme-toggle" id="themeToggleBtn" onclick="toggleTheme()" title="Switch between light and dark theme">
@@ -1211,11 +1236,11 @@ html[lang^="zh"] .intro-btn .intro-zh{display:inline}
           <input type="hidden" id="togSel" value="0">
           <span class="pal-count-inline" title="Swatches in active palette"><span id="palCount">0</span>sw</span>
           <div class="pal-dropdown" style="margin-left:auto">
-            <button class="pal-mini-btn" onclick="_togglePalMenu('palGlobalMenu')" title="Global palette actions" data-i18n="pal.more">More &#9662;</button>
+            <button class="pal-mini-btn" onclick="_togglePalMenu('palGlobalMenu')" title="Global palette actions" data-i18n="pal.more">Actions ▼</button>
             <div class="pal-menu" id="palGlobalMenu" hidden>
               <div class="pal-menu-row">
-                <label for="palPngSize" data-i18n="pal.png_size">PNG size</label>
-                <select id="palPngSize" title="Default canvas size used by every per-palette PNG export.">
+                <label for="palImgSize" data-i18n="pal.img_size">PNG / TIFF size</label>
+                <select id="palImgSize" title="Default canvas size used by every per-palette PNG and TIFF export.">
                   <option value="1024">1024</option>
                   <option value="2048" selected>2048</option>
                   <option value="4096">4096</option>
@@ -1223,6 +1248,15 @@ html[lang^="zh"] .intro-btn .intro-zh{display:inline}
               </div>
               <div class="pal-menu-sep"></div>
               <button onclick="setViewMode('palettes');_closeAllPalMenus()" data-i18n="pal.open_view">Open Palettes view (manage + download)</button>
+              <div class="pal-menu-sep"></div>
+              <button onclick="exportActivePalettePNGSized();_closeAllPalMenus()" data-i18n="export.png">PNG - labelled</button>
+              <button onclick="exportActivePalettePNGPure();_closeAllPalMenus()" data-i18n="export.png_pure">PNG - pure colour</button>
+              <button onclick="exportActivePaletteTIFFSized();_closeAllPalMenus()" data-i18n="export.tiff">TIFF - labelled (CMYK)</button>
+              <button onclick="exportActivePaletteTIFFPure();_closeAllPalMenus()" data-i18n="export.tiff_pure">TIFF - pure colour (CMYK)</button>
+              <button onclick="exportActivePaletteZIP();_closeAllPalMenus()" data-i18n="export.zip">ZIP (per-swatch + manifest)</button>
+              <button onclick="exportActivePaletteASE_CMYK();_closeAllPalMenus()" data-i18n="export.ase_cmyk">ASE (CMYK)</button>
+              <button onclick="exportActivePaletteASE_RGB();_closeAllPalMenus()" data-i18n="export.ase_rgb">ASE (RGB)</button>
+              <button onclick="exportActivePaletteGPL();_closeAllPalMenus()" data-i18n="export.gpl">GPL</button>
               <div class="pal-menu-sep"></div>
               <button onclick="exportPalettes();_closeAllPalMenus()" data-i18n="pal.backup_all">Backup all palettes (.json)</button>
               <button onclick="document.getElementById('palFile').click();_closeAllPalMenus()" data-i18n="pal.import_json">Import .json</button>
@@ -1232,10 +1266,10 @@ html[lang^="zh"] .intro-btn .intro-zh{display:inline}
         </div>
         <!-- Preview strip of the active palette -->
         <div class="pal-strip" id="palStrip" title="Click any swatch chip to remove from the active palette"></div>
-        <!-- Palettes view grid (rendered when viewMode='palettes') -->
-        <div class="pm-wrap hidden" id="pmWrap"></div>
       </div>
     </div>
+    <!-- Palettes view (rendered when viewMode='palettes') -->
+    <div class="pm-wrap" id="pmWrap"></div>
     <div class="grid-scroll" id="gridScroll">
       <div class="swatch-grid" id="swatchGrid"></div>
       <div class="gs-wrap" id="gsWrap">
@@ -2518,12 +2552,33 @@ function onPalChange() {
 }
 
 // Compact palette toolbar dropdown helpers
-function _togglePalMenu(id) {
+function _togglePalMenu(id, forcePosition) {
   const menu = document.getElementById(id);
   if (!menu) return;
   const wasOpen = !menu.hidden;
   _closeAllPalMenus();
-  if (!wasOpen) menu.hidden = false;
+  if (!wasOpen) {
+    menu.hidden = false;
+    // Check if the menu is inside a scrollable parent (e.g. palette-panel-body
+    // with overflow:auto). If so, switch to position:fixed so the dropdown
+    // is never clipped by the parent's overflow boundary.
+    const parent = menu.parentElement;
+    if (parent) {
+      const parentStyle = getComputedStyle(parent);
+      const isScrollable = parentStyle.overflow === 'auto' || parentStyle.overflow === 'scroll'
+                        || parent.parentElement
+                           && (getComputedStyle(parent.parentElement).overflow === 'auto'
+                            || getComputedStyle(parent.parentElement).overflow === 'scroll');
+      if (isScrollable) {
+        const rect = menu.getBoundingClientRect();
+        menu.style.position = 'fixed';
+        menu.style.top  = rect.top + 'px';
+        menu.style.left = (menu.classList.contains('pal-menu-left') ? rect.left : (window.innerWidth - rect.width)) + 'px';
+        menu.style.right = 'auto';
+        menu.style.bottom = 'auto';
+      }
+    }
+  }
 }
 function _closeAllPalMenus() {
   document.querySelectorAll('.pal-menu').forEach(m => { m.hidden = true; });
@@ -2679,6 +2734,10 @@ function renderPaletteMode() {
   document.getElementById('palettePanel')?.classList.add('open');
   const wrap = document.getElementById('pmWrap');
   wrap.innerHTML = '';
+  const titleEl = document.createElement('div');
+  titleEl.className = 'pm-view-title';
+  titleEl.textContent = (typeof t === 'function' ? t('palette.title','Palettes') : 'Palettes') + ' \u00b7 ' + palettes.length + ' palette' + (palettes.length===1?'':'s');
+  wrap.appendChild(titleEl);
 
   if (!palettes.length) {
     const e = document.createElement('div');
@@ -2707,9 +2766,10 @@ function renderPaletteMode() {
         <button class="pm-act" data-act="rename" title="${T('pm.rename','Rename')}">✎</button>
         <button class="pm-act" data-act="dup" title="${T('pm.dup','Duplicate')}">⎘</button>
         <button class="pm-act" data-act="clear" title="${T('pm.clear','Clear all swatches')}">⌫</button>
+        <button class="pm-act edit" data-act="edit" title="${T('pm.edit','Edit palette - switch to grid + selection mode')}">${T('pm.edit','Edit')}</button>
         <button class="pm-act danger" data-act="del" title="${T('pm.del','Delete palette')}">✕</button>
         <div class="pal-dropdown" style="display:inline-block">
-          <button class="pm-act primary" data-act="dl-toggle" title="${T('pm.download','Download this palette')}">↓ ${T('pm.download','Download')} ▾</button>
+          <button class="pm-act primary" data-act="dl-toggle" title="${T('pm.actions','Actions for this palette')}">${T('pm.actions','Actions')} ▾</button>
           <div class="pal-menu" id="${dlMenuId}" hidden>
             <button data-act="png"       onclick="exportPalettePNGSizedById('${p.id}');_closeAllPalMenus()">PNG - labelled</button>
             <button data-act="png_pure"  onclick="exportPalettePNGPureById('${p.id}');_closeAllPalMenus()">PNG - pure color</button>
@@ -2735,6 +2795,7 @@ function renderPaletteMode() {
         else if (a==='rename')    renamePaletteById(p.id);
         else if (a==='dup')       duplicatePalette(p.id);
         else if (a==='clear')     clearPaletteById(p.id);
+        else if (a==='edit')      { setActivePalette(p.id); setViewMode('grid'); if (!selectMode) toggleSelectMode(); }
         else if (a==='del')       deletePaletteById(p.id);
         else if (a==='dl-toggle') _togglePalMenu(dlMenuId);
       });
@@ -3158,6 +3219,8 @@ function render() {
   document.getElementById('swatchGrid').style.display = isPalettes ? 'none' : '';
   document.getElementById('gsWrap').style.display    = (isPalettes || isHueLight) ? 'none' : '';
   document.getElementById('pmWrap').style.display    = isPalettes ? 'flex' : 'none';
+  document.getElementById('palettePanel').style.display = isPalettes ? 'none' : '';
+  document.getElementById('gridScroll').style.display   = isPalettes ? 'none' : '';
   // Detach stale virtualizer scroll handler before HL/palettes views so it
   // can't wipe #swatchGrid on scroll. Regular grid path re-binds below.
   if ((isPalettes || isHueLight) && window._scrollPaintHandler) {
@@ -3990,37 +4053,46 @@ function _renderSwatchNames(s) {
   return out;
 }
 
-// ── PNG export - square grid, no gaps ────────────────────────────────────────
+// ── Filtered-grid labelled export helpers (PNG + TIFF) ───────────────────────
+function _filteredImgSize() {
+  const sel = document.getElementById('filteredImgSize');
+  return sel ? (+sel.value || 4096) : 4096;
+}
+
 function exportPNG() {
   const data = _masterExportData();
   if (!data.length) { alert('No swatches to export.'); return; }
-  _renderSwatchPNG(data, `cmyk_swatches_${data.length}_step${curStep}_${curCell}px.png`,
-                   { title: 'Mixo Swatch - filtered view' });
+  const sz = _filteredImgSize();
+  _renderSwatchPNG(data, `mixo_swatches_${data.length}_step${curStep}_${sz}.png`,
+                   { title: 'Mixo Swatch - filtered view', canvasSize: sz });
 }
 
 // Pure-color filtered export: no title band, no labels, no borders, no gap
-// between cells. Tiles abut edge-to-edge inside a 4096 x 4096 square canvas.
-// Cell size = floor(4096 / max(cols, rows)); any remainder leaves whitespace
-// at the bottom / right of the square (background filled white).
+// between cells. Tiles abut edge-to-edge inside a square canvas sized by
+// the user's #filteredImgSize dropdown. Cell size = floor(sz / max(cols, rows));
+// any remainder leaves whitespace at the bottom / right (background filled white).
 function exportFilteredPurePNG() {
   const data = _masterExportData();
   if (!data.length) { alert('No swatches to export.'); return; }
+  const sz = _filteredImgSize();
   _renderPalettePurePNG(
     data,
-    `cmyk_swatches_pure_${data.length}_step${curStep}_4096.png`,
-    4096
+    `cmyk_swatches_pure_${data.length}_step${curStep}_${sz}.png`,
+    sz
   );
 }
 
 // Pure-color filtered export as CMYK TIFF. Lossless - every output pixel
-// carries the swatch's stored s.C/M/Y/K (no sRGB round-trip). 4096^2.
+// carries the swatch's stored s.C/M/Y/K (no sRGB round-trip). Controlled by
+// the #filteredImgSize dropdown.
 async function exportFilteredPureTIFF() {
   const data = _masterExportData();
   if (!data.length) { alert('No swatches to export.'); return; }
+  const sz = _filteredImgSize();
   await _renderPaletteCMYKTIFFPure(
     data,
-    `cmyk_swatches_pure_${data.length}_step${curStep}_4096.tif`,
-    4096
+    `cmyk_swatches_pure_${data.length}_step${curStep}_${sz}.tif`,
+    sz
   );
 }
 
@@ -4031,25 +4103,39 @@ async function exportFilteredPureTIFF() {
 async function exportFilteredTIFF() {
   const data = _masterExportData();
   if (!data.length) { alert('No swatches to export.'); return; }
+  const sz = _filteredImgSize();
   await _renderSwatchTIFF(
     data,
-    `cmyk_swatches_${data.length}_step${curStep}_${curCell}px.tif`,
-    { title: 'Mixo Swatch - filtered view' }
+    `cmyk_swatches_${data.length}_step${curStep}_${sz}.tif`,
+    { title: 'Mixo Swatch - filtered view', canvasSize: sz }
   );
 }
 
 // Build the labelled filtered-view canvas (used by PNG + TIFF exporters).
 // Returns the populated <canvas> element; callers do the blob/encode step.
 function _drawFilteredSwatchCanvas(data, opts = {}) {
-  const cs   = curCell;
   const n    = data.length;
-  const cols = Math.ceil(Math.sqrt(n));
-  const rows = Math.ceil(n / cols);
   const TITLE_BAND = 96;
+  let cs, cols, rows, canvas;
 
-  const canvas = document.createElement('canvas');
-  canvas.width  = cols * cs;
-  canvas.height = TITLE_BAND + rows * cs;
+  if (opts.canvasSize) {
+    // Fixed canvas size mode: use fitSquare to auto-calculate the best cell size
+    const fit = fitSquare(n, opts.canvasSize);
+    cols = fit.cols;
+    rows = fit.rows;
+    cs   = Math.max(8, fit.cell);
+    canvas = document.createElement('canvas');
+    canvas.width  = opts.canvasSize;
+    canvas.height = TITLE_BAND + opts.canvasSize;
+  } else {
+    // Legacy mode: use the slider cell size
+    cs   = curCell;
+    cols = Math.ceil(Math.sqrt(n));
+    rows = Math.ceil(n / cols);
+    canvas = document.createElement('canvas');
+    canvas.width  = cols * cs;
+    canvas.height = TITLE_BAND + rows * cs;
+  }
   const ctx = canvas.getContext('2d');
 
   // Title band - dark slate background, white text
@@ -4882,8 +4968,8 @@ async function _renderPaletteLabelledTIFF(swatches, filename, canvasSize, title)
   downloadBlob(new Blob([tif], { type: 'image/tiff' }), filename);
 }
 
-function _palettePngSize() {
-  const sel = document.getElementById('palPngSize');
+function _paletteImgSize() {
+  const sel = document.getElementById('palImgSize');
   return sel ? (+sel.value || 2048) : 2048;
 }
 
@@ -4891,28 +4977,28 @@ function exportActivePalettePNGSized() {
   const p = _activePalette();
   if (!p || !p.swatches.length) { alert('Active palette is empty.'); return; }
   const sw = paletteSwatchesFromActive();
-  const sz = _palettePngSize();
+  const sz = _paletteImgSize();
   _renderPaletteLabelledPNG(sw, `palette_${p.name.replace(/[^\w\-]+/g,'_')}_${sz}.png`, sz, `Palette - ${p.name}`);
 }
 function exportActivePalettePNGPure() {
   const p = _activePalette();
   if (!p || !p.swatches.length) { alert('Active palette is empty.'); return; }
   const sw = paletteSwatchesFromActive();
-  const sz = _palettePngSize();
+  const sz = _paletteImgSize();
   _renderPalettePurePNG(sw, `palette_${p.name.replace(/[^\w\-]+/g,'_')}_pure_${sz}.png`, sz);
 }
 async function exportActivePaletteTIFFSized() {
   const p = _activePalette();
   if (!p || !p.swatches.length) { alert('Active palette is empty.'); return; }
   const sw = paletteSwatchesFromActive();
-  const sz = _palettePngSize();
+  const sz = _paletteImgSize();
   await _renderPaletteLabelledTIFF(sw, `palette_${p.name.replace(/[^\w\-]+/g,'_')}_${sz}.tif`, sz, `Palette - ${p.name}`);
 }
 async function exportActivePaletteTIFFPure() {
   const p = _activePalette();
   if (!p || !p.swatches.length) { alert('Active palette is empty.'); return; }
   const sw = paletteSwatchesFromActive();
-  const sz = _palettePngSize();
+  const sz = _paletteImgSize();
   await _renderPaletteCMYKTIFFPure(sw, `palette_${p.name.replace(/[^\w\-]+/g,'_')}_pure_${sz}.tif`, sz);
 }
 
@@ -4924,22 +5010,22 @@ function _palSwatchesById(id) {
 }
 function exportPalettePNGSizedById(id) {
   const r = _palSwatchesById(id); if (!r) { alert('Empty palette.'); return; }
-  const sz = _palettePngSize();
+  const sz = _paletteImgSize();
   _renderPaletteLabelledPNG(r.sw, `palette_${r.p.name.replace(/[^\w\-]+/g,'_')}_${sz}.png`, sz, `Palette - ${r.p.name}`);
 }
 function exportPalettePNGPureById(id) {
   const r = _palSwatchesById(id); if (!r) { alert('Empty palette.'); return; }
-  const sz = _palettePngSize();
+  const sz = _paletteImgSize();
   _renderPalettePurePNG(r.sw, `palette_${r.p.name.replace(/[^\w\-]+/g,'_')}_pure_${sz}.png`, sz);
 }
 async function exportPaletteTIFFSizedById(id) {
   const r = _palSwatchesById(id); if (!r) { alert('Empty palette.'); return; }
-  const sz = _palettePngSize();
+  const sz = _paletteImgSize();
   await _renderPaletteLabelledTIFF(r.sw, `palette_${r.p.name.replace(/[^\w\-]+/g,'_')}_${sz}.tif`, sz, `Palette - ${r.p.name}`);
 }
 async function exportPaletteTIFFPureById(id) {
   const r = _palSwatchesById(id); if (!r) { alert('Empty palette.'); return; }
-  const sz = _palettePngSize();
+  const sz = _paletteImgSize();
   await _renderPaletteCMYKTIFFPure(r.sw, `palette_${r.p.name.replace(/[^\w\-]+/g,'_')}_pure_${sz}.tif`, sz);
 }
 
@@ -5105,6 +5191,30 @@ async function exportFilteredSwatchZIP() {
     `mixo-swatch-filtered-${swatches.length}.zip`);
 }
 
+// -- Filtered-grid palette-format exports (ASE + GPL) -------------------
+// Reuse the existing buildASE / buildGPL functions with _masterExportData().
+function _filteredBuildASE(mode) {
+  const data = _masterExportData();
+  if (!data.length) { alert('No swatches to export.'); return; }
+  assignUniqueNames(data);
+  const title = `Mixo Swatch - filtered ${data.length}`;
+  const buf = buildASE(data, title, mode);
+  const ext = mode === 'cmyk' ? 'cmyk.ase' : 'rgb.ase';
+  downloadBlob(new Blob([buf], { type: 'application/octet-stream' }),
+    `mixo_swatches_filtered_${data.length}_step${curStep}.${ext}`);
+}
+function exportFilteredASE_CMYK() { _filteredBuildASE('cmyk'); }
+function exportFilteredASE_RGB()  { _filteredBuildASE('rgb'); }
+function exportFilteredGPL() {
+  const data = _masterExportData();
+  if (!data.length) { alert('No swatches to export.'); return; }
+  assignUniqueNames(data);
+  const title = `Mixo Swatch - filtered ${data.length}`;
+  const text = buildGPL(data, title);
+  downloadBlob(new Blob([text], { type: 'text/plain;charset=utf-8' }),
+    `mixo_swatches_filtered_${data.length}_step${curStep}.gpl`);
+}
+
 async function exportActivePaletteZIP() {
   const p = _activePalette();
   if (!p || !p.swatches.length) { alert('Active palette is empty.'); return; }
@@ -5205,6 +5315,7 @@ window.addEventListener('resize', () => {
 });
 
 function togglePalettePanel(force) {
+  if (typeof force === 'undefined' && viewMode === 'palettes') return;
   const panel = document.getElementById('palettePanel');
   const open = typeof force === 'boolean'
     ? (panel.classList.toggle('open', force), force)
@@ -5319,14 +5430,17 @@ const I18N = {
     'topbar.export': '↓ Export',
     'export.csv':    'CSV (UTF-8 BOM)',
     'export.png':    'PNG (with title band + labels)',
-    'export.png_pure':'PNG pure 4096 (color only)',
+    'export.png_pure':'PNG pure (color only)',
     'export.tiff':   'TIFF (CMYK, labelled)',
-    'export.tiff_pure':'TIFF pure 4096 (CMYK, color only)',
+    'export.tiff_pure':'TIFF pure (CMYK, color only)',
     'export.zip':    'ZIP (per-swatch + manifest)',
+    'export.ase_cmyk':'ASE (CMYK) - prepress / RIP',
+    'export.ase_rgb': 'ASE (RGB) - Adobe / Affinity / Substance',
+    'export.gpl':    'GPL - GIMP / Krita / Inkscape',
     'export.busy':   'Generating download…',
     'pal.new_short': '+ New',
-    'pal.more':      'More',
-    'pal.png_size':  'PNG size',
+    'pal.more':      'Actions ▾',
+    'pal.img_size':  'PNG / TIFF size',
     'pal.open_view': 'Open Palettes view (manage + download)',
     'pal.backup_all':'Backup all palettes (.json)',
     'pal.import_json':'Import .json',
@@ -5337,6 +5451,8 @@ const I18N = {
     'pm.clear':      'Clear all swatches',
     'pm.del':        'Delete palette',
     'pm.download':   'Download',
+    'pm.actions':    'Actions',
+    'pm.edit':       'Edit',
     'gs.neutral_title': 'Neutral ramp (ICC) · how the press actually hits a grey',
     'gs.neutral_sub':   "Each cell starts from a target sRGB grey (e.g. 50% grey), gets reverse-routed to CMYK through the active profile (the press's <b>GCR / UCR rules pick the CMY + K mix</b>), then forward-routed back to screen sRGB. This is the grey the RIP gives you when you ask the press for a neutral.",
     'gs.purek_title':   'Pure RGB reference · rgb(255-2.55*K, K = 0→100)',
@@ -5426,14 +5542,17 @@ const I18N = {
     'topbar.export': '↓ 書き出し',
     'export.csv':    'CSV (UTF-8 BOM)',
     'export.png':    'PNG (タイトル帯 + ラベル付き)',
-    'export.png_pure':'PNG 純色 4096',
+    'export.png_pure':'PNG 純色',
     'export.tiff':   'TIFF (CMYK・ラベル付き)',
-    'export.tiff_pure':'TIFF 純色 4096 (CMYK)',
+    'export.tiff_pure':'TIFF 純色 (CMYK)',
     'export.zip':    'ZIP (1色ずつ + マニフェスト)',
+    'export.ase_cmyk':'ASE (CMYK) - プリプレス / RIP',
+    'export.ase_rgb': 'ASE (RGB) - Adobe / Affinity / Substance',
+    'export.gpl':    'GPL - GIMP / Krita / Inkscape',
     'export.busy':   'ダウンロード生成中…',
     'pal.new_short': '+ 新規',
-    'pal.more':      'その他',
-    'pal.png_size':  'PNGサイズ',
+    'pal.more':      'アクション ▾',
+    'pal.img_size':  'PNG / TIFFサイズ',
     'pal.open_view': 'パレット一覧（編集 + 書き出し）',
     'pal.backup_all':'全パレットを書き出し (.json)',
     'pal.import_json':'.json を読み込み',
@@ -5444,6 +5563,8 @@ const I18N = {
     'pm.clear':      'スウォッチをクリア',
     'pm.del':        'パレット削除',
     'pm.download':   'ダウンロード',
+    'pm.actions':    'アクション',
+    'pm.edit':       '編集',
     'gs.neutral_title': 'ニュートラルランプ (ICC) · プリンタが実際にグレーを再現する経路',
     'gs.neutral_sub':   '各セルは目標sRGBグレー（例: 50%グレー）から出発し、アクティブプロファイルで逆方向ルーティングしてCMYKを得る（<b>プリンタのGCR / UCRルールがCMY + Kの配合を決める</b>）。そのあと順方向で画面sRGBに戻す。RIPに「ニュートラル」を頼んだときに実際に得られるグレー。',
     'gs.purek_title':   '純粋RGB基準 · rgb(255-2.55*K, K = 0→100)',
@@ -5453,7 +5574,7 @@ const I18N = {
     'badge.mode_d50': '模式：印刷 (D50)',
     'badge.mode_d65': '模式：螢幕 (D65)',
     'topbar.reset':  '↺ 重設介面',
-    'topbar.grid':   '色垊',
+    'topbar.grid':   '色板',
     'topbar.palettes': '調色盤',
     'topbar.csv':    '↓ CSV',
     'topbar.png':    '↓ PNG',
@@ -5465,8 +5586,8 @@ const I18N = {
     'sec.color_mode': '色彩模式',
     'sec.icc_profile': 'ICC 色彩設定檔 (CMYK)',
     'sec.round_trip':  '循環安全門檻',
-    'sec.step':      '步長',
-    'sec.cell':      '色垊尺寸',
+    'sec.step':      '步距',
+    'sec.cell':      '色板尺寸',
     'sec.tac':       'TAC 上限',
     'sec.k_tier':    '黑（K）階',
     'sec.k_range':   'K 範圍',
@@ -5485,8 +5606,8 @@ const I18N = {
     'pill.checked':  '勾選的資料庫',
     'tog.aa':        '只顯 WCAG AA',
     'tog.aaa':       '只顯 WCAG AAA',
-    'tog.wt':        '只顯白字色垊',
-    'tog.bt':        '只顯黑字色垊',
+    'tog.wt':        '只顯白字色板',
+    'tog.bt':        '只顯黑字色板',
     'sort.hue':      '色相',
     'sort.light':    '明度',
     'sort.tac':      'TAC',
@@ -5533,14 +5654,17 @@ const I18N = {
     'topbar.export': '↓ 匯出',
     'export.csv':    'CSV（UTF-8 BOM）',
     'export.png':    'PNG（含標題列與標籤）',
-    'export.png_pure':'PNG 純色 4096',
+    'export.png_pure':'PNG 純色',
     'export.tiff':   'TIFF（CMYK・含標籤）',
-    'export.tiff_pure':'TIFF 純色 4096（CMYK）',
+    'export.tiff_pure':'TIFF 純色 （CMYK）',
     'export.zip':    'ZIP（逐色 + 清單）',
+    'export.ase_cmyk':'ASE（CMYK）- 印前 / RIP',
+    'export.ase_rgb': 'ASE（RGB）- Adobe / Affinity / Substance',
+    'export.gpl':    'GPL - GIMP / Krita / Inkscape',
     'export.busy':   '正在產生下載檔…',
     'pal.new_short': '+ 新建',
-    'pal.more':      '更多',
-    'pal.png_size':  'PNG 尺寸',
+    'pal.more':      '操作 ▾',
+    'pal.img_size':  'PNG / TIFF 尺寸',
     'pal.open_view': '開啟調色盤檢視（管理 + 下載）',
     'pal.backup_all':'備份全部調色盤 (.json)',
     'pal.import_json':'匯入 .json',
@@ -5551,6 +5675,8 @@ const I18N = {
     'pm.clear':      '清空色塊',
     'pm.del':        '刪除調色盤',
     'pm.download':   '下載',
+    'pm.actions':    '操作',
+    'pm.edit':       '編輯',
     'gs.neutral_title': '中性灰階 (ICC) · 印刷機實際走出灰色的路徑',
     'gs.neutral_sub':   '每個色塊都從目標 sRGB 灰（例如 50% 灰）出發，先反向經由目前的描述檔路由成 CMYK（<b>由印刷機的 GCR / UCR 規則決定 CMY 與 K 的混合比例</b>），再正向回到螢幕 sRGB。這就是你叫 RIP「給我中性灰」時實際拿到的灰。',
     'gs.purek_title':   '純 RGB 基準 · rgb(255-2.55*K, K = 0→100)',
@@ -5774,10 +5900,13 @@ document.addEventListener('click', (e) => {
   const TARGETS = [
     ['exportCSV',                     'Generating CSV'],
     ['exportPNG',                     'Rendering PNG'],
-    ['exportFilteredPurePNG',         'Rendering 4096 PNG'],
+    ['exportFilteredPurePNG',         'Rendering PNG'],
     ['exportFilteredTIFF',            'Rendering TIFF (CMYK)'],
-    ['exportFilteredPureTIFF',        'Rendering 4096 TIFF (CMYK)'],
+    ['exportFilteredPureTIFF',        'Rendering TIFF (CMYK)'],
     ['exportFilteredSwatchZIP',       'Building ZIP'],
+    ['exportFilteredASE_CMYK',        'Building ASE (CMYK)'],
+    ['exportFilteredASE_RGB',         'Building ASE (RGB)'],
+    ['exportFilteredGPL',             'Building GPL'],
     ['exportActivePaletteASE',        'Building ASE'],
     ['exportActivePaletteASE_CMYK',   'Building ASE (CMYK)'],
     ['exportActivePaletteASE_RGB',    'Building ASE (RGB)'],
