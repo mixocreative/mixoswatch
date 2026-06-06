@@ -1679,9 +1679,9 @@
           <div>
             <div class="micro">live</div>
             <h2><img src="app/img/logo-black.svg" style="display:inline-block; height:1em; width:1em; margin: 0 0 -0.15em 0; " alt="Mixo Swatch" class="hero-logo"> Mixo Swatch</h2>
-            <h3 data-en>Digital, Press & 3D Print Dedicated Color Swatches</h3>
-            <h3 data-zh>平面數位、紙品與3D印刷用專用色票對照表</h3>
-            <h3 data-ja>デジタル・紙媒体・3Dプリント専用色票対照表</h3>
+            <h3 data-en>Digital, Press & 3D Print Dedicated Color Reliability System</h3>
+            <h3 data-zh>平面數位、紙品與3D印刷用色彩可靠性系統</h3>
+            <h3 data-ja>デジタル・紙媒体・3Dプリント色再現安定システム</h3>
           </div>
           </div>
           <span class="go">GO</span>
@@ -1954,9 +1954,9 @@
         <span data-zh>沒有 ICC，原始 CMYK 數值毫無意義。把 RGB 丟給列印機的 RIP (光柵掃瞄影像處理機)，色域會被靜默壓縮。Mixoswatch 先把每個色塊透過 ICC 渲染到螢幕上，挑出物理平台上的相近色。</span>
       </p>
       <p style="margin-top:8px;font-size:12.5px;color:var(--muted);line-height:1.6">
-        <span data-en>Standard 3D texturing (Substance Painter, ZBrush, Blender, Maya) correctly uses pure sRGB (e.g., sRGB IEC61966-2.1) management, leaving printer engines like RasterLink or MPM3 to compress these textures into the 3D print ink space. Mixoswatch serves a different workflow: brand color definition. It provides initial screening to quickly match specified colors with printable/screen swatches and their closest named colors. By using the printer's ICC profile as a baseline and applying bidirectional $\Delta E$, it strictly ensures color accuracy.</span>
-        <span data-ja>一般的な3Dテクスチャ制作（Substance Painter, ZBrush, Blender, Maya）ではsRGB（sRGB IEC61966-2.1など）管理が正しく、RasterLinkやMPM3等のプリンターエンジンがそれを3Dプリント用インク色空間へ圧縮します。一方、Mixoswatchが担うのは『ブランドのカラー定義』という別工程です。指定色の初期選別を行い、印刷・画面用の近似色パッチや色名を素早く検索します。プリンターのICCプロファイルを基準に、双方向 $\Delta E$ で色の正確性を厳格に担保します。</span>
-        <span data-zh>一般 3D軟體在紋理貼圖製作（Substance Painter、ZBrush、Blender、Maya）上可以使用 sRGB IEC61966-2.1 等純粹的sRGB着色管理，RasterLink / MPM3 等列印機用自家引擎把 sRGB 紋理壓縮到3D列印使用的墨水空間，這在流程上是對的。Mixoswatch 服務的是另一個流程：品牌定色，初步甄選出指定色彩，快速查找接近的可列印與螢幕用對照色票，及其接近名稱。先用列印機ICC色彩描述檔作基調，再用雙向 dE 對顏色精準度把關。</span>
+        <span data-en>Standard 3D texturing (Substance Painter, ZBrush, Blender, Maya) correctly uses pure sRGB (e.g., sRGB IEC61966-2.1) management, leaving printer engines like RasterLink or MPM3 to compress these textures into the 3D print ink space. Mixoswatch serves a different workflow: brand color definition. It provides initial screening to quickly match specified colors with printable/screen swatches and their closest named colors. By using the printer's ICC profile as a baseline and applying bidirectional ΔE, it improves predictability and rejects unstable colors..</span>
+        <span data-ja>一般的な3Dテクスチャ制作（Substance Painter, ZBrush, Blender, Maya）ではsRGB（sRGB IEC61966-2.1など）管理が正しく、RasterLinkやMPM3等のプリンターエンジンがそれを3Dプリント用インク色空間へ圧縮します。一方、Mixoswatchが担うのは『ブランドのカラー定義』という別工程です。指定色の初期選別を行い、印刷・画面用の近似色パッチや色名を素早く検索します。プリンターのICCプロファイルを基準とし、双方向 ΔE で不安定な色を排除します。</span>
+        <span data-zh>一般 3D軟體在紋理貼圖製作（Substance Painter、ZBrush、Blender、Maya）上可以使用 sRGB IEC61966-2.1 等純粹的sRGB着色管理，RasterLink / MPM3 等列印機用自家引擎把 sRGB 紋理壓縮到3D列印使用的墨水空間，這在流程上是對的。Mixoswatch 服務的是另一個流程：品牌定色，初步甄選出指定色彩，快速查找接近的可列印與螢幕用對照色票，及其接近名稱。先用列印機ICC色彩描述檔作基調，再用雙向 ΔE 排除不穩定的顏色。</span>
       </p>
       <div class="steps">
         <div class="step">
@@ -1993,9 +1993,9 @@
             <span data-zh>雙向 ΔE 容差值門檻</span>
           </h5>
           <p>
-            <span data-en>The dE filter hides swatches the profile cannot hold. Unprintable colors never appear in the picker.</span>
-            <span data-ja>ΔEフィルタが、プロファイルで保持できない色を非表示にする。プリント不能な色はピッカーに現れない。</span>
-            <span data-zh>ΔE 篩選會隱藏描述檔無法保留的色塊。不可印的顏色根本不會出現在挑色器中。</span>
+            <span data-en>The ΔE filter hides swatches the profile cannot hold. Colors outside tolerance under the chosen ICC + ΔE policy never appear in the picker.</span>
+            <span data-ja>選択された ICC および ΔE ポリシーにおいて、許容値（トランス）を超える色はカラーピッカーに一切表示されません。</span>
+            <span data-zh>ΔE 篩選會隱藏描述檔無法保留的色塊。超出容差範圍的色彩絕不會出現在選色器中。</span>
           </p>
         </div>
         <div class="step">
@@ -2619,9 +2619,9 @@
         <span data-zh>明上堂 <b>Mixo Creative</b> 是一家扎根於台灣、兼具國際視野的專業設計公司。香港教育大學文化及創新設計系講師、英國伯明罕藝術設計學院設計管理學一級榮譽碩士 <b>Adrian Li</b> 的工作室。明上堂歷年作品榮獲 Adobe Behance 官方平台認證、法國 Cults3D 精選推薦。深耕品牌識別幾何學、3D 造型設計與印刷。</span>
       </p>
       <p>
-        <span data-en>In graphic design, unless expensive spot colors are used, reconciling screen colors with physical proofs is incredibly time-consuming. As designs transition from 2D to 3D, the absence of physical color management in 3D modeling software makes controlling color discrepancies on 3D-printed models exceptionally difficult. To reduce costly production guesswork, we built the <b>Mixo Swatch Color Engineering Prediction System</b> - a professional "color translator" engineered to bridge digital design and physical output. Meaningful creativity deserves disciplined technical precision.</span>
-        <span data-ja>印刷結果を完全に再現できる画面は存在しません。グラフィック印刷では、高価な特色を使わない限り、画面と印刷サンプルの色合わせに多大な時間がかかります。さらに、平面から立体デザインへの展開において、3D ソフトは実物のカラーマネジメントに対応していないため、3D プリント模型の色ブレ管理は極めて困難です。製造現場での手探りの試作を省くため、明上堂は色彩予測システム <b>「Mixo Swatch」</b> を自社開発しました。</span>
-        <span data-zh>在跨足平面與立體設計的過程中，3D 建模軟體不支援實體色彩管理，列印成 3D 實體模型往往難以控制色差。在平面或紙品印刷上，沒有使用專色的品牌設計，設計師與客戶溝通時也面對選色導致校對螢幕色與列印色版相當耗時的問題。為了替省去生產端的反覆盲測，明上堂自主研發了 <b>Mixo Swatch 色彩工程預測系統</b>。</span>
+        <span data-en>In graphic design, unless expensive spot colors are used, reconciling screen colors with physical proofs is incredibly time-consuming. As designs transition from 2D to 3D, the absence of physical color management in 3D modeling software makes controlling color discrepancies on 3D-printed models exceptionally difficult. To reduce costly production guesswork, we built the <b>Mixo Swatch Color Reliability System</b> - a professional "color translator" engineered to bridge digital design and physical output. Meaningful creativity deserves disciplined technical precision.</span>
+        <span data-ja>印刷結果を完全に再現できる画面は存在しません。グラフィック印刷では、高価な特色を使わない限り、画面と印刷サンプルの色合わせに多大な時間がかかります。さらに、平面から立体デザインへの展開において、3D ソフトは実物のカラーマネジメントに対応していないため、3D プリント模型の色ブレ管理は極めて困難です。製造現場での手探りの試作を省くため、明上堂は色彩安定化システム <b>「Mixo Swatch」</b> を自社開発しました。</span>
+        <span data-zh>在跨足平面與立體設計的過程中，3D 建模軟體不支援實體色彩管理，列印成 3D 實體模型往往難以控制色差。在平面或紙品印刷上，沒有使用專色的品牌設計，設計師與客戶溝通時也面對選色導致校對螢幕色與列印色版相當耗時的問題。為了替省去生產端的反覆盲測，明上堂自主研發了 <b>Mixo Swatch 色彩可靠性系統</b>。</span>
       </p>
       <p>
         <span data-en>Whether your company is planning a new brand identity system or exploring ambitious frontiers in physical 3D art, we look forward to partnering with you - transforming ideas into reality with confidence, clarity, and technical reliability. We sincerely look forward to hearing about your next project.</span>
