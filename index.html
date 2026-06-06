@@ -170,7 +170,10 @@
 
     .nav-mini {
       display: flex;
-      gap: 18px
+      gap: 4px;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: flex-end;
     }
 
     .nav-mini a {
@@ -179,11 +182,51 @@
       color: var(--muted);
       text-decoration: none;
       letter-spacing: .06em;
-      transition: color .15s ease;
+      transition: all .2s ease;
+      padding: 6px 10px;
+      border-radius: 6px;
+      white-space: nowrap;
     }
 
     .nav-mini a:hover {
-      color: var(--text)
+      color: var(--text);
+      background: var(--bg2);
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+
+    @media (max-width: 860px) {
+      .mark-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+        padding: 16px 28px;
+      }
+      .header-actions {
+        width: 100%;
+        justify-content: space-between;
+        gap: 12px;
+      }
+      .nav-mini {
+        justify-content: flex-start;
+      }
+      .mark {
+        padding: 0 !important;
+      }
+    }
+
+    @media (max-width: 580px) {
+      .header-actions {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .nav-mini {
+        margin-left: -10px;
+      }
     }
 
     .hero {
@@ -1577,14 +1620,38 @@
 
     <header class="mark-row">
       <div class="mark" style="padding: 0 1em;"><img src="app/img/logo-black.svg" alt="" class="brand-logo" aria-hidden="true">mixoswatch<span class="mark-jp">墨色見本</span></div>
-      <div style="display:flex;gap:18px;align-items:center">
+      <div class="header-actions">
         <nav class="nav-mini">
-          <a href="#why" data-en="why" data-ja="趣旨" data-zh="緣由">why</a>
-          <a href="#byo" data-en="byo-icc" data-ja="自前" data-zh="自帶">byo-icc</a>
-          <a href="#how" data-en="how" data-ja="使い方" data-zh="使用">how</a>
-          <a href="#mimaki" data-en="mimaki" data-ja="Mimaki" data-zh="Mimaki">mimaki</a>
-          <a href="#glossary" data-en="terms" data-ja="用語" data-zh="術語">terms</a>
-          <a href="#panels" data-en="panels" data-ja="操作" data-zh="面板">panels</a>
+          <a href="#why">
+            <span data-en>why</span>
+            <span data-ja>理念</span>
+            <span data-zh>理念</span>
+          </a>
+          <a href="#byo">
+            <span data-en>ICC import</span>
+            <span data-ja>ICC 読み込み</span>
+            <span data-zh>匯入 ICC</span>
+          </a>
+          <a href="#how">
+            <span data-en>how</span>
+            <span data-ja>使い方</span>
+            <span data-zh>使用</span>
+          </a>
+          <a href="#printers">
+            <span data-en>color pipeline</span>
+            <span data-ja>カラーマネジメント</span>
+            <span data-zh>色彩流程</span>
+          </a>
+          <a href="#glossary">
+            <span data-en>terms</span>
+            <span data-ja>用語</span>
+            <span data-zh>術語</span>
+          </a>
+          <a href="#panels">
+            <span data-en>UI</span>
+            <span data-ja>UI</span>
+            <span data-zh>UI</span>
+          </a>
         </nav>
         <div class="lang-switch" id="langSwitch" title="Language / 言語 / 語言">
           <button data-lang="en" class="on">EN</button>
@@ -1608,7 +1675,7 @@
         <span data-zh><b>Mixo Swatch</b> 透過真實 ICC 引擎生成 CMYK，自動隱藏指定描述檔無法保留的色塊。</span>
       </p>
       <nav class="tools" aria-label="Choose a tool">
-        <a class="tool" href="app/mixo-swatch.html">
+        <a class="tool" target="_blank" href="app/mixo-swatch.html">
           <div>
             <div class="micro">live</div>
             <h2><img src="app/img/logo-black.svg" style="display:inline-block; height:1em; width:1em; margin: 0 0 -0.15em 0; " alt="Mixo Swatch" class="hero-logo"> Mixo Swatch</h2>
@@ -1650,7 +1717,7 @@
         <span data-en><b style="font-weight:bolder">[Hot take] </b>No screen perfectly matches printed results. In graphic design, unless expensive spot colors are used, reconciling screen colors with physical proofs is incredibly time-consuming. Furthermore, as designs transition from 2D to 3D, 3D modeling software's lack of physical color management makes controlling color discrepancies on 3D-printed models exceptionally difficult. To eliminate repetitive trial-and-error during production, we developed Mixo Swatch, a predictive color engineering system.</span>
         <span
           data-ja>印刷結果を完全に再現できる画面は存在しません。グラフィック印刷では、高価な特色を使わない限り、画面と印刷サンプルの色合わせに多大な時間がかかります。さらに、平面から立体デザインへの展開において、3Dソフトは実物のカラーマネジメントに対応していないため、3Dプリント模型の色ブレ管理は極めて困難です。製造現場での手探りの試作を省くため、明上堂は色彩予測システム「Mixo Swatch」を自社開発しました。</span>
-        <span data-zh><b style="font-weight:bolder">[真相]</b> 沒有任何螢幕能完全精確地呈現印刷結果。在平面或紙品印刷上，沒有使用昂貴專色的品牌設計，設計師與客户溝通時總得面對選色導致校對螢幕色與列印色版相當耗時的問題。在跨足平面與立體設計的過程中，3D建模軟體不支援實體色彩管理，列印成 3D 實體模型往往難以控制色差。為了一定程度省去生產端的反覆盲測，明上堂自主研發了 Mixo Swatch 色彩工程預測系統。</span>
+        <span data-zh><b style="font-weight:bolder">[真相]</b> 沒有任何螢幕能完全精確地呈現印刷結果。在平面或紙品印刷上，沒有使用昂貴專色的品牌設計，設計師與客户溝通時總得面對校對螢幕色與列印色版相當耗時的問題。在跨足平面與立體設計的過程中，3D建模軟體不支援實體色彩管理，列印成 3D 實體模型往往難以控制色差。為了一定程度省去生產端的反覆盲測，明上堂自主研發了 Mixo Swatch 色彩工程預測系統。</span>
       </p>
 <!-- //////////////////////////// -->
       <div class="split">
@@ -1875,21 +1942,21 @@
 
     <div class="rule"></div>
 
-    <section class="section" id="mimaki">
+    <section class="section" id="printers">
       <h3>
         <span data-en>Why print-first beats "give Mimaki a CMYK number" or "let the RIP decide from RGB".</span>
         <span data-ja>なぜ「印刷ファースト」が、生のCMYK指定や、RGBをRIPに任せる方式より優れているのか。</span>
         <span data-zh>為什麼選擇轉化好的色票勝過直接給 3D列印機 CMYK 數值或 RIP 自行從 RGB 決定。</span>
       </h3>
       <p>
-        <span data-en>Raw CMYK numbers mean nothing without an ICC. Hand RGB to the  RIP and it silently compresses the gamut. Mixo routes every swatch through the Mimaki proxy ICC on screen first, so what you pick is what cures on the build plate.</span>
-        <span data-ja>生のCMYK数値はICCなしでは意味を持たない。RGBを3DUJ RIPに渡せば、ガモットは静かに圧縮される。Mixoは全スウォッチをMimakiプロキシICC経由で先に画面に描画する。選んだ色がそのまま造形プラテンで硬化する。</span>
-        <span data-zh>沒有 ICC，原始 CMYK 數值毫無意義。把 RGB 丟給列印機的 RIP，色域會被靜默壓縮。Mixo 先把每個色塊透過 ICC 渲染到螢幕上，挑出物理平台上的相近色。</span>
+        <span data-en>Without an ICC profile, raw CMYK values are completely meaningless. If you send RGB files directly to the printer's RIP (Raster Image Processor, which converts digital files into printable dot patterns), the gamut will be silently compressed. Mixoswatch solves this by first rendering each color patch onto the screen via ICC to accurately simulate the output, and then selecting the closest matching colors achievable on the physical printing platform.</span>
+        <span data-ja>ICCプロファイルがなければ、生のCMYK数値には何の意味もありません。RGBデータをそのままプリンターのRIP（ラスターイメージプロセッサ：デジタルデータを印刷用の網点データに変換する処理装置）に送ると、色域が強制的に（サイレントに）圧縮されてしまいます。Mixoswatchは、まず各カラーパッチをICC経由で画面上に正確にレンダリング（シミュレーション）し、その上で、実際の印刷プラットフォームで再現可能な最も近い色を選び出します。</span>
+        <span data-zh>沒有 ICC，原始 CMYK 數值毫無意義。把 RGB 丟給列印機的 RIP (光柵掃瞄影像處理機)，色域會被靜默壓縮。Mixoswatch 先把每個色塊透過 ICC 渲染到螢幕上，挑出物理平台上的相近色。</span>
       </p>
       <p style="margin-top:8px;font-size:12.5px;color:var(--muted);line-height:1.6">
-        <span data-en>For texture-map authoring (Substance Painter, ZBrush, Blender, Maya), sRGB IEC61966-2.1 is recommended. RasterLink / MPM3 compresses sRGB textures into 3DUJ ink space with its proprietary multi-channel engine, which is the right tool there. Mixo is for the other workflow: spot-color brand palettes where the RIP's perceptual conversion would silently shift your brand cyan to "close enough". Mixo pre-routes CMYK through a Mimaki proxy, gates with round-trip dE, and lays the exact ink you specified.</span>
-        <span data-ja>テクスチャマップ制作（Substance Painter、ZBrush、Blender、Maya）にはsRGB IEC61966-2.1が推奨されます。RasterLink / MPM3が独自のマルチチャンネルエンジンでsRGBテクスチャを3DUJインク空間へ圧縮する。Mixoはもう一方のワークフロー、つまりブランドのスポットカラー選定向け。RIPの知覚的変換はブランドシアンを「ほぼ近い色」に静かにずらしてしまう。MixoはCMYKをMimakiプロキシで先回しし、往復ΔEで門番し、指定したインクをそのまま下ろす。</span>
-        <span data-zh>一般 3D軟體在紋理貼圖製作（Substance Painter、ZBrush、Blender、Maya）上可以使用 sRGB IEC61966-2.1 等純粹的sRGB着色管理，RasterLink / MPM3 等列印機用自家多通道引擎把 sRGB 紋理壓縮到3D列印使用的墨水空間，這在那個流程裡是對的。Mixo 服務的是另一個流程：品牌定色，初步甄選出指定色彩，快速查找接近的可列印與螢幕用對照色票，及其接近名稱。先用列印機ICC色彩描述檔作基調，再用雙向 dE 對顏色精準度把關。</span>
+        <span data-en>Standard 3D texturing (Substance Painter, ZBrush, Blender, Maya) correctly uses pure sRGB (e.g., sRGB IEC61966-2.1) management, leaving printer engines like RasterLink or MPM3 to compress these textures into the 3D print ink space. Mixoswatch serves a different workflow: brand color definition. It provides initial screening to quickly match specified colors with printable/screen swatches and their closest named colors. By using the printer's ICC profile as a baseline and applying bidirectional $\Delta E$, it strictly ensures color accuracy.</span>
+        <span data-ja>一般的な3Dテクスチャ制作（Substance Painter, ZBrush, Blender, Maya）ではsRGB（sRGB IEC61966-2.1など）管理が正しく、RasterLinkやMPM3等のプリンターエンジンがそれを3Dプリント用インク色空間へ圧縮します。一方、Mixoswatchが担うのは『ブランドのカラー定義』という別工程です。指定色の初期選別を行い、印刷・画面用の近似色パッチや色名を素早く検索します。プリンターのICCプロファイルを基準に、双方向 $\Delta E$ で色の正確性を厳格に担保します。</span>
+        <span data-zh>一般 3D軟體在紋理貼圖製作（Substance Painter、ZBrush、Blender、Maya）上可以使用 sRGB IEC61966-2.1 等純粹的sRGB着色管理，RasterLink / MPM3 等列印機用自家引擎把 sRGB 紋理壓縮到3D列印使用的墨水空間，這在流程上是對的。Mixoswatch 服務的是另一個流程：品牌定色，初步甄選出指定色彩，快速查找接近的可列印與螢幕用對照色票，及其接近名稱。先用列印機ICC色彩描述檔作基調，再用雙向 dE 對顏色精準度把關。</span>
       </p>
       <div class="steps">
         <div class="step">
