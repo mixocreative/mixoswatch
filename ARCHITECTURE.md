@@ -561,7 +561,7 @@ the factory defaults applied on first run. Current shipped values:
     "palette_panel_open": false,
     "ui_lang": "auto",
     "corpora_prefs": {
-      "_global": { "anchor": "cmyk", "tolerance": 5.5 },
+      "_global": { "anchor": "cmyk", "tolerance": 5.0 },
       "jp-trad": { "display": "name_ja" },
       "html":    { "display": "name_en" },
       "zh-trad": { "display": "name_zh" }
@@ -817,7 +817,7 @@ Applied in `filtered()`:
 - Named source pills (factory default `Any named`; per-library checkboxes
   all on by default)
 - Name tolerance slider (dE allowance for non-closest swatches to also
-  display the name; factory default 5.5)
+  display the name; factory default 5.0)
 - WCAG AA / AAA toggles (all OFF by default)
 - White-text-only / Black-text-only toggles (all OFF by default)
 - Search box (case-insensitive substring against all name fields + hex;

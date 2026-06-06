@@ -26,7 +26,7 @@
     "ui_lang": "auto",
 
     "corpora_prefs": {
-      "_global": { "anchor": "cmyk", "tolerance": 5.5 },
+      "_global": { "anchor": "cmyk", "tolerance": 5.0 },
       "jp-trad": { "display": "name_ja" },
       "html":    { "display": "name_en" },
       "zh-trad": { "display": "name_zh" }

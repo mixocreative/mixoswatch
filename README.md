@@ -250,7 +250,7 @@ The shipped defaults are tuned for the print-first workflow on a coated press:
 | Round-trip dE max | 0.6 | Tight - only press-safe swatches show by default |
 | K range | `[0, 80]` | K 85-100 collapses to pure black on most presses |
 | Named-swatch filter | `Any named` (all libraries on) | Useful grid out of the box |
-| Naming accuracy (dE) | 5.5 | Permissive enough to surface names but still meaningful |
+| Naming accuracy (dE) | 5.0 | Permissive enough to surface names but still meaningful |
 | Sort | Hue | Best general overview |
 | Accessibility toggles | All OFF | No hidden filters at first run |
 | UI language | `auto` | `navigator.language` → `ja` / `zh` (-Hant) / `en` |

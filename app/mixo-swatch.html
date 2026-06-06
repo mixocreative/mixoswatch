@@ -1085,8 +1085,8 @@ html[lang^="zh"] .intro-btn .intro-zh{display:inline}
         </div>
         <div class="match-help">Match by CMYK-Lab (print) or hex-Lab (screen). html corpus falls back to hex when anchor=cmyk.</div>
         <div class="match-row mt-6">
-          <div class="match-label"><span data-i18n="sec.accuracy">Naming Accuracy</span> &middot; <span id="vTol">5.5</span></div>
-          <input type="range" min="0" max="20" step="0.5" value="5.5" id="slTol" aria-label="Naming dE tolerance" oninput="onTol(this.value)" title="Show a corpus name when swatch is within this dE of a named entry. Smaller value = stricter name match (only exact closest). Larger = more permissive (more swatches show names). Default 5.5.">
+          <div class="match-label"><span data-i18n="sec.accuracy">Naming Accuracy</span> &middot; <span id="vTol">5.0</span></div>
+          <input type="range" min="0" max="5" step="0.5" value="5.0" id="slTol" aria-label="Naming dE tolerance" oninput="onTol(this.value)" title="Show a corpus name when swatch is within this dE of a named entry. Smaller value = stricter name match (only exact closest). Larger = more permissive (more swatches show names). Default 5.0.">
         </div>
         <div class="match-help">Higher = more swatches show names. Set to 0 to show only literal closest matches per library.</div>
       </div>
@@ -1421,7 +1421,7 @@ function _migrate_v1_to_v2(v1) {
   // Rewrite corpora_prefs to v3 shape (default tolerance now 5.5 to match ui_defaults.json)
   const oldPrefs = out.corpora_prefs || {};
   const newPrefs = {
-    _global: { anchor: 'cmyk', tolerance: 5.5 },
+    _global: { anchor: 'cmyk', tolerance: 5.0 },
     'jp-trad': { display: (oldPrefs.jpn && oldPrefs.jpn.display) || 'name_ja' },
     'html':    { display: (oldPrefs.html && oldPrefs.html.display) || 'name_en' },
     'zh-trad': { display: 'name_zh' },
@@ -1874,7 +1874,7 @@ function _saveCorporaPrefs() {
   catch {}
 }
 function _libPref(libId) {
-  const global = CORPORA_PREFS._global || { anchor: 'cmyk', tolerance: 3.0 };
+  const global = CORPORA_PREFS._global || { anchor: 'cmyk', tolerance: 5.0 };
   const lib = CORPORA_PREFS[libId] || {};
   const libDef = CORPORA.libraries.find(l => l.id === libId) || {};
   return {
@@ -3537,7 +3537,7 @@ function snapTACToProfile() {
   const sl = document.getElementById('slTAC');
   if (!sl) return;
   sl.value = lut.tac_recommended;
-  sl.max   = lut.tac_max || 400;
+  sl.max   = 400;
   document.getElementById('vTAC').textContent    = sl.value;
   document.getElementById('vTACMax').textContent = sl.max;
   if (typeof onFilter === 'function') onFilter();
