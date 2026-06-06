@@ -1086,7 +1086,7 @@ html[lang^="zh"] .intro-btn .intro-zh{display:inline}
         <div class="match-help">Match by CMYK-Lab (print) or hex-Lab (screen). html corpus falls back to hex when anchor=cmyk.</div>
         <div class="match-row mt-6">
           <div class="match-label"><span data-i18n="sec.accuracy">Naming Accuracy</span> &middot; <span id="vTol">5.0</span></div>
-          <input type="range" min="0" max="5" step="0.5" value="5.0" id="slTol" aria-label="Naming dE tolerance" oninput="onTol(this.value)" title="Show a corpus name when swatch is within this dE of a named entry. Smaller value = stricter name match (only exact closest). Larger = more permissive (more swatches show names). Default 5.0.">
+          <input type="range" min="0" max="5" step="0.5" value="5.0" id="slTol" aria-label="Naming dE tolerance" oninput="onTol(this.value)" title="Each named entry is assigned to ONE closest swatch (no repeats). Tolerance gates whether that single closest match is shown: only if its dE is within this value. Smaller = fewer names (stricter); larger = more names appear. Default 5.0.">
         </div>
         <div class="match-help">Higher = more swatches show names. Set to 0 to show only literal closest matches per library.</div>
       </div>
@@ -2010,9 +2010,13 @@ function corpusCellText(libId, sw) {
   if (!m || !m.entry) return null;
   return m.entry[fieldId] || null;
 }
-// Visibility gate per corpus: closest carrier OR within tolerance.
+// Visibility gate per corpus: ONLY the unique closest carrier per entry,
+// AND only when its dE is within tolerance. _markClosest guarantees exactly
+// one swatch is flagged __closest per (lib, entry) so names never repeat.
+// Tolerance no longer broadcasts the name to nearby swatches - it just
+// gates whether the single winner shows up at all.
 function corpusVisible(libId, sw) {
-  if (sw[`${libId}__closest`]) return true;
+  if (!sw[`${libId}__closest`]) return false;
   const dE = sw[`${libId}__deltaE`];
   return typeof dE === 'number' && dE <= curTol;
 }
@@ -3777,14 +3781,12 @@ function setGlobalAnchor(v) {
   }
 }
 
-// Visibility helper: is this swatch the closest-or-within-tolerance match
-// for the given lib, considering display pref?
+// Visibility helper: only the unique __closest carrier shows the name,
+// and only when its dE is within tolerance. Matches corpusVisible.
 function _visibleNamedFor(s, lib) {
-  if (!s[`${lib.id}__closest`]) {
-    const dE = s[`${lib.id}__deltaE`];
-    if (typeof dE !== 'number' || dE > curTol) return false;
-  }
-  return true;
+  if (!s[`${lib.id}__closest`]) return false;
+  const dE = s[`${lib.id}__deltaE`];
+  return typeof dE === 'number' && dE <= curTol;
 }
 // 'any' filter: any corpus matched within tolerance
 function anyCorpusVisible(s){
