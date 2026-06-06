@@ -1019,7 +1019,7 @@ html[lang^="zh"] .intro-btn .intro-zh{display:inline}
           <span class="threed-toggle-label" data-i18n="threed.label">3D-print preset</span>
         </button>
       </div>
-      <div class="match-help" data-i18n="threed.help">Live indicator + force button. Auto-lights when current settings meet every 3D-print requirement (Color mode = Print / D50, TAC &lt;= 240%, dE &lt;= 2.0, 3DUJ-safe profile). Click to force-fit every setting at once. When settings drift outside the envelope the indicator auto-untoggles.</div>
+      <div class="match-help" data-i18n="threed.help">Live indicator + force button. Auto-lights when current settings meet the 3D-print envelope (Color mode = Print / D50, TAC &lt;= 240%, dE &lt;= 2.0). ICC profile stays as you set it - pick the proxy that matches your build plate. Click to force-fit D50 + TAC + dE at once.</div>
     </div>
 
 
@@ -3563,8 +3563,10 @@ function _3DSatisfied() {
   const slTAC = document.getElementById('slTAC');
   const slDEmax = document.getElementById('slDEmax');
   if (!slTAC || !slDEmax) return false;
+  // Profile is no longer part of the envelope - the user picks the ICC and
+  // we only enforce Lab whitepoint (D50, where the ICC PCS lives) plus the
+  // TAC + dE caps. _is3DSafeProfile is retained for advisory use only.
   return LAB_MODE === 'd50'
-      && _is3DSafeProfile(ACTIVE_PROFILE)
       && +slTAC.value <= 240
       && +slDEmax.value <= 20;
 }
@@ -3608,28 +3610,22 @@ async function set3DPreset(on) {
   // toggle while it is already on is filtered out earlier by
   // onClick3DToggle. The auto-watch path (_sync3DCheckbox) handles
   // the "off" direction by re-evaluating _3DSatisfied().
+  //
+  // Profile is NOT forced here. The user picks the ICC; the preset only
+  // enforces the parts of the envelope that are independent of profile
+  // choice: Lab whitepoint must be D50 (so ICC PCS aligns), TAC <= 240,
+  // dE <= 2.0.
   if (!on) return;
   const slTAC = document.getElementById('slTAC');
   const slDEmax = document.getElementById('slDEmax');
   const vTAC = document.getElementById('vTAC');
   const vDEmax = document.getElementById('vDEmax');
   const tacOver = document.getElementById('tacOverride');
-  const sel = document.getElementById('iccSel');
   if (!slTAC || !slDEmax) return;
-  // Force color mode to Print (D50) - 3DUJ + ICC PCS both live here.
+  // Force color mode to Print (D50) - ICC PCS lives here.
   if (typeof LAB_MODE !== 'undefined' && LAB_MODE !== 'd50'
       && typeof setLabMode === 'function') {
     setLabMode('d50');
-  }
-  // Force-fit profile to a 3D-print-safe proxy.
-  const safe = _is3DSafeProfile(ACTIVE_PROFILE) ? ACTIVE_PROFILE : _pick3DProfile();
-  if (safe && (!ACTIVE_PROFILE || safe.filename !== ACTIVE_PROFILE.filename)) {
-    ACTIVE_PROFILE = safe;
-    ACTIVE_LUT_META = safe;
-    if (sel) sel.value = safe.filename;
-    TAC_USER_OVERRIDE = false;
-    snapTACToProfile();
-    await rebuildAll();
   }
   // Clamp TAC + dE max into the 3D-print envelope.
   if (+slTAC.value > 240)   slTAC.value = 240;
@@ -5244,7 +5240,7 @@ const I18N = {
     'links.about':   'About us ↗',
     'links.foot':    'mixocreative · Mixo Swatch',
     'threed.label':  '3D-print preset',
-    'threed.help':   'Live indicator + force button. Auto-lights when current settings meet every 3D-print requirement (Color mode = Print / D50, TAC <= 240%, dE <= 2.0, 3DUJ-safe profile). Click to force-fit every setting at once. When settings drift outside the envelope the indicator auto-untoggles.',
+    'threed.help':   'Live indicator + force button. Auto-lights when current settings meet the 3D-print envelope (Color mode = Print / D50, TAC <= 240%, dE <= 2.0). ICC profile stays as you set it - pick the proxy that matches your build plate. Click to force-fit D50 + TAC + dE at once.',
     'pal.sel_off':   'Selection: OFF',
     'pal.sel_on':    'Selection: ON',
     'pal.export':    'Export',
@@ -5351,7 +5347,7 @@ const I18N = {
     'links.about':   '私たちについて ↗',
     'links.foot':    'mixocreative · Mixo Swatch',
     'threed.label':  '3Dプリント設定',
-    'threed.help':   'ライブインジケーター兼強制ボタン。色モード = 印刷 (D50)、TAC <= 240%、ΔE <= 2.0、3DUJ 安全プロファイル がすべて揃った時に自動点灯。クリックでいつでもすべての設定を 3D プリント条件に一括で合わせる。設定が範囲外になると自動で消灯。',
+    'threed.help':   'ライブインジケーター兼強制ボタン。色モード = 印刷 (D50)、TAC <= 240%、ΔE <= 2.0 がすべて揃った時に自動点灯。ICC プロファイルは強制せず、ユーザーがビルドプレートに合うプロキシを選択。クリックで D50 + TAC + ΔE を一括設定。',
     'pal.sel_off':   '選択モード: OFF',
     'pal.sel_on':    '選択モード: ON',
     'pal.export':    '書き出し',
@@ -5458,7 +5454,7 @@ const I18N = {
     'links.about':   '關於我們 ↗',
     'links.foot':    'mixocreative · Mixo Swatch',
     'threed.label':  '3D 列印預設',
-    'threed.help':   '即時狀態指示燈兼強制按鈕。當色彩模式 = 印刷 (D50)、TAC <= 240%、dE <= 2.0、3DUJ 安全描述檔同時成立時自動亮起。點擊隨時可一次強制套用所有條件；當設定離開 3D 列印範圍時自動熄滅。',
+    'threed.help':   '即時狀態指示燈兼強制按鈕。當色彩模式 = 印刷 (D50)、TAC <= 240%、dE <= 2.0 同時成立時自動亮起。ICC 描述檔不強制變更，由使用者自選符合列印基台的代理描述檔。點擊可一次套用 D50 + TAC + dE。',
     'pal.sel_off':   '選取模式：關',
     'pal.sel_on':    '選取模式：開',
     'pal.export':    '匯出',
