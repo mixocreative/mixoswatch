@@ -3154,6 +3154,13 @@ function render() {
   document.getElementById('swatchGrid').style.display = isPalettes ? 'none' : '';
   document.getElementById('gsWrap').style.display    = (isPalettes || isHueLight) ? 'none' : '';
   document.getElementById('pmWrap').style.display    = isPalettes ? 'flex' : 'none';
+  // Detach stale virtualizer scroll handler before HL/palettes views so it
+  // can't wipe #swatchGrid on scroll. Regular grid path re-binds below.
+  if ((isPalettes || isHueLight) && window._scrollPaintHandler) {
+    document.getElementById('gridScroll')
+      .removeEventListener('scroll', window._scrollPaintHandler);
+    window._scrollPaintHandler = null;
+  }
   if (isPalettes) { renderPaletteMode(); return; }
   if (isHueLight) { renderHueLightMap(document.getElementById('swatchGrid')); return; }
 
