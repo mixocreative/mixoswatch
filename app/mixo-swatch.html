@@ -12,25 +12,26 @@
 
 <style>
 :root {
-  --bg:#1A1918; --bg2:#222120; --surface:#2A2928;
-  --border:rgba(255,255,255,0.12); --border2:rgba(255,255,255,0.06);
-  --text:#E8E6E0; --muted:#9B9A94; --faint:#6B6A64;
-  --accent:#B2A88D; --accent-rgb:178 168 141;
+  --bg:#1B1817; --bg2:#232020; --surface:#2A2625;
+  --border:rgba(255,255,255,0.14); --border2:rgba(255,255,255,0.07);
+  --text:#E8E6E0; --muted:#9E9A92; --faint:#6A6660;
+  --accent:#C8C0B0; --accent-rgb:200 192 176;
+  --accent-light:#8C8576;
   --font-mono:'IBM Plex Mono','Fira Mono',monospace;
   --font-sans:'Noto Sans JP',system-ui,sans-serif;
   --font-tc: 'Noto Serif TC', -apple-system, serif;
-  --font-jpn-serif:"Zen Antique Soft",serif;--accent-light:#6E6648;
+  --font-jpn-serif:"Zen Antique Soft",serif;
   --r:6px; --rl:10px;
   color-scheme:dark;
 }
-/* Light theme - mirrors index.html tokens exactly so the landing page
+/* Light theme. Mirrors index.html tokens exactly so the landing page
    and tool surface share one visual identity. Activated by
    document.documentElement[data-theme="light"]. */
 :root[data-theme="light"] {
-  --bg:#F8F6F1; --bg2:#F0EDE6; --surface:#FFFFFF;
+  --bg:#FAF8F3; --bg2:#F2EFE7; --surface:#FFFFFF;
   --border:rgba(0,0,0,0.14); --border2:rgba(0,0,0,0.07);
-  --text:#1A1916; --muted:#6E6C66; --faint:#A39F97;
-  --accent:#6E6648;--accent-light:#B2A88D; --accent-rgb:110 102 72;
+  --text:#15130E; --muted:#6B6862; --faint:#A8A49B;
+  --accent:#3D3424; --accent-light:#6E6648; --accent-rgb:61 52 36;
   color-scheme:light;
 }
 *{box-sizing:border-box;margin:0;padding:0}
@@ -54,7 +55,7 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:
 input[type=checkbox],
 input[type=radio],
 input[type=range]{accent-color:var(--accent)}
-
+.badge-container .certbadges{ display:flex; align-items:center; gap:10px; justify-content: center; width: 100%; filter: saturate(0.2); }
 /* ── Layout ── */
 .app{display:grid;grid-template-rows:52px 1fr;height:100vh}
 .topbar{
@@ -335,13 +336,14 @@ input[type=range]{accent-color:var(--accent)}
   position:absolute;top:1px;left:1px;width:14px;height:14px;border-radius:50%;
   background:var(--faint);transition:left .15s ease,background .15s ease;
 }
-.threed-toggle[aria-checked="true"] .threed-toggle-track{
+.threed-toggle[aria-checked="true"] .threed-toggle-track,
+.threed-toggle.on .threed-toggle-track{
   background:var(--accent);border-color:var(--accent);
 }
-.threed-toggle[aria-checked="true"] .threed-toggle-thumb{
+.threed-toggle[aria-checked="true"] .threed-toggle-thumb,
+.threed-toggle.on .threed-toggle-thumb{
   left:17px;background:var(--bg);
 }
-.threed-toggle[aria-checked="true"]{cursor:default}
 .threed-toggle:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
 
 /* ── Theme toggle (topbar) ── */
@@ -1017,7 +1019,7 @@ html[lang^="zh"] .intro-btn .intro-zh{display:inline}
           <span class="threed-toggle-label" data-i18n="threed.label">3D-print preset</span>
         </button>
       </div>
-      <div class="match-help" data-i18n="threed.help">Indicator + one-way force button. Auto-lights when current settings already meet every 3D-print requirement (Color mode = Print / D50, TAC &lt;= 240%, dE &lt;= 2.0, 3DUJ-safe profile). Click while off to force-fit every setting at once. Click while on does nothing - change a slider or profile to leave the 3D-print envelope.</div>
+      <div class="match-help" data-i18n="threed.help">Live indicator + force button. Auto-lights when current settings meet every 3D-print requirement (Color mode = Print / D50, TAC &lt;= 240%, dE &lt;= 2.0, 3DUJ-safe profile). Click to force-fit every setting at once. When settings drift outside the envelope the indicator auto-untoggles.</div>
     </div>
 
 
@@ -1280,7 +1282,7 @@ html[lang^="zh"] .intro-btn .intro-zh{display:inline}
       <p class="intro-sub intro-ja">想像力をかき立てるフィギュアデザインと3Dプリントアート</p>
     </div>
     <div class="badge-container" style="display: flex; text-align: center; align-items: center;justify-content: center;">
-    <span><img width="120" src="img/cults-cert-gold.png" alt="badges" style="vertical-align: middle;" /> <img width="120" src="img/behance-cert-gold.png" alt="badges" style="vertical-align: middle;"/></span><br/>
+    <span class="certbadges"><img width="120"" src="img/cults-cert-gold.png" alt="badges" style="vertical-align: middle;" /> <img width="120" style="filter: saturate(.5);" src="img/behance-cert-gold.png" alt="badges" style="vertical-align: middle;"/></span><br/>
     </div>
 
     <div class="intro-body-block">
@@ -1292,7 +1294,7 @@ html[lang^="zh"] .intro-btn .intro-zh{display:inline}
 
       <p class="intro-body intro-zh">在跨足平面與立體設計的過程中，3D建模軟體不支援實體色彩管理，列印成 3D 實體模型往往難以控制色差。在平面或紙品印刷上，沒有使用專色的品牌設計，設計師與客户溝通時也面對選色導致校對螢幕色與列印色版相當耗時的問題。為了替省去生產端的反覆盲測，明上堂自主研發了 Mixo Swatch 色彩工程預測系統。</p>
 
-      <p class="intro-body intro-en">Whether your company is planning a new brand identity system or exploring ambitious frontiers in physical 3D art, we look forward to partnering with you — transforming ideas into reality with confidence, clarity, and technical reliability.We sincerely look forward to hearing about your next project.</p>
+      <p class="intro-body intro-en">Whether your company is planning a new brand identity system or exploring ambitious frontiers in physical 3D art, we look forward to partnering with you, transforming ideas into reality with confidence, clarity, and technical reliability. We sincerely look forward to hearing about your next project.</p>
       <p class="intro-body intro-zh">不論您的企業正在規劃全新的品牌識別，還是想挑戰前沿的 3D 實體藝術創作，我們都期待能與您攜手，用最讓人安心的專業，陪伴您的創意行穩致遠。誠摯期待與您聊聊您的下一個企劃。</p>
       <p class="intro-body intro-ja">貴社の全く新しいブランドアイデンティティ（CI/VI）の構築から、最先端の3D立体アート作品への挑戦まで、私たちは最も安心できる専門知識をもって寄り添い、皆様のクリエイティブが着実に、そして遠くまで届くようサポートいたします。皆様の次なるプロジェクトについて、お話しできることを心より楽しみにしております。</p>
     </div><div class="intro-actions">
@@ -1329,14 +1331,6 @@ html[lang^="zh"] .intro-btn .intro-zh{display:inline}
         <span class="intro-zh">關於我們 &#x2192;</span>
         <span class="intro-ja">私たちについて &#x2192;</span>
       </a>
-    </div>
-
-    <div class="intro-brand">
-      <img src="img/logo3d.png"          alt="Mixo Creative 3D mark"          class="intro-mark">
-      <img src="img/logotype.svg"        alt="Mixo Creative logotype"         class="intro-mark intro-mark-wide">
-      <span class="intro-brand-sep" aria-hidden="true"></span>
-      <img src="img/cults-cert-gold.png"   alt="Cults3D Selected Designer"      class="intro-cert" title="Cults3D Selected Designer (France)">
-      <img src="img/behance-cert-gold.png" alt="Adobe Behance featured designer" class="intro-cert" title="Adobe Behance featured designer">
     </div>
 
     <div class="intro-foot">brought to you by Mixo Creative Ltd. · 明上堂有限公司 · mixocreative.com</div>
@@ -3564,20 +3558,25 @@ function _3DSatisfied() {
       && +slDEmax.value <= 20;
 }
 // Reflect the live state on the toggle button without firing set3DPreset.
+// Mirrors state onto aria-checked, aria-pressed, AND a .on class so the
+// auto-off path stays visible even if a CSS rule keyed on the aria attr
+// loses out to specificity elsewhere.
 function _sync3DCheckbox() {
   const cb = document.getElementById('tog3D');
   if (!cb) return;
   const on = _3DSatisfied();
   cb.setAttribute('aria-checked', on ? 'true' : 'false');
   cb.setAttribute('aria-pressed', on ? 'true' : 'false');
+  cb.classList.toggle('on', on);
 }
-// Toggle click handler. Only acts when going OFF -> ON. Clicking while
-// already ON is a no-op (the toggle only indicates state; settings must
-// drift out of the envelope on their own to flip it off).
+// Toggle click handler. Click always force-fits the full 3D-print
+// envelope (Color mode = Print/D50, TAC <= 240, dE <= 2.0, 3DUJ-safe
+// profile), regardless of current toggle state. When settings drift
+// out of the envelope on their own, _sync3DCheckbox runs from onFilter
+// / setLabMode / onProfileChange and auto-flips the toggle off.
 function onClick3DToggle() {
   const cb = document.getElementById('tog3D');
   if (!cb) return;
-  if (cb.getAttribute('aria-checked') === 'true') return;
   set3DPreset(true);
 }
 // Pick a 3D-safe profile from ICC_INDEX. Order: factory default, first
@@ -5234,7 +5233,7 @@ const I18N = {
     'links.about':   'About us ↗',
     'links.foot':    'mixocreative · Mixo Swatch',
     'threed.label':  '3D-print preset',
-    'threed.help':   'Indicator + one-way force button. Auto-lights when current settings already meet every 3D-print requirement (Color mode = Print / D50, TAC <= 240%, dE <= 2.0, 3DUJ-safe profile). Click while off to force-fit every setting at once. Click while on does nothing - change a slider or profile to leave the 3D-print envelope.',
+    'threed.help':   'Live indicator + force button. Auto-lights when current settings meet every 3D-print requirement (Color mode = Print / D50, TAC <= 240%, dE <= 2.0, 3DUJ-safe profile). Click to force-fit every setting at once. When settings drift outside the envelope the indicator auto-untoggles.',
     'pal.sel_off':   'Selection: OFF',
     'pal.sel_on':    'Selection: ON',
     'pal.export':    'Export',
@@ -5341,7 +5340,7 @@ const I18N = {
     'links.about':   '私たちについて ↗',
     'links.foot':    'mixocreative · Mixo Swatch',
     'threed.label':  '3Dプリント設定',
-    'threed.help':   'インジケーター兼一方向の強制ボタン。色モード = 印刷 (D50)、TAC <= 240%、ΔE <= 2.0、3DUJ 安全プロファイル がすべて揃った時に自動点灯する。OFF 時にクリックすると、すべての設定を一括で 3D プリント条件に合わせる。ON 時のクリックは何もしない。3D プリント領域を離れるには、スライダーやプロファイルを手動で変更する。',
+    'threed.help':   'ライブインジケーター兼強制ボタン。色モード = 印刷 (D50)、TAC <= 240%、ΔE <= 2.0、3DUJ 安全プロファイル がすべて揃った時に自動点灯。クリックでいつでもすべての設定を 3D プリント条件に一括で合わせる。設定が範囲外になると自動で消灯。',
     'pal.sel_off':   '選択モード: OFF',
     'pal.sel_on':    '選択モード: ON',
     'pal.export':    '書き出し',
@@ -5435,7 +5434,7 @@ const I18N = {
     'theme.dark':    '暗',
     'intro.tag':     '讓事物變得有趣',
     'intro.tag_sub': '客製化文化商品與激發想像力的 3D 列印藝術。',
-    'intro.body':    'Mixo Swatch 是 mixocreative 推出的印刷忠實 CMYK 配色工具 — 我們是一家橫跨平面、3D 列印藝術與品牌玩具的設計工作室。',
+    'intro.body':    'Mixo Swatch 是 mixocreative 推出的印刷忠實 CMYK 配色工具，我們是一家橫跨平面、3D 列印藝術與品牌玩具的設計工作室。',
     'intro.ig':      'Instagram',
     'intro.fb':      'Facebook',
     'intro.about':   '關於我們 →',
@@ -5448,7 +5447,7 @@ const I18N = {
     'links.about':   '關於我們 ↗',
     'links.foot':    'mixocreative · Mixo Swatch',
     'threed.label':  '3D 列印預設',
-    'threed.help':   '狀態指示燈兼單向強制按鈕。當色彩模式 = 印刷 (D50)、TAC <= 240%、dE <= 2.0、3DUJ 安全描述檔同時成立時自動亮起。關閉狀態下點擊會一次強制套用所有條件；開啟狀態下點擊不會有任何動作。要離開 3D 列印範圍，請手動調整滑桿或切換描述檔。',
+    'threed.help':   '即時狀態指示燈兼強制按鈕。當色彩模式 = 印刷 (D50)、TAC <= 240%、dE <= 2.0、3DUJ 安全描述檔同時成立時自動亮起。點擊隨時可一次強制套用所有條件；當設定離開 3D 列印範圍時自動熄滅。',
     'pal.sel_off':   '選取模式：關',
     'pal.sel_on':    '選取模式：開',
     'pal.export':    '匯出',

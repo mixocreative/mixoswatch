@@ -16,17 +16,17 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #F8F6F1;
-      --bg2: #F0EDE6;
+      --bg: #FAF8F3;
+      --bg2: #F2EFE7;
       --surface: #FFFFFF;
       --line: rgba(0, 0, 0, .07);
       --line2: rgba(0, 0, 0, .14);
-      --text: #1A1916;
-      --muted: #6E6C66;
-      --faint: #A39F97;
-      --accent: #6E6648;
-      --accent-rgb: 110 102 72;
-      --accent-dim: #B2A88D;
+      --text: #15130E;
+      --muted: #6B6862;
+      --faint: #A8A49B;
+      --accent: #87724d;
+      --accent-rgb: 61 52 36;
+      --accent-dim: #6E6648;
       --display: 'Outfit', -apple-system, system-ui, serif;
       --mono: 'IBM Plex Mono', ui-monospace, monospace;
       --jp: 'Noto Sans JP', -apple-system, sans-serif;
@@ -49,6 +49,13 @@
     input[type=checkbox],
     input[type=radio],
     input[type=range] { accent-color: var(--accent); }
+
+    .studio-badge {
+      border-radius: 8px;
+      background-color: #ffffffb5;
+    padding: 0.2em 0.5em;
+    border: 1px solid #c4baa05c;
+    }
 
     html,
     body {
@@ -226,6 +233,38 @@
       }
     }
 
+    /* Studio + certifications strip. Lives directly below the hero,
+       carries the brand attribution + the two third-party endorsement
+       badges. Belongs outside the hero per taste-skill 4.7. */
+    .trust-strip {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      align-items: flex-start;
+      padding: 24px 0 0;
+      border-top: 1px solid var(--line);
+      margin-top: -64px;
+    }
+    .trust-strip .trust-attrib {
+      font-size: 12px;
+      letter-spacing: .02em;
+      color: var(--muted);
+      font-family: var(--mono);
+    }
+    .trust-strip .badge-container {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+    .trust-strip .badge-container img {
+      vertical-align: middle;
+      opacity: .9;
+    }
+    @media (max-width:640px) {
+      .trust-strip .badge-container { gap: 12px; }
+    }
+
     /* Reversed CTA tiles: washi-paper fill on dark, sumi-ink on light. */
     .tool {
       --tool-bg: var(--surface);
@@ -309,21 +348,33 @@
       color: var(--tool-ink);
       text-transform: uppercase;
       font-weight: 500;
+      display: inline-flex;
       align-items: center;
       gap: 10px;
+      align-self: flex-end;
     }
 
+    /* Trailing rule + arrow. Line is drawn as a background on the
+       pseudo-element; the arrow sits at the line's end via text content,
+       so the whole "rule → ↗" composition lives in a single ::after. */
     .tool .go::after {
-      content: "";
+      content: "↗";
       display: inline-block;
-      width: 18px;
-      height: 1px;
-      background: currentColor;
-      transition: width .22s ease;
+      padding-left: 24px;
+      background: linear-gradient(currentColor, currentColor) no-repeat;
+      background-size: 18px 1px;
+      background-position: left center;
+      font-family: var(--display);
+      font-size: 14px;
+      line-height: 1;
+      letter-spacing: 0;
+      vertical-align: middle;
+      transition: background-size .22s ease, padding-left .22s ease;
     }
 
     .tool:hover .go::after {
-      width: 30px
+      background-size: 30px 1px;
+      padding-left: 36px;
     }
 
     
@@ -1552,14 +1603,9 @@
         <span data-zh><span style="display:inline-block;">螢幕</span> ✕ <span style="display:inline-block;">印刷</span> ✕ <span style="display:inline-block;">3D列印</span>  <em  style="display:inline-block;"><b>跨媒介色版</b></em></span>
       </h1>
       <p class="lede">
-        <span data-en><b>Mixo Swatch</b> is a color generation tool specifically designed for cross-media print workflows. It generates CMYK values based on defined steps and calculates safe, printable colors using a designated ICC engine (Pillow LittleCMS). The ΔE threshold calculates color accuracy bi-directionally, automatically hiding color swatches that cannot be preserved by the specific profile.</span>
-        <span data-ja><b>Mixo Swatch</b> は、クロスメディアな印刷ワークフローに特化して設計されたカラー生成ツールです。設定されたステップ（刻み幅）に基づいて CMYK 値を生成し、指定された ICC エンジン（Pillow LittleCMS）を介して印刷安全圏のカラーを算出します。ΔE 閾値（しきいち）により色精度を双方向から検証し、該当するプロファイルでは再現（保持）できない色ベタを自動的に非表示にします。</span>
-        <span data-zh><b>Mixo Swatch</b> 是專為跨媒介印刷流程使用的色彩生成工具。依照步距生成 CMYK 值，並透過指定用的 ICC 引擎（Pillow LittleCMS），計算安全的可列印顏色。 ΔE 門檻會雙向計算色準，並自動隱藏該描述檔無法保留的色塊。</span>
-      </p>
-      <p class="lede" style="font-size:14px;color:var(--faint)">
-        <span data-en>Works in browser. No upload, no telemetry, no account.</span>
-        <span data-ja>Webベース。アップロード・計測・アカウント不要。</span>
-        <span data-zh>瀏覽器運行。不上傳、不追蹤、不需註冊。</span>
+        <span data-en><b>Mixo Swatch</b> generates CMYK values through a real ICC engine, hiding any swatch your chosen profile cannot reproduce.</span>
+        <span data-ja><b>Mixo Swatch</b> は ICC エンジンを介して CMYK を生成し、プロファイルで再現できない色を自動で非表示にします。</span>
+        <span data-zh><b>Mixo Swatch</b> 透過真實 ICC 引擎生成 CMYK，自動隱藏指定描述檔無法保留的色塊。</span>
       </p>
       <nav class="tools" aria-label="Choose a tool">
         <a class="tool" href="app/mixo-swatch.html">
@@ -1571,15 +1617,26 @@
             <h3 data-ja>デジタル・紙媒体・3Dプリント専用色票対照表</h3>
           </div>
           </div>
-          <span class="go" style="text-align: end; display: inline-block;">GO↗</span>
+          <span class="go">GO</span>
         </a>
       </nav>
-    <div>
-    <span>brought to you by Mixo Creative Ltd.</span>
-    <div class="badge-container" style="display: flex; text-align: center; align-items: center; justify-content: left;">
-    <span><img width="60" src="app/img/logo3d.png" alt="logo3d" style="vertical-align: middle;" /> <img width="60" src="app/img/logotype.svg" alt="logotype" style="vertical-align: middle;"/><img width="120" src="app/img/cults-cert-gold.png" alt="badges" style="vertical-align: middle;" /> <img width="120" src="app/img/behance-cert-gold.png" alt="badges" style="vertical-align: middle;"/></span><br/>
-    </div>
-    </div>
+    </section>
+
+    <section class="trust-strip" aria-label="Studio + certifications">
+      <span class="trust-attrib">
+        <span data-en>brought to you by Mixo Creative Ltd.</span>
+        <span data-ja>Mixo Creative Ltd. が提供</span>
+        <span data-zh>由 Mixo Creative Ltd. 提供</span>
+      </span>
+      <div class="badge-container">
+        <div class="studio-badge">
+        <img width="60" src="app/img/logo3d.png" alt="Mixo Creative 3D mark" />
+        <img width="50" src="app/img/logotype.svg" alt="Mixo Creative logotype" />
+        </div>
+        <br/>
+        <img width="120" style="filter: saturate(.5);" src="app/img/cults-cert-gold.png" alt="Cults3D Selected Designer" />
+        <img width="120" style="filter: saturate(.5);" src="app/img/behance-cert-gold.png" alt="Adobe Behance featured designer" />
+      </div>
     </section>
 
     <section class="section" id="why">
@@ -1590,7 +1647,7 @@
         <span data-zh>螢幕色準無法保證，靠流程縮小落差。</span>
       </h3>
       <p style="font-size: larger;">
-        <span data-en><b style="font-weight:bolder">[Hot take] </b>No screen perfectly matches printed results. In graphic design, unless expensive spot colors are used, reconciling screen colors with physical proofs is incredibly time-consuming. Furthermore, as designs transition from 2D to 3D, 3D modeling software's lack of physical color management makes controlling color discrepancies on 3D-printed models exceptionally difficult. To eliminate repetitive trial-and-error during production, we developed Mixo Swatch — a predictive color engineering system.</span>
+        <span data-en><b style="font-weight:bolder">[Hot take] </b>No screen perfectly matches printed results. In graphic design, unless expensive spot colors are used, reconciling screen colors with physical proofs is incredibly time-consuming. Furthermore, as designs transition from 2D to 3D, 3D modeling software's lack of physical color management makes controlling color discrepancies on 3D-printed models exceptionally difficult. To eliminate repetitive trial-and-error during production, we developed Mixo Swatch, a predictive color engineering system.</span>
         <span
           data-ja>印刷結果を完全に再現できる画面は存在しません。グラフィック印刷では、高価な特色を使わない限り、画面と印刷サンプルの色合わせに多大な時間がかかります。さらに、平面から立体デザインへの展開において、3Dソフトは実物のカラーマネジメントに対応していないため、3Dプリント模型の色ブレ管理は極めて困難です。製造現場での手探りの試作を省くため、明上堂は色彩予測システム「Mixo Swatch」を自社開発しました。</span>
         <span data-zh><b style="font-weight:bolder">[真相]</b> 沒有任何螢幕能完全精確地呈現印刷結果。在平面或紙品印刷上，沒有使用昂貴專色的品牌設計，設計師與客户溝通時總得面對選色導致校對螢幕色與列印色版相當耗時的問題。在跨足平面與立體設計的過程中，3D建模軟體不支援實體色彩管理，列印成 3D 實體模型往往難以控制色差。為了一定程度省去生產端的反覆盲測，明上堂自主研發了 Mixo Swatch 色彩工程預測系統。</span>
@@ -1819,7 +1876,6 @@
     <div class="rule"></div>
 
     <section class="section" id="mimaki">
-      <div class="eyebrow"><span data-en>3D-print + Mimaki</span><span data-ja>3Dプリントと Mimaki</span><span data-zh>3D 列印與 Mimaki</span></div>
       <h3>
         <span data-en>Why print-first beats "give Mimaki a CMYK number" or "let the RIP decide from RGB".</span>
         <span data-ja>なぜ「印刷ファースト」が、生のCMYK指定や、RGBをRIPに任せる方式より優れているのか。</span>
@@ -1920,8 +1976,6 @@
     <div class="rule"></div>
 
     <section class="section" id="glossary">
-      <div class="eyebrow"><span data-en>terms in plain language</span><span data-ja>用語の平易な解説</span><span
-          data-zh>術語白話解釋</span></div>
       <h3>
         <span data-en>UI Terms to Know.</span>
         <span data-ja>UI用語の注意。</span>
@@ -2077,8 +2131,6 @@
     <div class="rule"></div>
 
     <section class="section" id="panels">
-      <div class="eyebrow"><span data-en>sidebar panels</span><span data-ja>サイドバー操作</span><span data-zh>側欄面板</span>
-      </div>
       <h3>
         <span data-en>UI documentation</span>
         <span data-ja>UI 解説</span>
@@ -2396,8 +2448,6 @@
         <div class="rule"></div>
 
     <section class="section" id="byo">
-      <div class="eyebrow"><span data-en>Zero Guesswork, Zero Lag</span><span data-ja>画面は軽快に、精度はプロ仕様。</span><span
-          data-zh>後端預先演算，零轉換時間</span></div>
       <h3>
         <span data-en>Turns any ICC into a browser-ready lookup table.</span>
         <span data-ja>任意のICCプロファイルからブラウザ用LUTへの変換機能。</span>
@@ -2486,11 +2536,6 @@
     <div class="rule"></div>
 
     <section class="section" id="studio">
-      <div class="eyebrow">
-        <span data-en>the studio behind it</span>
-        <span data-ja>このツールを作っているスタジオ</span>
-        <span data-zh>背後的設計工作室</span>
-      </div>
       <h3>
         <span data-en>Create. Make. Innovate.</span>
         <span data-ja>平面から立体まで、あらゆる領域の視覚的美を構築する</span>
@@ -2549,11 +2594,6 @@
     <div class="rule"></div>
 
     <section class="section">
-      <div class="eyebrow">
-        <span data-en>a quiet promise</span>
-        <span data-ja>静かな約束</span>
-        <span data-zh>低聲承諾</span>
-      </div>
       <h3>
         <span data-en>Local only. No accounts. No tracking.</span>
         <span data-ja>すべてローカル動作。アカウント不要。トラッキングなし。</span>

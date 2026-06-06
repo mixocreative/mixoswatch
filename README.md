@@ -10,7 +10,7 @@
 <div>
 Cross-media color swatches for **2D commercial print**, **screen**, and **3D color printing** (Mimaki 3DUJ, Stratasys J55, Cura material libraries). Every swatch routed through a real CMYK ICC profile, not naive subtractive math.
 
-In graphic design, unless expensive spot colors are used, reconciling screen colors with physical proofs is incredibly time-consuming. As designs transition from 2D to 3D, the absence of physical color management in 3D modeling software makes controlling color discrepancies on 3D-printed models exceptionally difficult. To reduce costly production guesswork, we built the **Mixo Swatch Color Engineering Prediction System** — a professional "color translator" engineered to bridge digital design and physical output. Meaningful creativity deserves disciplined technical precision.
+In graphic design, unless expensive spot colors are used, reconciling screen colors with physical proofs is incredibly time-consuming. As designs transition from 2D to 3D, the absence of physical color management in 3D modeling software makes controlling color discrepancies on 3D-printed models exceptionally difficult. To reduce costly production guesswork, we built the **Mixo Swatch Color Engineering Prediction System**, a professional "color translator" engineered to bridge digital design and physical output. Meaningful creativity deserves disciplined technical precision.
 
 [真相] 沒有任何螢幕能完全精確地呈現印刷結果。在平面或紙品印刷上，沒有使用昂貴專色的品牌設計，設計師與客户溝通時總得面對選色導致校對螢幕色與列印色版相當耗時的問題。在跨足平面與立體設計的過程中，3D建模軟體不支援實體色彩管理，列印成 3D 實體模型往往難以控制色差。為了一定程度省去生產端的反覆盲測，明上堂自主研發了 Mixo Swatch 色彩工程預測系統。
 
@@ -26,11 +26,11 @@ In graphic design, unless expensive spot colors are used, reconciling screen col
 
 ## About the studio
 
-> **Create. Make. Innovate.** — _Designing joy in every layer: custom toys and 3D-printed art that spark imagination._
+> **Create. Make. Innovate.** _Designing joy in every layer: custom toys and 3D-printed art that spark imagination._
 <div style="font-size:small;">
-Mixo Creative is a Taiwan-based professional design studio with an international outlook, specializing in brand-identity geometry, 3D form design, and print production. Founded by **Adrian Li** — lecturer in the Department of Cultural and Creative Arts at The Education University of Hong Kong, and First-Class Honours Master's graduate in Design Management from the Birmingham Institute of Art and Design, UK. The studio's works have been officially recognized by Adobe Behance and featured by Cults3D in France.
+Mixo Creative is a Taiwan-based professional design studio with an international outlook, specializing in brand-identity geometry, 3D form design, and print production. Founded by **Adrian Li**, lecturer in the Department of Cultural and Creative Arts at The Education University of Hong Kong, and First-Class Honours Master's graduate in Design Management from the Birmingham Institute of Art and Design, UK. The studio's works have been officially recognized by Adobe Behance and featured by Cults3D in France.
 
-Whether your company is planning a new brand identity system or exploring ambitious frontiers in physical 3D art, we look forward to partnering with you — transforming ideas into reality with confidence, clarity, and technical reliability. We sincerely look forward to hearing about your next project.
+Whether your company is planning a new brand identity system or exploring ambitious frontiers in physical 3D art, we look forward to partnering with you, transforming ideas into reality with confidence, clarity, and technical reliability. We sincerely look forward to hearing about your next project.
 
 明上堂 Mixo Creative 是一家扎根於台灣、兼具國際視野的專業設計公司。香港教育大學文化及創新設計系講師、英國伯明罕藝術設計學院設計管理學一級榮譽碩士 Adrian Li 的工作室。明上堂歷年作品榮獲 Adobe Behance 官方平台認證、法國 Cults3D 精選推薦。深耕品牌識別幾何學、 3D 造型設計與印刷。
 

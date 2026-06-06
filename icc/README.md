@@ -1,4 +1,4 @@
-# icc/ — drop your CMYK ICC profiles here
+# icc/ - drop your CMYK ICC profiles here
 
 This folder is `.gitignore`d. ICC profile binaries are not redistributable
 under Adobe / ECI / Fogra / Mimaki licenses, so the repository does not
@@ -19,9 +19,9 @@ The build step will:
 
 ## Recommended starter profiles (all free)
 
-- `CoatedFOGRA39.icc` — Adobe ICC Profiles bundle
-- `ISOcoated_v2_eci.icc` — eci.org
-- `JapanColor2001Coated.icc` — Adobe ICC Profiles bundle
-- `USWebCoatedSWOP.icc` — Adobe ICC Profiles bundle
+- `CoatedFOGRA39.icc` - Adobe ICC Profiles bundle
+- `ISOcoated_v2_eci.icc` - eci.org
+- `JapanColor2001Coated.icc` - Adobe ICC Profiles bundle
+- `USWebCoatedSWOP.icc` - Adobe ICC Profiles bundle
 
 See the top-level `README.md` for direct links.
