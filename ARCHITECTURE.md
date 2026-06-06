@@ -113,10 +113,10 @@ Two rendering intents matter for us:
 - **Relative colorimetric**: out-of-gamut colors are clipped to the gamut boundary. Used for proofing, accurate color match. This is our default.
 - **Perceptual**: entire gamut compressed proportionally. Used for photography.
 
-GCR is the rule for how grayscale gets built. Pure-K means K-ink only.
-Heavy GCR means K dominates the neutral axis. Light GCR means CMY mixes
-form the neutrals. Different profiles take different stances. That is why
-our two greyscale strips (see §5.3) look different.
+GCR is the rule for how grayscale gets built. Heavy GCR means K dominates
+the neutral axis. Light GCR means CMY mixes form the neutrals. Different
+profiles take different stances. That is why our ICC neutral ramp diverges
+from the Pure RGB reference baseline (see §5.3).
 
 ### 2.4 Total Area Coverage (TAC)
 
@@ -376,9 +376,10 @@ as Coated.
 
 ## 5. Greyscale rendering (in-browser)
 
-The Mixo Swatch renders two greyscale strips below the main grid using
-the live LUTs. No precomputed library is needed; both strips are derived
-at runtime from the active profile's forward and reverse LUTs.
+The Mixo Swatch renders two greyscale strips below the main grid: an
+ICC-routed neutral ramp and a Pure RGB reference ramp. The first uses
+the live LUTs; the second is profile-independent. Both are derived at
+runtime - no precomputed library.
 
 ### 5.1 Neutral ramp (ICC-routed)
 
@@ -386,18 +387,21 @@ For pct = 0, 10, ..., 100, target gray = sRGB(255-pct%, ...). Reverse-LUT
 to CMYK, forward-LUT back to RGB. This shows what the press actually
 hits when asked to render gray via its GCR rules.
 
-### 5.2 Pure K-only sweep
+### 5.2 Pure RGB reference ramp
 
-For K = 0, 10, ..., 100, look up CMYK(0, 0, 0, K) via the forward LUT.
-This shows K-channel-only behavior.
+For pct = 0, 10, ..., 100, render `rgb(v, v, v)` where `v = 255 - 2.55*pct`.
+No profile routing. pct=100 is exact `#000000`, pct=0 is exact `#FFFFFF`.
+This is the design-intent baseline that every monitor shows identically,
+regardless of ICC profile. Profile-independent by construction.
 
-### 5.3 Why two strips
+### 5.3 Why these two strips
 
-The two visibly diverge. Most profiles' neutral path mixes some CMY,
-their pure-K path drifts warm or cool. This divergence is the reason
-print-color work should look at both: the choice of which gray model to
-use influences how shadows and dark tones print. The same divergence
-appears in 3D-print profiles such as Mimaki 3DUJ.
+The ICC-routed neutral (§5.1) is what the press actually delivers when
+asked for a grey. The Pure RGB reference (§5.2) is what the designer
+intended. Comparing them shows how far the press drifts from the
+design-intent neutral - usually warm or cool, sometimes muddy. This
+divergence is most pronounced on 3D-print profiles (Mimaki 3DUJ) and
+uncoated stocks, and is the basis for the 3D-print preset's dE caps.
 
 ---
 
@@ -742,7 +746,10 @@ one before adding swatches. Deleting the last palette leaves
    - `matchNearest(s)`: find closest entry in each active library;
      populates `s.matches[lib.id]` for every lib in `CORPORA.libraries`
    - Dedupe by `C|M|Y|K` (defensive; lattice shouldn't dup)
-   - Split into `MAIN_DATA` (non-K-only) + `GS_DATA` (K-only)
+   - Split into `MAIN_DATA` (non-K-only) + `GS_DATA` (K-only). `GS_DATA`
+     is retained for back-compat but the on-screen second strip now
+     renders the Pure RGB reference ramp (computed inline, no lattice
+     source). Master exports append RGB ref + ICC neutral ramp.
    - `_markClosest(lib.id)` for each active library (TAC/K/index tiebreak)
    - `render()`
 
@@ -766,7 +773,7 @@ Shared cell-build helper `_makeSwatchCell(sw, ctx)` is used by:
 - Main virtualized renderer
 - Hue x Light map renderer (so info labels also appear there)
 
-### 7.3 Two greyscale strips
+### 7.3 ICC neutral + Pure RGB reference strips
 
 Below the main grid. See §5 for the renderer details.
 
@@ -798,7 +805,7 @@ triangle (`.chev`) was removed because the affordance was too subtle.
 
 **Hue x Light lives inside the main swatch grid area.** The Hue x Light
 sort option renders into `#swatchGrid` (full grid-area width). When the
-sort is active, `gsWrap` (the two greyscale strips block) is hidden so
+sort is active, `gsWrap` (the ICC neutral + Pure RGB reference strips block) is hidden so
 the bucket map gets the entire vertical real estate. The Palettes panel
 above the grid is left in whatever state the user last set it - there
 is no auto-open coupling between Hue x Light and the Palettes panel.
@@ -1078,13 +1085,18 @@ Originally defaulted to Tier 1 (Brand, K <= 25) as an anti-AI-purple
 exploration. Now: filter is a user choice, defaults open, narrow via UI
 pills if you want a low-K subset.
 
-### 8.5 Why two greyscale strips
+### 8.5 Why these ICC neutral + Pure RGB reference strips
 
-A single strip labelled "K-only" was the wrong abstraction. Real CMYK
-presses can hit the neutral axis two completely different ways
-(GCR-mixed CMY+K vs literal K-only). Both are valid; their behavior
-diverges visibly; users designing for 3D-print specifically need both
-for reference.
+Earlier iterations showed an ICC-neutral strip paired with a literal
+K-only sweep. The K-only data was duplicated by the main lattice
+(CMY=0 column), and "K-only vs GCR-mix" only tells you about press
+mechanics - not whether the press is meeting design intent.
+
+The current pairing is ICC-routed neutral (what the press delivers)
+vs Pure RGB reference (what the designer specified). This is a
+designer-facing comparison: the gap between rows is the drift the
+designer needs to plan around. The K-only sweep can still be obtained
+from the main grid by filtering CMY=0.
 
 ### 8.6 Why responsive cell sizing in Hue x Light
 
@@ -1209,8 +1221,8 @@ The HTML is self-contained, no build step. Compose:
 4. **Name matcher** (§6): `matchNearest`, `_markClosest` (dynamic lib IDs)
 5. **Filters + sort** (§7.5), including ΔE max and the Hue x Light sort
 6. **Virtualized grid + cell builder** (§7.2)
-7. **Two greyscale strips** (§5): neutral via reverse+forward
-   round-trip; pure-K via forward only
+7. **ICC neutral + Pure RGB reference strips** (§5): neutral via
+   reverse+forward round-trip; RGB ref computed inline (no profile)
 8. **Hue x Light sort** (§7.4) rendered inline, responsive cell sizing (§8.6)
 9. **Palette CRUD + collapsable panel** (§7.6) with localStorage persistence
 10. **Exports** (§7.7): CSV, PNG (labelled + pure), TIFF (labelled + pure, CMYK + optional ICC embed), ZIP (per-swatch png/ + tiff/ + manifest), ASE (CMYK + RGB variants), GPL
@@ -1252,7 +1264,7 @@ Directory Privacy (`.htaccess` / `.htpasswd`). No HTML changes needed.
 | ASE rejected by Photoshop | UTF-16BE name length wrong | Ensure char count INCLUDES null terminator |
 | Hue x Light overflows | Fixed `cs px` columns | Compute `fitCs = floor((avail - gaps)/18)`, use min |
 | `file://` blocks fetch | Wrong launch path | Serve via `python -m http.server 8765` |
-| Console: "palSet already declared" | Same `const` twice in `renderGS` | Reuse the outer declaration; don't redeclare in the pure-K block |
+| Console: "palSet already declared" | Same `const` twice in `renderGS` | Reuse the outer declaration; don't redeclare in the second strip block |
 
 ---
 

@@ -1244,9 +1244,9 @@ html[lang^="zh"] .intro-btn .intro-zh{display:inline}
           Each cell starts from a target sRGB grey (e.g. 50&#37; grey), gets reverse-routed to CMYK through the active profile (the press's <b>GCR / UCR rules pick the CMY + K mix</b>), then forward-routed back to screen sRGB. This is the grey the RIP gives you when you ask the press for a neutral.
         </div>
         <div class="gs-strip" id="gsStripNeutral"></div>
-        <div class="gs-divider mt-10" data-i18n="gs.purek_title" title="Greys built with K ink only - CMYK(0,0,0,K) at K = 0, 10, ..., 100. Shows what the press does without any CMY mixing. Usually drifts warm or cool vs the ICC-neutral row above.">Pure K-only sweep · CMYK(0, 0, 0, K = 0&#8594;100)</div>
+        <div class="gs-divider mt-10" data-i18n="gs.purek_title" title="Straight sRGB grey ramp - rgb(255-2.55*K, ...). No profile routing, K=100 is true #000. The design-intent baseline; every monitor shows the same neutral.">Pure RGB reference · rgb(255-2.55*K, K = 0&#8594;100)</div>
         <div class="gs-sub" data-i18n="gs.purek_sub">
-          Each cell is <b>CMYK(0, 0, 0, K)</b> with no cyan, magenta, or yellow added. Forward-routed through the active profile, this shows the K-ink-alone signature: most presses (especially 3DUJ resin + uncoated stock) drift warm or cool, because K ink has its own hue and there's no CMY mix balancing it. Compare the two rows to see how far the K-only path is from the GCR-routed neutral above.
+          Each cell is <b>plain sRGB grey</b>: rgb(v, v, v) where v = 255 - 2.55*K. <b>No profile routing</b> - K=100 is exact <b>#000</b>, K=0 is exact <b>#FFF</b>. This is the design-intent baseline (what your editor shows when you type "50% grey"). Compare against the ICC-neutral row above to see how far the press drifts from ideal black.
         </div>
         <div class="gs-strip" id="gsStripPureK"></div>
       </div>
@@ -3292,19 +3292,22 @@ function renderGS() {
   const cs    = Math.max(curCell, 28); // never smaller than 28px in the strip
   const step  = curStep;
 
-  // white (K=0) + K-only blacks
-  const white = MAIN_DATA.find(s=>s.C===0&&s.M===0&&s.Y===0&&s.K===0);
-  const gsArr = GS_DATA.filter(s=>s.K%step===0);
-  const all   = white ? [white,...gsArr] : gsArr;
-
   const fzK    = Math.max(6, Math.round(cs*0.13));
   const fzHex  = Math.max(5, Math.round(cs*0.10));
   const fzBadg = Math.max(5, Math.round(cs*0.10));
   const showH  = cs >= 32;
-
-  const frag = document.createDocumentFragment();
   const palSet = _activeSet();
-  all.forEach(sw => {
+
+  // ── Pure RGB reference ramp: linear sRGB grey, NO profile routing. ────────
+  // For each pct in 0..100 step curStep, render rgb(v,v,v) where
+  // v = round(255 * (1 - pct/100)). pct=100 -> #000 (true black), pct=0 ->
+  // #FFF (true white). This is the design-intent baseline: every monitor
+  // shows the same neutral, regardless of ICC profile. Use it to gauge how
+  // far the ICC-routed neutral ramp (top strip) drifts from ideal.
+  stripK.innerHTML = '';
+  const fragR = document.createDocumentFragment();
+  for (let pct = 0; pct <= 100; pct += step) {
+    const sw = _pureRGBRefSwatch(pct);
     const cell = document.createElement('div');
     cell.className = 'gs-cell swatch-cell' + (palSet.has(_swKey(sw)) ? ' in-palette' : '');
     cell.style.cssText = `background:${sw.hex};width:${cs}px;contain-intrinsic-size:${cs}px ${cs}px`;
@@ -3312,7 +3315,7 @@ function renderGS() {
     const k = document.createElement('div');
     k.className = 'cell-cmyk';
     k.style.cssText = `color:${sw.text_color};font-size:${fzK}px;top:2px`;
-    k.textContent = 'K' + sw.K;
+    k.textContent = `R${pct}`;
     cell.appendChild(k);
 
     if (showH) {
@@ -3334,12 +3337,9 @@ function renderGS() {
       if (selectMode) toggleSwatchInPalette(sw);
       else openDetail(sw);
     });
-    frag.appendChild(cell);
-  });
-
-  // 'all' currently holds the pure-K lattice sweep (CMYK(0,0,0,K))
-  stripK.innerHTML = '';
-  stripK.appendChild(frag);
+    fragR.appendChild(cell);
+  }
+  stripK.appendChild(fragR);
   _fitCellTexts(stripK);
 
   // ── Neutral ramp: RGB greyscale round-trip through the active profile.
@@ -3867,8 +3867,78 @@ function setLabMode(mode) {
 }
 
 // ── CSV export ───────────────────────────────────────────────────────────────
+// ── Master-export data assembly ─────────────────────────────────────────────
+// All top-level "filtered" exports (CSV / PNG / TIFF / ZIP) call this so the
+// download mirrors what's visible on screen: filtered main grid + Pure-K
+// column + ICC Neutral ramp. The two grey strips are ALWAYS appended
+// regardless of active filter so the master swatch set stays complete.
+function _pureRGBRefSwatch(pct) {
+  const v = Math.round(255 * (1 - pct/100));
+  const hex = '#' + [v,v,v].map(x=>x.toString(16).padStart(2,'0').toUpperCase()).join('');
+  const Lw = luminance(v,v,v);
+  const cB = contrast(Lw,0), cW = contrast(Lw,1);
+  const tc = cB >= cW ? '#000000' : '#FFFFFF';
+  const cr = +Math.max(cB,cW).toFixed(2);
+  return {
+    C:0, M:0, Y:0, K:pct,
+    R:v, G:v, B:v, hex, text_color:tc, contrast_ratio:cr,
+    wcag_aa: cr>=4.5, wcag_aaa: cr>=7.0,
+    tac: pct,
+    L_star: 100*(1 - pct/100), a_star:0, b_star:0,
+    luminance:+Lw.toFixed(5),
+    rgb_ref_pct: pct,
+    delta_e_print: null,
+    matches: {},
+    k_tier: 0,
+    k_tier_name: 'rgb-ref',
+  };
+}
+function _pureRGBRefSwatches(step) {
+  const out = [];
+  for (let pct = 0; pct <= 100; pct += step) out.push(_pureRGBRefSwatch(pct));
+  return out;
+}
+function _neutralRampSwatches(step) {
+  if (!ACTIVE_PROFILE) return [];
+  const fwd = LUT_CACHE.get(ACTIVE_PROFILE.lut);
+  const rev = ACTIVE_RLUT;
+  if (!fwd || !rev) return [];
+  const out = [];
+  for (let pct = 0; pct <= 100; pct += step) {
+    const g = Math.round(255 * (1 - pct/100));
+    const [c2,m2,y2,k2] = rlutLookup(rev, g, g, g);
+    const [R,G,B] = lutLookup(fwd, c2, m2, y2, k2);
+    const hex = '#' + [R,G,B].map(v=>v.toString(16).padStart(2,'0').toUpperCase()).join('');
+    const Lw = luminance(R,G,B);
+    const cB = contrast(Lw,0), cW = contrast(Lw,1);
+    const tc = cB >= cW ? '#000000' : '#FFFFFF';
+    const cr = +Math.max(cB,cW).toFixed(2);
+    out.push({
+      C:Math.round(c2), M:Math.round(m2), Y:Math.round(y2), K:Math.round(k2),
+      R, G, B, hex, text_color:tc, contrast_ratio:cr,
+      wcag_aa: cr>=4.5, wcag_aaa: cr>=7.0,
+      tac: Math.round(c2+m2+y2+k2),
+      L_star: 100*(1 - pct/100), a_star:0, b_star:0,
+      luminance:+Lw.toFixed(5),
+      neutral_pct: pct,
+      delta_e_print: null,
+      matches: {},
+      k_tier: 0,
+      k_tier_name: 'neutral',
+    });
+  }
+  return out;
+}
+function _masterExportData() {
+  const main = sorted(filtered());
+  const step = curStep;
+  const rgbRef = _pureRGBRefSwatches(step);
+  const neutral = _neutralRampSwatches(step);
+  return [...main, ...rgbRef, ...neutral];
+}
+
 function exportCSV() {
-  const data = sorted(filtered());
+  const data = _masterExportData();
   const fixed = ['C','M','Y','K','tac','k_tier','k_tier_name','R','G','B','hex',
     'luminance','text_color','contrast_ratio','wcag_aa','wcag_aaa',
     'L_star','a_star','b_star'];
@@ -3922,7 +3992,7 @@ function _renderSwatchNames(s) {
 
 // ── PNG export - square grid, no gaps ────────────────────────────────────────
 function exportPNG() {
-  const data = sorted(filtered());
+  const data = _masterExportData();
   if (!data.length) { alert('No swatches to export.'); return; }
   _renderSwatchPNG(data, `cmyk_swatches_${data.length}_step${curStep}_${curCell}px.png`,
                    { title: 'Mixo Swatch - filtered view' });
@@ -3933,7 +4003,7 @@ function exportPNG() {
 // Cell size = floor(4096 / max(cols, rows)); any remainder leaves whitespace
 // at the bottom / right of the square (background filled white).
 function exportFilteredPurePNG() {
-  const data = sorted(filtered());
+  const data = _masterExportData();
   if (!data.length) { alert('No swatches to export.'); return; }
   _renderPalettePurePNG(
     data,
@@ -3945,7 +4015,7 @@ function exportFilteredPurePNG() {
 // Pure-color filtered export as CMYK TIFF. Lossless - every output pixel
 // carries the swatch's stored s.C/M/Y/K (no sRGB round-trip). 4096^2.
 async function exportFilteredPureTIFF() {
-  const data = sorted(filtered());
+  const data = _masterExportData();
   if (!data.length) { alert('No swatches to export.'); return; }
   await _renderPaletteCMYKTIFFPure(
     data,
@@ -3959,7 +4029,7 @@ async function exportFilteredPureTIFF() {
 // through the reverse LUT to CMYK. Pure white short-circuits to (0,0,0,0)
 // and pure black to (0,0,0,100) so the title band stays clean ink.
 async function exportFilteredTIFF() {
-  const data = sorted(filtered());
+  const data = _masterExportData();
   if (!data.length) { alert('No swatches to export.'); return; }
   await _renderSwatchTIFF(
     data,
@@ -5024,7 +5094,7 @@ async function _buildPaletteZip(palette, swatches) {
 
 // Top-level: export all currently-filtered swatches as a ZIP.
 async function exportFilteredSwatchZIP() {
-  const swatches = typeof filtered === 'function' ? filtered() : [];
+  const swatches = _masterExportData();
   if (!swatches.length) { alert('No swatches in current filter.'); return; }
   if (swatches.length > 5000) {
     const mb = (swatches.length * 0.6 / 1024).toFixed(0);
@@ -5269,8 +5339,8 @@ const I18N = {
     'pm.download':   'Download',
     'gs.neutral_title': 'Neutral ramp (ICC) · how the press actually hits a grey',
     'gs.neutral_sub':   "Each cell starts from a target sRGB grey (e.g. 50% grey), gets reverse-routed to CMYK through the active profile (the press's <b>GCR / UCR rules pick the CMY + K mix</b>), then forward-routed back to screen sRGB. This is the grey the RIP gives you when you ask the press for a neutral.",
-    'gs.purek_title':   'Pure K-only sweep · CMYK(0, 0, 0, K = 0→100)',
-    'gs.purek_sub':     "Each cell is <b>CMYK(0, 0, 0, K)</b> with no cyan, magenta, or yellow added. Forward-routed through the active profile, this shows the K-ink-alone signature: most presses (especially 3DUJ resin + uncoated stock) drift warm or cool because K ink has its own hue and there's no CMY mix balancing it. Compare the two rows to see how far the K-only path is from the GCR-routed neutral above.",
+    'gs.purek_title':   'Pure RGB reference · rgb(255-2.55*K, K = 0→100)',
+    'gs.purek_sub':     'Each cell is <b>plain sRGB grey</b>: rgb(v, v, v) where v = 255 - 2.55*K. <b>No profile routing</b> - K=100 is exact <b>#000</b>, K=0 is exact <b>#FFF</b>. This is the design-intent baseline (what your editor shows when you type "50% grey"). Compare against the ICC-neutral row above to see how far the press drifts from ideal black.',
   },
   ja: {
     'badge.mode_d50': 'モード: 印刷 (D50)',
@@ -5376,8 +5446,8 @@ const I18N = {
     'pm.download':   'ダウンロード',
     'gs.neutral_title': 'ニュートラルランプ (ICC) · プリンタが実際にグレーを再現する経路',
     'gs.neutral_sub':   '各セルは目標sRGBグレー（例: 50%グレー）から出発し、アクティブプロファイルで逆方向ルーティングしてCMYKを得る（<b>プリンタのGCR / UCRルールがCMY + Kの配合を決める</b>）。そのあと順方向で画面sRGBに戻す。RIPに「ニュートラル」を頼んだときに実際に得られるグレー。',
-    'gs.purek_title':   '純K（黒）のみのスイープ · CMYK(0, 0, 0, K = 0→100)',
-    'gs.purek_sub':     '各セルは <b>CMYK(0, 0, 0, K)</b>。シアン・マゼンタ・イエローは加えない。アクティブプロファイルで順方向ルーティングし、K単独のインク特性を可視化する。多くのプリンタ（特に3DUJレジンや非塗工紙）はK単独だと暖色寄りまたは寒色寄りに振れる。Kインク自体に色相があり、CMYでバランスを取らないため。上のGCRニュートラルとどれだけ離れているかを比較できる。',
+    'gs.purek_title':   '純粋RGB基準 · rgb(255-2.55*K, K = 0→100)',
+    'gs.purek_sub':     '各セルは <b>純粋なsRGBグレー</b>：rgb(v, v, v)（v = 255 - 2.55*K）。<b>プロファイル変換なし</b> - K=100は正確に <b>#000</b>、K=0は正確に <b>#FFF</b>。デザイン基準（エディタで「50%グレー」と入力したときに表示される値）。上のICCニュートラルランプと比較して、プリンタが理想のブラックからどれだけ離れているかを確認できる。',
   },
   zh: {
     'badge.mode_d50': '模式：印刷 (D50)',
@@ -5483,8 +5553,8 @@ const I18N = {
     'pm.download':   '下載',
     'gs.neutral_title': '中性灰階 (ICC) · 印刷機實際走出灰色的路徑',
     'gs.neutral_sub':   '每個色塊都從目標 sRGB 灰（例如 50% 灰）出發，先反向經由目前的描述檔路由成 CMYK（<b>由印刷機的 GCR / UCR 規則決定 CMY 與 K 的混合比例</b>），再正向回到螢幕 sRGB。這就是你叫 RIP「給我中性灰」時實際拿到的灰。',
-    'gs.purek_title':   '純 K（黑）掃描 · CMYK(0, 0, 0, K = 0→100)',
-    'gs.purek_sub':     '每個色塊是 <b>CMYK(0, 0, 0, K)</b>，完全不加青、洋紅、黃。正向經由目前的描述檔路由，呈現純 K 墨單獨的特性。多數印刷機（特別是 3DUJ 樹脂與非塗佈紙）的純 K 灰會偏暖或偏冷，因為 K 墨本身帶色相，沒有 CMY 來平衡。對比上方 GCR 路徑的中性灰，可以看出兩條路徑差多遠。',
+    'gs.purek_title':   '純 RGB 基準 · rgb(255-2.55*K, K = 0→100)',
+    'gs.purek_sub':     '每個色塊是 <b>純 sRGB 灰</b>：rgb(v, v, v)（v = 255 - 2.55*K）。<b>不經任何描述檔轉換</b> - K=100 為正中 <b>#000</b>，K=0 為正中 <b>#FFF</b>。這是設計端的理想基準（在編輯器輸入「50% 灰」時看到的顏色）。對比上方 ICC 中性灰，可以看出印刷端離理想黑色有多遠。',
   }
 };
 let UI_LANG = 'en';
