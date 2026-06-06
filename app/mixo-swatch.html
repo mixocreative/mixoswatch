@@ -4451,118 +4451,120 @@ function pickHLBucket(s) {
 }
 
 function renderHueLightMap(target) {
-  // target defaults to the main swatch grid so Hue x Light behaves as
-  // an alternate sort/layout INSIDE the same scroll area as the regular
-  // grid - not as a takeover of the palettes panel.
+  // Hue x Light renders inside the main #swatchGrid so it shares the same
+  // scroll area, sizing slider, and cell builder as the regular grid - only
+  // the arrangement logic differs (fixed 10x18 bucket map instead of a
+  // wrapping lattice). 180 cells max -> no virtualization needed.
   const wrap = target || document.getElementById('swatchGrid');
-  wrap.innerHTML = '';
-  // The main swatch grid container carries inline styles from the
-  // virtualized renderer (display:block, height, width, margin). Wipe
-  // those AND override the .swatch-grid class padding/justify so the
-  // hl-grid below can span the full grid-area width responsively.
-  wrap.style.cssText =
-    'display:block;width:100%;max-width:100%;margin:0;padding:0;'+
-    'justify-content:stretch;';
   const data = sorted(filtered());
-  // Pick best swatch per (hue,light) cell - lowest delta_e_print wins ties
-  const grid = new Map();
+
+  // Pick best swatch per (hue,light) bucket - lowest delta_e_print wins ties
+  const buckets = new Map();
   for (const s of data) {
     const [hb, lb] = pickHLBucket(s);
     const k = `${hb}|${lb}`;
-    const cur = grid.get(k);
-    if (!cur || (s.delta_e_print ?? Infinity) < (cur.delta_e_print ?? Infinity)) grid.set(k, s);
-  }
-  // ── Rotated 90° permanently ──────────────────────────────────────────
-  // The bucket grid is rotated so the SHORT axis (10 lightness buckets)
-  // runs horizontally across the page and the LONG axis (18 hue buckets)
-  // runs vertically. This makes every cell wider on typical viewports
-  // (avail / 10 vs avail / 18 → cells ~80% larger) and keeps the layout
-  // fully responsive via fr columns + aspect-ratio cells. Light reads
-  // dark → light left → right; hue reads top → bottom.
-  const wrapEl = document.getElementById('gridScroll');
-  // hl-grid inner padding (px each side). Narrow viewports get less.
-  const innerPad = (window.innerWidth < 768) ? 4 : 10;
-  const avail  = (wrapEl?.clientWidth || window.innerWidth) - innerPad * 2;
-  const reqGap = Math.max(2, Math.round(curCell * 0.05));
-  const ROTATE = true;
-  const cols   = HL_LIGHT_BINS;   // 10 - lightness across
-  const rows   = HL_HUE_BINS;     // 18 - hue down
-  // Mirror the fr distribution to derive per-cell font sizes at build
-  // time. The browser does the actual sizing via fr; this number is only
-  // for _makeSwatchCell's font-size + visibility thresholds.
-  const effCs = Math.max(16, Math.floor((avail - reqGap * (cols - 1)) / cols));
-  const cs    = effCs;
-  const gap   = Math.max(2, Math.round(effCs * 0.05));
-
-  const container = document.createElement('div');
-  container.className = 'hl-grid';
-  container.style.cssText =
-    `display:grid;width:100%;box-sizing:border-box;`+
-    `grid-template-columns:repeat(${cols}, minmax(0, 1fr));`+
-    `gap:${gap}px;padding:${innerPad}px;`;
-
-  // Header row: orientation-aware legend
-  const head = document.createElement('div');
-  head.style.cssText = `grid-column:1/-1;font-family:var(--font-mono);font-size:11px;`+
-    `color:var(--muted);margin-bottom:4px;display:flex;justify-content:space-between`;
-  head.innerHTML = ROTATE
-    ? `<span>LIGHTNESS ➜</span><span>HUE ⬇</span>`
-    : `<span>HUE ➜</span><span>LIGHTNESS ⬇</span>`;
-  container.appendChild(head);
-
-  // Walk grid cells in row-major order matching the chosen orientation.
-  //   Wide: row = light (top = light, LB-1 → 0), col = hue (0 → HB-1).
-  //   Tall: row = hue   (0 → HB-1, top = red-ish),
-  //         col = light (left = dark, 0 → LB-1).
-  const palSet = _activeSet();
-  for (let r = 0; r < rows; r++) {
-    for (let c = 0; c < cols; c++) {
-      const hb = ROTATE ? r : c;
-      const lb = ROTATE ? c : (HL_LIGHT_BINS - 1 - r);
-      const cell = document.createElement('div');
-      const k = `${hb}|${lb}`;
-      const s = grid.get(k);
-      if (!s) {
-        cell.style.cssText = `aspect-ratio:1/1;border:1px dashed var(--border2);`+
-          `border-radius:4px;opacity:0.4`;
-        cell.title = `empty bucket (hue ${hb} × light ${lb})`;
-        container.appendChild(cell);
-        continue;
-      }
-      // Reuse the main cell builder so CMYK + hex + names render at large cs
-      const ctx = {
-        cs,
-        fzCmyk: Math.max(5,  Math.round(cs * 0.09)),
-        fzHex:  Math.max(5,  Math.round(cs * 0.10)),
-        fzJpn:  Math.max(7,  Math.round(cs * 0.18)),
-        fzRoma: Math.max(5,  Math.round(cs * 0.09)),
-        fzHtml: Math.max(4,  Math.round(cs * 0.09)),
-        fzBadg: Math.max(5,  Math.round(cs * 0.10)),
-        fzCR:   Math.max(4,  Math.round(cs * 0.09)),
-        showHex:  cs >= 36,
-        showJpn:  cs >= 52,
-        showHtml: cs >= 70,
-        showCR:   cs >= 60,
-        showBadge: cs >= 22,
-        showLabel: cs >= 22,
-        topCmyk: 2,
-        get topHex(){ return this.topCmyk + this.fzCmyk + 2; },
-        get topJpn(){ return this.topHex  + (this.showHex  ? this.fzHex  + 2 : 0); },
-        get topRoma(){ return this.topJpn + (this.showJpn  ? this.fzJpn  + 2 : 0); },
-        get topHtml(){ return this.topRoma+ (this.showJpn  ? this.fzRoma + 2 : 0); },
-        palSet,
-      };
-      const built = _makeSwatchCell(s, ctx);
-      // fr column owns width; aspect-ratio owns height. Drop the
-      // fixed-width style _makeSwatchCell put on the element.
-      built.style.width = 'auto';
-      built.style.aspectRatio = '1 / 1';
-      built.title = `${s.hex} · ΔE ${s.delta_e_print?.toFixed(2) ?? '-'}`;
-      container.appendChild(built);
+    const cur = buckets.get(k);
+    if (!cur || (s.delta_e_print ?? Infinity) < (cur.delta_e_print ?? Infinity)) {
+      buckets.set(k, s);
     }
   }
-  wrap.appendChild(container);
-  _fitCellTexts(container);
+
+  // Axes: lightness across (10, dark -> light), hue down (18).
+  const cols = HL_LIGHT_BINS;
+  const rows = HL_HUE_BINS;
+
+  // Cell size = slider value, but capped so all 10 columns fit horizontally
+  // (#gridScroll is overflow-x:hidden). Responsive: shrinks on narrow
+  // viewports, grows back when window widens. Floor at 16px to keep cells
+  // visible even on very small screens.
+  const scrollEl = document.getElementById('gridScroll');
+  const avail = (scrollEl?.clientWidth || window.innerWidth) - 24;
+  const gapAtSlider = Math.max(2, Math.round(curCell * 0.05));
+  const maxCs = Math.floor((avail - gapAtSlider * (cols - 1)) / cols);
+  const cs  = Math.max(16, Math.min(curCell, maxCs));
+  const gap = Math.max(2, Math.round(cs * 0.05));
+  const rowH = cs + gap;
+  const gridContentW = cols * cs + Math.max(0, cols - 1) * gap;
+  const headH = 20;
+  const totalH = headH + rows * rowH;
+
+  // Reset container to absolute-positioned layout, same shape as the
+  // regular grid path uses (so resize/scroll/cell-size all behave the same).
+  wrap.style.display = 'block';
+  wrap.style.position = 'relative';
+  wrap.style.padding = '';
+  wrap.style.justifyContent = '';
+  wrap.style.height = totalH + 'px';
+  wrap.style.width = gridContentW + 'px';
+  wrap.style.maxWidth = '100%';
+  wrap.style.margin = '0 auto';
+  wrap.style.gridTemplateColumns = '';
+  wrap.innerHTML = '';
+
+  // Header strip: axis legend pinned at the top of the wrap.
+  const head = document.createElement('div');
+  head.style.cssText =
+    `position:absolute;left:0;right:0;top:0;height:${headH}px;`+
+    `display:flex;justify-content:space-between;align-items:center;`+
+    `font-family:var(--font-mono);font-size:11px;color:var(--muted);`+
+    `pointer-events:none;`;
+  head.innerHTML = `<span>LIGHTNESS &#10148;</span><span>HUE &#11015;</span>`;
+  wrap.appendChild(head);
+
+  // Shared cell-build context (mirrors the regular grid path 1:1).
+  const ctx = {
+    cs,
+    fzCmyk: Math.max(5,  Math.round(cs * 0.09)),
+    fzHex:  Math.max(5,  Math.round(cs * 0.10)),
+    fzJpn:  Math.max(7,  Math.round(cs * 0.18)),
+    fzRoma: Math.max(5,  Math.round(cs * 0.09)),
+    fzHtml: Math.max(4,  Math.round(cs * 0.09)),
+    fzBadg: Math.max(5,  Math.round(cs * 0.10)),
+    fzCR:   Math.max(4,  Math.round(cs * 0.09)),
+    showHex:  cs >= 36,
+    showJpn:  cs >= 52,
+    showHtml: cs >= 70,
+    showCR:   cs >= 60,
+    showBadge: cs >= 22,
+    showLabel: cs >= 22,
+    topCmyk: 2,
+    get topHex()  { return this.topCmyk + this.fzCmyk + 2; },
+    get topJpn()  { return this.topHex  + (this.showHex  ? this.fzHex  + 2 : 0); },
+    get topRoma() { return this.topJpn  + (this.showJpn  ? this.fzJpn  + 2 : 0); },
+    get topHtml() { return this.topRoma + (this.showJpn  ? this.fzRoma + 2 : 0); },
+    palSet: _activeSet(),
+  };
+
+  // Place every (hue, light) bucket. Missing buckets render as a dashed
+  // placeholder so the grid keeps its shape.
+  const frag = document.createDocumentFragment();
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
+      const hb = r;
+      const lb = c;
+      const left = c * (cs + gap);
+      const top  = headH + r * rowH;
+      const s = buckets.get(`${hb}|${lb}`);
+      let cell;
+      if (!s) {
+        cell = document.createElement('div');
+        cell.style.cssText =
+          `position:absolute;left:${left}px;top:${top}px;`+
+          `width:${cs}px;height:${cs}px;`+
+          `border:1px dashed var(--border2);border-radius:4px;opacity:0.4;`;
+        cell.title = `empty bucket (hue ${hb} x light ${lb})`;
+      } else {
+        cell = _makeSwatchCell(s, ctx);
+        cell.style.position = 'absolute';
+        cell.style.left = left + 'px';
+        cell.style.top  = top  + 'px';
+        cell.title = `${s.hex} . dE ${s.delta_e_print?.toFixed(2) ?? '-'}`;
+      }
+      frag.appendChild(cell);
+    }
+  }
+  wrap.appendChild(frag);
+  _fitCellTexts(wrap);
 }
 
 
