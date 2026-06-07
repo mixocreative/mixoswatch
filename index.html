@@ -1665,12 +1665,12 @@
 
     <section class="hero">
       <h1>
-        <span data-en>Screen ✕ Press ✕ 3D Print <em  style="display:inline-block;"><b>Cross-Media Color Swatch</b></em></span>
+        <span data-en>Screen ✕ Press ✕ 3D Print <em  style="display:inline-block;"><b>Cross-Media Color System</b></em></span>
         <span data-ja>スクリーン✕印刷✕3Dプリント <em  style="display:inline-block;"><b>クロスメディア・カラースウォッチ</b></em></span>
         <span data-zh><span style="display:inline-block;">螢幕</span> ✕ <span style="display:inline-block;">印刷</span> ✕ <span style="display:inline-block;">3D列印</span>  <em  style="display:inline-block;"><b>跨媒介色版</b></em></span>
       </h1>
       <p class="lede">
-        <span data-en><b>Mixo Swatch</b> generates CMYK values through a real ICC engine, hiding any swatch your chosen profile cannot reproduce.</span>
+        <span data-en><b>Mixo Swatch</b> helps designers select ICC-aware CMYK swatches, filter unstable colors, build palettes, and export production-ready files.</span>
         <span data-ja><b>Mixo Swatch</b> は ICC エンジンを介して CMYK を生成し、プロファイルで再現できない色を自動で非表示にします。</span>
         <span data-zh><b>Mixo Swatch</b> 透過真實 ICC 引擎生成 CMYK，自動隱藏指定描述檔無法保留的色塊。</span>
       </p>
@@ -1679,7 +1679,7 @@
           <div>
             <div class="micro">live</div>
             <h2><img src="app/img/logo-black.svg" style="display:inline-block; height:1em; width:1em; margin: 0 0 -0.15em 0; " alt="Mixo Swatch" class="hero-logo"> Mixo Swatch</h2>
-            <h3 data-en>Digital, Press & 3D Print Dedicated Color Reliability System</h3>
+            <h3 data-en>Color Reliability System for Digital, Press, and 3D Print Workflows</h3>
             <h3 data-zh>平面數位、紙品與3D印刷用色彩可靠性系統</h3>
             <h3 data-ja>デジタル・紙媒体・3Dプリント色再現安定システム</h3>
           </div>
@@ -1709,12 +1709,12 @@
     <section class="section" id="why">
       <div class="eyebrow"><span data-en>why this tool</span><span data-ja>このツールの理由</span><span data-zh>為何這個工具</span></div>
       <h3>
-        <span data-en>What screens cannot promise, our workflow narrows.</span>
+        <span data-en>Reduce the gap between screen intent and production color.</span>
         <span data-ja>画面が保証できない領域を、ワークフローで狭める。</span>
         <span data-zh>螢幕色準無法保證，靠流程縮小落差。</span>
       </h3>
       <p style="font-size: larger;">
-        <span data-en><b style="font-weight:bolder">[Hot take] </b>No screen perfectly matches printed results. In graphic design, unless expensive spot colors are used, reconciling screen colors with physical proofs is incredibly time-consuming. Furthermore, as designs transition from 2D to 3D, 3D modeling software's lack of physical color management makes controlling color discrepancies on 3D-printed models exceptionally difficult. To eliminate repetitive trial-and-error during production, we developed Mixo Swatch, a predictive color engineering system.</span>
+        <span data-en>No screen can guarantee printed output. Brand, print, and 3D production teams often lose time reconciling monitor previews, physical proofs, and device-specific color limits. Mixo Swatch reduces that uncertainty by pairing ICC-routed swatch generation with round-trip dE checks, named-color matching, palette management, and production-focused exports.</span>
         <span
           data-ja>印刷結果を完全に再現できる画面は存在しません。グラフィック印刷では、高価な特色を使わない限り、画面と印刷サンプルの色合わせに多大な時間がかかります。さらに、平面から立体デザインへの展開において、3Dソフトは実物のカラーマネジメントに対応していないため、3Dプリント模型の色ブレ管理は極めて困難です。製造現場での手探りの試作を省くため、明上堂は色彩予測システム「Mixo Swatch」を自社開発しました。</span>
         <span data-zh><b style="font-weight:bolder">[真相]</b> 沒有任何螢幕能完全精確地呈現印刷結果。在平面或紙品印刷上，沒有使用昂貴專色的品牌設計，設計師與客户溝通時總得面對校對螢幕色與列印色版相當耗時的問題。在跨足平面與立體設計的過程中，3D建模軟體不支援實體色彩管理，列印成 3D 實體模型往往難以控制色差。為了一定程度省去生產端的反覆盲測，明上堂自主研發了 Mixo Swatch 色彩工程預測系統。</span>
@@ -1731,7 +1731,7 @@
             <span class="tag"><span data-en>real math</span><span data-ja>実数学</span><span data-zh>貼近真實</span></span>
           </h4>
           <p>
-            <span data-en>Our lookup tables sample sRGB → CMYK at LittleCMS, the open-source color engine inside GIMP, Scribus, Krita, and many prepress tools. The data layer matches what a LittleCMS prepress flow computes.</span>
+            <span data-en>Lookup tables are generated with LittleCMS, the open-source color engine used by GIMP, Scribus, Krita, and many prepress workflows. The browser interface works from the same ICC-derived data instead of simplified CMYK formulas.</span>
             <span data-ja>当ツールのLUTは、GIMP、Scribus、Krita、多くのプリプレスツールの内部で動いているオープンソースの色エンジン「LittleCMS」でsRGB → CMYKを標本化している。データ層はLittleCMSベースのプリプレスフローと同じ計算結果を返す。</span>
             <span data-zh>我們的查找表（LUT）在使用 LittleCMS 進行雙向取樣（sRGB ⇄ CMYK）。LittleCMS 是 GIMP、Scribus、Krita 等眾多專業印前工具內部核心使用的開源色彩引擎。資料層計算結果與標準印前流程一致，能反應印刷的色彩邊界。</span>
           </p><br />
@@ -1745,7 +1745,7 @@
             <span class="tag"><span data-en>delta-E</span><span data-ja>ΔE制御</span><span data-zh>ΔE 控制值</span></span>
           </h4>
           <p>
-            <span data-en>The ΔE slider decides how close a match has to be. Honest about what "close enough" means instead of pretending one number fits everything.</span>
+            <span data-en>The dE controls let each workflow define its own tolerance. Tighten the filter for critical print work, or widen it when exploration matters more than proof-level matching.</span>
             <span data-ja>ΔEスライダーで一致の厳しさを設定。「十分近い」を一つの数値で押し付けず、自分で決められる。</span>
             <span data-zh>可調整 ΔE 值決定顏色命名和轉換容差值的嚴謹度。不假裝一個數字適用於所有情境。</span>
           </p><br />
@@ -1759,7 +1759,7 @@
             <span class="tag"><span data-en>profiles</span><span data-ja>プロファイル</span><span data-zh>描述檔對應</span></span>
           </h4>
           <p>
-            <span data-en>Switch freely between international standards like FOGRA39, Japan Color 2001, and SWOP, or add your own printer's profile. See how the same CMYK values shift across different processes. Basic pickers can't show this because they ignore printer physics.</span>
+            <span data-en>Switch between standards such as FOGRA39, Japan Color 2001, and SWOP, or add your own printer profile. The same CMYK values can shift across processes; ICC-based preview makes those differences visible before production.</span>
             <span data-ja>FOGRA39、Japan Color 2001、SWOPなどの国際標準プロファイルを自由に切り替え、あるいは独自のプロファイルを追加可能。同じCMYK値でも製程によって色がどう変わるかが一目瞭然。物理的な制約を無視した一般的なカラーピッカーでは不可能な検証ができます。</span>
             <span data-zh>你可以在 FOGRA39、Japan Color 2001 與 SWOP 等國際標準描述檔之間自由切換，或者添加你自己機器的描述檔。相同的 CMYK 數值在不同製程下色偏一目了然。一般的簡易選色器根本無法呈現這點，因為它們從未納入列印機的物理考量。</span>
           </p><br />
@@ -1773,7 +1773,7 @@
             <span class="tag"><span data-en>prepress</span><span data-ja>プリプレス</span><span data-zh>步距控制</span></span>
           </h4>
           <p>
-            <span data-en>Commercial print and material calibration often require fixed steps (e.g., 5% or 10%). Smooth screen gradients hide physical deviations and dot gain issues. This tool lets you adjust steps manually to observe hue shifts across patches, perfect for picking highly reproducible colors.</span>
+            <span data-en>Commercial print and material calibration often use fixed steps such as 5% or 10%. Smooth gradients can hide dot gain and device drift; stepped swatches make shifts visible and help identify reproducible colors.</span>
             <span data-ja>商業印刷やキャリブレーションでは、しばしば固定のステップ（5%や10%刻み）が要求されます。画面上の滑らかなグラデーションは物理的な偏差やドットゲインの異常を隠してしまいます。本ツールはステップを手動調整でき、パッチ間の色相変化を直接観察できるため、再現性の高い色選びに最適です。</span>
             <span data-zh>在商業印刷實務與材料校準中，印刷廠往往明確要求固定步距（如 5% 或 10% 的跳階）。這是因為數位螢幕上平滑的連續漸層容易掩蓋物理偏差與網點擴大（Dot Gain）的異常。本工具將步距設成可手動調較，直接觀察同跳階色塊產生的色相偏移，最適合用來手選具高重現性的色票。</span>
           </p><br />
@@ -1800,7 +1800,7 @@
             <span class="tag"><span data-en>cross-media</span><span data-ja>クロスメディア</span><span data-zh>跨媒介應用</span></span>
           </h4>
           <p>
-            <span data-en>2D ✕ 3D cross-media application with real-time bi-directional safety checks under specific profiles. Rigorous math combined with physical color tolerance. Pick once, sync across both ends.</span>
+            <span data-en>Cross-media workflows can be checked against a specific print profile, using round-trip dE to identify colors that are more likely to survive the move from screen to physical output.</span>
             <span data-ja>2D ✕ 3Dのクロスメディア対応。特定のプロファイル下での双方向安全検証をリアルタイムで実行。物理的な許容誤差と厳密な数学的計算を組み合わせ、一度の選色で両端を同期させます。</span>
             <span data-zh>2D ✕ 3D 的雙端跨媒介應用，通過該特定描述檔下的雙向安全檢驗，運算即時執行。以物理色彩容差，配合數學嚴密計算。一次選色，雙端同步。</span>
           </p><br />
@@ -1828,9 +1828,9 @@
             <span class="tag"><span data-en>export</span><span data-ja>多用途</span><span data-zh>多用途</span></span>
           </h4>
           <p>
-            <span data-en>Export .ASE for Photoshop / Illustrator / Affinity / Substance; .GPL for GIMP / Krita / Inkscape / Blender (via GPL Palette Importer); or .PNG for reference. Copy CMYK/Hex from .JSON into Mimaki RasterLink, Stratasys GrabCAD, Ultimaker Cura, or industrial CAD color managers.</span>
-            <span data-ja>.ASE（Photoshop / Illustrator / Affinity / Substance）、.GPL（GIMP / Krita / Inkscape / Blender ※プラグイン経由）、視覚参照用の.PNGに対応。.JSONからCMYKやHex値を抽出し、Mimaki RasterLink、Stratasys GrabCAD、Ultimaker Cura、各種産業用CADのカラー管理へ入力できます。</span>
-            <span data-zh>匯出 .ASE 供 Photoshop / Illustrator / Affinity / Substance 使用；.GPL 供 GIMP / Krita / Inkscape / Blender（透過 GPL Palette Importer 外掛）使用；亦可匯出 .PNG 圖片做視覺參考。從 .JSON 複製 CMYK 或 Hex 數值，直接填入 Mimaki RasterLink 專色表、Stratasys GrabCAD 取色器、Ultimaker Cura 材料描述檔，或各類工業 CAD 的色彩管理器。</span>
+            <span data-en>Export labelled or pure PNG/TIFF, CMYK or RGB ASE, GPL, JSON, CSV, or ZIP packages with ordered per-swatch PNG/TIFF siblings and manifests. Filenames stay compact and process-safe; manifests preserve full ICC, dE, step, naming-accuracy, RGB/CMYK, and palette metadata.</span>
+            <span data-ja>ラベル付き/純色のPNG・TIFF、CMYK/RGB .ASE、.GPL、JSON、CSV、または色ごとのPNG/TIFFとマニフェストを含むZIPを書き出せます。ファイル名は短く工程に安全、ICC・dE・ステップ・命名精度・RGB/CMYK・パレット情報はマニフェストに保持します。</span>
+            <span data-zh>可匯出含標籤或純色 PNG/TIFF、CMYK 或 RGB .ASE、.GPL、JSON、CSV，或含逐色色塊 PNG/TIFF 與清單的 ZIP。檔名保持短而安全，完整 ICC、dE、階距、命名精度、RGB/CMYK 與調色盤資料保存在清單中。</span>
           </p><br />
         </div>
         <div class="col">
@@ -1865,7 +1865,7 @@
         <span data-zh><span style="font-size: 1.2em;"> 5 </span>步建立可印刷的色票組</span>
       </h3>
       <p>
-        <span data-en>Pick the press profile, narrow what you can see, pick + name your colors, choose how to sort and view them, or create separate color swatch sets, then export.</span>
+            <span data-en>Choose the production profile, narrow the visible gamut, select and name colors, review alternate views, build palettes, then export files for the next tool in the chain.</span>
         <span data-ja>プリントプロファイルを選び、表示を絞り、選んで命名し、並び順と表示を決め、または色票組を個別に作成し、最後に書き出す。</span>
         <span data-zh>選描述檔、縮小範圍、挑選與命名、決定排序與檢視，或分別製作色票組，然後匯出。</span>
       </p>
@@ -1891,7 +1891,7 @@
             <span data-zh>縮小範圍</span>
           </h5>
           <p>
-            <span data-en>Set CMYK range + TAC limit + round-trip dE max + K-tier + accessibility toggles. Anything the chosen profile cannot hold within tolerance disappears from the grid before you even see it.</span>
+            <span data-en>Set CMYK ranges, TAC limit, round-trip dE max, K-tier, and accessibility toggles. Colors outside the chosen tolerance are removed before the grid is shown.</span>
             <span data-ja>CMYK範囲・TAC上限・往復ΔE上限・K階層・アクセシビリティ切替を設定。選んだプロファイルで保持できない色は表示前に非表示。</span>
             <span data-zh>設定 CMYK 範圍、TAC 上限、往返 dE 門檻、K 階層、可讀性切換。所選描述檔無法保留的色塊在你看到前就被排除。</span>
           </p>
@@ -1904,7 +1904,7 @@
             <span data-zh>挑選與命名</span>
           </h5>
           <p>
-            <span data-en>Enable corpora (Japanese traditional, W3C CSS, Chinese traditional). Choose anchor (hex or CMYK) and naming-accuracy dE. Click swatches in Selection mode to add them to the active palette.</span>
+            <span data-en>Enable naming corpora such as Japanese traditional colors, W3C CSS colors, and Chinese traditional colors. Choose Hex or CMYK as the matching anchor, set naming-accuracy dE, then add swatches to the active palette in Selection mode.</span>
             <span data-ja>名前辞書（日本伝統色・W3C CSS・中国伝統色）を有効化。アンカー（hexまたはCMYK）と命名精度ΔEを選び、選択モードでスウォッチをクリックしてアクティブパレットに追加。</span>
             <span data-zh>啟用名稱資料庫（日本傳統色、W3C CSS、中國傳統色）。選錨點（hex 或 CMYK）與命名精度 dE，於選取模式下點按色塊加入使用中的調色盤。</span>
           </p>
@@ -1917,7 +1917,7 @@
             <span data-zh>排序與檢視</span>
           </h5>
           <p>
-            <span data-en>Re-order the grid by hue, lightness, TAC, chroma, cyan-only, round-trip safety, or switch to the Hue x Light bucket map to see one representative per (hue, lightness) cell. Cell size is a separate slider that controls how much detail each tile shows.</span>
+            <span data-en>Sort by hue, lightness, TAC, chroma, cyan-only, or round-trip safety. Hue x Light view shows one representative per hue/lightness bucket, while the cell-size slider controls how much detail each tile displays.</span>
             <span data-ja>グリッドを色相・明度・TAC・彩度・シアン単独・往復安全度で並び替え、または色相×明度バケットマップに切り替えて（色相,明度）セルごとの代表色を一覧。セルサイズは別スライダーで詳細度を調整。</span>
             <span data-zh>依色相、明度、TAC、彩度、純青、往返安全度重排，或切換到 色相 × 明度 桶圖逐格觀察。色塊尺寸由獨立滑桿控制，決定每個色塊顯示多少資訊。</span>
           </p>
@@ -1930,9 +1930,9 @@
             <span data-zh>匯出</span>
           </h5>
           <p>
-            <span data-en>Create color swatch sets, or from the top-bar Export menu: CSV (UTF-8 with name fields), labelled PNG, 4096-px pure-color PNG, ZIP (per-swatch + manifest). Per-palette Download menu in Palettes view adds ASE, GPL and JSON so Photoshop, Illustrator, Affinity, GIMP, Krita, or Inkscape can read it directly.</span>
-            <span data-ja>色票組を製作、またはトップバーのExportメニューから：CSV（UTF-8、名前付き）、ラベル付きPNG、4096pxピュアカラーPNG、ZIP（1色ずつ + マニフェスト）。パレット表示の各パレットDownloadメニューはASE / GPL / JSONも追加し、Photoshop / Illustrator / Affinity / GIMP / Krita 或いは Inkscapeで直接読み込める。</span>
-            <span data-zh>製作色票組，或頂列 Export 選單整個色彩資料庫輸出：CSV（UTF-8 含名稱欄位）、含標籤 PNG、4096 px 純色 PNG、ZIP（逐色 + 清單）。在「調色盤」檢視中，每張調色盤的 Download 選單再加上 ASE / GPL / JSON，可直接給 Photoshop、Illustrator、Affinity、GIMP、Krita 或 Inkscape 使用。</span>
+            <span data-en>Create swatch sets, switch to Palettes view, then export active or per-palette files: labelled/pure PNG, labelled/pure CMYK TIFF, ZIP, ASE, GPL, and JSON. The top-bar Export menu exports the current filtered set, including CSV.</span>
+            <span data-ja>色票組を作成し、Palettes表示でアクティブパレットまたは各パレットを書き出し：ラベル付き/純色PNG、ラベル付き/純色CMYK TIFF、ZIP、ASE、GPL、JSON。トップバーのExportメニューでは現在のフィルター済み色票セットをCSV込みで書き出せます。</span>
+            <span data-zh>建立色票組，切到「調色盤」檢視後，可匯出使用中或各張調色盤：含標籤/純色 PNG、含標籤/純色 CMYK TIFF、ZIP、ASE、GPL、JSON。頂列 Export 選單則輸出目前篩選後的整組色票，並包含 CSV。</span>
           </p>
         </div>
       </div>
@@ -1944,7 +1944,7 @@
 
     <section class="section" id="printers">
       <h3>
-        <span data-en>Why print-first beats "give Mimaki a CMYK number" or "let the RIP decide from RGB".</span>
+        <span data-en>Why a print-first palette workflow is different from raw CMYK entry or unmanaged RGB hand-off.</span>
         <span data-ja>なぜ「印刷ファースト」が、生のCMYK指定や、RGBをRIPに任せる方式より優れているのか。</span>
         <span data-zh>為什麼選擇轉化好的色票勝過直接給 3D列印機 CMYK 數值或 RIP 自行從 RGB 決定。</span>
       </h3>
@@ -1954,7 +1954,7 @@
         <span data-zh>沒有 ICC，原始 CMYK 數值毫無意義。把 RGB 丟給列印機的 RIP (光柵掃瞄影像處理機)，色域會被靜默壓縮。Mixoswatch 先把每個色塊透過 ICC 渲染到螢幕上，挑出物理平台上的相近色。</span>
       </p>
       <p style="margin-top:8px;font-size:12.5px;color:var(--muted);line-height:1.6">
-        <span data-en>Standard 3D texturing (Substance Painter, ZBrush, Blender, Maya) correctly uses pure sRGB (e.g., sRGB IEC61966-2.1) management, leaving printer engines like RasterLink or MPM3 to compress these textures into the 3D print ink space. Mixoswatch serves a different workflow: brand color definition. It provides initial screening to quickly match specified colors with printable/screen swatches and their closest named colors. By using the printer's ICC profile as a baseline and applying bidirectional ΔE, it improves predictability and rejects unstable colors..</span>
+        <span data-en>Standard 3D texturing tools such as Substance Painter, ZBrush, Blender, and Maya usually hand sRGB textures to RasterLink or MPM3, which then maps them into the printer's ink space. Mixo Swatch serves a different task: brand and palette definition. It uses the selected printer profile plus bidirectional dE checks to screen candidate colors, show named-color matches, and reject unstable swatches before production.</span>
         <span data-ja>一般的な3Dテクスチャ制作（Substance Painter, ZBrush, Blender, Maya）ではsRGB（sRGB IEC61966-2.1など）管理が正しく、RasterLinkやMPM3等のプリンターエンジンがそれを3Dプリント用インク色空間へ圧縮します。一方、Mixoswatchが担うのは『ブランドのカラー定義』という別工程です。指定色の初期選別を行い、印刷・画面用の近似色パッチや色名を素早く検索します。プリンターのICCプロファイルを基準とし、双方向 ΔE で不安定な色を排除します。</span>
         <span data-zh>一般 3D軟體在紋理貼圖製作（Substance Painter、ZBrush、Blender、Maya）上可以使用 sRGB IEC61966-2.1 等純粹的sRGB着色管理，RasterLink / MPM3 等列印機用自家引擎把 sRGB 紋理壓縮到3D列印使用的墨水空間，這在流程上是對的。Mixoswatch 服務的是另一個流程：品牌定色，初步甄選出指定色彩，快速查找接近的可列印與螢幕用對照色票，及其接近名稱。先用列印機ICC色彩描述檔作基調，再用雙向 ΔE 排除不穩定的顏色。</span>
       </p>
@@ -2044,18 +2044,17 @@
 
     <section class="section" id="glossary">
       <h3>
-        <span data-en>UI Terms to Know.</span>
+        <span data-en>Key concepts before using the controls.</span>
         <span data-ja>UI用語の注意。</span>
         <span data-zh>UI 詞彙須知。</span>
       </h3>
       <p>
-        <span data-en>The tools borrow terminology from standard commercial press houses and advanced colorimetry. Here
-          is what they actually mean:</span>
+        <span data-en>The live controls use commercial-print and colorimetry terms. These are the concepts that matter before you start adjusting the grid:</span>
         <span data-ja>本ツールは、商業プリントや色彩科学の標準的な用語を使用しています。それぞれの具体的な意味は以下の通りです：</span>
         <span data-zh>此工具沿用了商業印刷與色彩科學的標準術語。以下是它們在實際操作中的具體含意：</span>
       </p>
 
-      <div class="panels" id="panels">
+      <div class="panels">
 
         <div class="panel">
           <div class="panel-name">TAC (Total Area Coverage)<span class="jp">総インク量 ／ 總油墨覆蓋率</span></div>
@@ -2441,12 +2440,12 @@
         </div>
 
         <div class="panel">
-          <div class="panel-name">Palettes panel + Hue x Light<span class="jp">パレット枠</span></div>
+          <div class="panel-name">Palettes view + Hue x Light<span class="jp">パレット表示</span></div>
           <div class="panel-body">
             <p>
-              <span data-en>The Palettes panel sits between the top bar and the swatch grid as a collapsable button row (no chevron - a clear "Open palettes" / "Close palettes" accent button). The Hue x Light sort renders directly inside the swatch grid area and behaves like every other sort option.</span>
-              <span data-ja>パレットパネルはトップバーとスウォッチグリッドの間に、折りたためるボタン行として配置（シェブロンなし、明確な「パレットを開く / 閉じる」アクセントボタン）。色相×明度ソートはスウォッチグリッド内に直接描画され、他のソートオプションと同じ振る舞い。</span>
-              <span data-zh>調色盤面板位於頂列與色塊網格之間，是一個可收合的按鈕列（無箭頭，採用清晰的「展開調色盤 / 收起調色盤」強調按鈕）。色相 × 明度排序直接在色塊網格區渲染，與其他排序選項行為一致。</span>
+              <span data-en>Grid and Palettes are now separate view modes. Palettes view owns its own scroll area and per-palette action menus; Hue x Light remains a Sort option that renders directly inside the swatch grid area.</span>
+              <span data-ja>GridとPalettesは独立した表示モードです。Palettes表示は専用のスクロール領域と各パレットのアクションメニューを持ち、色相×明度はSortオプションとしてスウォッチグリッド内に描画されます。</span>
+              <span data-zh>Grid 與 Palettes 現在是獨立檢視模式。Palettes 檢視擁有自己的捲動區與各調色盤操作選單；色相 × 明度則保留為 Sort 選項，直接在色塊網格區渲染。</span>
             </p>
           </div>
         </div>
@@ -2455,9 +2454,9 @@
           <div class="panel-name">Palette export<span class="jp">書き出し</span></div>
           <div class="panel-body">
             <p>
-              <span data-en>Click tiles below to build a 4-color palette, then download as a real GPL or JSON file. These are the same formats Mixo Swatch exports (alongside ASE, PNG labelled, PNG pure, and a per-swatch ZIP).</span>
-              <span data-ja>下のタイルをクリックして4色パレットを組み、本物のGPLまたはJSONファイルとしてダウンロード。Mixo Swatchが書き出すのと同じフォーマット（他にASE、ラベル付きPNG、ピュアPNG、1色ずつのZIP）。</span>
-              <span data-zh>點按下方色塊組成 4 色調色盤，再下載成真實的 GPL 或 JSON 檔。這正是 Mixo Swatch 的匯出格式（另有 ASE、含標籤 PNG、純色 PNG 及逐色 ZIP）。</span>
+              <span data-en>Click tiles below to build a 4-color palette, then download as a real GPL or JSON file. The app also exports ASE, labelled/pure PNG, labelled/pure CMYK TIFF, and ordered per-swatch ZIP packages.</span>
+              <span data-ja>下のタイルをクリックして4色パレットを組み、本物のGPLまたはJSONファイルとしてダウンロード。アプリ本体ではASE、ラベル付き/純色PNG、ラベル付き/純色CMYK TIFF、順序付きの1色ずつZIPも書き出せます。</span>
+              <span data-zh>點按下方色塊組成 4 色調色盤，再下載成真實的 GPL 或 JSON 檔。正式工具亦可匯出 ASE、含標籤/純色 PNG、含標籤/純色 CMYK TIFF，以及有序的逐色 ZIP。</span>
             </p>
             <div class="demo" data-demo="palette">
               <div class="demo-controls">
@@ -2588,10 +2587,10 @@
       </div>
 
       <p>
-        <span data-en>That's it. Refresh the browser, Mixo Swatch now sees your new profile in its dropdown. Every
-          CMYK value renders through it live; the ΔE max slider hides anything that drifts too far on the round-trip,
-          giving you the same print-safe set the curated library used to ship offline. Full breakdown of every Python
-          flag, the LUT binary format, and the round-trip safety gate: see <a
+        <span data-en>Refresh the browser and the new profile appears in Mixo Swatch's profile menu. Every
+          CMYK value renders through that profile; the dE max slider removes swatches that drift too far on the round-trip,
+          producing a profile-filtered set for review and export. For the Python
+          flags, LUT binary format, and round-trip safety gate, see <a
             href="https://github.com/mixocreative/mixoswatch/blob/main/ARCHITECTURE.md" target="_blank" rel="noopener">ARCHITECTURE.md</a> sections 4 through 6.</span>
         <span data-ja>最後に、ブラウザをリロード（再読み込み）すると、Mixo Swatchのドロップダウンメニューに新しいプロファイルが表示されます。すべてのCMYK値がリアルタイムでレンダリングされ、ΔE上限スライダが往復で誤差の大きい色塊を隠してくれるため、以前のキュレーションライブラリが提供していた印刷安全色集合と同じものが得られます。Pythonパイプライン、LUT形式、往復安全ゲートなどの詳細については、<a
             href="https://github.com/mixocreative/mixoswatch/blob/main/ARCHITECTURE.md" target="_blank" rel="noopener">ARCHITECTURE.md</a> の第4章から第6章をご参照ください。</span>
@@ -2619,7 +2618,7 @@
         <span data-zh>明上堂 <b>Mixo Creative</b> 是一家扎根於台灣、兼具國際視野的專業設計公司。香港教育大學文化及創新設計系講師、英國伯明罕藝術設計學院設計管理學一級榮譽碩士 <b>Adrian Li</b> 的工作室。明上堂歷年作品榮獲 Adobe Behance 官方平台認證、法國 Cults3D 精選推薦。深耕品牌識別幾何學、3D 造型設計與印刷。</span>
       </p>
       <p>
-        <span data-en>In graphic design, unless expensive spot colors are used, reconciling screen colors with physical proofs is incredibly time-consuming. As designs transition from 2D to 3D, the absence of physical color management in 3D modeling software makes controlling color discrepancies on 3D-printed models exceptionally difficult. To reduce costly production guesswork, we built the <b>Mixo Swatch Color Reliability System</b> - a professional "color translator" engineered to bridge digital design and physical output. Meaningful creativity deserves disciplined technical precision.</span>
+        <span data-en>For brand, print, and 3D production work, unmanaged color translation creates slow approvals and repeated tests. The <b>Mixo Swatch Color Reliability System</b> helps bridge digital intent and physical output by combining ICC-routed swatches, tolerance controls, named-color matching, and export formats production teams can use directly.</span>
         <span data-ja>印刷結果を完全に再現できる画面は存在しません。グラフィック印刷では、高価な特色を使わない限り、画面と印刷サンプルの色合わせに多大な時間がかかります。さらに、平面から立体デザインへの展開において、3D ソフトは実物のカラーマネジメントに対応していないため、3D プリント模型の色ブレ管理は極めて困難です。製造現場での手探りの試作を省くため、明上堂は色彩安定化システム <b>「Mixo Swatch」</b> を自社開発しました。</span>
         <span data-zh>在跨足平面與立體設計的過程中，3D 建模軟體不支援實體色彩管理，列印成 3D 實體模型往往難以控制色差。在平面或紙品印刷上，沒有使用專色的品牌設計，設計師與客戶溝通時也面對選色導致校對螢幕色與列印色版相當耗時的問題。為了替省去生產端的反覆盲測，明上堂自主研發了 <b>Mixo Swatch 色彩可靠性系統</b>。</span>
       </p>
@@ -2667,7 +2666,7 @@
         <span data-zh>純本地運行。無需帳號。無任何追蹤。</span>
       </h3>
       <p>
-        <span data-en>Everything runs in your browser. ICC profiles and lookup tables sit on your disk. Palettes save to local storage. There is no server to call, no account to make, no analytics. If you close the tab the only state that survives is what your browser saved for you.</span>
+        <span data-en>Mixo Swatch runs locally in the browser. ICC profiles and lookup tables stay on disk, palettes are stored in localStorage, and the tool requires no account, remote processing, or analytics endpoint.</span>
         <span data-ja>すべてブラウザ内で動作。ICCプロファイルとLUTはあなたのディスク上に存在。パレットはローカルストレージに保存。呼び出すサーバなし、作成するアカウントなし、解析なし。タブを閉じれば、ブラウザがあなたのために保存した状態だけが残ります。</span>
         <span data-zh>所有運算都在你的瀏覽器內進行。ICC 描述檔與查找表存放在你的硬碟。色票組儲存於 localStorage。沒有要連線的伺服器、沒有要註冊的帳號、沒有任何分析。關掉分頁，留下的就只是瀏覽器替你儲存的那些狀態。</span>
       </p>

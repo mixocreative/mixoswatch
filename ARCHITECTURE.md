@@ -11,7 +11,8 @@
 A browser tool backed by a small Python toolchain that helps a designer
 pick CMYK colors and palettes that will print faithfully on a chosen press
 profile (FOGRA39, Japan Color, SWOP, Mimaki 3DUJ, etc.), and produce
-design-app-ready palette files (.ase / .gpl) plus per-swatch PNG manifests.
+design-app-ready palette files (.ase / .gpl), CMYK TIFF hand-off files,
+and per-swatch ZIP packages with PNG/TIFF siblings plus manifests.
 
 The single tool is `app/mixo-swatch.html` (Mixo Swatch). It explores the full CMYK
 uniform grid through a chosen ICC profile so the user can hand-pick swatches.
@@ -677,7 +678,7 @@ the reset.
 ### 6.6 UI internationalisation (en / ja / zh-Hant)
 
 The tool ships a built-in i18n layer covering every sidebar label,
-top-bar button, palette-panel string, and dynamic mode badge.
+top-bar button, palette/view string, and dynamic mode badge.
 
 **Languages supported:** English (`en`), Japanese (`ja`), Traditional
 Chinese (`zh`, rendered with `<html lang="zh-Hant">`).
@@ -796,19 +797,23 @@ Cells use `aspect-ratio: 1/1`, so they shrink-to-fit responsively as
 the viewport changes; the resize listener (§7.5) debounces re-render
 to 120 ms.
 
-**Palettes panel.** The Palettes block and the palette-manager (`pm-wrap`)
-are merged into a single collapsable panel that sits above the grid. The
-panel is collapsed by default. The header is a clear button row: title on
-the left, a high-contrast accent button (`#ppAction`) on the right
-labelled "Open palettes" / "Close palettes" - the legacy disclosure
-triangle (`.chev`) was removed because the affordance was too subtle.
+**Palettes toolbar + Palettes view.** The collapsible `#palettePanel`
+still exists as a compact global toolbar for selecting the active palette,
+toggling selection mode, choosing palette export size, importing/backing
+up JSON, and jumping to Palettes view. The manager itself is now a
+first-class view mode: selecting `[Palettes]` hides the virtualized grid
+area and shows `#pmWrap` as the owner of the main scroll area
+(`flex:1; min-height:0; overflow-y:auto`). The old coupling where
+Palettes view auto-opened the toolbar/panel is intentionally gone:
+switching views closes floating menus but does not mutate the toolbar's
+open/closed state. This keeps Grid <-> Palettes state honest and prevents
+stale counts or invisible manager content.
 
 **Hue x Light lives inside the main swatch grid area.** The Hue x Light
 sort option renders into `#swatchGrid` (full grid-area width). When the
-sort is active, `gsWrap` (the ICC neutral + Pure RGB reference strips block) is hidden so
-the bucket map gets the entire vertical real estate. The Palettes panel
-above the grid is left in whatever state the user last set it - there
-is no auto-open coupling between Hue x Light and the Palettes panel.
+sort is active, `gsWrap` (the ICC neutral + Pure RGB reference strips
+block) is hidden so the bucket map gets the entire vertical real estate.
+Hue x Light never opens or closes Palettes view.
 
 ### 7.5 Filters
 
@@ -837,6 +842,12 @@ dE), Hue x Light.
 - `_debouncedSearch()` collapses keystroke bursts (140 ms).
 - `_scheduleRender()` rAF-coalesces multiple `onFilter`/sort/checkbox
   events into one paint per frame.
+- Filtered and sorted swatch arrays are cached by a state signature:
+  data version, profile, Lab mode, step, all filters, search, sort,
+  corpus visibility/display fields, and naming tolerance. Slider drags
+  reuse cached data until the state actually changes.
+- Palette lookup is `Map`-based (`DEDUP_BY_KEY`, keyed by `C-M-Y-K`) so
+  palette rendering and exports do not scan `DEDUP` for every swatch.
 - `_schedulePersist()` rAF-coalesces sidebar `input`+`change` events
   into one `localStorage` write per frame.
 - Heavy rematch on anchor / Lab-mode flip is chunked at 1500
@@ -852,6 +863,9 @@ dE), Hue x Light.
 - `togglePaletteMode` cycles `grid <-> palettes` only; the obsolete
   `huelight` token (a sort option, not a view mode) was removed from
   the cycle.
+- Reduced-motion users get a low-power path: blinking palette-select
+  animation and hover scale are disabled under
+  `prefers-reduced-motion: reduce`.
 
 ### 7.6 Palettes
 
@@ -886,10 +900,10 @@ palette overwritten).
 | Button | Function | Output |
 |---|---|---|
 | CSV | `exportCSV()` | UTF-8 BOM CSV of filtered swatches |
-| PNG (topbar) | `exportPNG()` | Square fit-square PNG of filtered set with title band + per-cell labels (sRGB) |
-| PNG pure (topbar) | `exportFilteredPurePNG()` | 4096 x 4096 pure-color PNG of filtered set. No title band, no labels, no borders, no gap (sRGB) |
+| PNG (topbar) | `exportPNG()` | Fixed-size PNG of filtered set with title band + per-cell labels (sRGB) |
+| PNG pure (topbar) | `exportFilteredPurePNG()` | Fixed-size pure-color PNG of filtered set. No title band, no labels, no borders, no external margin (sRGB) |
 | TIFF (topbar) | `exportFilteredTIFF()` | Same layout as PNG but every pixel routed through the active reverse LUT to chunky 8-bit CMYK. ICC tag 34675 embedded when `icc/<filename>` is reachable |
-| TIFF pure (topbar) | `exportFilteredPureTIFF()` | 4096 x 4096 lossless CMYK TIFF of filtered set. Each tile carries the swatch's stored C/M/Y/K directly - no sRGB round-trip |
+| TIFF pure (topbar) | `exportFilteredPureTIFF()` | Fixed-size lossless CMYK TIFF of filtered set. Each tile carries the swatch's stored C/M/Y/K directly - no sRGB round-trip |
 | PNG (labelled, palette) | `exportActivePalettePNGSized()` | Palette PNG at 1024/2048/4096, full labels (sRGB) |
 | PNG (pure, palette) | `exportActivePalettePNGPure()` | Palette PNG at chosen size, swatches only (sRGB) |
 | TIFF (labelled, palette) | `exportActivePaletteTIFFSized()` | Palette TIFF at chosen size, CMYK via rLUT round-trip, ICC embedded when present |
@@ -902,6 +916,79 @@ palette overwritten).
 ZIP writer is pure JS, STORE-only (no compression), ~150 LOC including
 CRC-32 table. PNG data is already deflate-compressed internally so
 STORE is fine.
+
+**Shared export core.** Filtered exports and palette exports differ only
+by swatch source and size dropdown:
+
+- Filtered source: `_masterExportData()`; size: `#filteredImgSize`.
+- Palette source: active palette or palette-by-id; size: `#palImgSize`.
+- `_swatchExportLayout(n, opts)` decides rows, columns, title band,
+  body size, and canvas dimensions.
+- `_swatchTileRect(i, layout)` converts a swatch index into exact pixel
+  bounds.
+- `_paintSwatchFill(ctx, sw, i, layout)` paints the tile.
+- `_drawSwatchTiles(ctx, data, layout, opts)` optionally adds text
+  overlays using the same font families/weights as the UI cell classes:
+  IBM Plex Mono/Fira Mono for numeric text, Zen Antique Soft for the
+  primary Japanese name, mono for alternate names, and matching dynamic
+  cell-size formulas.
+- `_drawSwatchExportCanvas(data, opts)` returns the RGB canvas; callers
+  then encode PNG or convert to CMYK TIFF.
+
+**Full-canvas fixed-size grid.** Fixed-size PNG/TIFF exports no longer
+leave a right/bottom white strip. For a fixed canvas, `fitSquare(n, size)`
+chooses `side = ceil(sqrt(n))` and uses a `side x side` grid. Empty cells
+are allowed at the end when `n` is not a perfect square. Tile bounds are
+calculated by integer canvas division:
+
+```
+x0 = floor(col       * width / cols)
+x1 = floor((col + 1) * width / cols)
+y0 = floor(row       * bodySize / rows)
+y1 = floor((row + 1) * bodySize / rows)
+```
+
+This distributes leftover pixels across tiles, so the grid reaches the
+canvas edges exactly. Empty slots remain paper white by design.
+
+**Safer file naming.** Export filenames are ASCII slugs, short enough for
+older Adobe/RIP/scripts. Underscores separate metadata fields; hyphens
+separate words inside one field. Full metadata stays in manifests.
+
+Canvas exports:
+
+```
+mixo-pal_{palette-name}_{count}_{intent}_{profile}_de{n}_s{step}_na{n}_{space}_{size}px_{style}.{ext}
+mixo-swatches_filtered_{count}_{intent}_{profile}_de{n}_s{step}_na{n}_{space}_{size}px_{style}.{ext}
+```
+
+Data exports (CSV/ZIP/ASE/GPL/JSON) omit canvas size:
+
+```
+mixo-pal_{palette-name}_{count}_{intent}_{profile}_de{n}_s{step}_na{n}_{space}_{kind}.{ext}
+mixo-swatches_filtered_{count}_{intent}_{profile}_de{n}_s{step}_na{n}_{space}_{kind}.{ext}
+```
+
+Where `intent` is `pd50` for Print/D50 or `sd65` for Screen/D65;
+`space` is `rgb`, `cmyk`, or `data`; `style` is `labelled` or `pure`;
+and `kind` is `zip`, `ase`, `gpl`, `csv`, or `json`. Palette names are
+slugged and capped; profile labels are slugged and capped. Example:
+
+```
+mixo-pal_hong-kong-credit-cards-gold_9_pd50_coated-fogra39_de1.8_s10_na3.0_rgb_4096px_labelled.png
+mixo-swatches_filtered_128_pd50_coated-fogra39_de1.8_s10_na3.0_cmyk_zip.zip
+```
+
+**ZIP internals.** Per-swatch rasters use short, ordered basenames so
+palette order survives file browsing and PNG/TIFF siblings pair cleanly:
+
+```
+png/001_ccbbaa_C000-M012-Y024-K000.png
+tiff/001_ccbbaa_C000-M012-Y024-K000.tif
+manifest.txt
+manifest.csv
+manifest.json
+```
 
 ### 7.8 ASE binary format (`buildASE`)
 
@@ -1033,9 +1120,9 @@ When the fetch returns 404 the tag is omitted and the user assigns the
 profile in their RIP / Photoshop by hand. Cached per-filename so repeat
 exports do not re-fetch.
 
-**Pure variants** (`*_pure_*.tif`, `tiff/<base>.tif` inside ZIPs) paint
-each swatch tile with the stored `s.C/M/Y/K` directly - no rLUT round
-trip - so the output is bit-exact CMYK.
+**Pure variants** (`*_pure.tif` canvas exports, `tiff/<base>.tif`
+inside ZIPs) paint each swatch tile with the stored `s.C/M/Y/K`
+directly - no rLUT round trip - so the output is bit-exact CMYK.
 
 **Labelled variants** render the existing sRGB labelled canvas (title
 band + per-cell labels) and walk every pixel through the active
@@ -1078,14 +1165,30 @@ for the typical step-10 workload (~14k swatches, ~500 cells in DOM).
 even within the visible viewport, paint cost stays low. Cells getting
 scrolled into view paint at the last possible moment.
 
-### 8.4 Why the K-tier filter defaults to "all"
+### 8.4 Why export filenames are metadata-rich but capped
+
+The file needs to be understandable after it leaves the app, but design
+pipelines still include older Adobe tools, RIP hot folders, ZIP readers,
+NAS shares, and scripts that dislike long paths. The compromise is:
+
+- filename carries scope, set name, count, print/screen intent, profile,
+  dE max, step, naming accuracy, output color space, size when relevant,
+  and style/kind;
+- palette/profile labels are slugged and capped;
+- no spaces, slashes, punctuation, emoji, or non-ASCII;
+- manifests carry the full uncapped metadata and per-swatch truth.
+
+This keeps common filenames around 90-150 characters while still being
+auditable from disk.
+
+### 8.5 Why the K-tier filter defaults to "all"
 
 Originally defaulted to Tier 1 (Brand, K <= 25) as an anti-AI-purple
 "low K by default" heuristic. Confusing for a tool whose purpose is open
 exploration. Now: filter is a user choice, defaults open, narrow via UI
 pills if you want a low-K subset.
 
-### 8.5 Why these ICC neutral + Pure RGB reference strips
+### 8.6 Why these ICC neutral + Pure RGB reference strips
 
 Earlier iterations showed an ICC-neutral strip paired with a literal
 K-only sweep. The K-only data was duplicated by the main lattice
@@ -1098,14 +1201,14 @@ designer-facing comparison: the gap between rows is the drift the
 designer needs to plan around. The K-only sweep can still be obtained
 from the main grid by filtering CMY=0.
 
-### 8.6 Why responsive cell sizing in Hue x Light
+### 8.7 Why responsive cell sizing in Hue x Light
 
 The map is fixed at 18 hue x 10 light buckets. At large cell sizes
 (say 160 px) the map's natural width is 2,880+ px, easily wider than
 most viewports. Rather than horizontal-scroll (frustrating UX) we
 shrink-to-fit while preserving labels where they fit.
 
-### 8.7 Why no DIC / Pantone upload
+### 8.8 Why no DIC / Pantone upload
 
 DIC and Pantone are trademarked color systems. Their hex equivalents
 are not freely redistributable. The previous UI had a CSV upload path
@@ -1113,31 +1216,32 @@ which was useful but also a server-side abuse surface if hosted. We
 removed the upload path entirely; the JSON corpus can be hand-edited
 to add private color systems offline.
 
-### 8.8 Why no ICC upload via UI
+### 8.9 Why no ICC upload via UI
 
 Same reason: server-side file upload is an abuse surface. The whole
 ICC pipeline runs locally via Python anyway. Drop the .icc file in,
 run one script, refresh. That is the workflow.
 
-### 8.9 Why button-group mode switcher
+### 8.10 Why button-group mode switcher
 
 Two modes (Grid / Palettes) use a segmented button group. Hue x Light
 moved to Sort by (§7.4), so a three-button group was no longer necessary.
 The two-button group is more compact and the Hue x Light option is now
 adjacent to the other sort options where it belongs semantically.
 
-### 8.10 UI consolidation rationale (Spec 6)
+### 8.11 UI consolidation rationale (Spec 6)
 
 Several UI changes were bundled in Spec 6 to reduce sidebar surface area:
 
 - **Hue x Light -> Sort by**: bringing a layout-style view into the sort
   row eliminates a mode-switch and makes it composable with filters.
-- **Palettes collapsable panel**: the split between the palette dropdown
-  and the palette-manager panel was confusing. One collapsable panel with
-  a clear header reduces the mental model.
-- **Per-swatch ZIP**: previously export required selecting a palette. The
-  per-swatch ZIP lets the user export a single color directly from its
-  detail card without creating a palette.
+- **Palettes toolbar + view split**: the compact toolbar remains for
+  active-palette selection and global actions, while the full palette
+  manager renders in its own main view (`#pmWrap`) with full scroll
+  ownership and no auto-open side effects.
+- **Per-swatch ZIP**: filtered and palette exports can produce one
+  ordered ZIP containing 128x128 PNG/TIFF siblings plus manifests for
+  every exported swatch.
 - **Light + dark theme with topbar toggle**: the app ships both themes.
   **First-run default is dark**; OS `prefers-color-scheme` is intentionally
   ignored (the app's brand surface is the dark palette, the landing page
@@ -1161,10 +1265,12 @@ Several UI changes were bundled in Spec 6 to reduce sidebar surface area:
 | Initial page load | < 200 ms | LUT lazy-fetched, corpora ~3 KB |
 | Profile switch (step 10) | < 200 ms | LUT fetch + derive 14k swatches |
 | Profile switch (step 5) | < 1.5 s | Chunked w/ rAF |
-| Filter slider drag | rAF-batched | `render()` only repaints viewport |
+| Filter slider drag | rAF-batched | `render()` max once/frame; filtered/sorted cache avoids repeated scans |
 | Scroll | 60 fps | rAF-throttled paint, _lastWindow cache |
-| PNG export 4096^2 | ~2 s | One-shot canvas, no virtualization |
-| ZIP build (50 swatches) | < 200 ms | Pure JS, STORE-only |
+| PNG export 4096^2 | ~2 s | Shared canvas renderer; full-canvas grid; no virtualization |
+| TIFF pure 4096^2 | < 200 ms | Direct CMYK buffer, chunked progress |
+| TIFF labelled 4096^2 | ~0.8-1.2 s | Shared labelled canvas -> rLUT walk, yields every 64 rows |
+| ZIP build (50 swatches) | < 300 ms | Pure JS, STORE-only; progress yields per chunk |
 
 If step 5 ever feels too slow at default profile, raise initial
 TAC limit lower or cap K-tier to bring count down before profile
@@ -1223,11 +1329,11 @@ The HTML is self-contained, no build step. Compose:
 6. **Virtualized grid + cell builder** (§7.2)
 7. **ICC neutral + Pure RGB reference strips** (§5): neutral via
    reverse+forward round-trip; RGB ref computed inline (no profile)
-8. **Hue x Light sort** (§7.4) rendered inline, responsive cell sizing (§8.6)
-9. **Palette CRUD + collapsable panel** (§7.6) with localStorage persistence
+8. **Hue x Light sort** (§7.4) rendered inline, responsive cell sizing (§8.7)
+9. **Palette CRUD + Palettes view** (§7.6) with localStorage persistence
 10. **Exports** (§7.7): CSV, PNG (labelled + pure), TIFF (labelled + pure, CMYK + optional ICC embed), ZIP (per-swatch png/ + tiff/ + manifest), ASE (CMYK + RGB variants), GPL
 11. **Tooltips** on every control (laymen friendly, not jargon)
-12. **2-button mode switcher** (§8.9)
+12. **2-button mode switcher** (§8.10)
 
 ### 10.6 Run the stack locally
 

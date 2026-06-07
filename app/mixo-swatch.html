@@ -522,7 +522,10 @@ input[type=range]{accent-color:var(--accent)}
   font-family:var(--font-sans);
 }
 /* ── Palettes-mode panels ── */
-.pm-wrap{padding:14px 16px 80px;display:flex;flex-direction:column;gap:24px}
+.pm-wrap{
+  padding:14px 16px 80px;display:none;flex-direction:column;gap:24px;
+  flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;
+}
 .pm-panel{
   background:var(--surface);border:1px solid var(--border);
   border-radius:8px;padding:14px 16px;
@@ -871,6 +874,21 @@ html[lang^="zh"] .intro-btn .intro-zh{display:inline}
 @media (max-width: 767px) {
   .btn, .sort-btn, .pill, .preset-btn, .mode-btn {
     min-height: 44px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration:.001ms !important;
+    animation-iteration-count:1 !important;
+    scroll-behavior:auto !important;
+    transition-duration:.001ms !important;
+  }
+  .swatch-cell:hover {
+    transform:none;
+    box-shadow:0 0 0 2px rgb(var(--accent-rgb) / .42);
+  }
+  .pal-select-btn.on .pal-select-dot {
+    animation:none;
   }
 }
 </style>
@@ -1415,6 +1433,22 @@ let RAW = [];           // current generated lattice (all swatches)
 let DEDUP = [];         // dedupe-by-CMYK view, all derivations attach here
 let MAIN_DATA = [];     // non-K-only swatches for the main grid
 let GS_DATA = [];       // pure-K column for the greyscale strip
+let DEDUP_BY_KEY = new Map();
+let _dataVersion = 0;
+let _filterCache = { key: '', data: [] };
+let _sortCache = { key: '', data: [] };
+
+function _invalidateDataCaches() {
+  _dataVersion++;
+  _filterCache = { key: '', data: [] };
+  _sortCache = { key: '', data: [] };
+}
+function _rebuildDedupIndex() {
+  DEDUP_BY_KEY = new Map(DEDUP.map(s => [_swKey(s), s]));
+}
+function _liveSwatch(s) {
+  return DEDUP_BY_KEY.get(_swKey(s)) || s;
+}
 
 // LUT cache (profile filename -> Uint8Array)
 const LUT_CACHE = new Map();
@@ -2144,6 +2178,7 @@ async function rematchAll() {
     // eslint-disable-next-line no-await-in-loop
     await rematchOne(lib.id);
   }
+  _invalidateDataCaches();
 }
 
 // Dynamic sidebar UI: one row per corpus library, with a display dropdown
@@ -2422,7 +2457,9 @@ async function rebuildAll() {
   });
   GS_DATA   = DEDUP.filter(s => s.C===0 && s.M===0 && s.Y===0 && s.K>0);
   MAIN_DATA = DEDUP.filter(s => !(s.C===0 && s.M===0 && s.Y===0 && s.K>0));
+  _rebuildDedupIndex();
   for (const lib of CORPORA.libraries) _markClosest(lib);
+  _invalidateDataCaches();
 
   _setProgress(100, 'Done');
   if (status) status.textContent = ACTIVE_PROFILE.label;
@@ -2581,7 +2618,14 @@ function _togglePalMenu(id, forcePosition) {
   }
 }
 function _closeAllPalMenus() {
-  document.querySelectorAll('.pal-menu').forEach(m => { m.hidden = true; });
+  document.querySelectorAll('.pal-menu').forEach(m => {
+    m.hidden = true;
+    m.style.position = '';
+    m.style.top = '';
+    m.style.left = '';
+    m.style.right = '';
+    m.style.bottom = '';
+  });
 }
 document.addEventListener('click', function(e) {
   if (!e.target.closest('.pal-dropdown')) _closeAllPalMenus();
@@ -2652,9 +2696,7 @@ function setViewMode(m) {
   ['grid','palettes'].forEach(k => {
     document.getElementById('mode-' + k)?.classList.toggle('active', k === m);
   });
-  // Palettes view renders INSIDE the palette panel body. Auto-open the
-  // panel so the rendered content is visible.
-  if (m === 'palettes' && typeof _ensurePalettePanelOpen === 'function') _ensurePalettePanelOpen();
+  _closeAllPalMenus();
   // Update topbar count: palette mode swaps to palette-count, else clear
   if (m === 'palettes')
     document.getElementById('countLabel').textContent =
@@ -2708,8 +2750,8 @@ function clearPaletteById(id) {
 
 function exportPalettePNGById(id) {
   const p = palettes.find(x => x.id === id); if (!p || !p.swatches.length) { alert('Empty palette.'); return; }
-  const data = p.swatches.map(s => DEDUP.find(d => _swKey(d) === _swKey(s)) || s);
-  _renderSwatchPNG(data, `palette_${p.name.replace(/[^\w\-]+/g,'_')}.png`,
+  const data = p.swatches.map(_liveSwatch);
+  return _renderSwatchPNG(data, _exportDataFile('palette', p.name, data.length, 'rgb', 'labelled', 'png'),
                    { title: `Palette - ${p.name}` });
 }
 
@@ -2717,9 +2759,10 @@ function exportPaletteJSONById(id) {
   const p = palettes.find(x => x.id === id); if (!p) return;
   const out = { format: PAL_FMT, exported: new Date().toISOString(), palettes:[p] };
   const blob = new Blob([JSON.stringify(out, null, 2)], {type:'application/json'});
+  const count = Array.isArray(p.swatches) ? p.swatches.length : 0;
   const a = Object.assign(document.createElement('a'),
     {href:URL.createObjectURL(blob),
-     download:`palette_${p.name.replace(/[^\w\-]+/g,'_')}.palettes.json`});
+     download:_exportDataFile('palette', p.name, count, 'data', 'json', 'json')});
   a.click();
   setTimeout(()=>URL.revokeObjectURL(a.href), 1000);
 }
@@ -2731,7 +2774,6 @@ function setActivePalette(id) {
 }
 
 function renderPaletteMode() {
-  document.getElementById('palettePanel')?.classList.add('open');
   const wrap = document.getElementById('pmWrap');
   wrap.innerHTML = '';
   const titleEl = document.createElement('div');
@@ -2827,7 +2869,7 @@ function renderPaletteMode() {
       const topHtml= topRoma+ (showJpn?fzRoma+2:0);
 
       p.swatches.forEach(stored => {
-        const sw = DEDUP.find(d => _swKey(d) === _swKey(stored)) || stored;
+        const sw = _liveSwatch(stored);
         const cell = document.createElement('div');
         cell.className = 'swatch-cell';
         cell.style.cssText = `background:${sw.hex};width:${cs}px;contain-intrinsic-size:${cs}px ${cs}px`;
@@ -2921,7 +2963,6 @@ function removeFromPalette(sw) {
   p.updated = Date.now();
   savePalettes();
   refreshPalUI();
-  render();
 }
 
 function toggleSwatchInPalette(sw) {
@@ -2933,21 +2974,22 @@ function toggleSwatchInPalette(sw) {
     } else if (confirm('No palette exists yet. Create one now?')) {
       newPalette();
       // newPalette returns synchronously after setting activeId; re-try
-      if (_activePalette()) toggleSwatchInPalette(sw);
+      if (_activePalette()) return toggleSwatchInPalette(sw);
     }
-    return;
+    return false;
   }
   const key = _swKey(sw);
   if (p.swatches.some(x => _swKey(x) === key)) removeFromPalette(sw);
   else addToPalette(sw);
-  render();
+  _scheduleRender();
+  return true;
 }
 
 function exportPalettes() {
   const out = { format: PAL_FMT, exported: new Date().toISOString(), palettes };
   const blob = new Blob([JSON.stringify(out, null, 2)], {type:'application/json'});
   const a = Object.assign(document.createElement('a'),
-    {href:URL.createObjectURL(blob), download:`cmyk_swatches.palettes.json`});
+    {href:URL.createObjectURL(blob), download:`mixo-palettes_${palettes.length}_backup.json`});
   a.click();
   setTimeout(()=>URL.revokeObjectURL(a.href), 1000);
 }
@@ -2987,11 +3029,8 @@ function importPalettes(evt) {
 
 function exportActivePalettePNG() {
   const p = _activePalette(); if (!p || !p.swatches.length) { alert('Active palette is empty.'); return; }
-  const data = p.swatches.map(s => {
-    const full = DEDUP.find(d => _swKey(d) === _swKey(s));
-    return full || s;
-  });
-  _renderSwatchPNG(data, `palette_${p.name.replace(/[^\w\-]+/g,'_')}.png`,
+  const data = p.swatches.map(_liveSwatch);
+  return _renderSwatchPNG(data, _exportDataFile('palette', p.name, data.length, 'rgb', 'labelled', 'png'),
                    { title: `Palette - ${p.name}` });
 }
 
@@ -3017,7 +3056,7 @@ function setCellSlider(v) {
 }
 
 // ── filtering ────────────────────────────────────────────────────────────────
-function filtered() {
+function _filterState() {
   const cMn=+document.getElementById('slCmn').value;
   const cMx=+document.getElementById('slCmx').value;
   const mMn=+document.getElementById('slMmn').value;
@@ -3034,57 +3073,82 @@ function filtered() {
   const bt  = document.getElementById('togBt').checked;
   const q   = document.getElementById('searchQ').value.toLowerCase().trim();
   const st  = curStep;
+  const libs = CORPORA.libraries
+    .map(lib => `${lib.id}:${_libFilterEnabled(lib.id) ? 1 : 0}:${_libDisplayField(lib.id) || ''}`)
+    .join('|');
+  const key = [
+    _dataVersion, ACTIVE_PROFILE?.filename || '', LAB_MODE, st,
+    cMn,cMx,mMn,mMx,yMn,yMx,kMn,kMx,tac,deMax,curKTier,curNamed,curTol,
+    aa?1:0, aaa?1:0, wt?1:0, bt?1:0, q, libs
+  ].join('~');
+  return { key, cMn,cMx,mMn,mMx,yMn,yMx,kMn,kMx,tac,deMax,aa,aaa,wt,bt,q,st };
+}
 
-  return MAIN_DATA.filter(s => {
-    if (s.C%st!==0||s.M%st!==0||s.Y%st!==0||s.K%st!==0) return false;
-    if (s.C<cMn||s.C>cMx) return false;
-    if (s.M<mMn||s.M>mMx) return false;
-    if (s.Y<yMn||s.Y>yMx) return false;
-    if (s.K<kMn||s.K>kMx) return false;
-    if (s.tac>tac) return false;
-    if (typeof s.delta_e_print === 'number' && s.delta_e_print > deMax) return false;
+function filtered() {
+  const fs = _filterState();
+  if (_filterCache.key === fs.key) return _filterCache.data;
+
+  const out = MAIN_DATA.filter(s => {
+    if (s.C%fs.st!==0||s.M%fs.st!==0||s.Y%fs.st!==0||s.K%fs.st!==0) return false;
+    if (s.C<fs.cMn||s.C>fs.cMx) return false;
+    if (s.M<fs.mMn||s.M>fs.mMx) return false;
+    if (s.Y<fs.yMn||s.Y>fs.yMx) return false;
+    if (s.K<fs.kMn||s.K>fs.kMx) return false;
+    if (s.tac>fs.tac) return false;
+    if (typeof s.delta_e_print === 'number' && s.delta_e_print > fs.deMax) return false;
     if (s.k_tier > curKTier) return false;
     if (curNamed === 'any' && !anyCorpusVisible(s)) return false;
-    if (aa  && !s.wcag_aa)  return false;
-    if (aaa && !s.wcag_aaa) return false;
-    if (wt  && s.text_color!=='#FFFFFF') return false;
-    if (bt  && s.text_color!=='#000000') return false;
-    if (q) {
+    if (fs.aa  && !s.wcag_aa)  return false;
+    if (fs.aaa && !s.wcag_aaa) return false;
+    if (fs.wt  && s.text_color!=='#FFFFFF') return false;
+    if (fs.bt  && s.text_color!=='#000000') return false;
+    if (fs.q) {
       // Search across hex + all corpus matches (primary + secondary fields).
       const parts = [s.hex];
       for (const lib of CORPORA.libraries) {
         const m = s.matches?.[lib.id];
         if (m && m.entry) for (const f of lib.fields) parts.push(m.entry[f.id]);
       }
-      if (!parts.filter(Boolean).join(' ').toLowerCase().includes(q)) return false;
+      if (!parts.filter(Boolean).join(' ').toLowerCase().includes(fs.q)) return false;
     }
     return true;
   });
+  _filterCache = { key: fs.key, data: out };
+  _sortCache = { key: '', data: [] };
+  return out;
 }
 
 function sorted(arr) {
+  const cacheKey = (_filterCache.data === arr ? _filterCache.key : `external:${arr.length}:${_dataVersion}`) + `|sort:${sortMode}`;
+  if (_sortCache.key === cacheKey) return _sortCache.data;
+  let out;
   switch (sortMode) {
     case 'L':
-      return arr.slice().sort((a,b)=>a.L_star - b.L_star);
+      out = arr.slice().sort((a,b)=>a.L_star - b.L_star);
+      break;
     case 'tac':
-      return arr.slice().sort((a,b)=>a.tac - b.tac);
+      out = arr.slice().sort((a,b)=>a.tac - b.tac);
+      break;
     case 'C':
-      return arr.slice().sort((a,b)=>a.C - b.C);
+      out = arr.slice().sort((a,b)=>a.C - b.C);
+      break;
     case 'chroma':
-      return arr.slice().sort((a,b)=>{
+      out = arr.slice().sort((a,b)=>{
         const ca = Math.hypot(a.a_star, a.b_star);
         const cb = Math.hypot(b.a_star, b.b_star);
         return ca - cb || a.L_star - b.L_star;
       });
+      break;
     case 'safety':
-      return arr.slice().sort((a,b)=>{
+      out = arr.slice().sort((a,b)=>{
         const da = a.delta_e_print ?? Infinity;
         const db = b.delta_e_print ?? Infinity;
         return da - db || (-(a.L_star - b.L_star));
       });
+      break;
     case 'hue':
     default:
-      return arr.slice().sort((a,b)=>{
+      out = arr.slice().sort((a,b)=>{
         const ca = Math.hypot(a.a_star, a.b_star);
         const cb = Math.hypot(b.a_star, b.b_star);
         const isNeutralA = ca < 6, isNeutralB = cb < 6;
@@ -3095,7 +3159,10 @@ function sorted(arr) {
         const hb = (Math.atan2(b.b_star, b.a_star)*180/Math.PI + 360) % 360;
         return ha - hb || a.L_star - b.L_star;
       });
+      break;
   }
+  _sortCache = { key: cacheKey, data: out };
+  return out;
 }
 
 // ── render ───────────────────────────────────────────────────────────────────
@@ -3157,7 +3224,12 @@ function _makeSwatchCell(sw, ctx) {
     cell.appendChild(c);
   }
   cell.addEventListener('click', () => {
-    if (selectMode) toggleSwatchInPalette(sw);
+    if (selectMode) {
+      const wasInPalette = cell.classList.contains('in-palette');
+      if (toggleSwatchInPalette(sw) !== false) {
+        cell.classList.toggle('in-palette', !wasInPalette);
+      }
+    }
     else openDetail(sw);
   });
   return cell;
@@ -3213,7 +3285,7 @@ function _fitCellTexts(root) {
 function render() {
   // Two view modes: 'grid' (default - renders the swatch lattice or, when
   // sortMode === 'huelight', the bucket map - both inside #swatchGrid)
-  // and 'palettes' (renders palette cards inside the palette panel body).
+  // and 'palettes' (renders palette cards in #pmWrap as its own scroll area).
   const isPalettes = (viewMode === 'palettes');
   const isHueLight = !isPalettes && (sortMode === 'huelight');
   document.getElementById('swatchGrid').style.display = isPalettes ? 'none' : '';
@@ -3228,7 +3300,10 @@ function render() {
       .removeEventListener('scroll', window._scrollPaintHandler);
     window._scrollPaintHandler = null;
   }
-  if (isPalettes) { renderPaletteMode(); return; }
+  if (isPalettes) {
+    renderPaletteMode();
+    return;
+  }
   if (isHueLight) { renderHueLightMap(document.getElementById('swatchGrid')); return; }
 
   const data = sorted(filtered());
@@ -3832,10 +3907,12 @@ function setGlobalAnchor(v) {
   if (typeof rematchAll === 'function') {
     rematchAll().then(() => {
       for (const lib of CORPORA.libraries) _markClosest(lib);
+      _invalidateDataCaches();
       if (typeof _scheduleRender === 'function') _scheduleRender();
     });
   } else {
     for (const lib of CORPORA.libraries) _markClosest(lib);
+    _invalidateDataCaches();
     if (typeof _scheduleRender === 'function') _scheduleRender();
   }
 }
@@ -4032,7 +4109,7 @@ function exportCSV() {
   });
   const blob = new Blob(['﻿'+rows.join('\n')],{type:'text/csv;charset=utf-8'});
   const a = Object.assign(document.createElement('a'),
-    {href:URL.createObjectURL(blob), download:'cmyk_step' + curStep + '.csv'});
+    {href:URL.createObjectURL(blob), download:_exportDataFile('swatches', 'filtered', data.length, 'data', 'csv', 'csv')});
   a.click();
 }
 
@@ -4063,7 +4140,7 @@ function exportPNG() {
   const data = _masterExportData();
   if (!data.length) { alert('No swatches to export.'); return; }
   const sz = _filteredImgSize();
-  _renderSwatchPNG(data, `mixo_swatches_${data.length}_step${curStep}_${sz}.png`,
+  return _renderSwatchPNG(data, _exportCanvasFile('swatches', 'filtered', data.length, 'rgb', sz, 'labelled', 'png'),
                    { title: 'Mixo Swatch - filtered view', canvasSize: sz });
 }
 
@@ -4071,13 +4148,13 @@ function exportPNG() {
 // between cells. Tiles abut edge-to-edge inside a square canvas sized by
 // the user's #filteredImgSize dropdown. Cell size = floor(sz / max(cols, rows));
 // any remainder leaves whitespace at the bottom / right (background filled white).
-function exportFilteredPurePNG() {
+async function exportFilteredPurePNG() {
   const data = _masterExportData();
   if (!data.length) { alert('No swatches to export.'); return; }
   const sz = _filteredImgSize();
-  _renderPalettePurePNG(
+  await _renderPalettePurePNG(
     data,
-    `cmyk_swatches_pure_${data.length}_step${curStep}_${sz}.png`,
+    _exportCanvasFile('swatches', 'filtered', data.length, 'rgb', sz, 'pure', 'png'),
     sz
   );
 }
@@ -4091,7 +4168,7 @@ async function exportFilteredPureTIFF() {
   const sz = _filteredImgSize();
   await _renderPaletteCMYKTIFFPure(
     data,
-    `cmyk_swatches_pure_${data.length}_step${curStep}_${sz}.tif`,
+    _exportCanvasFile('swatches', 'filtered', data.length, 'cmyk', sz, 'pure', 'tif'),
     sz
   );
 }
@@ -4106,135 +4183,189 @@ async function exportFilteredTIFF() {
   const sz = _filteredImgSize();
   await _renderSwatchTIFF(
     data,
-    `cmyk_swatches_${data.length}_step${curStep}_${sz}.tif`,
+    _exportCanvasFile('swatches', 'filtered', data.length, 'cmyk', sz, 'labelled', 'tif'),
     { title: 'Mixo Swatch - filtered view', canvasSize: sz }
   );
 }
 
-// Build the labelled filtered-view canvas (used by PNG + TIFF exporters).
-// Returns the populated <canvas> element; callers do the blob/encode step.
-function _drawFilteredSwatchCanvas(data, opts = {}) {
-  const n    = data.length;
-  const TITLE_BAND = 96;
-  let cs, cols, rows, canvas;
-
+function _swatchExportLayout(n, opts = {}) {
+  const titleBand = opts.labelled === false ? 0 : (opts.titleBand || 96);
+  let cell, cols, rows, bodySize, width, height;
   if (opts.canvasSize) {
-    // Fixed canvas size mode: use fitSquare to auto-calculate the best cell size
     const fit = fitSquare(n, opts.canvasSize);
     cols = fit.cols;
     rows = fit.rows;
-    cs   = Math.max(8, fit.cell);
-    canvas = document.createElement('canvas');
-    canvas.width  = opts.canvasSize;
-    canvas.height = TITLE_BAND + opts.canvasSize;
+    cell = Math.max(1, fit.cell);
+    bodySize = opts.canvasSize;
+    width = opts.canvasSize;
+    height = titleBand + opts.canvasSize;
   } else {
-    // Legacy mode: use the slider cell size
-    cs   = curCell;
+    cell = curCell;
     cols = Math.ceil(Math.sqrt(n));
     rows = Math.ceil(n / cols);
-    canvas = document.createElement('canvas');
-    canvas.width  = cols * cs;
-    canvas.height = TITLE_BAND + rows * cs;
+    bodySize = rows * cell;
+    width = cols * cell;
+    height = titleBand + bodySize;
   }
-  const ctx = canvas.getContext('2d');
+  return { titleBand, cell, cols, rows, bodySize, width, height };
+}
 
-  // Title band - dark slate background, white text
-  ctx.fillStyle = '#1F1F23';
-  ctx.fillRect(0, 0, canvas.width, TITLE_BAND);
-  ctx.textBaseline = 'top';
-  ctx.fillStyle = '#F4F4F6';
-  ctx.font = `600 28px "IBM Plex Sans", system-ui, sans-serif`;
-  const title = opts.title || 'Mixo Swatch';
-  ctx.fillText(title, 22, 18);
-  ctx.font = `13px "IBM Plex Mono", ui-monospace, monospace`;
-  ctx.fillStyle = '#B5B5BE';
-  const profileLabel = ACTIVE_PROFILE?.label || 'no profile';
-  const profileFile  = ACTIVE_PROFILE?.filename || '';
-  ctx.fillText(`profile: ${profileLabel}  (${profileFile})`, 22, 52);
-  const tac = document.getElementById('slTAC')?.value;
-  const step = curStep;
-  ctx.fillText(`step ${step}   TAC limit ${tac}%   swatches: ${n.toLocaleString()}`, 22, 72);
+function _swatchTileRect(i, layout) {
+  const col = i % layout.cols;
+  const row = Math.floor(i / layout.cols);
+  if (layout.bodySize) {
+    const x0 = Math.floor(col * layout.width / layout.cols);
+    const x1 = Math.floor((col + 1) * layout.width / layout.cols);
+    const y0 = Math.floor(row * layout.bodySize / layout.rows);
+    const y1 = Math.floor((row + 1) * layout.bodySize / layout.rows);
+    return { cx: x0, cy: y0, w: x1 - x0, h: y1 - y0, cs: layout.cell };
+  }
+  return { cx: col * layout.cell, cy: row * layout.cell, w: layout.cell, h: layout.cell, cs: layout.cell };
+}
 
-  // Translate the swatch grid down past the title band
-  ctx.save();
-  ctx.translate(0, TITLE_BAND);
-  ctx.textBaseline = 'top';
+function _paintSwatchFill(ctx, sw, i, layout) {
+  const { cx, cy, w, h, cs } = _swatchTileRect(i, layout);
+  ctx.fillStyle = sw.hex;
+  ctx.fillRect(cx, cy, w, h);
+  return { cx, cy, w, h, cs };
+}
 
-  // font scales mirror render()
-  const fzCmyk = Math.max(5, Math.round(cs * 0.09));
-  const fzHex  = Math.max(5, Math.round(cs * 0.10));
-  const fzJpn  = Math.max(7, Math.round(cs * 0.18));
-  const fzHtml = Math.max(4, Math.round(cs * 0.09));
-  const fzBadg = Math.max(5, Math.round(cs * 0.10));
-  const fzCR   = Math.max(4, Math.round(cs * 0.09));
+const EXPORT_TILE_FONT = {
+  mono: '"IBM Plex Mono", "Fira Mono", monospace',
+  jpnSerif: '"Zen Antique Soft", serif',
+};
 
-  const showHex  = cs >= 36;
-  const showJpn  = cs >= 52;
-  const showHtml = cs >= 70;
-  const showCR   = cs >= 60;
-  const showBadge= cs >= 22;
-  const showLabel= cs >= 22;
+function _swatchTileTextSpec(cell) {
+  const cmyk = Math.max(5, Math.round(cell * 0.09));
+  const hex = Math.max(5, Math.round(cell * 0.10));
+  const name = Math.max(7, Math.round(cell * 0.18));
+  const altName = Math.max(4, Math.round(cell * 0.09));
+  const badge = Math.max(5, Math.round(cell * 0.10));
+  const contrast = Math.max(4, Math.round(cell * 0.09));
+  return {
+    size: { cmyk, hex, name, altName, badge, contrast },
+    font: {
+      cmyk: `500 ${cmyk}px ${EXPORT_TILE_FONT.mono}`,
+      hex: `${hex}px ${EXPORT_TILE_FONT.mono}`,
+      name: `300 ${name}px ${EXPORT_TILE_FONT.jpnSerif}`,
+      altName: `${altName}px ${EXPORT_TILE_FONT.mono}`,
+      badge: `500 ${badge}px ${EXPORT_TILE_FONT.mono}`,
+      contrast: `${contrast}px ${EXPORT_TILE_FONT.mono}`,
+    },
+    show: {
+      cmyk: cell >= 22,
+      hex: cell >= 36,
+      name: cell >= 52,
+      altName: cell >= 70,
+      badge: cell >= 22,
+      contrast: cell >= 60,
+    },
+    top: {
+      cmyk: 2,
+      hex: 2 + cmyk + 2,
+      name: 2 + cmyk + 2 + (cell >= 36 ? hex + 2 : 0),
+    },
+    pad: 3,
+  };
+}
 
-  const topCmyk = 2;
-  const topHex  = topCmyk + fzCmyk + 2;
-  const topJpn  = topHex  + (showHex ? fzHex + 2 : 0);
+function _drawSwatchTiles(ctx, data, layout, opts = {}) {
+  const cs = layout.cell;
+  const labelled = opts.labelled !== false;
+  if (opts.fillBackground !== false) {
+    ctx.fillStyle = '#FFFFFF';
+    ctx.fillRect(0, 0, layout.width, layout.bodySize);
+  }
 
-  const mono = '"IBM Plex Mono", ui-monospace, monospace';
-  const sans = '"Noto Sans JP", system-ui, sans-serif';
-  const pad  = 3;
+  const text = _swatchTileTextSpec(cs);
 
-  data.forEach((sw, i) => {
-    const cx = (i % cols) * cs;
-    const cy = Math.floor(i / cols) * cs;
-
-    // fill
-    ctx.fillStyle = sw.hex;
-    ctx.fillRect(cx, cy, cs, cs);
+  for (let i = 0; i < data.length; i++) {
+    const sw = data[i];
+    const { cx, cy } = _paintSwatchFill(ctx, sw, i, layout);
+    if (!labelled) continue;
 
     ctx.fillStyle = sw.text_color;
 
-    if (showLabel) {
-      ctx.font = `${fzCmyk}px ${mono}`;
-      ctx.fillText(`C${sw.C} M${sw.M} Y${sw.Y} K${sw.K}`, cx+pad, cy+topCmyk);
+    if (text.show.cmyk) {
+      ctx.font = text.font.cmyk;
+      ctx.fillText(`C${sw.C} M${sw.M} Y${sw.Y} K${sw.K}`, cx+text.pad, cy+text.top.cmyk);
     }
-    if (showHex) {
-      ctx.font = `${fzHex}px ${mono}`;
-      ctx.fillText(sw.hex, cx+pad, cy+topHex);
+    if (text.show.hex) {
+      ctx.font = text.font.hex;
+      ctx.fillText(sw.hex, cx+text.pad, cy+text.top.hex);
     }
-    if (showJpn) {
-      let yCursor = cy + topJpn;
+    if (text.show.name) {
+      let yCursor = cy + text.top.name;
       for (const ent of _renderSwatchNames(sw)) {
-        const fz = ent.libId === 'jp-trad' ? fzJpn : fzHtml;
-        if (ent.libId === 'jp-trad' && !showJpn) continue;
-        if (ent.libId !== 'jp-trad' && !showHtml) continue;
-        ctx.font = (ent.libId === 'jp-trad' ? `600 ${fz}px ${sans}` : `${fz}px ${sans}`);
-        ctx.fillText(ent.name, cx+pad, yCursor); yCursor += fz + 2;
+        const isPrimaryName = ent.libId === 'jp-trad';
+        if (!isPrimaryName && !text.show.altName) continue;
+        ctx.font = isPrimaryName ? text.font.name : text.font.altName;
+        const lineSize = isPrimaryName ? text.size.name : text.size.altName;
+        ctx.fillText(ent.name, cx+text.pad, yCursor); yCursor += lineSize + 2;
       }
     }
-    if (showBadge) {
+    if (text.show.badge) {
       const tag = sw.wcag_aaa ? 'AAA' : sw.wcag_aa ? 'AA' : '✗';
-      ctx.font = `bold ${fzBadg}px ${mono}`;
+      ctx.font = text.font.badge;
       const w = ctx.measureText(tag).width;
-      ctx.fillText(tag, cx+cs-w-pad, cy+cs-fzBadg-pad);
+      ctx.fillText(tag, cx+cs-w-text.pad, cy+cs-text.size.badge-text.pad);
     }
-    if (showCR) {
-      ctx.font = `${fzCR}px ${mono}`;
-      ctx.fillText(sw.contrast_ratio.toFixed(1)+':1', cx+pad, cy+cs-fzCR-pad);
+    if (text.show.contrast) {
+      ctx.font = text.font.contrast;
+      ctx.fillText(sw.contrast_ratio.toFixed(1)+':1', cx+text.pad, cy+cs-text.size.contrast-text.pad);
     }
-  });
+  }
+}
 
+// Build the export canvas. Pure and labelled exports share layout + fill;
+// labels are just an overlay, and callers later choose PNG or CMYK TIFF.
+function _drawSwatchExportCanvas(data, opts = {}) {
+  const n = data.length;
+  const layout = _swatchExportLayout(n, opts);
+  const canvas = document.createElement('canvas');
+  canvas.width = layout.width;
+  canvas.height = layout.height;
+  const ctx = canvas.getContext('2d');
+
+  if (layout.titleBand) {
+    ctx.fillStyle = '#1F1F23';
+    ctx.fillRect(0, 0, canvas.width, layout.titleBand);
+    ctx.textBaseline = 'top';
+    ctx.fillStyle = '#F4F4F6';
+    ctx.font = `600 28px "IBM Plex Sans", system-ui, sans-serif`;
+    const title = opts.title || 'Mixo Swatch';
+    ctx.fillText(title, 22, 18);
+    ctx.font = `13px "IBM Plex Mono", ui-monospace, monospace`;
+    ctx.fillStyle = '#B5B5BE';
+    const metaLines = opts.metaLines || (() => {
+      const profileLabel = ACTIVE_PROFILE?.label || 'no profile';
+      const profileFile  = ACTIVE_PROFILE?.filename || '';
+      const tac = document.getElementById('slTAC')?.value;
+      return [
+        `profile: ${profileLabel}  (${profileFile})`,
+        `step ${curStep}   TAC limit ${tac}%   swatches: ${n.toLocaleString()}`,
+      ];
+    })();
+    metaLines.slice(0, 2).forEach((line, i) => ctx.fillText(line, 22, 52 + i * 20));
+  }
+
+  ctx.save();
+  ctx.translate(0, layout.titleBand);
+  ctx.textBaseline = 'top';
+  _drawSwatchTiles(ctx, data, layout, opts);
   ctx.restore();
   return canvas;
 }
 
 function _renderSwatchPNG(data, filename, opts = {}) {
-  const canvas = _drawFilteredSwatchCanvas(data, opts);
-  canvas.toBlob(blob => {
+  const canvas = _drawSwatchExportCanvas(data, opts);
+  return new Promise(resolve => canvas.toBlob(blob => {
     const a = Object.assign(document.createElement('a'),
       {href:URL.createObjectURL(blob), download:filename});
     a.click();
     setTimeout(()=>URL.revokeObjectURL(a.href), 1000);
-  }, 'image/png');
+    resolve();
+  }, 'image/png'));
 }
 
 // Convert any RGBA canvas to chunky CMYK Uint8Array via the active rLUT.
@@ -4286,7 +4417,7 @@ async function _renderSwatchTIFF(data, filename, opts = {}) {
     alert('Labelled TIFF needs a reverse LUT for the active profile.');
     return;
   }
-  const canvas = _drawFilteredSwatchCanvas(data, opts);
+  const canvas = _drawSwatchExportCanvas(data, opts);
   const cmyk = await _canvasToCMYKBytes(canvas, _setProgress);
   const icc = await fetchActiveICC();
   const tif = buildTIFF(canvas.width, canvas.height, cmyk, icc);
@@ -4535,10 +4666,50 @@ function downloadBlob(blob, filename) {
   setTimeout(() => URL.revokeObjectURL(a.href), 1000);
 }
 
+function _safeSlug(raw, fallback = 'untitled', maxLen = 48) {
+  const s = String(raw || fallback)
+    .toLowerCase()
+    .replace(/\.[a-z0-9]+$/i, '')
+    .replace(/&/g, ' and ')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/-+/g, '-')
+    .replace(/^-+|-+$/g, '') || fallback;
+  return s.length > maxLen ? s.slice(0, maxLen).replace(/-+$/g, '') : s;
+}
+function _exportProfileSlug() {
+  const raw = ACTIVE_PROFILE?.label || ACTIVE_PROFILE?.filename || 'no-profile';
+  return _safeSlug(raw, 'profile', 24);
+}
+function _exportIntentSlug() {
+  return LAB_MODE === 'd50' ? 'pd50' : 'sd65';
+}
+function _exportDeltaSlug() {
+  const v = document.getElementById('slDE')?.value;
+  return Number.isFinite(+v) ? (+v).toFixed(1) : 'na';
+}
+function _exportBaseName(scope, setName, count) {
+  return [
+    scope === 'palette' ? 'mixo-pal' : 'mixo-swatches',
+    _safeSlug(setName, scope === 'palette' ? 'palette' : 'filtered'),
+    count,
+    _exportIntentSlug(),
+    _exportProfileSlug(),
+    `de${_exportDeltaSlug()}`,
+    `s${curStep}`,
+    `na${curTol.toFixed(1)}`,
+  ].join('_');
+}
+function _exportCanvasFile(scope, setName, count, space, size, style, ext) {
+  return `${_exportBaseName(scope, setName, count)}_${space}_${size}px_${style}.${ext}`;
+}
+function _exportDataFile(scope, setName, count, space, kind, ext) {
+  return `${_exportBaseName(scope, setName, count)}_${space}_${kind}.${ext}`;
+}
+
 function paletteSwatchesFromActive() {
   const p = _activePalette();
   if (!p) return [];
-  return p.swatches.map(s => DEDUP.find(d => _swKey(d) === _swKey(s)) || s);
+  return p.swatches.map(_liveSwatch);
 }
 
 function _exportActivePaletteASE(mode) {
@@ -4547,9 +4718,8 @@ function _exportActivePaletteASE(mode) {
   const sw = paletteSwatchesFromActive();
   assignUniqueNames(sw);
   const buf = buildASE(sw, p.name, mode);
-  const safe = p.name.replace(/[^\w\-]+/g,'_');
   downloadBlob(new Blob([buf], { type: 'application/octet-stream' }),
-               `palette_${safe}.${mode}.ase`);
+               _exportDataFile('palette', p.name, sw.length, mode, 'ase', 'ase'));
 }
 function exportActivePaletteASE_CMYK() { _exportActivePaletteASE('cmyk'); }
 function exportActivePaletteASE_RGB()  { _exportActivePaletteASE('rgb'); }
@@ -4564,17 +4734,16 @@ function exportActivePaletteGPL() {
   assignUniqueNames(sw);
   const text = buildGPL(sw, p.name);
   downloadBlob(new Blob([text], { type: 'text/plain;charset=utf-8' }),
-               `palette_${p.name.replace(/[^\w\-]+/g,'_')}.gpl`);
+               _exportDataFile('palette', p.name, sw.length, 'rgb', 'gpl', 'gpl'));
 }
 
 function _exportPaletteASEById(id, mode) {
   const p = palettes.find(x => x.id === id); if (!p || !p.swatches.length) { alert('Empty palette.'); return; }
-  const sw = p.swatches.map(s => DEDUP.find(d => _swKey(d) === _swKey(s)) || s);
+  const sw = p.swatches.map(_liveSwatch);
   assignUniqueNames(sw);
   const buf = buildASE(sw, p.name, mode);
-  const safe = p.name.replace(/[^\w\-]+/g,'_');
   downloadBlob(new Blob([buf], { type: 'application/octet-stream' }),
-               `palette_${safe}.${mode}.ase`);
+               _exportDataFile('palette', p.name, sw.length, mode, 'ase', 'ase'));
 }
 function exportPaletteASEById_CMYK(id) { _exportPaletteASEById(id, 'cmyk'); }
 function exportPaletteASEById_RGB(id)  { _exportPaletteASEById(id, 'rgb'); }
@@ -4582,11 +4751,11 @@ function exportPaletteASEById(id) { _exportPaletteASEById(id, 'rgb'); }
 
 function exportPaletteGPLById(id) {
   const p = palettes.find(x => x.id === id); if (!p || !p.swatches.length) { alert('Empty palette.'); return; }
-  const sw = p.swatches.map(s => DEDUP.find(d => _swKey(d) === _swKey(s)) || s);
+  const sw = p.swatches.map(_liveSwatch);
   assignUniqueNames(sw);
   const text = buildGPL(sw, p.name);
   downloadBlob(new Blob([text], { type: 'text/plain;charset=utf-8' }),
-               `palette_${p.name.replace(/[^\w\-]+/g,'_')}.gpl`);
+               _exportDataFile('palette', p.name, sw.length, 'rgb', 'gpl', 'gpl'));
 }
 
 
@@ -4812,9 +4981,9 @@ function buildZip(entries) {
 
 // -- Fit-square layout: choose cell size + cols/rows --------------------
 function fitSquare(n, canvasSize) {
-  const cols = Math.ceil(Math.sqrt(n));
-  const rows = Math.ceil(n / cols);
-  const side = Math.max(cols, rows);
+  const side = Math.max(1, Math.ceil(Math.sqrt(n)));
+  const cols = side;
+  const rows = side;
   const cell = Math.floor(canvasSize / side);
   return { cols, rows, cell };
 }
@@ -4855,17 +5024,22 @@ function _paintCmykRect(buf, bufW, x, y, w, h, sC, sM, sY, sK) {
 // -- Pure-TIFF palette export (lossless CMYK, no labels) ---------------
 async function _renderPaletteCMYKTIFFPure(swatches, filename, canvasSize) {
   const n = swatches.length;
-  const { cols, rows, cell } = fitSquare(n, canvasSize);
+  const layout = _swatchExportLayout(n, { canvasSize, labelled: false });
   // Paper white outside the swatch tiles - leaves room when n isn't a
   // perfect square. (0,0,0,0) = no ink.
-  const buf = _newCmykBuffer(canvasSize, canvasSize, 0, 0, 0, 0);
-  swatches.forEach((sw, i) => {
-    const cx = (i % cols) * cell;
-    const cy = Math.floor(i / cols) * cell;
-    _paintCmykRect(buf, canvasSize, cx, cy, cell, cell, sw.C, sw.M, sw.Y, sw.K);
-  });
+  const buf = _newCmykBuffer(layout.width, layout.height, 0, 0, 0, 0);
+  const CHUNK = Math.max(16, Math.floor(1048576 / Math.max(1, layout.cell * layout.cell)));
+  for (let i = 0; i < swatches.length; i++) {
+    const sw = swatches[i];
+    const r = _swatchTileRect(i, layout);
+    _paintCmykRect(buf, layout.width, r.cx, r.cy, r.w, r.h, sw.C, sw.M, sw.Y, sw.K);
+    if (i % CHUNK === CHUNK - 1 || i === swatches.length - 1) {
+      _setProgress(35 + ((i + 1) / swatches.length) * 45, `${i + 1} / ${swatches.length}`);
+      await new Promise(r => requestAnimationFrame(r));
+    }
+  }
   const icc = await fetchActiveICC();
-  const tif = buildTIFF(canvasSize, canvasSize, buf, icc);
+  const tif = buildTIFF(layout.width, layout.height, buf, icc);
   downloadBlob(new Blob([tif], { type: 'image/tiff' }), filename);
 }
 
@@ -4876,83 +5050,50 @@ async function _solidTiffBytes(sw, size = 128, iccBytes) {
 }
 
 // -- Pure-PNG (no text) palette export ---------------------------------
-function _renderPalettePurePNG(swatches, filename, canvasSize) {
+async function _renderPalettePurePNG(swatches, filename, canvasSize) {
   const n = swatches.length;
-  const { cols, rows, cell } = fitSquare(n, canvasSize);
+  const layout = _swatchExportLayout(n, { canvasSize, labelled: false });
   const canvas = document.createElement('canvas');
-  canvas.width = canvas.height = canvasSize;
+  canvas.width = layout.width;
+  canvas.height = layout.height;
   const ctx = canvas.getContext('2d');
   ctx.fillStyle = '#FFFFFF';
-  ctx.fillRect(0, 0, canvasSize, canvasSize);
-  swatches.forEach((sw, i) => {
-    const cx = (i % cols) * cell;
-    const cy = Math.floor(i / cols) * cell;
-    ctx.fillStyle = sw.hex;
-    ctx.fillRect(cx, cy, cell, cell);
-  });
-  canvas.toBlob(blob => {
+  ctx.fillRect(0, 0, layout.width, layout.height);
+  const CHUNK = Math.max(24, Math.floor(1048576 / Math.max(1, layout.cell * layout.cell)));
+  for (let i = 0; i < swatches.length; i++) {
+    _paintSwatchFill(ctx, swatches[i], i, layout);
+    if (i % CHUNK === CHUNK - 1 || i === swatches.length - 1) {
+      _setProgress(35 + ((i + 1) / swatches.length) * 45, `${i + 1} / ${swatches.length}`);
+      await new Promise(r => requestAnimationFrame(r));
+    }
+  }
+  return new Promise(resolve => canvas.toBlob(blob => {
     downloadBlob(blob, filename);
-  }, 'image/png');
+    resolve();
+  }, 'image/png'));
 }
 
-// -- Labelled palette canvas (shared by PNG + TIFF) --------------------
+// -- Labelled palette canvas (same core as filtered labelled PNG/TIFF) -
 function _drawPaletteLabelledCanvas(swatches, canvasSize, title) {
-  const n = swatches.length;
-  const { cols, rows, cell } = fitSquare(n, canvasSize);
-  const TITLE_BAND = Math.max(56, Math.round(canvasSize * 0.05));
-  const canvas = document.createElement('canvas');
-  canvas.width = canvasSize;
-  canvas.height = TITLE_BAND + canvasSize;
-  const ctx = canvas.getContext('2d');
-  // Title band
-  ctx.fillStyle = '#1F1F23';
-  ctx.fillRect(0, 0, canvas.width, TITLE_BAND);
-  ctx.textBaseline = 'top';
-  ctx.fillStyle = '#F4F4F6';
-  ctx.font = `600 ${Math.round(TITLE_BAND * 0.42)}px "IBM Plex Sans", system-ui, sans-serif`;
-  ctx.fillText(title, 18, Math.round(TITLE_BAND * 0.12));
-  ctx.fillStyle = '#B5B5BE';
-  ctx.font = `${Math.round(TITLE_BAND * 0.22)}px "IBM Plex Mono", ui-monospace, monospace`;
-  const sub = (typeof ACTIVE_PROFILE !== 'undefined' && ACTIVE_PROFILE) ? ACTIVE_PROFILE.label
-             : (typeof LIBRARY_META !== 'undefined' && LIBRARY_META) ? LIBRARY_META.icc_profile.split(/[\\\\/]/).pop()
-             : 'no profile';
-  ctx.fillText(`${sub}   swatches: ${n}   cell: ${cell}px`, 18, Math.round(TITLE_BAND * 0.62));
-  // Body
-  ctx.save();
-  ctx.translate(0, TITLE_BAND);
-  ctx.textBaseline = 'top';
-  const fzCmyk = Math.max(8, Math.round(cell * 0.09));
-  const fzHex  = Math.max(8, Math.round(cell * 0.10));
-  const fzJpn  = Math.max(8, Math.round(cell * 0.18));
-  const fzHtml = Math.max(7, Math.round(cell * 0.09));
-  const showLabels = cell >= 64;   // skip text on tiny cells
-  const pad = Math.max(4, Math.round(cell * 0.04));
-  swatches.forEach((sw, i) => {
-    const cx = (i % cols) * cell;
-    const cy = Math.floor(i / cols) * cell;
-    ctx.fillStyle = sw.hex;
-    ctx.fillRect(cx, cy, cell, cell);
-    if (!showLabels) return;
-    ctx.fillStyle = sw.text_color;
-    let y = cy + pad;
-    ctx.font = `${fzCmyk}px "IBM Plex Mono", ui-monospace, monospace`;
-    ctx.fillText(`C${sw.C} M${sw.M} Y${sw.Y} K${sw.K}`, cx + pad, y); y += fzCmyk + 2;
-    ctx.font = `${fzHex}px "IBM Plex Mono", ui-monospace, monospace`;
-    ctx.fillText(sw.hex, cx + pad, y); y += fzHex + 2;
-    for (const ent of _renderSwatchNames(sw)) {
-      const fz = ent.libId === 'jp-trad' ? fzJpn : fzHtml;
-      const fontFace = '"Noto Sans JP", system-ui, sans-serif';
-      ctx.font = (ent.libId === 'jp-trad' ? `600 ${fz}px ${fontFace}` : `${fz}px ${fontFace}`);
-      ctx.fillText(ent.name, cx + pad, y); y += fz + 2;
-    }
+  const fit = fitSquare(swatches.length, canvasSize);
+  const profileLabel = ACTIVE_PROFILE?.label || 'no profile';
+  const profileFile  = ACTIVE_PROFILE?.filename || '';
+  return _drawSwatchExportCanvas(swatches, {
+    title,
+    canvasSize,
+    metaLines: [
+      `profile: ${profileLabel}  (${profileFile})`,
+      `swatches: ${swatches.length.toLocaleString()}   cell: ${fit.cell}px`,
+    ],
   });
-  ctx.restore();
-  return canvas;
 }
 
 function _renderPaletteLabelledPNG(swatches, filename, canvasSize, title) {
   const canvas = _drawPaletteLabelledCanvas(swatches, canvasSize, title);
-  canvas.toBlob(blob => downloadBlob(blob, filename), 'image/png');
+  return new Promise(resolve => canvas.toBlob(blob => {
+    downloadBlob(blob, filename);
+    resolve();
+  }, 'image/png'));
 }
 
 // -- Labelled palette TIFF (CMYK via rLUT round-trip) ------------------
@@ -4978,55 +5119,55 @@ function exportActivePalettePNGSized() {
   if (!p || !p.swatches.length) { alert('Active palette is empty.'); return; }
   const sw = paletteSwatchesFromActive();
   const sz = _paletteImgSize();
-  _renderPaletteLabelledPNG(sw, `palette_${p.name.replace(/[^\w\-]+/g,'_')}_${sz}.png`, sz, `Palette - ${p.name}`);
+  return _renderPaletteLabelledPNG(sw, _exportCanvasFile('palette', p.name, sw.length, 'rgb', sz, 'labelled', 'png'), sz, `Palette - ${p.name}`);
 }
-function exportActivePalettePNGPure() {
+async function exportActivePalettePNGPure() {
   const p = _activePalette();
   if (!p || !p.swatches.length) { alert('Active palette is empty.'); return; }
   const sw = paletteSwatchesFromActive();
   const sz = _paletteImgSize();
-  _renderPalettePurePNG(sw, `palette_${p.name.replace(/[^\w\-]+/g,'_')}_pure_${sz}.png`, sz);
+  await _renderPalettePurePNG(sw, _exportCanvasFile('palette', p.name, sw.length, 'rgb', sz, 'pure', 'png'), sz);
 }
 async function exportActivePaletteTIFFSized() {
   const p = _activePalette();
   if (!p || !p.swatches.length) { alert('Active palette is empty.'); return; }
   const sw = paletteSwatchesFromActive();
   const sz = _paletteImgSize();
-  await _renderPaletteLabelledTIFF(sw, `palette_${p.name.replace(/[^\w\-]+/g,'_')}_${sz}.tif`, sz, `Palette - ${p.name}`);
+  await _renderPaletteLabelledTIFF(sw, _exportCanvasFile('palette', p.name, sw.length, 'cmyk', sz, 'labelled', 'tif'), sz, `Palette - ${p.name}`);
 }
 async function exportActivePaletteTIFFPure() {
   const p = _activePalette();
   if (!p || !p.swatches.length) { alert('Active palette is empty.'); return; }
   const sw = paletteSwatchesFromActive();
   const sz = _paletteImgSize();
-  await _renderPaletteCMYKTIFFPure(sw, `palette_${p.name.replace(/[^\w\-]+/g,'_')}_pure_${sz}.tif`, sz);
+  await _renderPaletteCMYKTIFFPure(sw, _exportCanvasFile('palette', p.name, sw.length, 'cmyk', sz, 'pure', 'tif'), sz);
 }
 
 // -- Per-id sized PNG exports for the palettes-mode panel --------------
 function _palSwatchesById(id) {
   const p = palettes.find(x => x.id === id);
   if (!p || !p.swatches.length) return null;
-  return { p, sw: p.swatches.map(s => DEDUP.find(d => _swKey(d) === _swKey(s)) || s) };
+  return { p, sw: p.swatches.map(_liveSwatch) };
 }
 function exportPalettePNGSizedById(id) {
   const r = _palSwatchesById(id); if (!r) { alert('Empty palette.'); return; }
   const sz = _paletteImgSize();
-  _renderPaletteLabelledPNG(r.sw, `palette_${r.p.name.replace(/[^\w\-]+/g,'_')}_${sz}.png`, sz, `Palette - ${r.p.name}`);
+  return _renderPaletteLabelledPNG(r.sw, _exportCanvasFile('palette', r.p.name, r.sw.length, 'rgb', sz, 'labelled', 'png'), sz, `Palette - ${r.p.name}`);
 }
-function exportPalettePNGPureById(id) {
+async function exportPalettePNGPureById(id) {
   const r = _palSwatchesById(id); if (!r) { alert('Empty palette.'); return; }
   const sz = _paletteImgSize();
-  _renderPalettePurePNG(r.sw, `palette_${r.p.name.replace(/[^\w\-]+/g,'_')}_pure_${sz}.png`, sz);
+  await _renderPalettePurePNG(r.sw, _exportCanvasFile('palette', r.p.name, r.sw.length, 'rgb', sz, 'pure', 'png'), sz);
 }
 async function exportPaletteTIFFSizedById(id) {
   const r = _palSwatchesById(id); if (!r) { alert('Empty palette.'); return; }
   const sz = _paletteImgSize();
-  await _renderPaletteLabelledTIFF(r.sw, `palette_${r.p.name.replace(/[^\w\-]+/g,'_')}_${sz}.tif`, sz, `Palette - ${r.p.name}`);
+  await _renderPaletteLabelledTIFF(r.sw, _exportCanvasFile('palette', r.p.name, r.sw.length, 'cmyk', sz, 'labelled', 'tif'), sz, `Palette - ${r.p.name}`);
 }
 async function exportPaletteTIFFPureById(id) {
   const r = _palSwatchesById(id); if (!r) { alert('Empty palette.'); return; }
   const sz = _paletteImgSize();
-  await _renderPaletteCMYKTIFFPure(r.sw, `palette_${r.p.name.replace(/[^\w\-]+/g,'_')}_pure_${sz}.tif`, sz);
+  await _renderPaletteCMYKTIFFPure(r.sw, _exportCanvasFile('palette', r.p.name, r.sw.length, 'cmyk', sz, 'pure', 'tif'), sz);
 }
 
 // -- Single-color PNG bytes (128x128 default) for ZIP entries ----------
@@ -5038,6 +5179,15 @@ async function _solidPngBytes(hex, size = 128) {
   ctx.fillRect(0, 0, size, size);
   const blob = await new Promise(res => c.toBlob(res, 'image/png'));
   return new Uint8Array(await blob.arrayBuffer());
+}
+
+function _swatchAssetBase(sw, index) {
+  const hex = sw.hex.replace('#','').toLowerCase();
+  const C = String(sw.C).padStart(3,'0');
+  const M = String(sw.M).padStart(3,'0');
+  const Y = String(sw.Y).padStart(3,'0');
+  const K = String(sw.K).padStart(3,'0');
+  return `${String(index + 1).padStart(3,'0')}_${hex}_C${C}-M${M}-Y${Y}-K${K}`;
 }
 
 // -- Per-swatch ZIP export with manifests mirroring swatches.py --------
@@ -5060,12 +5210,7 @@ async function _buildSwatchZip(swatches, label, onProgress) {
   const iccBytes = await fetchActiveICC();
   for (let i = 0; i < N; i++) {
     const sw = swatches[i];
-    const hex = sw.hex.replace('#','').toLowerCase();
-    const C = String(sw.C).padStart(3,'0');
-    const M = String(sw.M).padStart(3,'0');
-    const Y = String(sw.Y).padStart(3,'0');
-    const K = String(sw.K).padStart(3,'0');
-    const base = `${hex}_C${C}M${M}Y${Y}K${K}`;
+    const base = _swatchAssetBase(sw, i);
     const pngData  = await _solidPngBytes(sw.hex, 128);
     const tiffData = await _solidTiffBytes(sw, 128, iccBytes);
     entries.push({ name: `png/${base}.png`,  data: pngData });
@@ -5109,13 +5254,10 @@ async function _buildSwatchZip(swatches, label, onProgress) {
   }
   const csvRows = [['png_file','tiff_file','hex','r','g','b','c','m','y','k',
     'L_star','a_star','b_star','delta_e_print', ...libHeaders]];
-  for (const sw of swatches) {
+  for (let i = 0; i < swatches.length; i++) {
+    const sw = swatches[i];
     const hex = sw.hex.replace('#','').toLowerCase();
-    const C = String(sw.C).padStart(3,'0');
-    const M = String(sw.M).padStart(3,'0');
-    const Y = String(sw.Y).padStart(3,'0');
-    const K = String(sw.K).padStart(3,'0');
-    const base = `${hex}_C${C}M${M}Y${Y}K${K}`;
+    const base = _swatchAssetBase(sw, i);
     const libCols = [];
     for (const lib of CORPORA.libraries) {
       const entry = sw[`${lib.id}__name`];
@@ -5143,13 +5285,9 @@ async function _buildSwatchZip(swatches, label, onProgress) {
     icc_profile: profile,
     delta_e_threshold: dEthr,
     count_total: swatches.length,
-    swatches: swatches.map(s => {
+    swatches: swatches.map((s, i) => {
       const hex = s.hex.replace('#','').toLowerCase();
-      const C = String(s.C).padStart(3,'0');
-      const M = String(s.M).padStart(3,'0');
-      const Y = String(s.Y).padStart(3,'0');
-      const K = String(s.K).padStart(3,'0');
-      const base = `${hex}_C${C}M${M}Y${Y}K${K}`;
+      const base = _swatchAssetBase(s, i);
       const row = {
         png_file:  `png/${base}.png`,
         tiff_file: `tiff/${base}.tif`,
@@ -5188,7 +5326,7 @@ async function exportFilteredSwatchZIP() {
   }
   const zipBytes = await _buildSwatchZip(swatches, `filtered-${swatches.length}`, _setProgress);
   downloadBlob(new Blob([zipBytes], { type: 'application/zip' }),
-    `mixo-swatch-filtered-${swatches.length}.zip`);
+    _exportDataFile('swatches', 'filtered', swatches.length, 'cmyk', 'zip', 'zip'));
 }
 
 // -- Filtered-grid palette-format exports (ASE + GPL) -------------------
@@ -5199,9 +5337,8 @@ function _filteredBuildASE(mode) {
   assignUniqueNames(data);
   const title = `Mixo Swatch - filtered ${data.length}`;
   const buf = buildASE(data, title, mode);
-  const ext = mode === 'cmyk' ? 'cmyk.ase' : 'rgb.ase';
   downloadBlob(new Blob([buf], { type: 'application/octet-stream' }),
-    `mixo_swatches_filtered_${data.length}_step${curStep}.${ext}`);
+    _exportDataFile('swatches', 'filtered', data.length, mode, 'ase', 'ase'));
 }
 function exportFilteredASE_CMYK() { _filteredBuildASE('cmyk'); }
 function exportFilteredASE_RGB()  { _filteredBuildASE('rgb'); }
@@ -5212,7 +5349,7 @@ function exportFilteredGPL() {
   const title = `Mixo Swatch - filtered ${data.length}`;
   const text = buildGPL(data, title);
   downloadBlob(new Blob([text], { type: 'text/plain;charset=utf-8' }),
-    `mixo_swatches_filtered_${data.length}_step${curStep}.gpl`);
+    _exportDataFile('swatches', 'filtered', data.length, 'rgb', 'gpl', 'gpl'));
 }
 
 async function exportActivePaletteZIP() {
@@ -5221,14 +5358,14 @@ async function exportActivePaletteZIP() {
   const sw = paletteSwatchesFromActive();
   const zipBytes = await _buildPaletteZip(p, sw);
   downloadBlob(new Blob([zipBytes], { type: 'application/zip' }),
-    `palette_${p.name.replace(/[^\w\-]+/g,'_')}.zip`);
+    _exportDataFile('palette', p.name, sw.length, 'cmyk', 'zip', 'zip'));
 }
 
 async function exportPaletteZIPById(id) {
   const r = _palSwatchesById(id); if (!r) { alert('Empty palette.'); return; }
   const zipBytes = await _buildPaletteZip(r.p, r.sw);
   downloadBlob(new Blob([zipBytes], { type: 'application/zip' }),
-    `palette_${r.p.name.replace(/[^\w\-]+/g,'_')}.zip`);
+    _exportDataFile('palette', r.p.name, r.sw.length, 'cmyk', 'zip', 'zip'));
 }
 
 window.addEventListener('load', async () => {
@@ -5802,12 +5939,6 @@ function toggleTheme() {
   try { saved = localStorage.getItem('ui_theme'); } catch {}
   _applyTheme(saved === 'light' ? 'light' : 'dark');
 })();
-
-/* ── Hue x Light + Palettes views auto-open the palette panel ─────────── */
-function _ensurePalettePanelOpen() {
-  const p = document.getElementById('palettePanel');
-  if (p && !p.classList.contains('open')) togglePalettePanel(true);
-}
 
 /* ── Export busy-state mechanism ──────────────────────────────────────────
  *
