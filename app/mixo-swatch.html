@@ -7,7 +7,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500&display=swap" rel="stylesheet">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Zen+Antique+Soft&display=swap" rel="stylesheet">
+
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@200..900&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Mono:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
 <style>
@@ -20,9 +21,10 @@
   --font-mono:'Atkinson Hyperlegible Mono',monospace;
   --font-sans:'Noto Sans JP',system-ui,sans-serif;
   --font-tc: 'Noto Serif TC', -apple-system, serif;
-  --font-jpn-serif:"Zen Antique Soft",serif;
+  --font-jpn-serif:"Shippori Mincho B1",serif;
   --r:6px; --rl:10px;
   color-scheme:dark;
+   --overlay: rgba(0,0,0,.52);
 
   /* ── Glassmorphism tokens ────────────────────────────── */
   --glass-bg: rgba(42, 38, 37, 0.55);
@@ -65,12 +67,14 @@
 /* Light theme. Mirrors index.html tokens exactly so the landing page
    and tool surface share one visual identity. Activated by
    document.documentElement[data-theme="light"]. */
+  
 :root[data-theme="light"] {
   --bg:#FAF8F3; --bg2:#F2EFE7; --surface:#FFFFFF;
   --border:rgba(0,0,0,0.14); --border2:rgba(0,0,0,0.07);
   --text:#15130E; --muted:#6B6862; --faint:#A8A49B;
   --accent:#3D3424; --accent-light:#e1e0dd; --accent-rgb:61 52 36;
   color-scheme:light;
+  --overlay: rgba(255, 253, 246, 0.726);
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:100vh;overflow:hidden}
@@ -618,7 +622,7 @@ input[type=range]{accent-color:var(--accent)}
 }
 .cell-jpn{
   position:absolute;left:0;right:0;
-  font-family:var(--font-jpn-serif);
+  font-family:var(--font-jpn-serif);font-weight:800;
   padding:2px 3px;line-height:1.3;pointer-events:none;
   overflow:hidden;white-space:nowrap;text-overflow:ellipsis;
 }
@@ -669,12 +673,13 @@ input[type=range]{accent-color:var(--accent)}
 /* ── Detail overlay ── */
 .overlay{
   display:none;position:fixed;inset:0;z-index:200;
-  background:rgba(0,0,0,0.42);backdrop-filter:blur(3px);
+  background:var(--overlay);backdrop-filter:blur(12px);
   align-items:center;justify-content:center;
 }
 .overlay.open{display:flex}
 .detail-card{
-  background:var(--surface);border-radius:var(--rl);
+  /* background:var(--surface);*/
+  border-radius:var(--rl); 
   border:1px solid var(--border);width:380px;max-width:94vw;
   overflow:hidden;box-shadow:0 28px 72px rgba(0,0,0,0.26);
   animation:popIn .16s ease-out;
@@ -701,7 +706,7 @@ input[type=range]{accent-color:var(--accent)}
   font-size:11px;font-family:var(--font-mono);font-weight:500;
   padding:2px 9px;border-radius:4px;
 }
-.d-body{padding:16px;display:flex;flex-direction:column;gap:11px}
+.d-body{padding:16px;display:flex;flex-direction:column;gap:11px; background:var(--surface);}
 .d-row{display:flex;align-items:baseline}
 .d-key{
   font-size:10px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;
@@ -715,10 +720,11 @@ input[type=range]{accent-color:var(--accent)}
   font-size:11px;padding:3px 9px;border-radius:20px;
   border:1px solid var(--border);color:var(--text);background:var(--bg2);line-height:1.5;
 }
-.chip.jpn{background:#0A2030;color:#6AC0E8;border-color:transparent}
-.chip.chip-jp-trad{background:#eeeeee;color:#131313;border-color:transparent}
-.chip.chip-html{background:#000000;color:#c9c9c9;border-color:transparent}
-.chip.chip-zh-trad{background:#3f0303;color:#fcc2c2;border-color:transparent}
+.chip.jpn{background:#d0d0d0;color:#6AC0E8;border-color:transparent}
+.chip.chip-jp-trad{background:#eeeeee;color:#131313;border-color: #718394;}
+.chip.chip-w3c-names{background:#3e576f;color:#e1f1ff;border-color: #718394;}
+.chip.chip-zh-trad{background:#3f0303;color:#fcc2c2;}
+.chip.chip-colour-in-translation{background:#03163f;color:#c2e5fc;}
 .copy-row{display:flex;gap:6px;flex-wrap:wrap;padding-top:3px}
 .copy-btn{
   font-size:11px;padding:5px 10px;border-radius:var(--r);
@@ -728,6 +734,15 @@ input[type=range]{accent-color:var(--accent)}
 }
 .copy-btn:hover{background:var(--bg2)}
 .copy-btn.ok{background:#0A2A14;color:#60D090;border-color:transparent}
+.pal-btn{
+  font-size:11px;padding:5px 12px;border-radius:var(--r);
+  border:1px solid var(--border);cursor:pointer;font-family:var(--font-mono);
+  font-weight:600;letter-spacing:.02em;margin-left:auto;
+  transition:filter .1s;
+}
+.pal-btn:hover{filter:brightness(1.1)}
+.pal-btn.is-add{background:var(--accent);color:var(--bg);border-color:transparent}
+.pal-btn.is-remove{background:#a02020;color:var(--bg);border-color:transparent}
 
 /* per-library Naming UI rows (legacy nm-* kept for safety) */
 .nm-row{display:flex;flex-direction:column;gap:4px;padding:6px 0;border-top:1px solid var(--border2)}
@@ -783,7 +798,7 @@ input[type=range]{accent-color:var(--accent)}
 .lp-sub{font-size:11px;color:var(--muted);font-family:var(--font-mono)}
 
 /* ── Intro overlay (first-run welcome card) ── */
-#introOverlay{position:fixed;inset:0;z-index:9000;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.52);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+#introOverlay{position:fixed;inset:0;z-index:9000;display:none;align-items:center;justify-content:center;background:var(--overlay);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
 #introOverlay.open{display:flex}
 .intro-card{
   background:var(--surface);border:1px solid var(--border);border-radius:14px;
@@ -1182,7 +1197,7 @@ html[lang^="zh"] .intro-btn .intro-zh{display:inline}
       <div class="sec-label" data-i18n="sec.naming">Naming &middot; per library</div>
       <div id="namingRows" data-i18n-title="sidebar.naming_rows_title"></div>
       <div style="font-size:10px;color:var(--faint);line-height:1.5;margin-top:6px" data-i18n="sidebar.naming_rows_help">
-        Add a corpus by editing <code>data/corpora/name_corpora.json</code> and refreshing. Per-corpus prefs are stored in your browser.
+        Add a corpus by dropping <code>&lt;id&gt;.json</code> into <code>data/corpora/libraries/</code> and appending its filename to <code>data/corpora/libraries.json</code>, then refresh. Per-corpus prefs are stored in your browser.
       </div>
     </div>
 
@@ -1245,11 +1260,14 @@ html[lang^="zh"] .intro-btn .intro-zh{display:inline}
         into <code>icc/</code> then run
         <code>python scripts/gen_luts.py</code>, then refresh.<br><br>
 
-        <b>New Japanese / HTML name?</b> Edit
-        <code>data/corpora/name_corpora.json</code>. Append an entry
-        (<code>{"name": "桜色", "romaji": "sakura-iro", "hex": "#FCC9D2"}</code>
-        for jpn, <code>{"name": "rose", "hex": "#FF007F"}</code> for html), save,
-        refresh. No Python rebuild needed - Lab is computed in browser.
+        <b>New Japanese / HTML name?</b> Edit the per-library file under
+        <code>data/corpora/libraries/</code> (e.g. <code>jp-trad.json</code>,
+        <code>html.json</code>). Append an entry to its <code>entries</code> array
+        (<code>{"name_ja": "桜色", "romaji": "sakura-iro", "hex": "#FCC9D2"}</code>
+        for jpn, <code>{"name_en": "rose", "hex": "#FF007F"}</code> for html), save,
+        refresh. To add a brand-new corpus, drop a new <code>&lt;id&gt;.json</code>
+        in the same folder and list it in <code>data/corpora/libraries.json</code>.
+        No Python rebuild needed - Lab is computed in browser.
       </div>
     </div>
 
@@ -1438,7 +1456,7 @@ html[lang^="zh"] .intro-btn .intro-zh{display:inline}
       <div class="d-hexdemo" id="dHexDemo">#FFFFFF</div>
       <div class="d-pills" id="dPills"></div>
     </div>
-    <div class="d-body">
+    <div class="d-body glass">
       <div>
         <div class="d-row"><span class="d-key" data-i18n="detail.cmyk_key">CMYK</span><span class="d-val" id="dCMYK">-</span></div>
         <div class="d-row"><span class="d-key" data-i18n="detail.tac_key">TAC</span><span class="d-val" id="dTAC">-</span></div>
@@ -1499,7 +1517,7 @@ const LUT_HEADER = 16;
 // Active profile state
 let ACTIVE_PROFILE = null;        // {filename,label,kind,lut,...}
 let ICC_INDEX = null;             // parsed icc/index.json
-// v2 corpora schema (see data/corpora/name_corpora.json)
+// v3 corpora schema (per-library files under data/corpora/libraries/, manifest libraries.json)
 let CORPORA = { libraries: [] };
 let CORPORA_PREFS = {};                                // see _loadCorporaPrefs()
 const CORPORA_PREFS_KEY = 'cmykCorporaPrefs_v1';
@@ -2041,12 +2059,31 @@ function _setLibPref(libId, key, value) {
 
 async function loadCorpora() {
   _loadCorporaPrefs();
-  const r = await fetch('../data/corpora/name_corpora.json');
-  const json = await r.json();
-  let libs;
-  if (Array.isArray(json.corpora))        libs = json.corpora;
-  else if (Array.isArray(json.libraries)) libs = json.libraries;
-  else                                    libs = [];
+  // Per-library files under data/corpora/libraries/, listed by manifest
+  // libraries.json. Browser cannot enumerate folders, so the manifest is
+  // the source of truth: append a filename there to register a new corpus.
+  const baseDir = '../data/corpora/';
+  let libs = [];
+  try {
+    const manRes = await fetch(baseDir + 'libraries.json');
+    if (!manRes.ok) throw new Error('HTTP ' + manRes.status);
+    const manifest = await manRes.json();
+    const files = Array.isArray(manifest.files) ? manifest.files : [];
+    const loaded = await Promise.all(files.map(async fn => {
+      try {
+        const r = await fetch(baseDir + 'libraries/' + fn);
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        return await r.json();
+      } catch (e) {
+        console.warn('[corpora] failed to load', fn, e);
+        return null;
+      }
+    }));
+    libs = loaded.filter(Boolean);
+  } catch (e) {
+    console.error('[corpora] manifest load failed', e);
+    libs = [];
+  }
   // Promote v2 -> v3 in memory: label string -> {en,ja,zh}, primary/secondary -> fields[]
   for (const lib of libs) {
     if (typeof lib.label === 'string') {
@@ -2384,7 +2421,7 @@ function buildFilterUI() {
   all.appendChild(allTxt);
   frag.appendChild(all);
   // Per-lib checkboxes. Corpus label is itself tri-lingual in
-  // data/corpora/name_corpora.json (label.{en,ja,zh}); render the one
+  // data/corpora/libraries/<id>.json (label.{en,ja,zh}); render the one
   // matching the active UI language and fall back to en.
   const L = (typeof UI_LANG === 'string' && UI_LANG) ? UI_LANG : 'en';
   for (const lib of CORPORA.libraries) {
@@ -2982,8 +3019,7 @@ function renderPaletteMode() {
             const fz = isJpn ? fzJpn : fzHtml;
             const e = document.createElement('div');
             e.className = isJpn ? 'cell-jpn' : 'cell-html';
-            e.style.cssText = `color:${sw.text_color};font-size:${fz}px;top:${yCursor}px`
-                            + (isJpn ? ';font-weight:600' : '');
+            e.style.cssText = `color:${sw.text_color};font-size:${fz}px;top:${yCursor}px`;
             e.textContent = text;
             cell.appendChild(e);
             yCursor += fz + 2;
@@ -3285,8 +3321,7 @@ function _makeSwatchCell(sw, ctx) {
       const fz = isJpn ? ctx.fzJpn : ctx.fzHtml;
       const e  = document.createElement('div');
       e.className = isJpn ? 'cell-jpn' : 'cell-html';
-      e.style.cssText = `color:${sw.text_color};font-size:${fz}px;top:${yCursor}px`
-                      + (isJpn ? ';font-weight:300' : '');
+      e.style.cssText = `color:${sw.text_color};font-size:${fz}px;top:${yCursor}px`;
       e.textContent = text;
       cell.appendChild(e);
       yCursor += fz + 2;
@@ -3543,8 +3578,7 @@ function renderGS() {
       const fz = isJpn ? fzJpn : fzHtml;
       const e  = document.createElement('div');
       e.className = isJpn ? 'cell-jpn' : 'cell-html';
-      e.style.cssText = `color:${tc};font-size:${fz}px;top:${y}px`
-                      + (isJpn ? ';font-weight:300' : '');
+      e.style.cssText = `color:${tc};font-size:${fz}px;top:${y}px`;
       e.textContent = text;
       cell.appendChild(e);
       y += fz + 2;
@@ -3749,7 +3783,10 @@ function openDetail(sw) {
     const b = document.createElement('button');
     b.className = 'copy-btn';
     b.setAttribute('data-i18n', i18nKey);
+    const titleKey = i18nKey + '_title';
+    b.setAttribute('data-i18n-title', titleKey);
     b.textContent = (typeof t === 'function') ? t(i18nKey, lbl) : lbl;
+    b.title = (typeof t === 'function') ? t(titleKey, 'Copy ' + lbl + ' to clipboard') : ('Copy ' + lbl + ' to clipboard');
     b.addEventListener('click', () => {
       navigator.clipboard.writeText(val).catch(()=>{});
       b.textContent = '✓'; b.classList.add('ok');
@@ -3759,14 +3796,17 @@ function openDetail(sw) {
   });
 
   const palBtn = document.createElement('button');
-  palBtn.className = 'copy-btn';
   const inPal = _activeSet().has(_swKey(sw));
+  palBtn.className = 'pal-btn ' + (inPal ? 'is-remove' : 'is-add');
   const palBtnI18nKey = inPal ? 'detail.remove_from_palette' : 'detail.add_to_palette';
+  const palBtnTitleKey = palBtnI18nKey + '_title';
   const palBtnText = inPal ? '− Remove from palette' : '+ Add to palette';
   palBtn.setAttribute('data-i18n', palBtnI18nKey);
+  palBtn.setAttribute('data-i18n-title', palBtnTitleKey);
   palBtn.textContent = (typeof t === 'function') ? t(palBtnI18nKey, palBtnText) : palBtnText;
-  palBtn.style.background = inPal ? '#a02020' : 'var(--accent)';
-  palBtn.style.color = '#fff';
+  palBtn.title = (typeof t === 'function')
+    ? t(palBtnTitleKey, inPal ? 'Remove this swatch from the active palette' : 'Add this swatch to the active palette')
+    : (inPal ? 'Remove this swatch from the active palette' : 'Add this swatch to the active palette');
   palBtn.addEventListener('click', () => { toggleSwatchInPalette(sw); closeDetail(); });
   row.appendChild(palBtn);
 
@@ -5584,7 +5624,7 @@ window.addEventListener('load', async () => {
     document.getElementById('iccStatus').textContent = 'Error: ' + e.message;
     alert('Failed to load ICC pipeline: ' + e.message + '\n\n' +
           'Did you run "python scripts/gen_luts.py" first? Are ' +
-          'data/luts/index.json and data/corpora/name_corpora.json present?');
+          'data/luts/index.json and data/corpora/libraries.json present?');
   }
 });
 // Debounce resize: native resize event fires many times per drag; coalesce.
@@ -5840,10 +5880,22 @@ const I18N = {
     'detail.luminance_key': 'Luminance',
     'detail.contrast_key': 'Contrast',
     'detail.color_names_key': 'Color names',
+    'detail.copy_hex': 'HEX',
+    'detail.copy_cmyk': 'CMYK',
+    'detail.copy_rgb': 'RGB',
+    'detail.copy_json': 'JSON',
+    'detail.copy_hex_title': 'Copy hex code to clipboard',
+    'detail.copy_cmyk_title': 'Copy CMYK values to clipboard',
+    'detail.copy_rgb_title': 'Copy RGB values to clipboard',
+    'detail.copy_json_title': 'Copy full swatch as JSON to clipboard',
+    'detail.add_to_palette': '+ Add to palette',
+    'detail.remove_from_palette': '− Remove from palette',
+    'detail.add_to_palette_title': 'Add this swatch to the active palette',
+    'detail.remove_from_palette_title': 'Remove this swatch from the active palette',
     'sidebar.match_help': 'Match by CMYK-Lab (print) or hex-Lab (screen). html corpus falls back to hex when anchor=cmyk.',
     'sidebar.naming_accuracy_help': 'Higher = more swatches show names. Set to 0 to show only literal closest matches per library.',
-    'sidebar.naming_rows_help': 'Add a corpus by editing <code>data/corpora/name_corpora.json</code> and refreshing. Per-corpus prefs are stored in your browser.',
-    'sidebar.add_profiles_help': '<b>New ICC profile?</b> Drop the <code>.icc</code> / <code>.icm</code> into <code>icc/</code> then run <code>python scripts/gen_luts.py</code>, then refresh.<br><br><b>New Japanese / HTML name?</b> Edit <code>data/corpora/name_corpora.json</code>. Append an entry (<code>{"name": "桜色", "romaji": "sakura-iro", "hex": "#FCC9D2"}</code> for jpn, <code>{"name": "rose", "hex": "#FF007F"}</code> for html), save, refresh. No Python rebuild needed - Lab is computed in browser.',
+    'sidebar.naming_rows_help': 'Add a corpus by dropping <code>&lt;id&gt;.json</code> into <code>data/corpora/libraries/</code> and appending its filename to <code>data/corpora/libraries.json</code>, then refresh. Per-corpus prefs are stored in your browser.',
+    'sidebar.add_profiles_help': '<b>New ICC profile?</b> Drop the <code>.icc</code> / <code>.icm</code> into <code>icc/</code> then run <code>python scripts/gen_luts.py</code>, then refresh.<br><br><b>New Japanese / HTML name?</b> Edit the per-library file under <code>data/corpora/libraries/</code> (e.g. <code>jp-trad.json</code>, <code>html.json</code>). Append an entry to its <code>entries</code> array (<code>{"name_ja": "桜色", "romaji": "sakura-iro", "hex": "#FCC9D2"}</code> for jpn, <code>{"name_en": "rose", "hex": "#FF007F"}</code> for html), save, refresh. To add a brand-new corpus, drop a new <code>&lt;id&gt;.json</code> in the same folder and list it in <code>data/corpora/libraries.json</code>. No Python rebuild needed - Lab is computed in browser.',
     'palette.select_placeholder_empty': '(none - create a palette to start)',
     'palette.empty_no_palettes': 'No palettes yet. Click "+ New" to start one.',
     'palette.empty_pm_view': 'No palettes yet. Create one.',
@@ -6066,10 +6118,22 @@ const I18N = {
     'detail.luminance_key': '輝度',
     'detail.contrast_key': 'コントラスト',
     'detail.color_names_key': '色名',
+    'detail.copy_hex': 'HEX',
+    'detail.copy_cmyk': 'CMYK',
+    'detail.copy_rgb': 'RGB',
+    'detail.copy_json': 'JSON',
+    'detail.copy_hex_title': 'HEX をクリップボードにコピー',
+    'detail.copy_cmyk_title': 'CMYK 値をクリップボードにコピー',
+    'detail.copy_rgb_title': 'RGB 値をクリップボードにコピー',
+    'detail.copy_json_title': 'スウォッチを JSON 形式でクリップボードにコピー',
+    'detail.add_to_palette': '＋ パレットに追加',
+    'detail.remove_from_palette': '− パレットから削除',
+    'detail.add_to_palette_title': 'このスウォッチを現在のパレットに追加',
+    'detail.remove_from_palette_title': 'このスウォッチを現在のパレットから削除',
     'sidebar.match_help': 'CMYK-Lab（印刷）または hex-Lab（画面）で照合。html コーパスは anchor=cmyk のとき hex にフォールバック。',
     'sidebar.naming_accuracy_help': '高いほど名前の付くスウォッチが増える。0 にすると各ライブラリの完全一致のみ表示。',
-    'sidebar.naming_rows_help': 'コーパス追加：<code>data/corpora/name_corpora.json</code> を編集して再読み込み。コーパスごとの設定はブラウザに保存される。',
-    'sidebar.add_profiles_help': '<b>新しい ICC プロファイル？</b> <code>.icc</code> / <code>.icm</code> を <code>icc/</code> に置き、<code>python scripts/gen_luts.py</code> を実行して再読み込み。<br><br><b>新しい日本語 / HTML 名？</b> <code>data/corpora/name_corpora.json</code> を編集してエントリを追加（jpn は <code>{"name": "桜色", "romaji": "sakura-iro", "hex": "#FCC9D2"}</code>、html は <code>{"name": "rose", "hex": "#FF007F"}</code>）、保存して再読み込み。Python の再ビルドは不要。Lab はブラウザで計算される。',
+    'sidebar.naming_rows_help': 'コーパス追加：<code>&lt;id&gt;.json</code> を <code>data/corpora/libraries/</code> に置き、ファイル名を <code>data/corpora/libraries.json</code> に追記して再読み込み。コーパスごとの設定はブラウザに保存される。',
+    'sidebar.add_profiles_help': '<b>新しい ICC プロファイル？</b> <code>.icc</code> / <code>.icm</code> を <code>icc/</code> に置き、<code>python scripts/gen_luts.py</code> を実行して再読み込み。<br><br><b>新しい日本語 / HTML 名？</b> <code>data/corpora/libraries/</code> 配下の該当ファイル（例：<code>jp-trad.json</code>、<code>html.json</code>）を編集し、<code>entries</code> 配列にエントリを追加（jpn は <code>{"name_ja": "桜色", "romaji": "sakura-iro", "hex": "#FCC9D2"}</code>、html は <code>{"name_en": "rose", "hex": "#FF007F"}</code>）、保存して再読み込み。新規コーパスを追加する場合は同フォルダに <code>&lt;id&gt;.json</code> を置き、<code>data/corpora/libraries.json</code> に登録する。Python の再ビルドは不要。Lab はブラウザで計算される。',
     'palette.select_placeholder_empty': '（なし - パレットを作成して開始）',
     'palette.empty_no_palettes': 'パレット未作成。「+ 新規」で開始。',
     'palette.empty_pm_view': 'パレット未作成。新しく作成してください。',
@@ -6292,10 +6356,22 @@ const I18N = {
     'detail.luminance_key': '亮度',
     'detail.contrast_key': '對比',
     'detail.color_names_key': '色彩名稱',
+    'detail.copy_hex': 'HEX',
+    'detail.copy_cmyk': 'CMYK',
+    'detail.copy_rgb': 'RGB',
+    'detail.copy_json': 'JSON',
+    'detail.copy_hex_title': '複製 HEX 至剪貼簿',
+    'detail.copy_cmyk_title': '複製 CMYK 數值至剪貼簿',
+    'detail.copy_rgb_title': '複製 RGB 數值至剪貼簿',
+    'detail.copy_json_title': '以 JSON 格式複製整筆色票至剪貼簿',
+    'detail.add_to_palette': '＋ 加入調色盤',
+    'detail.remove_from_palette': '− 從調色盤移除',
+    'detail.add_to_palette_title': '將此色票加入目前的調色盤',
+    'detail.remove_from_palette_title': '從目前的調色盤移除此色票',
     'sidebar.match_help': '以 CMYK-Lab（印刷）或 hex-Lab（螢幕）配對。html 資料庫在 anchor=cmyk 時退回 hex。',
     'sidebar.naming_accuracy_help': '數值越高，顯示名稱的色板越多。設為 0 只顯示各資料庫的精確命中。',
-    'sidebar.naming_rows_help': '新增資料庫：編輯 <code>data/corpora/name_corpora.json</code> 後重新整理。各資料庫設定保存在瀏覽器中。',
-    'sidebar.add_profiles_help': '<b>新增 ICC 描述檔？</b> 將 <code>.icc</code> / <code>.icm</code> 放入 <code>icc/</code>，執行 <code>python scripts/gen_luts.py</code>，重新整理。<br><br><b>新增日文 / HTML 名稱？</b> 編輯 <code>data/corpora/name_corpora.json</code>，新增條目（jpn 用 <code>{"name": "桜色", "romaji": "sakura-iro", "hex": "#FCC9D2"}</code>，html 用 <code>{"name": "rose", "hex": "#FF007F"}</code>），儲存後重新整理。不需重新跑 Python，Lab 在瀏覽器中計算。',
+    'sidebar.naming_rows_help': '新增資料庫：將 <code>&lt;id&gt;.json</code> 放入 <code>data/corpora/libraries/</code>，並把檔名加入 <code>data/corpora/libraries.json</code>，重新整理。各資料庫設定保存在瀏覽器中。',
+    'sidebar.add_profiles_help': '<b>新增 ICC 描述檔？</b> 將 <code>.icc</code> / <code>.icm</code> 放入 <code>icc/</code>，執行 <code>python scripts/gen_luts.py</code>，重新整理。<br><br><b>新增日文 / HTML 名稱？</b> 編輯 <code>data/corpora/libraries/</code> 下的對應檔案（例：<code>jp-trad.json</code>、<code>html.json</code>），於 <code>entries</code> 陣列新增條目（jpn 用 <code>{"name_ja": "桜色", "romaji": "sakura-iro", "hex": "#FCC9D2"}</code>，html 用 <code>{"name_en": "rose", "hex": "#FF007F"}</code>），儲存後重新整理。如要新增資料庫，將新的 <code>&lt;id&gt;.json</code> 放入同一資料夾並於 <code>data/corpora/libraries.json</code> 登錄。不需重新跑 Python，Lab 在瀏覽器中計算。',
     'palette.select_placeholder_empty': '（無 - 建立調色盤以開始）',
     'palette.empty_no_palettes': '尚無調色盤。點「+ 新建」開始。',
     'palette.empty_pm_view': '尚無調色盤。請建立新調色盤。',

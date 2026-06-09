@@ -100,7 +100,8 @@ mixoswatch/
 │   └── gen_luts.py              Build CMYK↔sRGB lookup tables from ICCs
 ├── data/
 │   ├── corpora/
-│   │   └── name_corpora.json    Named-color dictionaries
+│   │   ├── libraries.json       Manifest - lists per-library files
+│   │   └── libraries/           One JSON file per corpus (jp-trad, html, zh-trad, wcs)
 │   ├── ui_defaults.json         Factory defaults
 │   └── luts/                    Generated, gitignored
 │       ├── index.json           Profile manifest
@@ -159,14 +160,14 @@ LUT binary format (magic `LUT4` / `CMK4`, 16-byte header, little-endian, quadril
 
 ## Named-color corpora
 
-`data/corpora/name_corpora.json` ships with four libraries. Add more by editing the JSON and refreshing the browser - no Python step needed.
+Corpora live as **one JSON file per library** under `data/corpora/libraries/`, registered by the manifest `data/corpora/libraries.json`. The app fetches the manifest, then each listed file in parallel. Add more by dropping `<id>.json` in the libraries folder and appending its filename to the manifest - no Python step needed.
 
-| ID | Source | Entries |
+| File | Source | Entries |
 |---|---|---|
-| `jp-trad` | NipponColors.com Japanese traditional | 250 |
-| `html` | W3C CSS Color Module Level 4 | 148 |
-| `zh-trad` | Chinese traditional color corpus | 526 |
-| `wcs` | UC Berkeley World Color Survey (placeholder Lab anchors) | 6 |
+| `libraries/jp-trad.json` | NipponColors.com Japanese traditional | 250 |
+| `libraries/html.json` | W3C CSS Color Module Level 4 | 148 |
+| `libraries/zh-trad.json` | Chinese traditional color corpus | 526 |
+| `libraries/wcs.json` | UC Berkeley World Color Survey (placeholder Lab anchors) | 6 |
 
 Schema v3 reference in `ARCHITECTURE.md §6.1`. Each entry supports `name_en`, `name_ja`, `name_zh`, and `hex` / `cmyk` match anchors. The UI lets users switch the per-library anchor live.
 

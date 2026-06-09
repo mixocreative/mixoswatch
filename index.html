@@ -10,10 +10,12 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+JP:wght@300;400&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500&family=Noto+Sans+JP:wght@300;400&display=swap"
     rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@200..900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Mono:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg: #FAF8F3;
@@ -27,8 +29,8 @@
       --accent: #87724d;
       --accent-rgb: 61 52 36;
       --accent-dim: #6E6648;
-      --display: 'Outfit', -apple-system, system-ui, serif;
-      --mono: 'IBM Plex Mono', ui-monospace, monospace;
+      --display: -apple-system, system-ui, serif;
+      --mono: 'Atkinson Hyperlegible Mono', ui-monospace, monospace;
       --jp: 'Noto Sans JP', -apple-system, sans-serif;
       --tc: 'Noto Serif TC', -apple-system, serif;
       --tcsans: 'Noto Sans TC', -apple-system, sans-serif;
@@ -81,6 +83,7 @@
     padding: 0.2em 0.5em;
     border: 1px solid #c4baa05c;
     }
+
 
     html,
     body {
@@ -1749,6 +1752,18 @@
 
     <section class="section" id="why">
       <div class="eyebrow"><span data-en>why this tool</span><span data-ja>このツールの理由</span><span data-zh>為何這個工具</span></div>
+      
+      <h2>
+        <span data-en style="font-family: var(--display);">
+          <em  style="display:inline-block; font-weight: bolder;"><b>Strike a Balance...</b></em>
+        </span>
+        <span data-ja style="font-family: var(--tcsans);">
+          <em  style="display:inline-block; font-weight: bolder;"><b>調和を図る...</b></em>
+        </span>
+        <span data-zh style="font-family: var(--tcsans);">
+          <em  style="display:inline-block; font-weight: bolder;"><b>抓到平衡 ...</b></em>
+        </span>
+      </h2>
       <h3>
         <span data-en>Reduce the gap between screen intent and production color.</span>
         <span data-ja>画面が保証できない領域を、ワークフローで狭める。</span>
@@ -2192,10 +2207,11 @@
           <div class="panel-name">Naming libraries shipped<span class="jp">同梱辞書 ／ 內建詞典</span></div>
           <div class="panel-body">
             <p>
-              <span data-en>The tools ship with three name corpora out of the box. Add more by editing
-                <code>data/corpora/name_corpora.json</code> and refreshing.</span>
-              <span data-ja>同梱辞書は三つ。<code>data/corpora/name_corpora.json</code>を編集して再読込すれば追加可能。</span>
-              <span data-zh>內建三個命名色詞典。編輯 <code>data/corpora/name_corpora.json</code> 後重新整理可加入更多。</span>
+              <span data-en>The tools ship with name corpora out of the box. Each library is its own file under
+                <code>data/corpora/libraries/</code>; add more by dropping <code>&lt;id&gt;.json</code> there and
+                appending the filename to <code>data/corpora/libraries.json</code>, then refreshing.</span>
+              <span data-ja>同梱辞書は <code>data/corpora/libraries/</code> 配下に 1 ファイル 1 ライブラリで配置。追加は <code>&lt;id&gt;.json</code> を置き、<code>data/corpora/libraries.json</code> にファイル名を追記して再読込。</span>
+              <span data-zh>內建命名色詞典於 <code>data/corpora/libraries/</code> 下，每個資料庫一個檔案。新增時將 <code>&lt;id&gt;.json</code> 放入該資料夾並把檔名加入 <code>data/corpora/libraries.json</code>，重新整理即可。</span>
             </p>
             <ul style="margin-top:6px;padding-left:0;list-style:none;display:flex;flex-direction:column;gap:8px">
               <li>

@@ -39,7 +39,8 @@ cmyk/
 |   `-- gen_luts.py                Build CMYK->sRGB + sRGB->CMYK LUTs from ICCs
 |-- data/                          Generated, mostly gitignored
 |   |-- corpora/
-|   |   `-- name_corpora.json      jp-trad + html + zh-trad named color corpora (committed, schema v3)
+|   |   |-- libraries.json         Manifest of per-library corpus files (committed, schema v3)
+|   |   `-- libraries/             One JSON file per library (jp-trad, html, zh-trad, wcs)
 |   `-- luts/
 |       |-- index.json             Profile manifest (consumed by the HTML)
 |       |-- <profile>.lut          Forward LUT: CMYK->sRGB (17^4 x 3 bytes ~= 245 KB)
@@ -419,37 +420,50 @@ uncoated stocks, and is the basis for the 3D-print preset's dE caps.
 
 ---
 
-## 6. Name corpora (`data/corpora/name_corpora.json`)
+## 6. Name corpora (`data/corpora/libraries/` + `libraries.json`)
 
-### 6.1 Schema v3 (current)
+### 6.1 Storage layout + schema v3 (current)
 
-Per-library the JSON declares an `id`, a tri-lingual `label` object
-(`{en, ja, zh}`), an ordered `fields[]` array (each entry's displayable
-name fields), a `default_display`, an `anchor` (`hex` or `cmyk`), and an
-`entries[]` list. Each entry carries tri-lingual name fields plus optional
-transliteration.
+**Storage layout.** Each corpus is its own file under
+`data/corpora/libraries/<id>.json`. A manifest at
+`data/corpora/libraries.json` lists which files to load:
 
 ```json
 {
   "version": 3,
   "schema_rev": "3.0",
-  "corpora": [
+  "files": ["jp-trad.json", "html.json", "zh-trad.json", "wcs.json"]
+}
+```
+
+Browsers cannot enumerate directories, so the manifest is the source of
+truth: registering a new corpus requires both dropping the file in
+`libraries/` and appending its filename to `files[]`. The app fetches the
+manifest first, then each listed file in parallel; missing or malformed
+files are skipped with a console warning rather than aborting the load.
+
+**Per-library schema.** Each `<id>.json` file is a single library object
+declaring an `id`, a tri-lingual `label` object (`{en, ja, zh}`), an
+ordered `fields[]` array (each entry's displayable name fields), a
+`default_display`, an `anchor` (`hex` or `cmyk`), and an `entries[]`
+list. Each entry carries tri-lingual name fields plus optional
+transliteration.
+
+```json
+{
+  "id": "jp-trad",
+  "label": { "en": "Japanese traditional", "ja": "日本の伝統色", "zh": "日本傳統色" },
+  "fields": [
+    { "id": "name_ja",  "label": { "en": "kanji",  "ja": "漢字", "zh": "漢字" } },
+    { "id": "romaji",   "label": { "en": "romaji", "ja": "ローマ字", "zh": "羅馬字" } },
+    { "id": "name_en",  "label": { "en": "english","ja": "英語", "zh": "英語" } }
+  ],
+  "default_display": "name_ja",
+  "anchor": "hex",
+  "entries": [
     {
-      "id": "jp-trad",
-      "label": { "en": "Japanese traditional", "ja": "日本の伝統色", "zh": "日本傳統色" },
-      "fields": [
-        { "id": "name_ja",  "label": { "en": "kanji",  "ja": "漢字", "zh": "漢字" } },
-        { "id": "romaji",   "label": { "en": "romaji", "ja": "ローマ字", "zh": "羅馬字" } },
-        { "id": "name_en",  "label": { "en": "english","ja": "英語", "zh": "英語" } }
-      ],
-      "default_display": "name_ja",
-      "anchor": "hex",
-      "entries": [
-        {
-          "name_ja": "桜色", "name_en": "Sakura Pink", "name_zh": "櫻花色",
-          "romaji": "sakura-iro", "hex": "#FCC9D2"
-        }
-      ]
+      "name_ja": "桜色", "name_en": "Sakura Pink", "name_zh": "櫻花色",
+      "romaji": "sakura-iro", "hex": "#FCC9D2"
     }
   ]
 }
@@ -481,16 +495,20 @@ only.
 
 **Active corpora (v3 ship):**
 
-| ID | Source | Anchor | Entries |
+| File | Source | Anchor | Entries |
 |---|---|---|---|
-| `jp-trad` | NipponColors.com (250 traditional Japanese colors) | hex | 250 |
-| `html` | W3C CSS Color Module Level 4 canonical hex | hex | 148 |
-| `zh-trad` | Chinese traditional color corpus | hex | 526 |
-| `wcs` | UC Berkeley World Color Survey (placeholder Lab anchors) | hex | 6 |
+| `libraries/jp-trad.json` | NipponColors.com (250 traditional Japanese colors) | hex | 250 |
+| `libraries/html.json` | W3C CSS Color Module Level 4 canonical hex | hex | 148 |
+| `libraries/zh-trad.json` | Chinese traditional color corpus | hex | 526 |
+| `libraries/wcs.json` | UC Berkeley World Color Survey (placeholder Lab anchors) | hex | 6 |
 
-Backward compatibility: the loader accepts v2 / v2.1 corpora (with
-`primary` / `secondary` fields and the legacy `{ "jpn": [...], "html": [...] }`
-shape) and auto-promotes them to v3 on read.
+Backward compatibility: the loader accepts v2 / v2.1 per-library shapes
+(with `primary` / `secondary` fields) and auto-promotes them to v3 on
+read. The legacy monolithic `data/corpora/name_corpora.json` (a single
+file containing all libraries under `corpora[]` / `libraries[]`) was
+retired in favor of the per-library layout; the one-shot splitter
+`scripts/split_corpora.py` migrates an old monolithic file to the new
+folder.
 
 ### 6.2 Matching algorithm
 
@@ -556,12 +574,18 @@ opening individual library dialogs.
 
 ### 6.4 Edit workflow
 
-1. Open `data/corpora/name_corpora.json` in any text editor (save UTF-8).
-2. Add a new corpus to the `corpora` array, or append entries to an
-   existing one. Follow the v3 schema: tri-lingual `label` object,
-   tri-lingual `name_en`/`name_ja`/`name_zh` per entry.
-3. Save and refresh the browser. No Python rebuild needed. Lab is
-   computed in the browser on load (in both D50 and D65 modes).
+**Add entries to an existing library.** Open the relevant file under
+`data/corpora/libraries/` (e.g. `jp-trad.json`) in any text editor (save
+UTF-8), append entries to its `entries[]` array following the v3 schema
+(tri-lingual `name_en`/`name_ja`/`name_zh`), and refresh the browser.
+
+**Add a brand-new library.** Create `data/corpora/libraries/<id>.json`
+holding a single library object (top-level `id`, `label`, `fields`,
+`default_display`, `anchor`, `entries[]`), then append the filename to
+the `files[]` array in `data/corpora/libraries.json` and refresh.
+
+No Python rebuild needed. Lab is computed in the browser on load (in
+both D50 and D65 modes).
 
 ### 6.5 UI defaults + reset (`data/ui_defaults.json`)
 
@@ -759,7 +783,7 @@ one before adding swatches. Deleting the last palette leaves
    - Detect `file://` protocol; if so, show error pointing the user at `python -m http.server 8765`
    - `loadPalettes()`: pull saved palettes from `localStorage['cmykPalettes_v1']`
    - `loadIndex()`: fetch `data/luts/index.json`, populate profile dropdown
-   - `loadCorpora()`: fetch `data/corpora/name_corpora.json`, precompute Lab for each entry
+   - `loadCorpora()`: fetch `data/corpora/libraries.json` manifest, then each per-library file under `data/corpora/libraries/` in parallel; precompute Lab for each entry
    - `populateProfileSelect()`: fill the dropdown, default to FOGRA39
    - `rebuildAll()`: generate lattice, fetch LUTs, derive per-swatch fields, render
 
@@ -1338,17 +1362,19 @@ writes `data/luts/index.json`. Skips RGB-only working spaces.
 
 ### 10.4 Build name corpora
 
-`data/corpora/name_corpora.json` is committed and ready to use. It
-ships with four active corpora in schema v3 format (see §6.1):
+`data/corpora/libraries/` ships pre-populated and the manifest
+`data/corpora/libraries.json` lists every library to load. Ships with
+four active corpora in schema v3 format (see §6.1):
 
-- `jp-trad`: 250 NipponColors.com Japanese traditional colors
-- `html`: 148 W3C CSS Color Module Level 4 canonical named colors
-- `zh-trad`: 526 Chinese traditional colors
-- `wcs`: 6 UC Berkeley World Color Survey placeholder anchors (Red, Green, Blue, Yellow, Black, White) - hex-anchored seed entries; expand by replacing the placeholder block with the full WCS Munsell-derived dataset when needed
+- `libraries/jp-trad.json`: 250 NipponColors.com Japanese traditional colors
+- `libraries/html.json`: 148 W3C CSS Color Module Level 4 canonical named colors
+- `libraries/zh-trad.json`: 526 Chinese traditional colors
+- `libraries/wcs.json`: 6 UC Berkeley World Color Survey placeholder anchors (Red, Green, Blue, Yellow, Black, White) - hex-anchored seed entries; expand by replacing the placeholder block with the full WCS Munsell-derived dataset when needed
 
-To add a corpus, edit the JSON per the v3 schema in §6.1 and refresh the
-browser. Even an empty corpora array lets the HTML load; it just won't
-have nearest-name matches.
+To add a corpus, drop `<id>.json` in `data/corpora/libraries/`, append
+its filename to the manifest's `files[]`, and refresh the browser. Even
+an empty manifest (`"files": []`) lets the HTML load; it just won't have
+nearest-name matches.
 
 ### 10.5 Build the HTML
 
