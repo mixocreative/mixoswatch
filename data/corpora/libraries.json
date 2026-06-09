@@ -1,0 +1,11 @@
+{
+  "version": 3,
+  "schema_rev": "3.0",
+  "_doc": "Manifest of per-library corpus files. App fetches this first, then each file in `files`. To add a library: drop <id>.json in data/corpora/libraries/ and append its filename here.",
+  "files": [
+    "jp-trad.json",
+    "w3c-names.json",
+    "zh-trad.json",
+    "colour-in-translation.json"
+  ]
+}

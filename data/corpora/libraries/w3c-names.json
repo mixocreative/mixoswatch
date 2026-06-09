@@ -1,0 +1,1827 @@
+{
+  "id": "w3c-names",
+  "label": {
+    "en": "W3C named colors (148)",
+    "ja": "W3C 名前付き色",
+    "zh": "W3C 命名色"
+  },
+  "fields": [
+    {
+      "id": "name_en",
+      "label": {
+        "en": "English",
+        "ja": "英語",
+        "zh": "英文"
+      }
+    },
+    {
+      "id": "name_ja",
+      "label": {
+        "en": "Japanese",
+        "ja": "日本語",
+        "zh": "日文"
+      }
+    },
+    {
+      "id": "name_zh",
+      "label": {
+        "en": "Chinese",
+        "ja": "中国語",
+        "zh": "中文"
+      }
+    }
+  ],
+  "default_display": "name_en",
+  "anchor": "hex",
+  "source": "https://www.w3.org/TR/css-color-4/#named-colors",
+  "entries": [
+    {
+      "name_en": "White",
+      "name_ja": "白",
+      "name_zh": "白",
+      "hex": "#FFFFFF",
+      "cmyk": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name_en": "Alice Blue",
+      "name_ja": "アリスブルー",
+      "name_zh": "愛麗絲藍",
+      "hex": "#F0F8FF",
+      "cmyk": [
+        7,
+        2,
+        0,
+        0
+      ]
+    },
+    {
+      "name_en": "Antique White",
+      "name_ja": "アンティークホワイト",
+      "name_zh": "古董白",
+      "hex": "#FAEBD7",
+      "cmyk": [
+        2,
+        10,
+        19,
+        0
+      ]
+    },
+    {
+      "name_en": "Aqua",
+      "name_ja": "アクア",
+      "name_zh": "水色",
+      "hex": "#00FFFF",
+      "cmyk": [
+        56,
+        0,
+        18,
+        0
+      ]
+    },
+    {
+      "name_en": "Aqua Marine",
+      "name_ja": "アクアマリン",
+      "name_zh": "海藍寶石",
+      "hex": "#7FFFD4",
+      "cmyk": [
+        47,
+        0,
+        34,
+        0
+      ]
+    },
+    {
+      "name_en": "Azure",
+      "name_ja": "アジュール",
+      "name_zh": "天藍",
+      "hex": "#F0FFFF",
+      "cmyk": [
+        7,
+        0,
+        3,
+        0
+      ]
+    },
+    {
+      "name_en": "Beige",
+      "name_ja": "ベージュ",
+      "name_zh": "米色",
+      "hex": "#F5F5DC",
+      "cmyk": [
+        6,
+        2,
+        20,
+        0
+      ]
+    },
+    {
+      "name_en": "Bisque",
+      "name_ja": "ビスク",
+      "name_zh": "陶瓷白",
+      "hex": "#FFE4C4",
+      "cmyk": [
+        0,
+        15,
+        27,
+        0
+      ]
+    },
+    {
+      "name_en": "Black",
+      "name_ja": "ブラック",
+      "name_zh": "黑色",
+      "hex": "#000000",
+      "cmyk": [
+        91,
+        79,
+        62,
+        98
+      ]
+    },
+    {
+      "name_en": "Blanched Almond",
+      "name_ja": "ブランチドアーモンド",
+      "name_zh": "漂白杏仁",
+      "hex": "#FFEBCD",
+      "cmyk": [
+        1,
+        11,
+        24,
+        0
+      ]
+    },
+    {
+      "name_en": "Blue",
+      "name_ja": "ブルー",
+      "name_zh": "藍色",
+      "hex": "#0000FF",
+      "cmyk": [
+        95,
+        77,
+        0,
+        0
+      ]
+    },
+    {
+      "name_en": "Blue Violet",
+      "name_ja": "ブルーバイオレット",
+      "name_zh": "藍紫",
+      "hex": "#8A2BE2",
+      "cmyk": [
+        74,
+        82,
+        0,
+        0
+      ]
+    },
+    {
+      "name_en": "Brown",
+      "name_ja": "ブラウン",
+      "name_zh": "棕色",
+      "hex": "#A52A2A",
+      "cmyk": [
+        25,
+        93,
+        82,
+        23
+      ]
+    },
+    {
+      "name_en": "Burly Wood",
+      "name_ja": "バーリーウッド",
+      "name_zh": "實木色",
+      "hex": "#DEB887",
+      "cmyk": [
+        15,
+        30,
+        51,
+        3
+      ]
+    },
+    {
+      "name_en": "Cadet Blue",
+      "name_ja": "カデットブルー",
+      "name_zh": "軍藍",
+      "hex": "#5F9EA0",
+      "cmyk": [
+        65,
+        24,
+        38,
+        5
+      ]
+    },
+    {
+      "name_en": "Chartreuse",
+      "name_ja": "シャルトリューズ",
+      "name_zh": "黃綠",
+      "hex": "#7FFF00",
+      "cmyk": [
+        53,
+        0,
+        100,
+        0
+      ]
+    },
+    {
+      "name_en": "Chocolate",
+      "name_ja": "チョコレート",
+      "name_zh": "巧克力",
+      "hex": "#D2691E",
+      "cmyk": [
+        17,
+        67,
+        95,
+        5
+      ]
+    },
+    {
+      "name_en": "Coral",
+      "name_ja": "コーラル",
+      "name_zh": "珊瑚",
+      "hex": "#FF7F50",
+      "cmyk": [
+        0,
+        63,
+        69,
+        0
+      ]
+    },
+    {
+      "name_en": "Cornflower Blue",
+      "name_ja": "コーンフラワーブルー",
+      "name_zh": "矢車菊藍",
+      "hex": "#6495ED",
+      "cmyk": [
+        64,
+        40,
+        0,
+        0
+      ]
+    },
+    {
+      "name_en": "Corn Silk",
+      "name_ja": "コーンシルク",
+      "name_zh": "玉米穗",
+      "hex": "#FFF8DC",
+      "cmyk": [
+        2,
+        3,
+        19,
+        0
+      ]
+    },
+    {
+      "name_en": "Crimson",
+      "name_ja": "クリムゾン",
+      "name_zh": "深紅",
+      "hex": "#DC143C",
+      "cmyk": [
+        12,
+        98,
+        72,
+        3
+      ]
+    },
+    {
+      "name_en": "Cyan",
+      "name_ja": "シアン",
+      "name_zh": "青色",
+      "hex": "#00FFFF",
+      "cmyk": [
+        56,
+        0,
+        18,
+        0
+      ]
+    },
+    {
+      "name_en": "Dark Blue",
+      "name_ja": "ダークブルー",
+      "name_zh": "暗藍",
+      "hex": "#00008B",
+      "cmyk": [
+        100,
+        93,
+        26,
+        13
+      ]
+    },
+    {
+      "name_en": "Dark Cyan",
+      "name_ja": "ダークシアン",
+      "name_zh": "暗青",
+      "hex": "#008B8B",
+      "cmyk": [
+        82,
+        25,
+        47,
+        10
+      ]
+    },
+    {
+      "name_en": "Dark Golden Rod",
+      "name_ja": "ダークゴールデンロッド",
+      "name_zh": "暗金菊",
+      "hex": "#B8860B",
+      "cmyk": [
+        25,
+        44,
+        100,
+        15
+      ]
+    },
+    {
+      "name_en": "Dark Gray",
+      "name_ja": "ダークグレー",
+      "name_zh": "深灰",
+      "hex": "#A9A9A9",
+      "cmyk": [
+        35,
+        28,
+        29,
+        7
+      ]
+    },
+    {
+      "name_en": "Dark Green",
+      "name_ja": "ダークグリーン",
+      "name_zh": "深綠",
+      "hex": "#006400",
+      "cmyk": [
+        89,
+        34,
+        100,
+        31
+      ]
+    },
+    {
+      "name_en": "Dark Grey",
+      "name_ja": "ダークグレイ",
+      "name_zh": "深灰色",
+      "hex": "#A9A9A9",
+      "cmyk": [
+        35,
+        28,
+        29,
+        7
+      ]
+    },
+    {
+      "name_en": "Dark Khaki",
+      "name_ja": "ダークカーキ",
+      "name_zh": "暗卡其",
+      "hex": "#BDB76B",
+      "cmyk": [
+        31,
+        21,
+        67,
+        5
+      ]
+    },
+    {
+      "name_en": "Dark Magenta",
+      "name_ja": "ダークマゼンタ",
+      "name_zh": "暗品紅",
+      "hex": "#8B008B",
+      "cmyk": [
+        62,
+        100,
+        3,
+        1
+      ]
+    },
+    {
+      "name_en": "Dark Olive Green",
+      "name_ja": "ダークオリーブグリーン",
+      "name_zh": "暗橄欖綠",
+      "hex": "#556B2F",
+      "cmyk": [
+        67,
+        38,
+        94,
+        30
+      ]
+    },
+    {
+      "name_en": "Dark Orange",
+      "name_ja": "ダークオレンジ",
+      "name_zh": "暗橙",
+      "hex": "#FF8C00",
+      "cmyk": [
+        0,
+        55,
+        94,
+        0
+      ]
+    },
+    {
+      "name_en": "Dark Orchid",
+      "name_ja": "ダークオーキッド",
+      "name_zh": "暗蘭",
+      "hex": "#9932CC",
+      "cmyk": [
+        66,
+        84,
+        0,
+        0
+      ]
+    },
+    {
+      "name_en": "Dark Red",
+      "name_ja": "ダークレッド",
+      "name_zh": "暗紅",
+      "hex": "#8B0000",
+      "cmyk": [
+        28,
+        100,
+        100,
+        36
+      ]
+    },
+    {
+      "name_en": "Dark Salmon",
+      "name_ja": "ダークサーモン",
+      "name_zh": "暗鮭",
+      "hex": "#E9967A",
+      "cmyk": [
+        10,
+        51,
+        52,
+        1
+      ]
+    },
+    {
+      "name_en": "Dark Sea Green",
+      "name_ja": "ダークシーグリーン",
+      "name_zh": "暗海綠",
+      "hex": "#8FBC8F",
+      "cmyk": [
+        51,
+        12,
+        54,
+        1
+      ]
+    },
+    {
+      "name_en": "Dark Slate Blue",
+      "name_ja": "ダークスレートブルー",
+      "name_zh": "暗板岩藍",
+      "hex": "#483D8B",
+      "cmyk": [
+        87,
+        86,
+        13,
+        2
+      ]
+    },
+    {
+      "name_en": "Dark Slate Gray",
+      "name_ja": "ダークスレートグレー",
+      "name_zh": "深板岩灰",
+      "hex": "#2F4F4F",
+      "cmyk": [
+        78,
+        47,
+        53,
+        47
+      ]
+    },
+    {
+      "name_en": "Dark Slate Grey",
+      "name_ja": "ダークスレートグレイ",
+      "name_zh": "深板岩灰色",
+      "hex": "#2F4F4F",
+      "cmyk": [
+        78,
+        47,
+        53,
+        47
+      ]
+    },
+    {
+      "name_en": "Dark Turquoise",
+      "name_ja": "ダークターコイズ",
+      "name_zh": "暗青綠",
+      "hex": "#00CED1",
+      "cmyk": [
+        69,
+        0,
+        30,
+        0
+      ]
+    },
+    {
+      "name_en": "Dark Violet",
+      "name_ja": "ダークバイオレット",
+      "name_zh": "暗紫",
+      "hex": "#9400D3",
+      "cmyk": [
+        71,
+        87,
+        0,
+        0
+      ]
+    },
+    {
+      "name_en": "Deep Pink",
+      "name_ja": "ディープピンク",
+      "name_zh": "深粉",
+      "hex": "#FF1493",
+      "cmyk": [
+        0,
+        92,
+        1,
+        0
+      ]
+    },
+    {
+      "name_en": "Deep Sky Blue",
+      "name_ja": "ディープスカイブルー",
+      "name_zh": "深天藍",
+      "hex": "#00BFFF",
+      "cmyk": [
+        69,
+        9,
+        0,
+        0
+      ]
+    },
+    {
+      "name_en": "Dim Gray",
+      "name_ja": "ディムグレー",
+      "name_zh": "暗灰",
+      "hex": "#696969",
+      "cmyk": [
+        55,
+        45,
+        45,
+        32
+      ]
+    },
+    {
+      "name_en": "Dim Grey",
+      "name_ja": "ディムグレイ",
+      "name_zh": "暗灰色",
+      "hex": "#696969",
+      "cmyk": [
+        55,
+        45,
+        45,
+        32
+      ]
+    },
+    {
+      "name_en": "Dodger Blue",
+      "name_ja": "ドジャーブルー",
+      "name_zh": "道奇藍",
+      "hex": "#1E90FF",
+      "cmyk": [
+        76,
+        44,
+        0,
+        0
+      ]
+    },
+    {
+      "name_en": "Fire Brick",
+      "name_ja": "ファイアブリック",
+      "name_zh": "火磚紅",
+      "hex": "#B22222",
+      "cmyk": [
+        23,
+        96,
+        89,
+        17
+      ]
+    },
+    {
+      "name_en": "Floral White",
+      "name_ja": "フローラルホワイト",
+      "name_zh": "花卉白",
+      "hex": "#FFFAF0",
+      "cmyk": [
+        0,
+        3,
+        8,
+        0
+      ]
+    },
+    {
+      "name_en": "Forest Green",
+      "name_ja": "フォレストグリーン",
+      "name_zh": "森林綠",
+      "hex": "#228B22",
+      "cmyk": [
+        82,
+        22,
+        100,
+        8
+      ]
+    },
+    {
+      "name_en": "Fuchsia",
+      "name_ja": "フクシア",
+      "name_zh": "紫紅",
+      "hex": "#FF00FF",
+      "cmyk": [
+        43,
+        79,
+        0,
+        0
+      ]
+    },
+    {
+      "name_en": "Gainsboro",
+      "name_ja": "ゲインズボロ",
+      "name_zh": "銀灰",
+      "hex": "#DCDCDC",
+      "cmyk": [
+        16,
+        12,
+        13,
+        0
+      ]
+    },
+    {
+      "name_en": "Ghost White",
+      "name_ja": "ゴーストホワイト",
+      "name_zh": "幽靈白",
+      "hex": "#F8F8FF",
+      "cmyk": [
+        3,
+        3,
+        0,
+        0
+      ]
+    },
+    {
+      "name_en": "Gold",
+      "name_ja": "ゴールド",
+      "name_zh": "金色",
+      "hex": "#FFD700",
+      "cmyk": [
+        6,
+        16,
+        90,
+        0
+      ]
+    },
+    {
+      "name_en": "Golden Rod",
+      "name_ja": "ゴールデンロッド",
+      "name_zh": "金菊",
+      "hex": "#DAA520",
+      "cmyk": [
+        16,
+        36,
+        92,
+        5
+      ]
+    },
+    {
+      "name_en": "Gray",
+      "name_ja": "グレー",
+      "name_zh": "灰色",
+      "hex": "#808080",
+      "cmyk": [
+        48,
+        39,
+        39,
+        21
+      ]
+    },
+    {
+      "name_en": "Green",
+      "name_ja": "グリーン",
+      "name_zh": "綠色",
+      "hex": "#008000",
+      "cmyk": [
+        86,
+        25,
+        100,
+        14
+      ]
+    },
+    {
+      "name_en": "Green Yellow",
+      "name_ja": "グリーンイエロー",
+      "name_zh": "黃綠色",
+      "hex": "#ADFF2F",
+      "cmyk": [
+        42,
+        0,
+        92,
+        0
+      ]
+    },
+    {
+      "name_en": "Grey",
+      "name_ja": "グレイ",
+      "name_zh": "灰色（英式）",
+      "hex": "#808080",
+      "cmyk": [
+        48,
+        39,
+        39,
+        21
+      ]
+    },
+    {
+      "name_en": "Honey Dew",
+      "name_ja": "ハニーデュー",
+      "name_zh": "蜜露",
+      "hex": "#F0FFF0",
+      "cmyk": [
+        8,
+        0,
+        11,
+        0
+      ]
+    },
+    {
+      "name_en": "Hot Pink",
+      "name_ja": "ホットピンク",
+      "name_zh": "熱粉",
+      "hex": "#FF69B4",
+      "cmyk": [
+        2,
+        73,
+        0,
+        0
+      ]
+    },
+    {
+      "name_en": "Indian Red",
+      "name_ja": "インディアンレッド",
+      "name_zh": "印度紅",
+      "hex": "#CD5C5C",
+      "cmyk": [
+        18,
+        74,
+        57,
+        7
+      ]
+    },
+    {
+      "name_en": "Indigo",
+      "name_ja": "インディゴ",
+      "name_zh": "靛藍",
+      "hex": "#4B0082",
+      "cmyk": [
+        91,
+        100,
+        18,
+        7
+      ]
+    },
+    {
+      "name_en": "Ivory",
+      "name_ja": "アイボリー",
+      "name_zh": "象牙",
+      "hex": "#FFFFF0",
+      "cmyk": [
+        0,
+        0,
+        9,
+        0
+      ]
+    },
+    {
+      "name_en": "Khaki",
+      "name_ja": "カーキ",
+      "name_zh": "卡其",
+      "hex": "#F0E68C",
+      "cmyk": [
+        12,
+        7,
+        56,
+        0
+      ]
+    },
+    {
+      "name_en": "Lavender",
+      "name_ja": "ラベンダー",
+      "name_zh": "薰衣草",
+      "hex": "#E6E6FA",
+      "cmyk": [
+        11,
+        11,
+        0,
+        0
+      ]
+    },
+    {
+      "name_en": "Lavender Blush",
+      "name_ja": "ラベンダーブラッシュ",
+      "name_zh": "薰衣草紅",
+      "hex": "#FFF0F5",
+      "cmyk": [
+        0,
+        10,
+        2,
+        0
+      ]
+    },
+    {
+      "name_en": "Lawn Green",
+      "name_ja": "ローングリーン",
+      "name_zh": "草坪綠",
+      "hex": "#7CFC00",
+      "cmyk": [
+        54,
+        0,
+        100,
+        0
+      ]
+    },
+    {
+      "name_en": "Lemon Chiffon",
+      "name_ja": "レモンシフォン",
+      "name_zh": "檸檬薄紗",
+      "hex": "#FFFACD",
+      "cmyk": [
+        3,
+        2,
+        28,
+        0
+      ]
+    },
+    {
+      "name_en": "Light Blue",
+      "name_ja": "ライトブルー",
+      "name_zh": "淺藍",
+      "hex": "#ADD8E6",
+      "cmyk": [
+        37,
+        6,
+        12,
+        0
+      ]
+    },
+    {
+      "name_en": "Light Coral",
+      "name_ja": "ライトコーラル",
+      "name_zh": "淺珊瑚",
+      "hex": "#F08080",
+      "cmyk": [
+        6,
+        63,
+        43,
+        0
+      ]
+    },
+    {
+      "name_en": "Light Cyan",
+      "name_ja": "ライトシアン",
+      "name_zh": "淺青",
+      "hex": "#E0FFFF",
+      "cmyk": [
+        15,
+        0,
+        5,
+        0
+      ]
+    },
+    {
+      "name_en": "Light Golden Rod Yellow",
+      "name_ja": "ライトゴールデンロッドイエロー",
+      "name_zh": "淺金菊黃",
+      "hex": "#FAFAD2",
+      "cmyk": [
+        5,
+        0,
+        26,
+        0
+      ]
+    },
+    {
+      "name_en": "Light Gray",
+      "name_ja": "ライトグレー",
+      "name_zh": "淺灰",
+      "hex": "#D3D3D3",
+      "cmyk": [
+        20,
+        15,
+        16,
+        0
+      ]
+    },
+    {
+      "name_en": "Light Green",
+      "name_ja": "ライトグリーン",
+      "name_zh": "淺綠",
+      "hex": "#90EE90",
+      "cmyk": [
+        48,
+        0,
+        59,
+        0
+      ]
+    },
+    {
+      "name_en": "Light Grey",
+      "name_ja": "ライトグレイ",
+      "name_zh": "淺灰色",
+      "hex": "#D3D3D3",
+      "cmyk": [
+        20,
+        15,
+        16,
+        0
+      ]
+    },
+    {
+      "name_en": "Light Pink",
+      "name_ja": "ライトピンク",
+      "name_zh": "淺粉",
+      "hex": "#FFB6C1",
+      "cmyk": [
+        0,
+        40,
+        15,
+        0
+      ]
+    },
+    {
+      "name_en": "Light Salmon",
+      "name_ja": "ライトサーモン",
+      "name_zh": "淺鮭",
+      "hex": "#FFA07A",
+      "cmyk": [
+        0,
+        49,
+        53,
+        0
+      ]
+    },
+    {
+      "name_en": "Light Sea Green",
+      "name_ja": "ライトシーグリーン",
+      "name_zh": "淺海綠",
+      "hex": "#20B2AA",
+      "cmyk": [
+        74,
+        8,
+        42,
+        0
+      ]
+    },
+    {
+      "name_en": "Light Sky Blue",
+      "name_ja": "ライトスカイブルー",
+      "name_zh": "淺天藍",
+      "hex": "#87CEFA",
+      "cmyk": [
+        49,
+        9,
+        1,
+        0
+      ]
+    },
+    {
+      "name_en": "Light Slate Gray",
+      "name_ja": "ライトスレートグレー",
+      "name_zh": "淺板岩灰",
+      "hex": "#778899",
+      "cmyk": [
+        56,
+        38,
+        30,
+        12
+      ]
+    },
+    {
+      "name_en": "Light Slate Grey",
+      "name_ja": "ライトスレートグレイ",
+      "name_zh": "淺板岩灰色",
+      "hex": "#778899",
+      "cmyk": [
+        56,
+        38,
+        30,
+        12
+      ]
+    },
+    {
+      "name_en": "Light Steel Blue",
+      "name_ja": "ライトスチールブルー",
+      "name_zh": "淺鋼藍",
+      "hex": "#B0C4DE",
+      "cmyk": [
+        36,
+        19,
+        8,
+        0
+      ]
+    },
+    {
+      "name_en": "Light Yellow",
+      "name_ja": "ライトイエロー",
+      "name_zh": "淺黃",
+      "hex": "#FFFFE0",
+      "cmyk": [
+        2,
+        0,
+        18,
+        0
+      ]
+    },
+    {
+      "name_en": "Lime",
+      "name_ja": "ライム",
+      "name_zh": "石灰綠",
+      "hex": "#00FF00",
+      "cmyk": [
+        64,
+        0,
+        100,
+        0
+      ]
+    },
+    {
+      "name_en": "Lime Green",
+      "name_ja": "ライムグリーン",
+      "name_zh": "酸橙綠",
+      "hex": "#32CD32",
+      "cmyk": [
+        69,
+        0,
+        95,
+        0
+      ]
+    },
+    {
+      "name_en": "Linen",
+      "name_ja": "リネン",
+      "name_zh": "亞麻",
+      "hex": "#FAF0E6",
+      "cmyk": [
+        2,
+        7,
+        12,
+        0
+      ]
+    },
+    {
+      "name_en": "Magenta",
+      "name_ja": "マゼンタ",
+      "name_zh": "品紅",
+      "hex": "#FF00FF",
+      "cmyk": [
+        43,
+        79,
+        0,
+        0
+      ]
+    },
+    {
+      "name_en": "Maroon",
+      "name_ja": "マルーン",
+      "name_zh": "慄紅",
+      "hex": "#800000",
+      "cmyk": [
+        30,
+        100,
+        100,
+        42
+      ]
+    },
+    {
+      "name_en": "Medium Aqua Marine",
+      "name_ja": "ミディアムアクアマリン",
+      "name_zh": "中海藍",
+      "hex": "#66CDAA",
+      "cmyk": [
+        60,
+        0,
+        46,
+        0
+      ]
+    },
+    {
+      "name_en": "Medium Blue",
+      "name_ja": "ミディアムブルー",
+      "name_zh": "中藍",
+      "hex": "#0000CD",
+      "cmyk": [
+        100,
+        85,
+        0,
+        0
+      ]
+    },
+    {
+      "name_en": "Medium Orchid",
+      "name_ja": "ミディアムオーキッド",
+      "name_zh": "中蘭",
+      "hex": "#BA55D3",
+      "cmyk": [
+        51,
+        74,
+        0,
+        0
+      ]
+    },
+    {
+      "name_en": "Medium Purple",
+      "name_ja": "ミディアムパープル",
+      "name_zh": "中紫",
+      "hex": "#9370DB",
+      "cmyk": [
+        58,
+        63,
+        0,
+        0
+      ]
+    },
+    {
+      "name_en": "Medium Sea Green",
+      "name_ja": "ミディアムシーグリーン",
+      "name_zh": "中海綠",
+      "hex": "#3CB371",
+      "cmyk": [
+        73,
+        4,
+        71,
+        0
+      ]
+    },
+    {
+      "name_en": "Medium Slate Blue",
+      "name_ja": "ミディアムスレートブルー",
+      "name_zh": "中板巖藍",
+      "hex": "#7B68EE",
+      "cmyk": [
+        71,
+        66,
+        0,
+        0
+      ]
+    },
+    {
+      "name_en": "Medium Spring Green",
+      "name_ja": "ミディアムスプリンググリーン",
+      "name_zh": "中春綠",
+      "hex": "#00FA9A",
+      "cmyk": [
+        62,
+        0,
+        60,
+        0
+      ]
+    },
+    {
+      "name_en": "Medium Turquoise",
+      "name_ja": "ミディアムターコイズ",
+      "name_zh": "中青綠",
+      "hex": "#48D1CC",
+      "cmyk": [
+        64,
+        0,
+        31,
+        0
+      ]
+    },
+    {
+      "name_en": "Medium Violet Red",
+      "name_ja": "ミディアムバイオレットレッド",
+      "name_zh": "中紫紅",
+      "hex": "#C71585",
+      "cmyk": [
+        29,
+        98,
+        8,
+        1
+      ]
+    },
+    {
+      "name_en": "Midnight Blue",
+      "name_ja": "ミッドナイトブルー",
+      "name_zh": "午夜藍",
+      "hex": "#191970",
+      "cmyk": [
+        100,
+        96,
+        31,
+        17
+      ]
+    },
+    {
+      "name_en": "Mint Cream",
+      "name_ja": "ミントクリーム",
+      "name_zh": "薄荷奶油",
+      "hex": "#F5FFFA",
+      "cmyk": [
+        5,
+        0,
+        5,
+        0
+      ]
+    },
+    {
+      "name_en": "Misty Rose",
+      "name_ja": "ミスティローズ",
+      "name_zh": "薄霧玫瑰",
+      "hex": "#FFE4E1",
+      "cmyk": [
+        0,
+        16,
+        10,
+        0
+      ]
+    },
+    {
+      "name_en": "Moccasin",
+      "name_ja": "モカシン",
+      "name_zh": "鹿皮色",
+      "hex": "#FFE4B4",
+      "cmyk": [
+        2,
+        14,
+        36,
+        0
+      ]
+    },
+    {
+      "name_en": "Navajo White",
+      "name_ja": "ナバホホワイト",
+      "name_zh": "納瓦白",
+      "hex": "#FFDEAD",
+      "cmyk": [
+        1,
+        17,
+        38,
+        0
+      ]
+    },
+    {
+      "name_en": "Navy",
+      "name_ja": "ネイビー",
+      "name_zh": "海軍藍",
+      "hex": "#000080",
+      "cmyk": [
+        100,
+        93,
+        28,
+        18
+      ]
+    },
+    {
+      "name_en": "Old Lace",
+      "name_ja": "オールドレース",
+      "name_zh": "舊蕾絲",
+      "hex": "#FDF5E6",
+      "cmyk": [
+        1,
+        5,
+        13,
+        0
+      ]
+    },
+    {
+      "name_en": "Olive",
+      "name_ja": "オリーブ",
+      "name_zh": "橄欖",
+      "hex": "#808000",
+      "cmyk": [
+        51,
+        35,
+        100,
+        21
+      ]
+    },
+    {
+      "name_en": "Olive Drab",
+      "name_ja": "オリーブドラブ",
+      "name_zh": "橄欖褐",
+      "hex": "#6B8E23",
+      "cmyk": [
+        64,
+        27,
+        100,
+        11
+      ]
+    },
+    {
+      "name_en": "Orange",
+      "name_ja": "オレンジ",
+      "name_zh": "橙色",
+      "hex": "#FFA500",
+      "cmyk": [
+        0,
+        44,
+        93,
+        0
+      ]
+    },
+    {
+      "name_en": "Orange Red",
+      "name_ja": "オレンジレッド",
+      "name_zh": "橙紅",
+      "hex": "#FF4500",
+      "cmyk": [
+        0,
+        82,
+        95,
+        0
+      ]
+    },
+    {
+      "name_en": "Orchid",
+      "name_ja": "オーキッド",
+      "name_zh": "蘭花",
+      "hex": "#DA70D6",
+      "cmyk": [
+        32,
+        65,
+        0,
+        0
+      ]
+    },
+    {
+      "name_en": "Pale Golden Rod",
+      "name_ja": "ペールゴールデンロッド",
+      "name_zh": "淡金菊",
+      "hex": "#EEE8AA",
+      "cmyk": [
+        12,
+        6,
+        43,
+        0
+      ]
+    },
+    {
+      "name_en": "Pale Green",
+      "name_ja": "ペールグリーン",
+      "name_zh": "淡綠",
+      "hex": "#98FB98",
+      "cmyk": [
+        44,
+        0,
+        57,
+        0
+      ]
+    },
+    {
+      "name_en": "Pale Turquoise",
+      "name_ja": "ペールターコイズ",
+      "name_zh": "淡青綠",
+      "hex": "#AFEEEE",
+      "cmyk": [
+        35,
+        0,
+        15,
+        0
+      ]
+    },
+    {
+      "name_en": "Pale Violet Red",
+      "name_ja": "ペールバイオレットレッド",
+      "name_zh": "淡紫紅",
+      "hex": "#DB7093",
+      "cmyk": [
+        16,
+        68,
+        24,
+        2
+      ]
+    },
+    {
+      "name_en": "Papaya Whip",
+      "name_ja": "パパイアホイップ",
+      "name_zh": "木瓜色",
+      "hex": "#FFEFD5",
+      "cmyk": [
+        0,
+        9,
+        20,
+        0
+      ]
+    },
+    {
+      "name_en": "Peach Puff",
+      "name_ja": "ピーチパフ",
+      "name_zh": "桃色",
+      "hex": "#FFDAB9",
+      "cmyk": [
+        0,
+        20,
+        31,
+        0
+      ]
+    },
+    {
+      "name_en": "Peru",
+      "name_ja": "ペルー",
+      "name_zh": "祕魯色",
+      "hex": "#CD853F",
+      "cmyk": [
+        19,
+        52,
+        80,
+        7
+      ]
+    },
+    {
+      "name_en": "Pink",
+      "name_ja": "ピンク",
+      "name_zh": "粉紅",
+      "hex": "#FFC0CB",
+      "cmyk": [
+        0,
+        36,
+        13,
+        0
+      ]
+    },
+    {
+      "name_en": "Plum",
+      "name_ja": "プラム",
+      "name_zh": "梅",
+      "hex": "#DDA0DD",
+      "cmyk": [
+        20,
+        47,
+        0,
+        0
+      ]
+    },
+    {
+      "name_en": "Powder Blue",
+      "name_ja": "パウダーブルー",
+      "name_zh": "粉藍",
+      "hex": "#B0E0E6",
+      "cmyk": [
+        36,
+        1,
+        14,
+        0
+      ]
+    },
+    {
+      "name_en": "Purple",
+      "name_ja": "パープル",
+      "name_zh": "紫色",
+      "hex": "#800080",
+      "cmyk": [
+        66,
+        100,
+        11,
+        4
+      ]
+    },
+    {
+      "name_en": "Rebecca Purple",
+      "name_ja": "レベッカパープル",
+      "name_zh": "麗貝卡紫",
+      "hex": "#663399",
+      "cmyk": [
+        77,
+        91,
+        0,
+        0
+      ]
+    },
+    {
+      "name_en": "Red",
+      "name_ja": "レッド",
+      "name_zh": "紅色",
+      "hex": "#FF0000",
+      "cmyk": [
+        0,
+        96,
+        94,
+        0
+      ]
+    },
+    {
+      "name_en": "Rosy Brown",
+      "name_ja": "ローズィブラウン",
+      "name_zh": "玫瑰棕",
+      "hex": "#BC8F8F",
+      "cmyk": [
+        25,
+        46,
+        35,
+        11
+      ]
+    },
+    {
+      "name_en": "Royal Blue",
+      "name_ja": "ロイヤルブルー",
+      "name_zh": "皇家藍",
+      "hex": "#4169E1",
+      "cmyk": [
+        82,
+        63,
+        0,
+        0
+      ]
+    },
+    {
+      "name_en": "Saddle Brown",
+      "name_ja": "サドルブラウン",
+      "name_zh": "鞍褐",
+      "hex": "#8B4513",
+      "cmyk": [
+        31,
+        74,
+        99,
+        35
+      ]
+    },
+    {
+      "name_en": "Salmon",
+      "name_ja": "サーモン",
+      "name_zh": "鮭肉色",
+      "hex": "#FA8072",
+      "cmyk": [
+        1,
+        63,
+        51,
+        0
+      ]
+    },
+    {
+      "name_en": "Sandy Brown",
+      "name_ja": "サンディブラウン",
+      "name_zh": "沙棕",
+      "hex": "#F4A460",
+      "cmyk": [
+        5,
+        45,
+        67,
+        0
+      ]
+    },
+    {
+      "name_en": "Sea Green",
+      "name_ja": "シーグリーン",
+      "name_zh": "海綠",
+      "hex": "#2E8B57",
+      "cmyk": [
+        80,
+        24,
+        79,
+        9
+      ]
+    },
+    {
+      "name_en": "Sea Shell",
+      "name_ja": "シーシェル",
+      "name_zh": "貝殼",
+      "hex": "#FFF5EE",
+      "cmyk": [
+        0,
+        6,
+        8,
+        0
+      ]
+    },
+    {
+      "name_en": "Sienna",
+      "name_ja": "シエナ",
+      "name_zh": "赭色",
+      "hex": "#A0522D",
+      "cmyk": [
+        28,
+        71,
+        85,
+        25
+      ]
+    },
+    {
+      "name_en": "Silver",
+      "name_ja": "シルバー",
+      "name_zh": "銀色",
+      "hex": "#C0C0C0",
+      "cmyk": [
+        27,
+        21,
+        22,
+        3
+      ]
+    },
+    {
+      "name_en": "Sky Blue",
+      "name_ja": "スカイブルー",
+      "name_zh": "天藍色",
+      "hex": "#87CEEB",
+      "cmyk": [
+        50,
+        7,
+        9,
+        0
+      ]
+    },
+    {
+      "name_en": "Slate Blue",
+      "name_ja": "スレートブルー",
+      "name_zh": "板岩藍",
+      "hex": "#6A5ACD",
+      "cmyk": [
+        75,
+        71,
+        0,
+        0
+      ]
+    },
+    {
+      "name_en": "Slate Gray",
+      "name_ja": "スレートグレー",
+      "name_zh": "板岩灰",
+      "hex": "#708090",
+      "cmyk": [
+        59,
+        41,
+        32,
+        15
+      ]
+    },
+    {
+      "name_en": "Slate Grey",
+      "name_ja": "スレートグレイ",
+      "name_zh": "板岩灰色",
+      "hex": "#708090",
+      "cmyk": [
+        59,
+        41,
+        32,
+        15
+      ]
+    },
+    {
+      "name_en": "Snow",
+      "name_ja": "スノー",
+      "name_zh": "雪白",
+      "hex": "#FFFAFA",
+      "cmyk": [
+        0,
+        4,
+        2,
+        0
+      ]
+    },
+    {
+      "name_en": "Spring Green",
+      "name_ja": "スプリンググリーン",
+      "name_zh": "春綠",
+      "hex": "#00FF7F",
+      "cmyk": [
+        62,
+        0,
+        71,
+        0
+      ]
+    },
+    {
+      "name_en": "Steel Blue",
+      "name_ja": "スチールブルー",
+      "name_zh": "鋼藍",
+      "hex": "#4682B4",
+      "cmyk": [
+        75,
+        44,
+        16,
+        2
+      ]
+    },
+    {
+      "name_en": "Tan",
+      "name_ja": "タン",
+      "name_zh": "棕褐",
+      "hex": "#D2B48C",
+      "cmyk": [
+        18,
+        29,
+        48,
+        5
+      ]
+    },
+    {
+      "name_en": "Teal",
+      "name_ja": "ティール",
+      "name_zh": "水鴨色",
+      "hex": "#008080",
+      "cmyk": [
+        84,
+        29,
+        49,
+        15
+      ]
+    },
+    {
+      "name_en": "Thistle",
+      "name_ja": "シスル",
+      "name_zh": "薊色",
+      "hex": "#D8BFD8",
+      "cmyk": [
+        18,
+        30,
+        6,
+        0
+      ]
+    },
+    {
+      "name_en": "Tomato",
+      "name_ja": "トマト",
+      "name_zh": "番茄",
+      "hex": "#FF6347",
+      "cmyk": [
+        0,
+        73,
+        71,
+        0
+      ]
+    },
+    {
+      "name_en": "Turquoise",
+      "name_ja": "ターコイズ",
+      "name_zh": "青綠",
+      "hex": "#40E0D0",
+      "cmyk": [
+        62,
+        0,
+        33,
+        0
+      ]
+    },
+    {
+      "name_en": "Violet",
+      "name_ja": "バイオレット",
+      "name_zh": "紫羅蘭",
+      "hex": "#EE82EE",
+      "cmyk": [
+        27,
+        57,
+        0,
+        0
+      ]
+    },
+    {
+      "name_en": "Wheat",
+      "name_ja": "ウィート",
+      "name_zh": "麥色",
+      "hex": "#F5DEB3",
+      "cmyk": [
+        6,
+        15,
+        36,
+        0
+      ]
+    },
+    {
+      "name_en": "White",
+      "name_ja": "ホワイト",
+      "name_zh": "白色",
+      "hex": "#FFFFFF",
+      "cmyk": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name_en": "White Smoke",
+      "name_ja": "ホワイトスモーク",
+      "name_zh": "白煙",
+      "hex": "#F5F5F5",
+      "cmyk": [
+        4,
+        4,
+        4,
+        0
+      ]
+    },
+    {
+      "name_en": "Yellow",
+      "name_ja": "イエロー",
+      "name_zh": "黃色",
+      "hex": "#FFFF00",
+      "cmyk": [
+        12,
+        0,
+        84,
+        0
+      ]
+    },
+    {
+      "name_en": "Yellow Green",
+      "name_ja": "イエローグリーン",
+      "name_zh": "綠黃色",
+      "hex": "#9ACD32",
+      "cmyk": [
+        50,
+        1,
+        91,
+        0
+      ]
+    }
+  ]
+}
