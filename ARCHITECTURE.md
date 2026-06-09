@@ -146,13 +146,14 @@ TAC as a UI filter in the Mixo Swatch.
 
 The **3D-print preset** is a **one-way force button + live satisfaction indicator**. It auto-lights whenever the live state already satisfies every 3D-print requirement:
 - `LAB_MODE === 'd50'` (Color mode = Print)
-- profile filename matches `Uncoated | Newspaper | 3DUJ | Mimaki`
 - TAC slider <= 240%
 - dE max slider <= 2.0
 
+Profile choice is **no longer part of the envelope**. The user picks the ICC; the preset only enforces the profile-independent parts (Lab whitepoint where the ICC PCS lives, plus TAC + dE caps). `_pick3DProfile()` and `_is3DSafeProfile()` are retained as advisory helpers but the preset does NOT swap `ACTIVE_PROFILE`.
+
 Click behaviour:
-- **Click while off** (conditions not met): force-fit every constraint at once - switch `LAB_MODE` to `d50`, swap `ACTIVE_PROFILE` to a 3D-safe proxy (`_pick3DProfile()` order: factory default match, first Uncoated, first Newspaper, first profile), clamp TAC to 240% and dE max to 2.0. No snapshot is kept.
-- **Click while on**: no-op. The indicator only flips off when the user organically leaves the envelope (moves a slider, switches profile, flips `LAB_MODE`) - `_sync3DCheckbox()` re-evaluates on every relevant input.
+- **Click while off** (conditions not met): force-fit every profile-independent constraint at once - switch `LAB_MODE` to `d50`, clamp TAC to 240% and dE max to 2.0. No snapshot is kept.
+- **Click while on**: no-op. The indicator only flips off when the user organically leaves the envelope (moves a slider, flips `LAB_MODE`) - `_sync3DCheckbox()` re-evaluates on every relevant input.
 
 ### 2.5 K-tier philosophy (project-specific)
 
@@ -230,6 +231,8 @@ b = 200 * (f(Y/Yn) - f(Z/Zn))
 ```
 
 **`rgb2lab_d50`**: apply Bradford CAT (§2.7) to the linear XYZ first, then feed D50 reference white (Xn=0.96422, Yn=1, Zn=0.82521) into the same f(t) formula above.
+
+**`labToHex(L, a, b, whitepoint = WP_D65)`**: inverse path. Lab -> XYZ via `labToXyz`, XYZ -> linear sRGB via the inverse matrix, gamma-encode to 0-255 sRGB, format as `#RRGGBB`. Used when a corpus entry ships only Lab values (no `hex` anchor) so the loader can normalise it into the same hex-anchored matching pipeline as every other entry. Default whitepoint is D65; pass `WP_D50` to convert ICC-PCS Lab values.
 
 ### 3.4 WCAG relative luminance + contrast
 
@@ -382,6 +385,16 @@ ICC-routed neutral ramp and a Pure RGB reference ramp. The first uses
 the live LUTs; the second is profile-independent. Both are derived at
 runtime - no precomputed library.
 
+**Strip cells now surface library names.** Each strip swatch is pushed
+through `matchNearest(sw, fwd)` at paint time so `sw.matches[lib.id]`
+is populated. Since strip swatches are not part of `DEDUP`, the
+`__closest` flag is never set on them; the strip name-loop gates purely
+on `m.deltaE <= curTol` (Naming Accuracy slider) and on the per-library
+display field radio. Result: greyscale strip cells display the same
+library labels (jp-trad / html / zh-trad / wcs) that the main grid
+cells show under the same tolerance, and clicking a strip cell opens
+the detail card with the same chips populated.
+
 ### 5.1 Neutral ramp (ICC-routed)
 
 For pct = 0, 10, ..., 100, target gray = sRGB(255-pct%, ...). Reverse-LUT
@@ -473,6 +486,7 @@ only.
 | `jp-trad` | NipponColors.com (250 traditional Japanese colors) | hex | 250 |
 | `html` | W3C CSS Color Module Level 4 canonical hex | hex | 148 |
 | `zh-trad` | Chinese traditional color corpus | hex | 526 |
+| `wcs` | UC Berkeley World Color Survey (placeholder Lab anchors) | hex | 6 |
 
 Backward compatibility: the loader accepts v2 / v2.1 corpora (with
 `primary` / `secondary` fields and the legacy `{ "jpn": [...], "html": [...] }`
@@ -525,9 +539,15 @@ State is part of `cmykUIState_v2` under `corpora_prefs[lib.id]` with
 keys `display`, `anchor`, and `filter_enabled`. The "Reset UI to
 defaults" button (§6.5) clears these along with the rest of UI state.
 
-The detail card chip pass is independent of the cell display radio: it
-shows every field of the matched entry for every library (no hiding),
-so the user can always see the full corpus context for a swatch.
+The detail card chip pass mirrors the cell-display radio and the
+Naming Accuracy slider: a chip is emitted for a library only when (a)
+its display field is not set to `hide`, (b) the swatch's `__closest`
+flag is set for that library, and (c) `m.deltaE <= curTol`. Chips show
+the single selected display field (not every field of the matched
+entry). Rationale: prior "always show everything" behaviour created
+confusing chip walls on neutrals where every library had a far-but-best
+match. The slider is now the single dial that controls whether names
+appear anywhere (cells, strips, detail card chips).
 
 **Global anchor + dE tolerance.** A link badge in the header allows the
 user to lock the anchor mode globally (applies to all libraries) or set
@@ -559,7 +579,7 @@ the factory defaults applied on first run. Current shipped values:
     "cmyk_range": { "c": [0,100], "m": [0,100], "y": [0,100], "k": [0,80] },
     "tac_max": 240,
     "delta_e_max": 0.6,
-    "default_profile_match": "UncoatedFOGRA29",
+    "default_profile_match": "FOGRA39",
     "active_palette_id": null,
     "lab_mode": "d50",
     "gamut_safe_only": false,
@@ -569,7 +589,8 @@ the factory defaults applied on first run. Current shipped values:
       "_global": { "anchor": "cmyk", "tolerance": 5.0 },
       "jp-trad": { "display": "name_ja" },
       "html":    { "display": "name_en" },
-      "zh-trad": { "display": "name_zh" }
+      "zh-trad": { "display": "name_zh" },
+      "wcs":     { "display": "name_en" }
     }
   }
 }
@@ -589,19 +610,20 @@ workflow on a coated press:
   to pure black on most coated presses and rarely useful for brand work.
 - `named_filter: "any"` plus the per-library checkboxes (all on by default)
   surface only swatches that hit a named entry in at least one corpus -
-  paired with `tolerance: 5.5` this keeps the grid useful out of the box.
+  paired with `tolerance: 5.0` this keeps the grid useful out of the box.
+  The slider UI caps at 5.0 (`min=0 max=5 step=0.5`); the same value
+  feeds cell labels, strip labels, and detail-card chips.
 - `lab_mode: "d50"` mirrors the ICC Profile Connection Space whitepoint
   used by Photoshop / InDesign Info panel readings.
-- `default_profile_match: "UncoatedFOGRA29"` is the closest bundled
-  proxy for Mimaki 3DUJ when no genuine 3DUJ ICC is supplied. Gamut
-  approximately 78 % of FOGRA39 coated (within ~5 % of measured 3DUJ
-  gamut), TAC recommended 260 % sits inside the Mimaki safe zone
-  (240-280), and the warm-neutral axis tracks resin yellow-cast better
-  than any coated profile. ECI cross-media workflows reach for
-  UncoatedFOGRA29 in the same sample-then-tune role.
-  `populateProfileSelect()` searches the manifest with this string
-  (case-insensitive) and falls back to FOGRA39 then the first profile
-  if the match is absent.
+- `default_profile_match: "FOGRA39"` resolves to Coated FOGRA39 - the
+  European coated-sheetfed reference profile and the most common
+  prepress baseline for brand work. `populateProfileSelect()` searches
+  the manifest with this string (case-insensitive); if no match is
+  found the fallback chain is first Uncoated -> first Newspaper ->
+  first profile. For 3D-print spot work (Mimaki 3DUJ) the user clicks
+  the 3D-print preset toggle which enforces the print-safe envelope
+  (LAB_MODE=d50, TAC<=240, dE<=2.0) without changing the active profile;
+  the user picks an Uncoated/3DUJ ICC themselves.
 
 **Mixo Swatch is a picker, not a texture-authoring tool.** Mimaki's own
 RasterLink / MPM3 RIP documentation recommends sRGB IEC61966-2.1 input
@@ -697,6 +719,15 @@ language switch and replaces its `textContent` with `t(key)`. Elements
 with state-dependent text (the Lab mode badge, the palette open/close
 button) are updated by hand inside `applyI18n` after the walk.
 
+**Tooltip + help-text i18n.** Hover tooltips use `data-i18n-title="<key>"`
+and inline help paragraphs use `data-i18n="<key>"` on the help element
+itself. `applyI18n()` walks both sets: `data-i18n-title` updates the
+DOM `title` attribute (browser-native tooltip), `data-i18n` updates
+`textContent`. Every interactive control in the sidebar (sliders,
+radios, checkboxes, dropdowns, naming-accuracy slider, color-mode
+toggle, profile dropdown, sort buttons, etc.) carries a
+`data-i18n-title` so the tooltip layer is tri-lingual end-to-end.
+
 **Translation table.** `I18N` is an in-script object keyed by lang code,
 with one entry per `data-i18n` key. Adding a translation = adding the
 key + string to all three languages. Keys are namespaced
@@ -776,7 +807,8 @@ Shared cell-build helper `_makeSwatchCell(sw, ctx)` is used by:
 
 ### 7.3 ICC neutral + Pure RGB reference strips
 
-Below the main grid. See §5 for the renderer details.
+Below the main grid. See §5 for the renderer details, including the
+per-cell library-name labels (gated on `m.deltaE <= curTol`).
 
 ### 7.4 View modes
 
@@ -1307,11 +1339,12 @@ writes `data/luts/index.json`. Skips RGB-only working spaces.
 ### 10.4 Build name corpora
 
 `data/corpora/name_corpora.json` is committed and ready to use. It
-ships with three active corpora in schema v3 format (see §6.1):
+ships with four active corpora in schema v3 format (see §6.1):
 
 - `jp-trad`: 250 NipponColors.com Japanese traditional colors
 - `html`: 148 W3C CSS Color Module Level 4 canonical named colors
 - `zh-trad`: 526 Chinese traditional colors
+- `wcs`: 6 UC Berkeley World Color Survey placeholder anchors (Red, Green, Blue, Yellow, Black, White) - hex-anchored seed entries; expand by replacing the placeholder block with the full WCS Munsell-derived dataset when needed
 
 To add a corpus, edit the JSON per the v3 schema in §6.1 and refresh the
 browser. Even an empty corpora array lets the HTML load; it just won't
@@ -1328,7 +1361,9 @@ The HTML is self-contained, no build step. Compose:
 5. **Filters + sort** (§7.5), including ΔE max and the Hue x Light sort
 6. **Virtualized grid + cell builder** (§7.2)
 7. **ICC neutral + Pure RGB reference strips** (§5): neutral via
-   reverse+forward round-trip; RGB ref computed inline (no profile)
+   reverse+forward round-trip; RGB ref computed inline (no profile);
+   each strip swatch runs through `matchNearest` so cells surface the
+   same library names as the main grid, gated on Naming Accuracy
 8. **Hue x Light sort** (§7.4) rendered inline, responsive cell sizing (§8.7)
 9. **Palette CRUD + Palettes view** (§7.6) with localStorage persistence
 10. **Exports** (§7.7): CSV, PNG (labelled + pure), TIFF (labelled + pure, CMYK + optional ICC embed), ZIP (per-swatch png/ + tiff/ + manifest), ASE (CMYK + RGB variants), GPL

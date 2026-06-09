@@ -6,7 +6,7 @@
 
 # Mixo Swatch
 
-Cross-media color swatches for **commercial print**, **screen workflows**, and **3D color printing** (Mimaki 3DUJ, Stratasys J55, Cura material libraries). Every swatch is routed through a real CMYK ICC profile — not naive subtractive math.
+Cross-media color swatches for **commercial print**, **screen workflows**, and **3D color printing** (Mimaki 3DUJ, Stratasys J55, Cura material libraries). Every swatch is routed through a real CMYK ICC profile - not naive subtractive math.
 
 **[→ Open Mixo Swatch](https://mixocreative.github.io/mixoswatch/app/mixo-swatch.html)**
 
@@ -20,10 +20,10 @@ Cross-media color swatches for **commercial print**, **screen workflows**, and *
 
 ## What's included
 
-- **`app/mixo-swatch.html`** — live ICC-routed CMYK explorer with TAC, round-trip ΔE, K-tier, accessibility, search, naming-corpus, and sort filters. Build palettes, manage them in Palettes view, and export CSV, PNG, CMYK TIFF, ZIP, ASE, GPL, and JSON.
-- **Production hand-off formats** — CMYK ASE and CMYK TIFF preserve ink values for RIP/prepress; RGB ASE and PNG serve Adobe, Affinity, Substance, Figma, web, and mockup workflows. ZIP exports include ordered per-swatch PNG/TIFF siblings plus manifests.
-- **Print / screen / 3D workflow controls** — D50/D65 Lab mode, per-profile TAC defaults, 3D-print preset, Hue × Light map, full-canvas PNG/TIFF export, safer filenames, and EN / 日本語 / 繁體中文 UI with a light/dark theme toggle.
-- **`index.html`** — tri-lingual project landing page with interactive demos and setup guidance.
+- **`app/mixo-swatch.html`** - live ICC-routed CMYK explorer with TAC, round-trip ΔE, K-tier, accessibility, search, naming-corpus, and sort filters. Build palettes, manage them in Palettes view, and export CSV, PNG, CMYK TIFF, ZIP, ASE, GPL, and JSON.
+- **Production hand-off formats** - CMYK ASE and CMYK TIFF preserve ink values for RIP/prepress; RGB ASE and PNG serve Adobe, Affinity, Substance, Figma, web, and mockup workflows. ZIP exports include ordered per-swatch PNG/TIFF siblings plus manifests.
+- **Print / screen / 3D workflow controls** - D50/D65 Lab mode, per-profile TAC defaults, 3D-print preset, Hue × Light map, full-canvas PNG/TIFF export, safer filenames, and EN / 日本語 / 繁體中文 UI with a light/dark theme toggle.
+- **`index.html`** - tri-lingual project landing page with interactive demos and setup guidance.
 
 ---
 
@@ -57,12 +57,12 @@ Most web CMYK pickers use `R = 255 × (1 − C/100) × (1 − K/100)`. That is n
 
 | Receiver | Export | Why |
 |---|---|---|
-| Photoshop / InDesign / Affinity prepress | **TIFF (CMYK)** | 8-bit CMYK, ICC profile embedded — self-describing |
+| Photoshop / InDesign / Affinity prepress | **TIFF (CMYK)** | 8-bit CMYK, ICC profile embedded - self-describing |
 | Mimaki RasterLink / MPM3 | **TIFF (CMYK)** + assign 3DUJ ICC in the RIP | RIP reads CMYK directly, no perceptual compression on brand colors |
 | Prepress / RIP swatch import | **ASE (CMYK)** | Exact ink values, no sRGB intermediate |
 | Adobe / Affinity / Substance / Figma | **ASE (RGB)** + PNG | Screen tools expect sRGB |
 | Web / mockup / preview | **PNG** | Standard sRGB raster |
-| Texture-map authoring for 3DUJ | Not this tool — send sRGB-tagged textures into RasterLink directly | Mimaki RIP handles sRGB → 3DUJ-ink mapping for texture work |
+| Texture-map authoring for 3DUJ | Not this tool - send sRGB-tagged textures into RasterLink directly | Mimaki RIP handles sRGB → 3DUJ-ink mapping for texture work |
 
 ---
 
@@ -106,7 +106,7 @@ mixoswatch/
 │       ├── index.json           Profile manifest
 │       ├── *.lut                Forward CMYK → sRGB (17⁴, ~250 KB each)
 │       └── *.rcmyk.lut          Reverse sRGB → CMYK (17³, ~20 KB each)
-├── icc/                         Gitignored — bring your own .icc / .icm
+├── icc/                         Gitignored - bring your own .icc / .icm
 ├── README.md
 ├── ARCHITECTURE.md              Full pipeline + rationale
 └── _config.yml                  Jekyll / Slate theme config
@@ -116,21 +116,21 @@ mixoswatch/
 
 ## ICC profiles are not bundled
 
-Adobe / ECI / Mimaki / Fogra distribute CMYK ICC profiles under licenses that prohibit redistribution. `icc/` is gitignored — bring your own.
+Adobe / ECI / Mimaki / Fogra distribute CMYK ICC profiles under licenses that prohibit redistribution. `icc/` is gitignored - bring your own.
 
 
 ---
 
-## Python pipeline — `scripts/gen_luts.py`
+## Python pipeline - `scripts/gen_luts.py`
 
-Uses Pillow's `ImageCms` binding to LittleCMS — the same color engine many prepress tools and FOSS RIPs share. Walks `icc/`, skips RGB-only working spaces, and emits two binary LUTs per profile:
+Uses Pillow's `ImageCms` binding to LittleCMS - the same color engine many prepress tools and FOSS RIPs share. Walks `icc/`, skips RGB-only working spaces, and emits two binary LUTs per profile:
 
 | File | Direction | Grid | Size |
 |---|---|---|---|
 | `data/luts/<profile>.lut` | CMYK → sRGB | 17⁴ = 83,521 nodes | ~250 KB |
 | `data/luts/<profile>.rcmyk.lut` | sRGB → CMYK | 17³ = 4,913 nodes | ~20 KB |
 
-Plus `data/luts/index.json` — the profile manifest the HTML reads to populate its dropdown.
+Plus `data/luts/index.json` - the profile manifest the HTML reads to populate its dropdown.
 
 **Flags**
 
@@ -159,19 +159,20 @@ LUT binary format (magic `LUT4` / `CMK4`, 16-byte header, little-endian, quadril
 
 ## Named-color corpora
 
-`data/corpora/name_corpora.json` ships with three libraries. Add more by editing the JSON and refreshing the browser — no Python step needed.
+`data/corpora/name_corpora.json` ships with four libraries. Add more by editing the JSON and refreshing the browser - no Python step needed.
 
 | ID | Source | Entries |
 |---|---|---|
 | `jp-trad` | NipponColors.com Japanese traditional | 250 |
 | `html` | W3C CSS Color Module Level 4 | 148 |
 | `zh-trad` | Chinese traditional color corpus | 526 |
+| `wcs` | UC Berkeley World Color Survey (placeholder Lab anchors) | 6 |
 
 Schema v3 reference in `ARCHITECTURE.md §6.1`. Each entry supports `name_en`, `name_ja`, `name_zh`, and `hex` / `cmyk` match anchors. The UI lets users switch the per-library anchor live.
 
 ---
 
-## Factory UI defaults — `data/ui_defaults.json`
+## Factory UI defaults - `data/ui_defaults.json`
 
 Read on load and on "Reset to defaults". Session state layers on top via `localStorage` (`cmykUIState_v2`); reset restores JSON values while leaving saved palettes intact.
 
@@ -180,10 +181,10 @@ Read on load and on "Reset to defaults". Session state layers on top via `localS
 | Step | 20 | Stays under ~1300 swatches on first paint |
 | Cell size | 80 px | CMYK + hex + corpus labels all legible |
 | Lab mode | `d50` (Print) | Matches ICC PCS whitepoint + Photoshop Info panel |
-| Profile | UncoatedFOGRA29 | Closest bundled proxy for Mimaki 3DUJ; TAC 260 % is in the Mimaki safe zone |
+| Profile | FOGRA39 (substring match) | Default Coated FOGRA39; fallback chain: factory match -> first Uncoated -> first Newspaper -> first profile |
 | TAC max | 240 % | Conservative coated-uncoated bracket |
 | Round-trip ΔE max | 0.6 | Only press-safe swatches shown by default |
-| K range | `[0, 80]` | K 85–100 collapses to pure black on most presses |
+| K range | `[0, 80]` | K 85-100 collapses to pure black on most presses |
 | Named-swatch filter | Any named (all libraries on) | Useful grid out of the box |
 | Naming accuracy (ΔE) | 5.0 | Permissive enough to surface names, still meaningful |
 | Sort | Hue | Best general overview |
@@ -196,7 +197,7 @@ Full key reference in `ARCHITECTURE.md §6.5`.
 
 ## Hosting on GitHub Pages
 
-The repo is GitHub Pages–ready once `data/luts/` is built. Two options:
+The repo is GitHub Pages-ready once `data/luts/` is built. Two options:
 
 **Commit the LUT artifacts:**
 
@@ -206,7 +207,7 @@ git commit -m "ship LUT artifacts for GitHub Pages"
 git push
 ```
 
-ICC files stay out — LUTs are derived sampling results, not source profiles.
+ICC files stay out - LUTs are derived sampling results, not source profiles.
 
 **Self-host:** run `python -m http.server 8765` locally and never push the data folder.
 
@@ -223,7 +224,7 @@ ICC files stay out — LUTs are derived sampling results, not source profiles.
 | Scroll | 60 fps (virtualized, ~500 cells in DOM) |
 | PNG export 4096² | ~2 s |
 | TIFF pure 4096² (CMYK) | < 200 ms |
-| TIFF labelled 4096² (CMYK) | ~0.8–1.2 s |
+| TIFF labelled 4096² (CMYK) | ~0.8-1.2 s |
 | ZIP export (50 swatches) | < 300 ms |
 
 Detailed budget and lag-prevention rationale in `ARCHITECTURE.md §11`.
@@ -232,7 +233,7 @@ Detailed budget and lag-prevention rationale in `ARCHITECTURE.md §11`.
 
 ## Architecture
 
-[`ARCHITECTURE.md`](ARCHITECTURE.md) is the full pipeline contract — color theory (CMYK / Lab / LCh, ΔE variants, GCR/UCR, K-tier, gamut, Bradford D50/D65 CAT), LUT binary format, round-trip safety gate, corpora schema v3, HTML pipeline lifecycle, virtualization, export rendering core, filename grammar, per-profile TAC defaults, i18n contract, and rebuild guide.
+[`ARCHITECTURE.md`](ARCHITECTURE.md) is the full pipeline contract - color theory (CMYK / Lab / LCh, ΔE variants, GCR/UCR, K-tier, gamut, Bradford D50/D65 CAT), LUT binary format, round-trip safety gate, corpora schema v3, HTML pipeline lifecycle, virtualization, export rendering core, filename grammar, per-profile TAC defaults, i18n contract, and rebuild guide.
 
 ---
 
@@ -240,7 +241,7 @@ Detailed budget and lag-prevention rationale in `ARCHITECTURE.md §11`.
 
 > **Create. Make. Innovate.** _Designing joy in every layer: custom toys and 3D-printed art that spark imagination._
 
-Mixo Creative is a Taiwan-based professional design studio specializing in brand-identity geometry, 3D form design, and print production. Founded by **Adrian Li** — lecturer in the Department of Cultural and Creative Arts at The Education University of Hong Kong, and First-Class Honours Master's graduate in Design Management from the Birmingham Institute of Art and Design, UK. Works recognized by Adobe Behance and featured by Cults3D (France).
+Mixo Creative is a Taiwan-based professional design studio specializing in brand-identity geometry, 3D form design, and print production. Founded by **Adrian Li** - lecturer in the Department of Cultural and Creative Arts at The Education University of Hong Kong, and First-Class Honours Master's graduate in Design Management from the Birmingham Institute of Art and Design, UK. Works recognized by Adobe Behance and featured by Cults3D (France).
 
 明上堂 Mixo Creative 是一家扎根於台灣、兼具國際視野的專業設計公司。深耕品牌識別幾何學、3D 造型設計與印刷。
 
