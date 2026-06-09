@@ -5,6 +5,11 @@
     "ja": "中国の伝統色",
     "zh": "中國傳統色"
   },
+  "short_label": {
+    "en": "ZH-Trad",
+    "ja": "中国色",
+    "zh": "中國色"
+  },
   "fields": [
     {
       "id": "name_zh",

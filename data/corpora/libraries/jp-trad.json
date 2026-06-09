@@ -1,9 +1,14 @@
 {
   "id": "jp-trad",
   "label": {
-    "en": "Japanese traditional (NipponColors 250)",
+    "en": "Japanese traditional (NipponColors)",
     "ja": "日本の伝統色",
     "zh": "日本傳統色"
+  },
+  "short_label": {
+    "en": "JP-Trad",
+    "ja": "和色",
+    "zh": "日本色"
   },
   "fields": [
     {

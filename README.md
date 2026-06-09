@@ -20,7 +20,7 @@ Cross-media color swatches for **commercial print**, **screen workflows**, and *
 
 ## What's included
 
-- **`app/mixo-swatch.html`** - live ICC-routed CMYK explorer with TAC, round-trip ΔE, K-tier, accessibility, search, naming-corpus, and sort filters. Build palettes, manage them in Palettes view, and export CSV, PNG, CMYK TIFF, ZIP, ASE, GPL, and JSON.
+- **`app/mixo-swatch.html`** - live ICC-routed CMYK explorer with TAC, round-trip ΔE, K-tier, accessibility, search, naming-corpus, and sort filters. Build palettes, manage them in Palettes view, and export CSV, PNG, CMYK TIFF, ZIP, ASE, GPL, and JSON. Per-corpus cell label classes (`.cell-jpn`/`.cell-zh`/`.cell-w3c`/`.cell-neu`) driven by `--fz-*` / `--lh-*` / `--cell-gap` CSS variables so the in-cell typography rescales with `cs` and is tunable from CSS without rebuilding JS — see `ARCHITECTURE.md §7.2.1`.
 - **Production hand-off formats** - CMYK ASE and CMYK TIFF preserve ink values for RIP/prepress; RGB ASE and PNG serve Adobe, Affinity, Substance, Figma, web, and mockup workflows. ZIP exports include ordered per-swatch PNG/TIFF siblings plus manifests.
 - **Print / screen / 3D workflow controls** - D50/D65 Lab mode, per-profile TAC defaults, 3D-print preset, Hue × Light map, full-canvas PNG/TIFF export, safer filenames, and EN / 日本語 / 繁體中文 UI with a light/dark theme toggle.
 - **`index.html`** - tri-lingual project landing page with interactive demos and setup guidance.
@@ -101,7 +101,7 @@ mixoswatch/
 ├── data/
 │   ├── corpora/
 │   │   ├── libraries.json       Manifest - lists per-library files
-│   │   └── libraries/           One JSON file per corpus (jp-trad, html, zh-trad, wcs)
+│   │   └── libraries/           One JSON file per corpus (jp-trad, zh-trad, w3c-names, colour-in-translation)
 │   ├── ui_defaults.json         Factory defaults
 │   └── luts/                    Generated, gitignored
 │       ├── index.json           Profile manifest
@@ -162,14 +162,14 @@ LUT binary format (magic `LUT4` / `CMK4`, 16-byte header, little-endian, quadril
 
 Corpora live as **one JSON file per library** under `data/corpora/libraries/`, registered by the manifest `data/corpora/libraries.json`. The app fetches the manifest, then each listed file in parallel. Add more by dropping `<id>.json` in the libraries folder and appending its filename to the manifest - no Python step needed.
 
-| File | Source | Entries |
-|---|---|---|
-| `libraries/jp-trad.json` | NipponColors.com Japanese traditional | 250 |
-| `libraries/html.json` | W3C CSS Color Module Level 4 | 148 |
-| `libraries/zh-trad.json` | Chinese traditional color corpus | 526 |
-| `libraries/wcs.json` | UC Berkeley World Color Survey (placeholder Lab anchors) | 6 |
+| File | Source | Short label | Entries |
+|---|---|---|---|
+| `libraries/jp-trad.json` | NipponColors.com Japanese traditional | JP-Trad / 和色 / 日本色 | 250 |
+| `libraries/zh-trad.json` | Chinese traditional color corpus | ZH-Trad / 中国色 / 中國色 | 526 |
+| `libraries/w3c-names.json` | W3C CSS Color Module Level 4 | W3C | 148 |
+| `libraries/colour-in-translation.json` | Northeastern University London "Colour in Translation" (UK) | NEU (UK) / NEU（英） / 東北大（英） | 530 |
 
-Schema v3 reference in `ARCHITECTURE.md §6.1`. Each entry supports `name_en`, `name_ja`, `name_zh`, and `hex` / `cmyk` match anchors. The UI lets users switch the per-library anchor live.
+Schema v3 reference in `ARCHITECTURE.md §6.1`. Each entry supports `name_en`, `name_ja`, `name_zh`, and `hex` / `cmyk` match anchors. The UI lets users switch the per-library anchor live. Library files carry an optional `short_label` triplet (`{en, ja, zh}`) used by the detail card's chip prefix so long names like `Northeastern University London Colour in Translation (UK)` collapse to `NEU (UK)`.
 
 ---
 
@@ -187,7 +187,7 @@ Read on load and on "Reset to defaults". Session state layers on top via `localS
 | Round-trip ΔE max | 0.6 | Only press-safe swatches shown by default |
 | K range | `[0, 80]` | K 85-100 collapses to pure black on most presses |
 | Named-swatch filter | Any named (all libraries on) | Useful grid out of the box |
-| Naming accuracy (ΔE) | 5.0 | Permissive enough to surface names, still meaningful |
+| Naming accuracy (ΔE) | 5.5 | Permissive enough to surface names across w3c / NEU sets, still meaningful |
 | Sort | Hue | Best general overview |
 | Accessibility toggles | All OFF | No hidden filters at first run |
 | UI language | `auto` | `navigator.language` → `ja` / `zh-Hant` / `en` |

@@ -444,7 +444,10 @@ files are skipped with a console warning rather than aborting the load.
 
 **Per-library schema.** Each `<id>.json` file is a single library object
 declaring an `id`, a tri-lingual `label` object (`{en, ja, zh}`), an
-ordered `fields[]` array (each entry's displayable name fields), a
+optional tri-lingual `short_label` (`{en, ja, zh}`) used by the detail
+card's chip prefix (so long names like `Northeastern University London
+Colour in Translation (UK)` collapse to `NEU (UK)`), an ordered
+`fields[]` array (each entry's displayable name fields), a
 `default_display`, an `anchor` (`hex` or `cmyk`), and an `entries[]`
 list. Each entry carries tri-lingual name fields plus optional
 transliteration.
@@ -452,7 +455,8 @@ transliteration.
 ```json
 {
   "id": "jp-trad",
-  "label": { "en": "Japanese traditional", "ja": "日本の伝統色", "zh": "日本傳統色" },
+  "label":       { "en": "Japanese traditional", "ja": "日本の伝統色", "zh": "日本傳統色" },
+  "short_label": { "en": "JP-Trad",              "ja": "和色",         "zh": "日本色"   },
   "fields": [
     { "id": "name_ja",  "label": { "en": "kanji",  "ja": "漢字", "zh": "漢字" } },
     { "id": "romaji",   "label": { "en": "romaji", "ja": "ローマ字", "zh": "羅馬字" } },
@@ -468,6 +472,11 @@ transliteration.
   ]
 }
 ```
+
+`short_label` is optional; loaders fall back chain `short_label[L] →
+label[L] → id` when rendering the detail-card chip prefix. The full
+`label` is always used for the chip tooltip / corpus picker so the long
+form stays discoverable.
 
 **Tri-lingual fields per entry.** Each entry carries `name_en`, `name_ja`,
 and `name_zh`. Entries that originally had only one language leave the
@@ -495,12 +504,17 @@ only.
 
 **Active corpora (v3 ship):**
 
-| File | Source | Anchor | Entries |
-|---|---|---|---|
-| `libraries/jp-trad.json` | NipponColors.com (250 traditional Japanese colors) | hex | 250 |
-| `libraries/html.json` | W3C CSS Color Module Level 4 canonical hex | hex | 148 |
-| `libraries/zh-trad.json` | Chinese traditional color corpus | hex | 526 |
-| `libraries/wcs.json` | UC Berkeley World Color Survey (placeholder Lab anchors) | hex | 6 |
+| File | Source | Anchor | `short_label` (en) | Entries |
+|---|---|---|---|---|
+| `libraries/jp-trad.json` | NipponColors.com Japanese traditional | hex | JP-Trad | 250 |
+| `libraries/zh-trad.json` | Chinese traditional color corpus | hex | ZH-Trad | 526 |
+| `libraries/w3c-names.json` | W3C CSS Color Module Level 4 canonical hex | hex | W3C | 148 |
+| `libraries/colour-in-translation.json` | Northeastern University London "Colour in Translation" (UK) | hex | NEU (UK) | 530 |
+
+The previous `libraries/html.json` was renamed to `libraries/w3c-names.json`
+(its content was always the W3C named colours — the file name is now
+honest). `libraries/wcs.json` (UC Berkeley World Color Survey
+placeholder anchors, 6 hex-seeded entries) was retired.
 
 Backward compatibility: the loader accepts v2 / v2.1 per-library shapes
 (with `primary` / `secondary` fields) and auto-promotes them to v3 on
@@ -829,6 +843,149 @@ Shared cell-build helper `_makeSwatchCell(sw, ctx)` is used by:
 - Main virtualized renderer
 - Hue x Light map renderer (so info labels also appear there)
 
+### 7.2.1 Cell label rendering pipeline
+
+Every `.swatch-cell` (main grid, Hue x Light map, Palettes-mode panel
+swatches, ICC neutral + Pure RGB reference strips) stacks the same set
+of label rows in DOM order:
+
+```
+.cell-cmyk   (C M Y K text)
+.cell-hex    (#RRGGBB)
+.cell-jpn    | .cell-zh | .cell-w3c | .cell-neu  (one row per active corpus)
+.cell-html   (fallback for any unknown library not in the sibling map)
+.cell-badge  (WCAG AAA/AA/× pill, absolute bottom-right)
+.cell-cr     (contrast ratio, absolute bottom-left)
+```
+
+**Flex column layout.** `.swatch-cell` is `display:flex;
+flex-direction:column; padding:2px 0; gap:var(--cell-gap,1px)`. Labels
+stack naturally; row height = `font-size * line-height + padding`.
+Badge and CR remain `position:absolute` for corner anchoring. Rationale:
+absolute-positioned `top:Xpx` math used to be authoritative; any CSS
+override (line-height, padding, font) drifted from the JS-computed
+positions. Flex flow makes the CSS the single source of truth — every
+visual is one knob change away.
+
+**Sibling cell classes.** Each known corpus maps to a sibling class so
+its row can be styled independently of the unknown-fallback row. The
+registry is a single source of truth — each entry declares its CSS
+class, its fit strategy, and its font-size bucket:
+
+```js
+const CORPUS_CELL_CLASS = {
+  'jp-trad':              { cls: 'cell-jpn', fit: 'uniform',  fz: 'jpn' },
+  'zh-trad':              { cls: 'cell-zh',  fit: 'per_cell', fz: 'sib' },
+  'w3c-names':            { cls: 'cell-w3c', fit: 'per_cell', fz: 'sib' },
+  'colour-in-translation':{ cls: 'cell-neu', fit: 'per_cell', fz: 'sib' },
+};
+function _corpusClass(libId) {
+  const e = CORPUS_CELL_CLASS[libId];
+  return e ? e.cls : null;
+}
+function _corpusFz(libId, fzMap) {
+  const e = CORPUS_CELL_CLASS[libId];
+  return e ? fzMap[e.fz] : fzMap.html;
+}
+```
+
+`_LABEL_CLS_UNIFORM` / `_LABEL_CLS_PER_CELL` are derived from the
+registry at script-load via `Object.values(CORPUS_CELL_CLASS).filter
+(v => v.fit === '...').map(v => v.cls)`. Render loops route every
+known corpus through `_corpusClass(lib.id)` (returns the class string
+or `null`) and `_corpusFz(lib.id, fzMap)` (returns the font-size px or
+the `cell-html` fallback). Unknown libraries fall through to
+`cell-html` automatically.
+
+Add or remove a corpus = one line in `CORPUS_CELL_CLASS` (plus a CSS
+rule for the class if it's new). The fit pipeline, font-size selector,
+and class lists all pick up the change without further code edits.
+
+**CSS variables, per cell.** Font size and line height are driven by
+CSS vars set on each `.swatch-cell`. The variable layer lets the user
+retune one cell (or all cells) without rebuilding JS:
+
+| Var | Default rule | Purpose |
+|---|---|---|
+| `--fz-cmyk`, `--fz-hex`, `--fz-jpn`, `--fz-sib`, `--fz-html`, `--fz-badg`, `--fz-cr` | written per cell by JS (`px`) | Font size for each row class |
+| `--lh-cmyk`, `--lh-hex`, `--lh-jpn`, `--lh-sib`, `--lh-html`, `--lh-badg`, `--lh-cr` | declared on `.swatch-cell` rule | Line-height per row class |
+| `--cell-gap` | `1px` (on `.swatch-cell` rule) | Inter-row gap in the flex column |
+
+Sibling classes split their font size: `.cell-jpn` reads `--fz-jpn`
+(default kanji-emphasis ratio), `.cell-zh/.cell-w3c/.cell-neu` share
+`--fz-sib` (smaller, uniform row height for the three secondary
+corpora). `.cell-html` reads `--fz-html` for unknown libraries.
+
+**Font ratio constants (JS).** A single block at the top of the script
+controls how font sizes scale with cell size `cs`:
+
+```js
+const _FZ_RATIO_CMYK = 0.09;
+const _FZ_RATIO_HEX  = 0.10;
+const _FZ_RATIO_JPN  = 0.16;  // kanji emphasis row
+const _FZ_RATIO_SIB  = 0.10;  // zh / w3c / neu (smaller)
+const _FZ_RATIO_HTML = 0.09;  // unknown libs fallback
+const _FZ_RATIO_BADG = 0.10;
+const _FZ_RATIO_CR   = 0.09;
+```
+
+Each render path (palette mode, `_makeSwatchCell`, reference strip
+ramps) computes `fz = Math.max(MIN, Math.round(cs * RATIO))` and writes
+the resulting px values to the cell's CSS vars via `_cellFzVars({...})`.
+Strip ramps use the same ratios (no more strip-specific `fzK = cs*0.13`
+divergence — the `R0/N0` text inherits `--fz-cmyk` like every other
+cell).
+
+**Stacking advance (legacy / fallback).** Although flex flow handles
+visual stacking, two helpers remain for the bottom-overflow clip path
+and any non-flex caller:
+
+```js
+const _LABEL_LH_RATIO  = 1.05;
+const _LABEL_GAP_RATIO = 0.08;
+function _rowAdvance(cls, fz) {
+  return Math.ceil(fz * (_LABEL_LH_RATIO + _LABEL_GAP_RATIO));
+}
+function _cellRowH(cls, fz) {
+  if (cls === 'cell-html') return fz * 1.25 + 8;
+  if (cls === 'cell-cmyk') return fz * 1.25 + 4;
+  if (cls === 'cell-hex')  return fz * 1.25;
+  return fz * 1.3;         // siblings (padding 0 on those classes)
+}
+```
+
+`_cellRowH` mirrors each class's CSS padding + line-height and feeds
+the vertical-clip check.
+
+**Fit + clip pipeline (`_fitCellTexts(root, cs)`).** Runs once per
+render after the cells are in the DOM. Three phases:
+
+1. **UNIFORM shrink** (`_LABEL_CLS_UNIFORM = ['cell-cmyk','cell-hex',
+   'cell-jpn']`): groups labels by class + initial font size, finds the
+   worst `scrollWidth/clientWidth` ratio across the group, and shrinks
+   the entire group to that ratio so visually-aligned rows stay aligned
+   across cells. Below the 5 px floor the entire group hides.
+
+2. **PER-CELL shrink** (`_LABEL_CLS_PER_CELL = ['cell-html','cell-zh',
+   'cell-w3c','cell-neu']`): each label shrinks against its own width
+   only. Required for `cell-w3c`/`cell-neu` because corpus entries like
+   `LightGoldenrodYellow` would otherwise drag the entire class group
+   below the floor and hide every w3c label across the grid. Per-cell
+   shrink kills only the offending cell; neighbours keep their fz.
+
+3. **Vertical overflow clip** (when `cs` is passed): for each cell,
+   computes `limit = cell.clientHeight - max(badge.offsetHeight + 4,
+   cr.offsetHeight + 4)` and walks children top-down by `offsetTop +
+   offsetHeight`. First row whose bottom exceeds `limit` is hidden, and
+   every label row below it in DOM order is also hidden (no
+   gap-then-stray-row).
+
+**Short label.** Detail-card chips that list every active library name
+read `lib.short_label[L] || lib.label[L] || lib.id` so long full-form
+names (`Northeastern University London Colour in Translation (UK)`)
+collapse to `NEU (UK)` while the tooltip still shows the full label for
+context.
+
 ### 7.3 ICC neutral + Pure RGB reference strips
 
 Below the main grid. See §5 for the renderer details, including the
@@ -950,6 +1107,63 @@ JSON shape:
 
 Import: file picker, parse, merge (existing kept) or replace (active
 palette overwritten).
+
+### 7.6.1 Palette swatch interaction model
+
+Three surfaces show palette swatches: the active-palette `pal-chip`
+strip in the sidebar toolbar, the in-grid `in-palette` cells (main
+grid + Hue x Light), and the per-palette panels in Palettes view. They
+share one mental model: **click = inspect, hover-corner = remove**.
+
+**Click semantics.**
+
+| Surface | Old behaviour | New behaviour |
+|---|---|---|
+| `pal-chip` (sidebar strip) | click removed swatch from active palette | click opens the detail card; chip text rehydrates via `_liveSwatch(stored)` because the stored record only has `C/M/Y/K/hex/R/G/B` |
+| Palette-panel `.swatch-cell` (Palettes view) | left-click opened detail; right-click prompted "Remove from {name}?" confirm | left-click still opens detail; right-click confirm dropped — replaced by the corner button |
+| Main grid `.swatch-cell` (select mode) | click toggled membership in active palette | unchanged — selecting in `selectMode` still adds; removal goes through detail card or corner button |
+
+**Hover-corner remove button (`.cell-remove`).** Rendered on
+palette-panel `.swatch-cell`s. `position:absolute; top:-6px; right:-6px`
+so half of the 18x18 button sits outside the cell box, giving it a
+clear hit target even in tightly packed rows. To keep it visible
+through the cell's clip stack the hover rule lifts three properties at
+once:
+
+```css
+.swatch-cell:hover{
+  overflow:visible;
+  content-visibility:visible;
+  contain:none;
+}
+```
+
+`content-visibility:auto` (used for grid virtualisation, see §8.3)
+implies `contain: layout style paint;` — paint containment clips
+overflow like `overflow:hidden`, so disabling both is required. The
+✓ glyph from `.swatch-cell.in-palette::after` is hidden on hover so the
+× button sits cleanly in the corner. Click calls
+`removeFromPaletteAt(p.id, stored)` with `stopPropagation()` so the
+cell's own click handler (which opens detail) does not also fire.
+
+**Palette-scoped detail card.** `openDetail(sw, palCtx)` takes an
+optional `palCtx` palette object. When supplied (panel-cell click in
+Palettes view), the Add/Remove button:
+- computes `inPal` against `palCtx.swatches` rather than the active
+  palette's set, so a swatch present in palette A but not B shows
+  "Remove" when opened from A's panel and "Add" if opened from B's;
+- removes via `removeFromPaletteAt(palCtx.id, sw)` rather than the
+  active-palette `toggleSwatchInPalette(sw)`, so a click in panel B
+  never accidentally mutates the active palette;
+- shows a palette-name tooltip (`Remove from "{palCtx.name}"`).
+
+When `palCtx` is omitted (main-grid click, pal-chip click), the card
+falls back to active-palette semantics for backward compatibility.
+
+**i18n.** Corner-button tooltip uses the standard tri-lingual key
+pattern: `data-i18n-title="palette.remove_swatch"` with en/ja/zh
+entries in the `I18N` table (`Remove from palette` / `パレットから削除`
+/ `從調色盤移除`). `applyI18n()` re-applies on language switch.
 
 ### 7.7 Exports
 
@@ -1285,6 +1499,66 @@ moved to Sort by (§7.4), so a three-button group was no longer necessary.
 The two-button group is more compact and the Hue x Light option is now
 adjacent to the other sort options where it belongs semantically.
 
+### 8.10.1 Why click-to-inspect on palette swatches
+
+Pre-change, clicking a `pal-chip` (and toggling an in-palette grid cell
+in select mode) was the primary remove gesture. That made every chip a
+single-click footgun: careful palette curation could be lost to one
+mis-click, with no preview of which colour was about to disappear. The
+new model:
+
+- click = inspect (matches main grid + Hue x Light behaviour);
+- remove lives in two explicit surfaces — the detail card's
+  "Remove from palette" button and the hover-corner `.cell-remove`
+  button on Palettes-view panel cells;
+- 16x16 `pal-chip`s are too small to host a safe corner button, so the
+  detail card is the only removal path there.
+
+Trade-off: removal goes from one click to two. The corner button keeps
+power users at one hover + one click, and the detail card makes the
+target unambiguous in multi-palette workflows (see §7.6.1 on `palCtx`).
+
+### 8.10.2 Why a separate `_FZ_RATIO_*` block + CSS vars
+
+Earlier iterations interleaved per-row font sizes (`fzCmyk`, `fzHex`,
+`fzJpn`, `fzHtml`) at every render path (palette mode, `_makeSwatchCell`,
+reference strips). Tuning required hunting through three duplicated
+declarations and one strip-specific divergence (`fzK = cs * 0.13`).
+The current layout:
+
+- `_FZ_RATIO_*` constants live in one block at the top of the script —
+  one knob per row class;
+- a `_cellFzVars({...})` helper turns the resolved px values into
+  `--fz-*` CSS variables on the parent `.swatch-cell`;
+- CSS rules read `font-size: var(--fz-jpn)` etc., so designers can
+  override one cell, one class, or every cell from the stylesheet
+  without touching JS.
+
+Pairing with `display:flex; flex-direction:column` means changing one
+ratio (or `--lh-*`, or `--cell-gap`) reflows the whole stack
+automatically — no fragile `top:Xpx` math to keep in sync.
+
+### 8.10.3 Why sibling cell classes for known corpora
+
+Earlier code branched on `lib.id === 'jp-trad'` inline at every render
+site to decide whether to use the bigger kanji font. Adding two new
+corpora (`w3c-names`, `colour-in-translation`) would have forced the
+same ternary at every site. Instead:
+
+- `CORPUS_CELL_CLASS` is a registry where each entry declares
+  `{ cls, fit, fz }` — class name, fit strategy, font-size bucket;
+- unknown libs fall back to `cell-html` via `_corpusClass()` returning
+  `null`;
+- the render loops branch once on the lookup (`_corpusClass(lib.id)`,
+  `_corpusFz(lib.id, fzMap)`), not on a chain of ids;
+- the fit pipeline's UNIFORM / PER_CELL lists derive from
+  `Object.values(CORPUS_CELL_CLASS).filter(v => v.fit === ...).map
+  (v => v.cls)` at script load — adding or removing a library does
+  not require touching any other code path;
+- per-class CSS (different font-family, different colour, hover
+  effects, prefix glyphs like `♦`/`#`) lives in stylesheet, not
+  templating code.
+
 ### 8.11 UI consolidation rationale (Spec 6)
 
 Several UI changes were bundled in Spec 6 to reduce sidebar surface area:
@@ -1364,12 +1638,14 @@ writes `data/luts/index.json`. Skips RGB-only working spaces.
 
 `data/corpora/libraries/` ships pre-populated and the manifest
 `data/corpora/libraries.json` lists every library to load. Ships with
-four active corpora in schema v3 format (see §6.1):
+four active corpora in schema v3 format (see §6.1). Each ships with
+both `label` (long form, used in tooltips + sidebar) and `short_label`
+(used in detail-card chip prefix):
 
-- `libraries/jp-trad.json`: 250 NipponColors.com Japanese traditional colors
-- `libraries/html.json`: 148 W3C CSS Color Module Level 4 canonical named colors
-- `libraries/zh-trad.json`: 526 Chinese traditional colors
-- `libraries/wcs.json`: 6 UC Berkeley World Color Survey placeholder anchors (Red, Green, Blue, Yellow, Black, White) - hex-anchored seed entries; expand by replacing the placeholder block with the full WCS Munsell-derived dataset when needed
+- `libraries/jp-trad.json` (`JP-Trad` / `和色` / `日本色`): 250 NipponColors.com Japanese traditional colors
+- `libraries/zh-trad.json` (`ZH-Trad` / `中国色` / `中國色`): 526 Chinese traditional colors
+- `libraries/w3c-names.json` (`W3C`): 148 W3C CSS Color Module Level 4 canonical named colors
+- `libraries/colour-in-translation.json` (`NEU (UK)` / `NEU（英）` / `東北大（英）`): Northeastern University London "Colour in Translation" UK English colour names
 
 To add a corpus, drop `<id>.json` in `data/corpora/libraries/`, append
 its filename to the manifest's `files[]`, and refresh the browser. Even
@@ -1386,15 +1662,27 @@ The HTML is self-contained, no build step. Compose:
 4. **Name matcher** (§6): `matchNearest`, `_markClosest` (dynamic lib IDs)
 5. **Filters + sort** (§7.5), including ΔE max and the Hue x Light sort
 6. **Virtualized grid + cell builder** (§7.2)
-7. **ICC neutral + Pure RGB reference strips** (§5): neutral via
+7. **Cell label rendering pipeline** (§7.2.1): flex-column `.swatch-cell`;
+   `CORPUS_CELL_CLASS` map (jp-trad/zh-trad/w3c-names/colour-in-translation);
+   `_FZ_RATIO_*` constants + `_LABEL_LH_RATIO`/`_LABEL_GAP_RATIO`;
+   `_cellFzVars` writer for `--fz-*` CSS vars; `--lh-*` defaults on the
+   `.swatch-cell` rule; `_rowAdvance` + `_cellRowH` helpers;
+   `_fitCellTexts(root, cs)` three-phase pipeline (UNIFORM shrink + PER_CELL
+   shrink + bottom-overflow clip); `lib.short_label` consumption in detail
+   chips
+8. **ICC neutral + Pure RGB reference strips** (§5): neutral via
    reverse+forward round-trip; RGB ref computed inline (no profile);
    each strip swatch runs through `matchNearest` so cells surface the
    same library names as the main grid, gated on Naming Accuracy
-8. **Hue x Light sort** (§7.4) rendered inline, responsive cell sizing (§8.7)
-9. **Palette CRUD + Palettes view** (§7.6) with localStorage persistence
-10. **Exports** (§7.7): CSV, PNG (labelled + pure), TIFF (labelled + pure, CMYK + optional ICC embed), ZIP (per-swatch png/ + tiff/ + manifest), ASE (CMYK + RGB variants), GPL
-11. **Tooltips** on every control (laymen friendly, not jargon)
-12. **2-button mode switcher** (§8.10)
+9. **Hue x Light sort** (§7.4) rendered inline, responsive cell sizing (§8.7)
+10. **Palette CRUD + Palettes view** (§7.6) with localStorage persistence;
+    palette swatch interaction model (§7.6.1) with `openDetail(sw, palCtx)`
+    palette-scoped detail card, `.cell-remove` hover-corner button on
+    Palettes-view panel cells, click-to-inspect on `pal-chip`s,
+    `palette.remove_swatch` i18n triplet
+11. **Exports** (§7.7): CSV, PNG (labelled + pure), TIFF (labelled + pure, CMYK + optional ICC embed), ZIP (per-swatch png/ + tiff/ + manifest), ASE (CMYK + RGB variants), GPL
+12. **Tooltips** on every control (laymen friendly, not jargon)
+13. **2-button mode switcher** (§8.10)
 
 ### 10.6 Run the stack locally
 

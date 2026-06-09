@@ -1,9 +1,14 @@
 {
   "id": "w3c-names",
   "label": {
-    "en": "W3C named colors (148)",
+    "en": "W3C named colors",
     "ja": "W3C 名前付き色",
     "zh": "W3C 命名色"
+  },
+  "short_label": {
+    "en": "W3C",
+    "ja": "W3C",
+    "zh": "W3C"
   },
   "fields": [
     {

@@ -440,9 +440,24 @@ input[type=range]{accent-color:var(--accent)}
      so scrollbar stays accurate. */
   content-visibility:auto;
   contain-intrinsic-size:48px 48px;
+  /* Labels stack via flex column flow. Heights = font-size + line-height,
+     all driven by CSS vars below -> font, line-height, gap all scale together
+     so changing one knob keeps the stack visually consistent. */
+  display:flex;flex-direction:column;
+  padding:2px 0;
+  gap:var(--cell-gap, 1px);
+  --lh-cmyk: 1.25;
+  --lh-hex:  1.25;
+  --lh-jpn:  1.3;
+  --lh-sib:  1.3;
+  --lh-html: 1.25;
+  --lh-badg: 1.4;
+  --lh-cr:   1.3;
 }
 .swatch-cell:hover{transform:scale(1.14);z-index:5;box-shadow:0 4px 20px rgba(0,0,0,0.22)}
-.swatch-cell.in-palette{box-shadow:inset 0 0 0 3px #FFFFFF, inset 0 0 0 5px #111}
+.swatch-cell.in-palette{
+  box-shadow: inset 0 0 7px 1px var(--bg), 0 0 7px 4px var(--text);
+}
 .swatch-cell.in-palette::after{
   content:'✓';position:absolute;top:2px;right:3px;
   font-size:11px;font-weight:700;line-height:1;
@@ -450,6 +465,23 @@ input[type=range]{accent-color:var(--accent)}
   width:14px;height:14px;display:flex;align-items:center;justify-content:center;
   z-index:6;
 }
+/* Hover-corner remove. Sits half-outside the cell so it stays clickable in
+   tightly packed rows. Cell's overflow:hidden is lifted during hover so the
+   button can escape its bounds; cell already raises z-index:5 on hover so
+   the button stacks above neighbours. */
+.swatch-cell:hover{overflow:visible;content-visibility:visible;contain:none}
+.cell-remove{
+  position:absolute;top:-6px;right:-6px;
+  width:18px;height:18px;display:none;
+  align-items:center;justify-content:center;
+  background:rgba(180,0,0,0.95);color:#fff;
+  border:1px solid #fff;border-radius:50%;cursor:pointer;
+  font-weight:700;font-size:13px;line-height:1;
+  box-shadow:0 1px 4px rgba(0,0,0,0.35);
+  z-index:8;pointer-events:auto;padding:0;
+}
+.swatch-cell:hover > .cell-remove{display:flex}
+.swatch-cell:hover.in-palette::after{display:none}
 
 /* ── Palette section ── */
 .pal-row{display:flex;gap:6px;align-items:center}
@@ -607,41 +639,66 @@ input[type=range]{accent-color:var(--accent)}
   border:1px dashed var(--border);border-radius:6px;
 }
 
-/* Text layers inside cell - sizes set via JS custom props */
+/* Text layers inside cell. Font size + line-height come from CSS vars set
+   on the parent .swatch-cell (JS writes --fz-* per render; --lh-* default
+   declared on .swatch-cell rule above). Override either var on a single
+   .swatch-cell to retune just that cell's labels. */
 .cell-cmyk{
-  position:absolute;top:0;left:0;right:0;
   font-family:var(--font-mono);font-weight:500;
-  padding:2px 3px;line-height:1.25;pointer-events:none;
+  padding:0 3px;pointer-events:none;flex-shrink:0;
+  font-size:var(--fz-cmyk);line-height:var(--lh-cmyk);
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
 }
 .cell-hex{
-  position:absolute;left:0;right:0;
   font-family:var(--font-mono);
-  padding:0 3px;line-height:1.25;pointer-events:none;
+  padding:0 3px;pointer-events:none;flex-shrink:0;
+  font-size:var(--fz-hex);line-height:var(--lh-hex);
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
 }
-.cell-jpn{
-  position:absolute;left:0;right:0;
+.cell-jpn,.cell-zh,.cell-w3c,.cell-neu{
   font-family:var(--font-jpn-serif);font-weight:800;
-  padding:2px 3px;line-height:1.3;pointer-events:none;
+  padding:0 3px;pointer-events:none;flex-shrink:0;
   overflow:hidden;white-space:nowrap;text-overflow:ellipsis;
 }
+.cell-jpn{ font-size:var(--fz-jpn); line-height:var(--lh-jpn); }
+.cell-zh{  font-size:var(--fz-sib); line-height:var(--lh-sib); }
+.cell-w3c,.cell-neu{
+  font-family:var(--font-mono);font-weight:600;
+  font-size:var(--fz-sib);line-height:var(--lh-sib);
+}
+.cell-jpn span, .cell-jpn span, .cell-zh span, .cell-w3c span, .cell-neu span{
+  display:inline-flex;
+  align-items:center;
+}
+.cell-jpn span{
+}
+.cell-zh span::before{
+  content:'- ';
+}
+.cell-w3c span::before{
+  content:'# ';
+}
+.cell-neu span::before{
+  content:'';
+}
 .cell-html{
-  position:absolute;left:0;right:0;
   font-family:var(--font-mono);
-  padding:4px 3px;line-height:1.25;pointer-events:none;
+  padding:0 3px;pointer-events:none;flex-shrink:0;
+  font-size:var(--fz-html);line-height:var(--lh-html);
   overflow:hidden;white-space:nowrap;text-overflow:ellipsis;
 }
 .cell-badge{
   position:absolute;bottom:2px;right:2px;
   font-family:var(--font-mono);font-weight:500;
-  padding:1px 3px;border-radius:2px;line-height:1.4;
+  padding:1px 3px;border-radius:2px;
+  font-size:var(--fz-badg);line-height:var(--lh-badg);
   pointer-events:none;
 }
 .cell-cr{
   position:absolute;bottom:2px;left:2px;
   font-family:var(--font-mono);
-  padding:0 2px;line-height:1.3;pointer-events:none;
+  padding:0 2px;pointer-events:none;
+  font-size:var(--fz-cr);line-height:var(--lh-cr);
 }
 .badge-aaa{background:rgba(0,110,30,0.88);color:#fff}
 .badge-aa {background:rgba(0,75,170,0.88);color:#fff}
@@ -662,13 +719,9 @@ input[type=range]{accent-color:var(--accent)}
 }
 .gs-sub b{color:var(--text);font-weight:500}
 .gs-strip{display:flex;gap:3px;flex-wrap:wrap}
-.gs-cell{
-  aspect-ratio:1;border-radius:3px;cursor:pointer;
-  position:relative;overflow:hidden;
-  border:1px solid rgba(0,0,0,0.07);
-  transition:transform .1s;flex-shrink:0;
-}
-.gs-cell:hover{transform:scale(1.12);z-index:5;box-shadow:0 2px 10px rgba(0,0,0,0.18)}
+/* .gs-cell shares .swatch-cell rule: flex column flow, --fz/--lh vars,
+   aspect-ratio, hover scale. Class kept on the element for legacy hooks
+   (gridscan exports, css overrides) but carries no extra style. */
 
 /* ── Detail overlay ── */
 .overlay{
@@ -717,8 +770,11 @@ input[type=range]{accent-color:var(--accent)}
 .cr-bar-fill{height:100%;border-radius:3px;transition:width .3s}
 .chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:2px}
 .chip{
-  font-size:11px;padding:3px 9px;border-radius:20px;
+  font-size:11px;padding:3px 9px;border-radius:1em;
   border:1px solid var(--border);color:var(--text);background:var(--bg2);line-height:1.5;
+}
+.chip span::before{
+  content:"♦";
 }
 .chip.jpn{background:#d0d0d0;color:#6AC0E8;border-color:transparent}
 .chip.chip-jp-trad{background:#eeeeee;color:#131313;border-color: #718394;}
@@ -2189,6 +2245,89 @@ function matchNearest(s, fwdLUT) {
   }
 }
 
+// Per-corpus render registry. Each known library declares:
+//   cls : sibling cell class (CSS owns its font/style)
+//   fit : 'uniform' = group shrink across grid (text length stable;
+//         all cells in the class collapse together so rows stay
+//         visually aligned)
+//         'per_cell' = each cell shrinks against its own width (one
+//         long entry like "LightGoldenrodYellow" only kills its own
+//         cell, not the column)
+//   fz  : which fz bucket the renderer uses for this row -
+//         'jpn' = the bigger kanji-emphasis font (cs * _FZ_RATIO_JPN)
+//         'sib' = the smaller shared sibling font (cs * _FZ_RATIO_SIB)
+// Unknown libraries fall back to .cell-html (per_cell, fzHtml).
+// _LABEL_CLS_UNIFORM and _LABEL_CLS_PER_CELL below derive from this
+// map at script-load. Adding or removing a library is a one-line edit
+// here; the fit pipeline and font-size selector both pick up the
+// change automatically with no further code edits.
+const CORPUS_CELL_CLASS = {
+  'jp-trad':              { cls: 'cell-jpn', fit: 'uniform',  fz: 'jpn' },
+  'zh-trad':              { cls: 'cell-zh',  fit: 'per_cell', fz: 'sib' },
+  'w3c-names':            { cls: 'cell-w3c', fit: 'per_cell', fz: 'sib' },
+  'colour-in-translation':{ cls: 'cell-neu', fit: 'per_cell', fz: 'sib' },
+};
+function _corpusClass(libId) {
+  const e = CORPUS_CELL_CLASS[libId];
+  return e ? e.cls : null;
+}
+// Pick the row font size for a known sibling corpus. Falls through to
+// fzHtml for the unknown-lib path.
+function _corpusFz(libId, fzMap) {
+  const e = CORPUS_CELL_CLASS[libId];
+  return e ? fzMap[e.fz] : fzMap.html;
+}
+
+// Rendered row VISUAL height per label class. Mirrors CSS line-height +
+// padding. Used by the bottom-overflow clip in _fitCellTexts.
+function _cellRowH(cls, fz) {
+  if (cls === 'cell-html') return fz * 1.25 + 8;
+  if (cls === 'cell-cmyk') return fz * 1.25 + 4;
+  if (cls === 'cell-hex')  return fz * 1.25;
+  return fz * 1.3;              // cell-jpn / cell-zh / cell-w3c / cell-neu (padding 0)
+}
+
+// Stacking advance per row = how much to bump y for the next row.
+// Decoupled from visual height: rows visually overlap their padding zones
+// (pointer-events:none anyway) so the user-visible gap between glyphs is
+// controlled here, not by CSS padding.
+// Tune by ratio:
+//   _LABEL_LH_RATIO  - line-box fraction (1.0 = glyph height only)
+//   _LABEL_GAP_RATIO - extra gap as fraction of font size
+const _LABEL_LH_RATIO  = 1.05;
+const _LABEL_GAP_RATIO = 0.08;
+function _rowAdvance(cls, fz) {
+  return Math.ceil(fz * (_LABEL_LH_RATIO + _LABEL_GAP_RATIO));
+}
+
+// Font size as fraction of cell size (cs). One knob per row class so the
+// whole label stack stays proportional to the swatch box at every cs.
+// Sibling classes (cell-jpn/zh/w3c/neu) SHARE a single ratio so their rows
+// have identical height and the stack is visually stable.
+const _FZ_RATIO_CMYK = 0.09;
+const _FZ_RATIO_HEX  = 0.10;
+const _FZ_RATIO_JPN  = 0.16;   // cell-jpn: kanji emphasis row, larger
+const _FZ_RATIO_SIB  = 0.10;   // cell-zh / cell-w3c / cell-neu: smaller
+const _FZ_RATIO_HTML = 0.09;
+const _FZ_RATIO_BADG = 0.10;
+const _FZ_RATIO_CR   = 0.09;
+
+// Inline cssText fragment: write per-cell CSS vars consumed by .cell-*
+// classes. Pass an object with any subset of {cmyk,hex,sib,html,badg,cr};
+// undefined keys are skipped. Pair with the --lh-* defaults declared on
+// .swatch-cell so the cell's font + line-height are fully tunable from CSS.
+function _cellFzVars(v) {
+  let s = '';
+  if (v.cmyk != null) s += `--fz-cmyk:${v.cmyk}px;`;
+  if (v.hex  != null) s += `--fz-hex:${v.hex}px;`;
+  if (v.jpn  != null) s += `--fz-jpn:${v.jpn}px;`;
+  if (v.sib  != null) s += `--fz-sib:${v.sib}px;`;
+  if (v.html != null) s += `--fz-html:${v.html}px;`;
+  if (v.badg != null) s += `--fz-badg:${v.badg}px;`;
+  if (v.cr   != null) s += `--fz-cr:${v.cr}px;`;
+  return s;
+}
+
 // Field text this corpus contributes to a swatch label for the current
 // display pref. Returns null if hidden / no match.
 function corpusCellText(libId, sw) {
@@ -2693,8 +2832,8 @@ function refreshPalUI() {
       const c = document.createElement('div');
       c.className = 'pal-chip';
       c.style.background = sw.hex;
-      c.title = `C${sw.C} M${sw.M} Y${sw.Y} K${sw.K} · ${sw.hex} - ${t('palette.chip_click_remove', 'click to remove')}`;
-      c.addEventListener('click', () => { removeFromPalette(sw); });
+      c.title = `C${sw.C} M${sw.M} Y${sw.Y} K${sw.K} · ${sw.hex}`;
+      c.addEventListener('click', () => openDetail(_liveSwatch(sw)));
       strip.appendChild(c);
     });
   }
@@ -2973,38 +3112,38 @@ function renderPaletteMode() {
       row.className = 'pm-row';
       row.style.gap = gap + 'px';
       // visibility thresholds same as main render
-      const fzCmyk = Math.max(5, Math.round(cs*0.09));
-      const fzHex  = Math.max(5, Math.round(cs*0.10));
-      const fzJpn  = Math.max(7, Math.round(cs*0.18));
-      const fzRoma = Math.max(5, Math.round(cs*0.09));
-      const fzHtml = Math.max(4, Math.round(cs*0.09));
-      const fzBadg = Math.max(5, Math.round(cs*0.10));
-      const fzCR   = Math.max(4, Math.round(cs*0.09));
+      const fzCmyk = Math.max(5, Math.round(cs * _FZ_RATIO_CMYK));
+      const fzHex  = Math.max(5, Math.round(cs * _FZ_RATIO_HEX));
+      const fzJpn  = Math.max(7, Math.round(cs * _FZ_RATIO_JPN));
+      const fzSib  = Math.max(7, Math.round(cs * _FZ_RATIO_SIB));
+      const fzHtml = Math.max(4, Math.round(cs * _FZ_RATIO_HTML));
+      const fzBadg = Math.max(5, Math.round(cs * _FZ_RATIO_BADG));
+      const fzCR   = Math.max(4, Math.round(cs * _FZ_RATIO_CR));
       const showHex=cs>=36, showJpn=cs>=52, showHtml=cs>=70, showCR=cs>=60;
       const showLabel=cs>=22, showBadge=cs>=22;
       const topCmyk=2;
-      const topHex = topCmyk+fzCmyk+2;
-      const topJpn = topHex + (showHex?fzHex+2:0);
-      const topRoma= topJpn + (showJpn?fzJpn+2:0);
-      const topHtml= topRoma+ (showJpn?fzRoma+2:0);
+      const topHex = topCmyk + _rowAdvance('cell-cmyk', fzCmyk);
+      const topJpn = topHex + (showHex ? _rowAdvance('cell-hex', fzHex) : 0);
+
+      const cellVars = _cellFzVars({cmyk:fzCmyk, hex:fzHex, jpn:fzJpn, sib:fzSib, html:fzHtml, badg:fzBadg, cr:fzCR});
 
       p.swatches.forEach(stored => {
         const sw = _liveSwatch(stored);
         const cell = document.createElement('div');
         cell.className = 'swatch-cell';
-        cell.style.cssText = `background:${sw.hex};width:${cs}px;contain-intrinsic-size:${cs}px ${cs}px`;
+        cell.style.cssText = `background:${sw.hex};width:${cs}px;contain-intrinsic-size:${cs}px ${cs}px;${cellVars}`;
 
         if (showLabel && sw.text_color) {
           const e = document.createElement('div');
           e.className='cell-cmyk';
-          e.style.cssText=`color:${sw.text_color};font-size:${fzCmyk}px;top:${topCmyk}px`;
+          e.style.color = sw.text_color;
           e.textContent=`C${sw.C} M${sw.M} Y${sw.Y} K${sw.K}`;
           cell.appendChild(e);
         }
         if (showHex && sw.text_color) {
           const e=document.createElement('div');
           e.className='cell-hex';
-          e.style.cssText=`color:${sw.text_color};font-size:${fzHex}px;top:${topHex}px`;
+          e.style.color = sw.text_color;
           e.textContent=sw.hex;
           cell.appendChild(e);
         }
@@ -3014,46 +3153,61 @@ function renderPaletteMode() {
             if (!corpusVisible(lib.id, sw)) continue;
             const text = corpusCellText(lib.id, sw);
             if (!text) continue;
-            const isJpn = (lib.id === 'jp-trad');
-            if (!isJpn && !showHtml) continue;
-            const fz = isJpn ? fzJpn : fzHtml;
+            const sibClass = _corpusClass(lib.id);
+            const isSib = !!sibClass;
+            if (!isSib && !showHtml) continue;
+            const fz = _corpusFz(lib.id, { jpn: fzJpn, sib: fzSib, html: fzHtml });
             const e = document.createElement('div');
-            e.className = isJpn ? 'cell-jpn' : 'cell-html';
-            e.style.cssText = `color:${sw.text_color};font-size:${fz}px;top:${yCursor}px`;
-            e.textContent = text;
+            e.className = sibClass || 'cell-html';
+            e.style.color = sw.text_color;
+            // Create a span to wrap the text content
+            const span = document.createElement('span');
+            span.textContent = text;
+            e.appendChild(span);
+
             cell.appendChild(e);
-            yCursor += fz + 2;
+            yCursor += _rowAdvance(e.className, fz);
           }
         }
         if (showBadge && sw.wcag_aa !== undefined) {
           const b=document.createElement('div');
           b.className='cell-badge ' + (sw.wcag_aaa?'badge-aaa':sw.wcag_aa?'badge-aa':'badge-fail');
-          b.style.fontSize=fzBadg+'px';
           b.textContent=sw.wcag_aaa?'AAA':sw.wcag_aa?'AA':'✗';
           cell.appendChild(b);
         }
         if (showCR && sw.contrast_ratio !== undefined) {
           const c=document.createElement('div');
           c.className='cell-cr';
-          c.style.cssText=`color:${sw.text_color};font-size:${fzCR}px`;
-          c.textContent=sw.contrast_ratio.toFixed(1)+':1';
+          c.style.cssText=`color:${sw.text_color}`;
+
+          // Create a span to wrap the text content
+          const span = document.createElement('span');
+          c.appendChild(span);
+
+          span.textContent=sw.contrast_ratio.toFixed(1)+':1';
           cell.appendChild(c);
         }
 
-        cell.addEventListener('click', () => openDetail(sw));
-        cell.addEventListener('contextmenu', (ev) => {
-          ev.preventDefault();
-          if (confirm(`Remove this swatch from "${p.name}"?`)) {
-            removeFromPaletteAt(p.id, stored);
-          }
+        cell.addEventListener('click', () => openDetail(sw, p));
+        const rm = document.createElement('button');
+        rm.className = 'cell-remove';
+        rm.textContent = '×';
+        rm.setAttribute('data-i18n-title', 'palette.remove_swatch');
+        rm.title = (typeof t === 'function')
+          ? t('palette.remove_swatch','Remove from palette')
+          : 'Remove from palette';
+        rm.addEventListener('click', (ev) => {
+          ev.stopPropagation();
+          removeFromPaletteAt(p.id, stored);
         });
+        cell.appendChild(rm);
         row.appendChild(cell);
       });
       panel.appendChild(row);
     }
     wrap.appendChild(panel);
   });
-  _fitCellTexts(wrap);
+  _fitCellTexts(wrap, cs);
 }
 
 function removeFromPaletteAt(palId, sw) {
@@ -3290,20 +3444,27 @@ function sorted(arr) {
 function _makeSwatchCell(sw, ctx) {
   const cell = document.createElement('div');
   cell.className = 'swatch-cell' + (ctx.palSet.has(_swKey(sw)) ? ' in-palette' : '');
-  cell.style.cssText = `background:${sw.hex};width:${ctx.cs}px;contain-intrinsic-size:${ctx.cs}px ${ctx.cs}px`;
+  const cellVars = _cellFzVars({cmyk:ctx.fzCmyk, hex:ctx.fzHex, jpn:ctx.fzJpn, sib:ctx.fzSib, html:ctx.fzHtml, badg:ctx.fzBadg, cr:ctx.fzCR});
+  cell.style.cssText = `background:${sw.hex};width:${ctx.cs}px;contain-intrinsic-size:${ctx.cs}px ${ctx.cs}px;${cellVars}`;
 
   if (ctx.showLabel) {
     const e = document.createElement('div');
     e.className = 'cell-cmyk';
-    e.style.cssText = `color:${sw.text_color};font-size:${ctx.fzCmyk}px;top:${ctx.topCmyk}px`;
-    e.textContent = `C${sw.C} M${sw.M} Y${sw.Y} K${sw.K}`;
+    e.style.color = sw.text_color;
+    // Create a span to wrap the text content
+            const span = document.createElement('span');
+            span.textContent = `C${sw.C} M${sw.M} Y${sw.Y} K${sw.K}`;
+            e.appendChild(span);
     cell.appendChild(e);
   }
   if (ctx.showHex) {
     const e = document.createElement('div');
     e.className = 'cell-hex';
-    e.style.cssText = `color:${sw.text_color};font-size:${ctx.fzHex}px;top:${ctx.topHex}px`;
-    e.textContent = sw.hex;
+    e.style.color = sw.text_color;
+    // Create a span to wrap the text content
+            const span = document.createElement('span');
+            span.textContent = sw.hex;
+            e.appendChild(span);
     cell.appendChild(e);
   }
   // v2.1: iterate every loaded corpus dynamically. Each visible corpus
@@ -3315,29 +3476,35 @@ function _makeSwatchCell(sw, ctx) {
       if (!corpusVisible(lib.id, sw)) continue;
       const text = corpusCellText(lib.id, sw);
       if (!text) continue;
-      // Size threshold: jpn uses fzJpn, others use fzHtml-class.
-      const isJpn = (lib.id === 'jp-trad');
-      if (!isJpn && !ctx.showHtml) continue;
-      const fz = isJpn ? ctx.fzJpn : ctx.fzHtml;
+      // jp-trad uses fzJpn (kanji emphasis); other known siblings use fzSib;
+      // unknowns use fzHtml only when showHtml threshold passes.
+      const sibClass = _corpusClass(lib.id);
+      const isSib = !!sibClass;
+      if (!isSib && !ctx.showHtml) continue;
+      const fz = _corpusFz(lib.id, { jpn: ctx.fzJpn, sib: ctx.fzSib, html: ctx.fzHtml });
       const e  = document.createElement('div');
-      e.className = isJpn ? 'cell-jpn' : 'cell-html';
-      e.style.cssText = `color:${sw.text_color};font-size:${fz}px;top:${yCursor}px`;
-      e.textContent = text;
+      e.className = sibClass || 'cell-html';
+      e.style.color = sw.text_color;
+
+          // Create a span to wrap the text content
+          const span = document.createElement('span');
+        span.textContent = text;
+          e.appendChild(span);
+
       cell.appendChild(e);
-      yCursor += fz + 2;
+      yCursor += _rowAdvance(e.className, fz);
     }
   }
   if (ctx.showBadge) {
     const b = document.createElement('div');
     b.className = 'cell-badge ' + (sw.wcag_aaa ? 'badge-aaa' : sw.wcag_aa ? 'badge-aa' : 'badge-fail');
-    b.style.fontSize = ctx.fzBadg + 'px';
     b.textContent = sw.wcag_aaa ? 'AAA' : sw.wcag_aa ? 'AA' : '✗';
     cell.appendChild(b);
   }
   if (ctx.showCR) {
     const c = document.createElement('div');
     c.className = 'cell-cr';
-    c.style.cssText = `color:${sw.text_color};font-size:${ctx.fzCR}px`;
+    c.style.cssText = `color:${sw.text_color}`;
     c.textContent = sw.contrast_ratio.toFixed(1) + ':1';
     cell.appendChild(c);
   }
@@ -3353,25 +3520,36 @@ function _makeSwatchCell(sw, ctx) {
   return cell;
 }
 
-// Per-label-type UNIFORM fit. Same label class + same initial font-size =
-// one group. Group rules:
-//   1. Find the cell with the worst overflow in the group.
-//   2. Shrink the group's font-size by that worst ratio (so every cell in
-//      the group fits at the same uniform size).
-//   3. If the required size falls below the 5 px floor, hide EVERY label
-//      in that group (all-or-nothing per the user's "if one cell too
-//      small, all should disappear" rule).
-// The kanji line and the romaji line live in the same .cell-jpn class but
-// are painted at different initial font sizes (fzJpn vs fzRoma) - they
-// therefore land in separate groups and shrink / hide independently.
-function _fitCellTexts(root) {
+// Fit + clip pipeline for cell labels.
+//   1. UNIFORM groups (.cell-cmyk/.cell-hex + known sibling corpora):
+//      shrink whole group by worst-case width ratio so visually-aligned
+//      label rows stay aligned across cells. Below FLOOR -> hide whole group.
+//   2. PER-CELL (.cell-html for unknown corpora): each label shrinks against
+//      its own width. Below FLOOR -> hide just that label.
+//   3. Vertical overflow clip (when `cs` passed): hide any label whose
+//      measured bottom (top + _cellRowH) lands inside the reserved
+//      badge/contrast-ratio strip or below the cell. Walk top -> bottom and
+//      drop everything past the first overflow so rows stay contiguous.
+// Derived from CORPUS_CELL_CLASS: cmyk + hex always shrink uniformly
+// (their text is generated by the app, length stable). Each known corpus
+// adds itself to the uniform or per_cell bucket via its `fit` field.
+// .cell-html (unknown-lib fallback) is always per_cell since we cannot
+// predict text length variance for libraries we have not registered.
+// Removing a library = drop its key from CORPUS_CELL_CLASS; the lists
+// below recompute automatically and the fit pipeline keeps working.
+const _LABEL_CLS_UNIFORM = ['cell-cmyk', 'cell-hex'].concat(
+  Object.values(CORPUS_CELL_CLASS).filter(v => v.fit === 'uniform').map(v => v.cls)
+);
+const _LABEL_CLS_PER_CELL = ['cell-html'].concat(
+  Object.values(CORPUS_CELL_CLASS).filter(v => v.fit === 'per_cell').map(v => v.cls)
+);
+const _LABEL_CLS_ALL = new Set([..._LABEL_CLS_UNIFORM, ..._LABEL_CLS_PER_CELL]);
+function _fitCellTexts(root, cs) {
   if (!root) return;
-  const TYPES = ['cell-cmyk', 'cell-hex', 'cell-jpn', 'cell-html'];
   const FLOOR = 5;
-  for (const cls of TYPES) {
+  for (const cls of _LABEL_CLS_UNIFORM) {
     const labels = root.querySelectorAll('.' + cls);
     if (!labels.length) continue;
-    // Group by rounded initial font-size.
     const groups = new Map();
     for (const el of labels) {
       if (!el.firstChild) continue;
@@ -3389,12 +3567,51 @@ function _fitCellTexts(root) {
         const r = sw / cw;
         if (r > worstRatio) worstRatio = r;
       }
-      if (worstRatio <= 1.01) continue;          // already fits everywhere
+      if (worstRatio <= 1.01) continue;
       const newFz = Math.floor(baseFz / worstRatio * 10) / 10;
       if (newFz < FLOOR) {
         for (const el of group) el.style.display = 'none';
       } else {
         for (const el of group) el.style.fontSize = newFz + 'px';
+      }
+    }
+  }
+  for (const cls of _LABEL_CLS_PER_CELL) {
+    const labels = root.querySelectorAll('.' + cls);
+    for (const el of labels) {
+      if (!el.firstChild) continue;
+      const cw = el.clientWidth, sw = el.scrollWidth;
+      if (cw <= 0) continue;
+      const ratio = sw / cw;
+      if (ratio <= 1.01) continue;
+      const baseFz = parseFloat(el.style.fontSize) || 10;
+      const newFz = Math.floor(baseFz / ratio * 10) / 10;
+      if (newFz < FLOOR) el.style.display = 'none';
+      else el.style.fontSize = newFz + 'px';
+    }
+  }
+  if (!cs) return;
+  // Flex-column layout means children stack naturally. Measure offsetTop +
+  // offsetHeight per row; hide rows whose measured bottom crosses the
+  // badge/cr reserve. Once one row clips, every later row in the column also
+  // hides so the stack stays contiguous (no gap-then-stray-row).
+  const cells = root.querySelectorAll('.swatch-cell');
+  for (const cell of cells) {
+    let reserve = 0;
+    const badge = cell.querySelector('.cell-badge');
+    const cr    = cell.querySelector('.cell-cr');
+    if (badge && badge.style.display !== 'none') reserve = Math.max(reserve, badge.offsetHeight + 4);
+    if (cr    && cr.style.display    !== 'none') reserve = Math.max(reserve, cr.offsetHeight + 4);
+    const limit = cell.clientHeight - reserve;
+    let clipped = false;
+    for (const el of cell.children) {
+      const cls = (el.className || '').split(' ')[0];
+      if (!_LABEL_CLS_ALL.has(cls)) continue;
+      if (clipped) { el.style.display = 'none'; continue; }
+      if (el.style.display === 'none') continue;
+      if (el.offsetTop + el.offsetHeight > limit) {
+        el.style.display = 'none';
+        clipped = true;
       }
     }
   }
@@ -3437,19 +3654,19 @@ function render() {
   grid.style.setProperty('--gap', gap + 'px');
   grid.style.gap = gap + 'px';
 
-  // Font sizes scale with cell - CMYK now matches small DIC/HTML scale
-  const fzCmyk = Math.max(5,  Math.round(cs * 0.09));
-  const fzHex  = Math.max(5,  Math.round(cs * 0.10));
-  const fzJpn  = Math.max(7,  Math.round(cs * 0.18));
-  const fzRoma = Math.max(5,  Math.round(cs * 0.09));
-  const fzHtml = Math.max(4,  Math.round(cs * 0.09));
-  const fzBadg = Math.max(5,  Math.round(cs * 0.10));
-  const fzCR   = Math.max(4,  Math.round(cs * 0.09));
+  // Font sizes as fraction of cs. Ratios live at top of script (_FZ_RATIO_*).
+  const fzCmyk = Math.max(5, Math.round(cs * _FZ_RATIO_CMYK));
+  const fzHex  = Math.max(5, Math.round(cs * _FZ_RATIO_HEX));
+  const fzJpn  = Math.max(7, Math.round(cs * _FZ_RATIO_JPN));
+  const fzSib  = Math.max(7, Math.round(cs * _FZ_RATIO_SIB));
+  const fzHtml = Math.max(4, Math.round(cs * _FZ_RATIO_HTML));
+  const fzBadg = Math.max(5, Math.round(cs * _FZ_RATIO_BADG));
+  const fzCR   = Math.max(4, Math.round(cs * _FZ_RATIO_CR));
 
   // Build a shared cell-build context so the virtualizer + initial paint
   // share one set of visibility / font / offset rules.
   const ctx = {
-    cs, fzCmyk, fzHex, fzJpn, fzRoma, fzHtml, fzBadg, fzCR,
+    cs, fzCmyk, fzHex, fzJpn, fzSib, fzHtml, fzBadg, fzCR,
     showHex:  cs >= 36,
     showJpn:  cs >= 52,
     showHtml: cs >= 70,
@@ -3457,10 +3674,8 @@ function render() {
     showBadge: cs >= 22,
     showLabel: cs >= 22,
     topCmyk: 2,
-    get topHex()  { return this.topCmyk + this.fzCmyk + 2; },
-    get topJpn()  { return this.topHex  + (this.showHex  ? this.fzHex  + 2 : 0); },
-    get topRoma() { return this.topJpn  + (this.showJpn  ? this.fzJpn  + 2 : 0); },
-    get topHtml() { return this.topRoma + (this.showJpn  ? this.fzRoma + 2 : 0); },
+    get topHex() { return this.topCmyk + _rowAdvance('cell-cmyk', this.fzCmyk); },
+    get topJpn() { return this.topHex  + (this.showHex ? _rowAdvance('cell-hex', this.fzHex) : 0); },
     palSet: _activeSet(),
   };
 
@@ -3515,7 +3730,7 @@ function render() {
     }
     grid.innerHTML = '';
     grid.appendChild(frag);
-    _fitCellTexts(grid);
+    _fitCellTexts(grid, cs);
   }
 
   // (Re)bind scroll listener with throttle via rAF
@@ -3548,11 +3763,12 @@ function renderGS() {
   const cs    = Math.max(curCell, 28); // never smaller than 28px in the strip
   const step  = curStep;
 
-  const fzK    = Math.max(6, Math.round(cs*0.13));
-  const fzHex  = Math.max(5, Math.round(cs*0.10));
-  const fzBadg = Math.max(5, Math.round(cs*0.10));
-  const fzJpn  = Math.max(7, Math.round(cs*0.18));
-  const fzHtml = Math.max(4, Math.round(cs*0.09));
+  const fzCmyk = Math.max(5, Math.round(cs * _FZ_RATIO_CMYK));
+  const fzHex  = Math.max(5, Math.round(cs * _FZ_RATIO_HEX));
+  const fzBadg = Math.max(5, Math.round(cs * _FZ_RATIO_BADG));
+  const fzJpn  = Math.max(7, Math.round(cs * _FZ_RATIO_JPN));
+  const fzSib  = Math.max(7, Math.round(cs * _FZ_RATIO_SIB));
+  const fzHtml = Math.max(4, Math.round(cs * _FZ_RATIO_HTML));
   const showH    = cs >= 32;
   const showJpn  = cs >= 52;
   const showHtml = cs >= 70;
@@ -3562,9 +3778,8 @@ function renderGS() {
   // Strip swatches aren't in DEDUP so the per-corpus `__closest` flag never
   // gets set; bypass corpusVisible and gate purely on dE <= curTol so cells
   // surface the same library names that the main grid + detail card show.
-  const addNames = (cell, sw, tc, yStart) => {
+  const addNames = (cell, sw, tc) => {
     if (!showJpn) return;
-    let y = yStart;
     for (const lib of CORPORA.libraries) {
       const fieldId = _libDisplayField(lib.id);
       if (!fieldId) continue;
@@ -3573,18 +3788,16 @@ function renderGS() {
       if (typeof m.deltaE !== 'number' || m.deltaE > curTol) continue;
       const text = m.entry[fieldId];
       if (!text) continue;
-      const isJpn = (lib.id === 'jp-trad');
-      if (!isJpn && !showHtml) continue;
-      const fz = isJpn ? fzJpn : fzHtml;
+      const sibClass = _corpusClass(lib.id);
+      const isSib = !!sibClass;
+      if (!isSib && !showHtml) continue;
       const e  = document.createElement('div');
-      e.className = isJpn ? 'cell-jpn' : 'cell-html';
-      e.style.cssText = `color:${tc};font-size:${fz}px;top:${y}px`;
+      e.className = sibClass || 'cell-html';
+      e.style.color = tc;
       e.textContent = text;
       cell.appendChild(e);
-      y += fz + 2;
     }
   };
-  const namesY = showH ? (fzK + 4 + fzHex + 2) : (fzK + 4);
 
   // ── Pure RGB reference ramp: linear sRGB grey, NO profile routing. ────────
   // For each pct in 0..100 step curStep, render rgb(v,v,v) where
@@ -3599,28 +3812,28 @@ function renderGS() {
     if (typeof matchNearest === 'function') matchNearest(sw, fwdShared);
     const cell = document.createElement('div');
     cell.className = 'gs-cell swatch-cell' + (palSet.has(_swKey(sw)) ? ' in-palette' : '');
-    cell.style.cssText = `background:${sw.hex};width:${cs}px;contain-intrinsic-size:${cs}px ${cs}px`;
+    const stripVars = _cellFzVars({cmyk:fzCmyk, hex:fzHex, jpn:fzJpn, sib:fzSib, html:fzHtml, badg:fzBadg});
+    cell.style.cssText = `background:${sw.hex};width:${cs}px;contain-intrinsic-size:${cs}px ${cs}px;${stripVars}`;
 
     const k = document.createElement('div');
     k.className = 'cell-cmyk';
-    k.style.cssText = `color:${sw.text_color};font-size:${fzK}px;top:2px`;
+    k.style.color = sw.text_color;
     k.textContent = `R${pct}`;
     cell.appendChild(k);
 
     if (showH) {
       const h = document.createElement('div');
       h.className = 'cell-hex';
-      h.style.cssText = `color:${sw.text_color};font-size:${fzHex}px;top:${fzK+4}px`;
+      h.style.color = sw.text_color;
       h.textContent = sw.hex;
       cell.appendChild(h);
     }
 
-    addNames(cell, sw, sw.text_color, namesY);
+    addNames(cell, sw, sw.text_color);
 
     const badge = document.createElement('div');
     badge.className = 'cell-badge ' +
       (sw.wcag_aaa ? 'badge-aaa' : sw.wcag_aa ? 'badge-aa' : 'badge-fail');
-    badge.style.fontSize = fzBadg + 'px';
     badge.textContent = sw.wcag_aaa ? 'AAA' : sw.wcag_aa ? 'AA' : '✗';
     cell.appendChild(badge);
 
@@ -3631,7 +3844,7 @@ function renderGS() {
     fragR.appendChild(cell);
   }
   stripK.appendChild(fragR);
-  _fitCellTexts(stripK);
+  _fitCellTexts(stripK, cs);
 
   // ── Neutral ramp: RGB greyscale round-trip through the active profile.
   // For each L in 0..100, target sRGB(L,L,L), reverse → CMYK via ACTIVE_RLUT,
@@ -3667,23 +3880,23 @@ function renderGS() {
     if (typeof matchNearest === 'function') matchNearest(sw, fwd);
     const cell = document.createElement('div');
     cell.className = 'gs-cell swatch-cell' + (palSet.has(_swKey(sw)) ? ' in-palette' : '');
-    cell.style.cssText = `background:${hex};width:${cs}px;contain-intrinsic-size:${cs}px ${cs}px`;
+    const stripVars = _cellFzVars({cmyk:fzCmyk, hex:fzHex, jpn:fzJpn, sib:fzSib, html:fzHtml, badg:fzBadg});
+    cell.style.cssText = `background:${hex};width:${cs}px;contain-intrinsic-size:${cs}px ${cs}px;${stripVars}`;
     const k = document.createElement('div');
     k.className = 'cell-cmyk';
-    k.style.cssText = `color:${tc};font-size:${fzK}px;top:2px`;
+    k.style.color = tc;
     k.textContent = `N${pct}`;
     cell.appendChild(k);
     if (showH) {
       const h = document.createElement('div');
       h.className = 'cell-hex';
-      h.style.cssText = `color:${tc};font-size:${fzHex}px;top:${fzK+4}px`;
+      h.style.color = tc;
       h.textContent = hex;
       cell.appendChild(h);
     }
-    addNames(cell, sw, tc, namesY);
+    addNames(cell, sw, tc);
     const badge = document.createElement('div');
     badge.className = 'cell-badge ' + (sw.wcag_aaa?'badge-aaa':sw.wcag_aa?'badge-aa':'badge-fail');
-    badge.style.fontSize = fzBadg + 'px';
     badge.textContent = sw.wcag_aaa?'AAA':sw.wcag_aa?'AA':'✗';
     cell.appendChild(badge);
     cell.addEventListener('click', () => {
@@ -3693,11 +3906,14 @@ function renderGS() {
     fragN.appendChild(cell);
   }
   stripN.appendChild(fragN);
-  _fitCellTexts(stripN);
+  _fitCellTexts(stripN, cs);
 }
 
 // ── detail card ──────────────────────────────────────────────────────────────
-function openDetail(sw) {
+// palCtx: when set, the detail card was opened from inside that palette's
+// panel/strip - the Add/Remove button targets THAT palette, not the active
+// one. Default (palCtx omitted): behave as before, acting on active palette.
+function openDetail(sw, palCtx) {
   const prev = document.getElementById('dPrev');
   prev.style.background = sw.hex;
   const tc = sw.text_color;
@@ -3761,10 +3977,13 @@ function openDetail(sw) {
       ? ` <em style="opacity:.5;font-style:normal">[${m.anchor}]</em>`
       : '';
     
-    const libLabel = (lib.label && (lib.label[L] || lib.label.en)) || lib.id;
+    const libShort = (lib.short_label && (lib.short_label[L] || lib.short_label.en))
+                  || (lib.label && (lib.label[L] || lib.label.en))
+                  || lib.id;
+    const libFull  = (lib.label && (lib.label[L] || lib.label.en)) || lib.id;
 
-    chipEl.title = `${libLabel} - anchor: ${m.anchor}`;
-    chipEl.innerHTML = `<em style="opacity:.6;font-style:normal;font-size:.85em">${libLabel}:</em> `
+    chipEl.title = `${libFull} - anchor: ${m.anchor}`;
+    chipEl.innerHTML = `<em style="opacity:.6;font-style:normal;font-size:.85em">${libShort}:</em> `
                      + `${displayName} ` // Changed from fieldTxt to displayName
                      + `<em style="opacity:.65;font-style:normal">ΔE ${m.deltaE.toFixed(1)}</em>`
                      + `${anchorTag}`;
@@ -3796,18 +4015,29 @@ function openDetail(sw) {
   });
 
   const palBtn = document.createElement('button');
-  const inPal = _activeSet().has(_swKey(sw));
+  const swKey = _swKey(sw);
+  const inPal = palCtx
+    ? palCtx.swatches.some(x => _swKey(x) === swKey)
+    : _activeSet().has(swKey);
   palBtn.className = 'pal-btn ' + (inPal ? 'is-remove' : 'is-add');
   const palBtnI18nKey = inPal ? 'detail.remove_from_palette' : 'detail.add_to_palette';
   const palBtnTitleKey = palBtnI18nKey + '_title';
-  const palBtnText = inPal ? '− Remove from palette' : '+ Add to palette';
+  const palBtnText = inPal ? '− remove' : '+ Add to palette';
   palBtn.setAttribute('data-i18n', palBtnI18nKey);
   palBtn.setAttribute('data-i18n-title', palBtnTitleKey);
   palBtn.textContent = (typeof t === 'function') ? t(palBtnI18nKey, palBtnText) : palBtnText;
   palBtn.title = (typeof t === 'function')
-    ? t(palBtnTitleKey, inPal ? 'Remove this swatch from the active palette' : 'Add this swatch to the active palette')
-    : (inPal ? 'Remove this swatch from the active palette' : 'Add this swatch to the active palette');
-  palBtn.addEventListener('click', () => { toggleSwatchInPalette(sw); closeDetail(); });
+    ? t(palBtnTitleKey, inPal
+        ? (palCtx ? `Remove from "${palCtx.name}"` : 'Remove this swatch from the active palette')
+        : 'Add this swatch to the active palette')
+    : (inPal
+        ? (palCtx ? `Remove from "${palCtx.name}"` : 'Remove this swatch from the active palette')
+        : 'Add this swatch to the active palette');
+  palBtn.addEventListener('click', () => {
+    if (palCtx && inPal) removeFromPaletteAt(palCtx.id, sw);
+    else toggleSwatchInPalette(sw);
+    closeDetail();
+  });
   row.appendChild(palBtn);
 
   document.getElementById('overlay').classList.add('open');
@@ -5020,13 +5250,13 @@ function renderHueLightMap(target) {
   // Shared cell-build context (mirrors the regular grid path 1:1).
   const ctx = {
     cs,
-    fzCmyk: Math.max(5,  Math.round(cs * 0.09)),
-    fzHex:  Math.max(5,  Math.round(cs * 0.10)),
-    fzJpn:  Math.max(7,  Math.round(cs * 0.18)),
-    fzRoma: Math.max(5,  Math.round(cs * 0.09)),
-    fzHtml: Math.max(4,  Math.round(cs * 0.09)),
-    fzBadg: Math.max(5,  Math.round(cs * 0.10)),
-    fzCR:   Math.max(4,  Math.round(cs * 0.09)),
+    fzCmyk: Math.max(5, Math.round(cs * _FZ_RATIO_CMYK)),
+    fzHex:  Math.max(5, Math.round(cs * _FZ_RATIO_HEX)),
+    fzJpn:  Math.max(7, Math.round(cs * _FZ_RATIO_JPN)),
+    fzSib:  Math.max(7, Math.round(cs * _FZ_RATIO_SIB)),
+    fzHtml: Math.max(4, Math.round(cs * _FZ_RATIO_HTML)),
+    fzBadg: Math.max(5, Math.round(cs * _FZ_RATIO_BADG)),
+    fzCR:   Math.max(4, Math.round(cs * _FZ_RATIO_CR)),
     showHex:  cs >= 36,
     showJpn:  cs >= 52,
     showHtml: cs >= 70,
@@ -5034,10 +5264,8 @@ function renderHueLightMap(target) {
     showBadge: cs >= 22,
     showLabel: cs >= 22,
     topCmyk: 2,
-    get topHex()  { return this.topCmyk + this.fzCmyk + 2; },
-    get topJpn()  { return this.topHex  + (this.showHex  ? this.fzHex  + 2 : 0); },
-    get topRoma() { return this.topJpn  + (this.showJpn  ? this.fzJpn  + 2 : 0); },
-    get topHtml() { return this.topRoma + (this.showJpn  ? this.fzRoma + 2 : 0); },
+    get topHex() { return this.topCmyk + _rowAdvance('cell-cmyk', this.fzCmyk); },
+    get topJpn() { return this.topHex  + (this.showHex ? _rowAdvance('cell-hex', this.fzHex) : 0); },
     palSet: _activeSet(),
   };
 
@@ -5070,7 +5298,7 @@ function renderHueLightMap(target) {
     }
   }
   wrap.appendChild(frag);
-  _fitCellTexts(wrap);
+  _fitCellTexts(wrap, cs);
 }
 
 
@@ -5859,7 +6087,7 @@ const I18N = {
     'palette.swatches_in_active_title': 'Swatches in active palette',
     'palette.global_actions_title': 'Backup, import, manage palettes',
     'palette.img_size_title': 'Image size for PNG / TIFF export',
-    'palette.strip_remove_title': 'Click swatch to remove from palette',
+    'palette.strip_remove_title': 'Click swatch to remove',
     'intro.learn_app_title': 'Learn about Mixo Swatch',
     'intro.follow_instagram_title': 'Follow mixocreative on Instagram',
     'intro.follow_facebook_title': 'Follow mixocreative on Facebook',
@@ -5889,7 +6117,7 @@ const I18N = {
     'detail.copy_rgb_title': 'Copy RGB values to clipboard',
     'detail.copy_json_title': 'Copy full swatch as JSON to clipboard',
     'detail.add_to_palette': '+ Add to palette',
-    'detail.remove_from_palette': '− Remove from palette',
+    'detail.remove_from_palette': '− remove',
     'detail.add_to_palette_title': 'Add this swatch to the active palette',
     'detail.remove_from_palette_title': 'Remove this swatch from the active palette',
     'sidebar.match_help': 'Match by CMYK-Lab (print) or hex-Lab (screen). html corpus falls back to hex when anchor=cmyk.',
@@ -5903,6 +6131,7 @@ const I18N = {
     'palette.empty_none_selected': 'No palette selected. Pick one above, or create one.',
     'palette.empty_no_swatches': 'Empty - enable Select mode and click swatches.',
     'palette.chip_click_remove': 'click to remove',
+    'palette.remove_swatch': 'Remove from palette',
   },
   ja: {
     'badge.mode_d50': 'モード: 印刷 (D50)',
@@ -6126,8 +6355,8 @@ const I18N = {
     'detail.copy_cmyk_title': 'CMYK 値をクリップボードにコピー',
     'detail.copy_rgb_title': 'RGB 値をクリップボードにコピー',
     'detail.copy_json_title': 'スウォッチを JSON 形式でクリップボードにコピー',
-    'detail.add_to_palette': '＋ パレットに追加',
-    'detail.remove_from_palette': '− パレットから削除',
+    'detail.add_to_palette': '＋パレットに追加',
+    'detail.remove_from_palette': '−パレットから削除',
     'detail.add_to_palette_title': 'このスウォッチを現在のパレットに追加',
     'detail.remove_from_palette_title': 'このスウォッチを現在のパレットから削除',
     'sidebar.match_help': 'CMYK-Lab（印刷）または hex-Lab（画面）で照合。html コーパスは anchor=cmyk のとき hex にフォールバック。',
@@ -6141,6 +6370,7 @@ const I18N = {
     'palette.empty_none_selected': 'パレット未選択。上から選ぶか新規作成。',
     'palette.empty_no_swatches': '空 - 選択モードを有効にしてスウォッチをクリック。',
     'palette.chip_click_remove': 'クリックで削除',
+    'palette.remove_swatch': 'パレットから削除',
   },
   zh: {
     'badge.mode_d50': '模式：印刷 (D50)',
@@ -6365,7 +6595,7 @@ const I18N = {
     'detail.copy_rgb_title': '複製 RGB 數值至剪貼簿',
     'detail.copy_json_title': '以 JSON 格式複製整筆色票至剪貼簿',
     'detail.add_to_palette': '＋ 加入調色盤',
-    'detail.remove_from_palette': '− 從調色盤移除',
+    'detail.remove_from_palette': '− 移除',
     'detail.add_to_palette_title': '將此色票加入目前的調色盤',
     'detail.remove_from_palette_title': '從目前的調色盤移除此色票',
     'sidebar.match_help': '以 CMYK-Lab（印刷）或 hex-Lab（螢幕）配對。html 資料庫在 anchor=cmyk 時退回 hex。',
@@ -6379,6 +6609,7 @@ const I18N = {
     'palette.empty_none_selected': '尚未選擇調色盤。請從上方挑選或新建一個。',
     'palette.empty_no_swatches': '空 - 啟用選取模式並點選色板。',
     'palette.chip_click_remove': '點擊以移除',
+    'palette.remove_swatch': '從調色盤移除',
   }
 };
 let UI_LANG = 'en';

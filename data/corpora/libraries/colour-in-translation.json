@@ -5,6 +5,11 @@
     "ja": "ノースイースタン大学ロンドン 色の翻訳（英国）",
     "zh": "倫敦東北大學 色彩翻譯（英國）"
   },
+  "short_label": {
+    "en": "NEU (UK)",
+    "ja": "NEU（英）",
+    "zh": "東北大（英）"
+  },
   "fields": [
     {
       "id": "name_en",
@@ -18,6 +23,10 @@
   "default_display": "name_en",
   "anchor": "hex",
   "entries": [
+    {
+      "name_en": "White",
+      "hex": "#FFFFFF"
+    },
     {
       "name_en": "Acid Green",
       "hex": "#7ECB48"
