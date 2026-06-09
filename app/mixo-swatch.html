@@ -716,6 +716,9 @@ input[type=range]{accent-color:var(--accent)}
   border:1px solid var(--border);color:var(--text);background:var(--bg2);line-height:1.5;
 }
 .chip.jpn{background:#0A2030;color:#6AC0E8;border-color:transparent}
+.chip.chip-jp-trad{background:#0A2030;color:#6AC0E8;border-color:transparent}
+.chip.chip-html{background:#3A0A30;color:#E86AC0;border-color:transparent}
+.chip.chip-zh-trad{background:#303A0A;color:#C0E86A;border-color:transparent}
 .copy-row{display:flex;gap:6px;flex-wrap:wrap;padding-top:3px}
 .copy-btn{
   font-size:11px;padding:5px 10px;border-radius:var(--r);
@@ -3615,27 +3618,41 @@ function openDetail(sw) {
   // Detail card: always show every corpus match (independent of the per-cell
   // display pref). Each chip surfaces the corpus label + matched primary +
   // secondary (if available) + ΔE + which anchor was used for the match.
-  let chips = '';
+  const dChipsEl = document.getElementById('dChips');
+  dChipsEl.innerHTML = ''; // Clear existing chips
+  const L = (typeof UI_LANG === 'string' && UI_LANG) ? UI_LANG : 'en';
+
   for (const lib of CORPORA.libraries) {
+    // Hide the chip if the library is set to 'hide' in namingRows settings
+    if (_libDisplayField(lib.id) === null) continue;
+
     const m = sw.matches?.[lib.id];
     if (!m || !m.entry) continue;
-    const klass = lib.id === 'jp-trad' ? 'chip jpn' : 'chip';
+
+    const chipEl = document.createElement('span');
+    chipEl.classList.add('chip', `chip-${lib.id}`); // Add generic and specific class
+
     // v2.1: render every declared field of the matched entry, separated by " · "
     const fieldTxt = lib.fields
       .map(f => m.entry[f.id])
       .filter(Boolean)
       .join(' · ');
     if (!fieldTxt) continue;
+
     const anchorTag = lib._hasCmyk
       ? ` <em style="opacity:.5;font-style:normal">[${m.anchor}]</em>`
       : '';
-    chips += `<span class="${klass}" title="${lib.label.en} - anchor: ${m.anchor}">`
-          +  `<em style="opacity:.6;font-style:normal;font-size:.85em">${lib.label.en}:</em> `
-          +  `${fieldTxt} `
-          +  `<em style="opacity:.65;font-style:normal">ΔE ${m.deltaE.toFixed(1)}</em>`
-          +  `${anchorTag}</span>`;
+    
+    const libLabel = (lib.label && (lib.label[L] || lib.label.en)) || lib.id;
+
+    chipEl.title = `${libLabel} - anchor: ${m.anchor}`;
+    chipEl.innerHTML = `<em style="opacity:.6;font-style:normal;font-size:.85em">${libLabel}:</em> `
+                     + `${fieldTxt} `
+                     + `<em style="opacity:.65;font-style:normal">ΔE ${m.deltaE.toFixed(1)}</em>`
+                     + `${anchorTag}`;
+    
+    dChipsEl.appendChild(chipEl);
   }
-  document.getElementById('dChips').innerHTML = chips;
 
   const row = document.getElementById('dCopyRow');
   row.innerHTML = '';
