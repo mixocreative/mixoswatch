@@ -117,13 +117,6 @@ mixoswatch/
 
 Adobe / ECI / Mimaki / Fogra distribute CMYK ICC profiles under licenses that prohibit redistribution. `icc/` is gitignored — bring your own.
 
-| Profile | Source |
-|---|---|
-| `CoatedFOGRA39.icc` (recommended baseline) | [Adobe ICC Profiles bundle](https://www.adobe.com/support/downloads/iccprofiles/) |
-| `ISOcoated_v2_eci.icc` | [ECI offset profiles](https://www.eci.org/doku.php?id=en:colourstandards:offset) |
-| `JapanColor2001Coated.icc` | Adobe ICC Profiles bundle |
-| `USWebCoatedSWOP.icc` | Adobe ICC Profiles bundle |
-| Mimaki 3DUJ profile | Mimaki Profile Master 3 (MPM3), or request from Mimaki support |
 
 ---
 
