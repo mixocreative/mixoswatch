@@ -12045,17 +12045,17 @@
     {
       "id": "wcs",
       "label": {
-        "en": "World Color Survey",
-        "ja": "世界色彩調査",
-        "zh": "世界色彩調查"
+        "en": "UC Berkeley World Color Survey (WCS) ",
+        "ja": "UC Berkeley 世界色彩調査（WCS）",
+        "zh": "加州大學伯克利分校世界色彩資料庫（WCS）"
       },
       "fields": [
         {
           "id": "name_en",
           "label": {
             "en": "English Name",
-            "ja": "英語名",
-            "zh": "英文名稱"
+            "ja": "色名",
+            "zh": "色名"
           }
         }
       ],

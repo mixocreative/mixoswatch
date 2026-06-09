@@ -3516,8 +3516,41 @@ function renderGS() {
   const fzK    = Math.max(6, Math.round(cs*0.13));
   const fzHex  = Math.max(5, Math.round(cs*0.10));
   const fzBadg = Math.max(5, Math.round(cs*0.10));
-  const showH  = cs >= 32;
+  const fzJpn  = Math.max(7, Math.round(cs*0.18));
+  const fzHtml = Math.max(4, Math.round(cs*0.09));
+  const showH    = cs >= 32;
+  const showJpn  = cs >= 52;
+  const showHtml = cs >= 70;
   const palSet = _activeSet();
+  const fwdShared = ACTIVE_PROFILE ? LUT_CACHE.get(ACTIVE_PROFILE.lut) : null;
+
+  // Strip swatches aren't in DEDUP so the per-corpus `__closest` flag never
+  // gets set; bypass corpusVisible and gate purely on dE <= curTol so cells
+  // surface the same library names that the main grid + detail card show.
+  const addNames = (cell, sw, tc, yStart) => {
+    if (!showJpn) return;
+    let y = yStart;
+    for (const lib of CORPORA.libraries) {
+      const fieldId = _libDisplayField(lib.id);
+      if (!fieldId) continue;
+      const m = sw.matches?.[lib.id];
+      if (!m || !m.entry) continue;
+      if (typeof m.deltaE !== 'number' || m.deltaE > curTol) continue;
+      const text = m.entry[fieldId];
+      if (!text) continue;
+      const isJpn = (lib.id === 'jp-trad');
+      if (!isJpn && !showHtml) continue;
+      const fz = isJpn ? fzJpn : fzHtml;
+      const e  = document.createElement('div');
+      e.className = isJpn ? 'cell-jpn' : 'cell-html';
+      e.style.cssText = `color:${tc};font-size:${fz}px;top:${y}px`
+                      + (isJpn ? ';font-weight:300' : '');
+      e.textContent = text;
+      cell.appendChild(e);
+      y += fz + 2;
+    }
+  };
+  const namesY = showH ? (fzK + 4 + fzHex + 2) : (fzK + 4);
 
   // ── Pure RGB reference ramp: linear sRGB grey, NO profile routing. ────────
   // For each pct in 0..100 step curStep, render rgb(v,v,v) where
@@ -3529,6 +3562,7 @@ function renderGS() {
   const fragR = document.createDocumentFragment();
   for (let pct = 0; pct <= 100; pct += step) {
     const sw = _pureRGBRefSwatch(pct);
+    if (typeof matchNearest === 'function') matchNearest(sw, fwdShared);
     const cell = document.createElement('div');
     cell.className = 'gs-cell swatch-cell' + (palSet.has(_swKey(sw)) ? ' in-palette' : '');
     cell.style.cssText = `background:${sw.hex};width:${cs}px;contain-intrinsic-size:${cs}px ${cs}px`;
@@ -3546,6 +3580,8 @@ function renderGS() {
       h.textContent = sw.hex;
       cell.appendChild(h);
     }
+
+    addNames(cell, sw, sw.text_color, namesY);
 
     const badge = document.createElement('div');
     badge.className = 'cell-badge ' +
@@ -3589,7 +3625,12 @@ function renderGS() {
       L_star: 100*(1 - pct/100), a_star:0, b_star:0,
       luminance:+Lw.toFixed(5),
       neutral_pct: pct,
+      delta_e_print: null,
+      matches: {},
+      k_tier: 0,
+      k_tier_name: 'neutral',
     };
+    if (typeof matchNearest === 'function') matchNearest(sw, fwd);
     const cell = document.createElement('div');
     cell.className = 'gs-cell swatch-cell' + (palSet.has(_swKey(sw)) ? ' in-palette' : '');
     cell.style.cssText = `background:${hex};width:${cs}px;contain-intrinsic-size:${cs}px ${cs}px`;
@@ -3605,6 +3646,7 @@ function renderGS() {
       h.textContent = hex;
       cell.appendChild(h);
     }
+    addNames(cell, sw, tc, namesY);
     const badge = document.createElement('div');
     badge.className = 'cell-badge ' + (sw.wcag_aaa?'badge-aaa':sw.wcag_aa?'badge-aa':'badge-fail');
     badge.style.fontSize = fzBadg + 'px';
