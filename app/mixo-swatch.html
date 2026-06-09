@@ -716,9 +716,9 @@ input[type=range]{accent-color:var(--accent)}
   border:1px solid var(--border);color:var(--text);background:var(--bg2);line-height:1.5;
 }
 .chip.jpn{background:#0A2030;color:#6AC0E8;border-color:transparent}
-.chip.chip-jp-trad{background:#0A2030;color:#6AC0E8;border-color:transparent}
-.chip.chip-html{background:#3A0A30;color:#E86AC0;border-color:transparent}
-.chip.chip-zh-trad{background:#303A0A;color:#C0E86A;border-color:transparent}
+.chip.chip-jp-trad{background:#eeeeee;color:#131313;border-color:transparent}
+.chip.chip-html{background:#000000;color:#c9c9c9;border-color:transparent}
+.chip.chip-zh-trad{background:#3f0303;color:#fcc2c2;border-color:transparent}
 .copy-row{display:flex;gap:6px;flex-wrap:wrap;padding-top:3px}
 .copy-btn{
   font-size:11px;padding:5px 10px;border-radius:var(--r);
@@ -1164,7 +1164,7 @@ html[lang^="zh"] .intro-btn .intro-zh{display:inline}
           <div class="match-label" data-i18n="sec.anchor">Anchor</div>
           <div class="mode-group anchor-group" id="anchorGroup">
             <button type="button" class="mode-btn active" data-anchor="cmyk" onclick="setGlobalAnchor('cmyk')">CMYK</button>
-            <button type="button" class="mode-btn" data-anchor="hex" onclick="setGlobalAnchor('hex')">hex</button>
+            <button type="button" class="mode-btn" data-anchor="hex" onclick="setGlobalAnchor('hex')">HEX</button>
           </div>
         </div>
         <div class="match-help">Match by CMYK-Lab (print) or hex-Lab (screen). html corpus falls back to hex when anchor=cmyk.</div>
@@ -3654,7 +3654,7 @@ function openDetail(sw) {
   const row = document.getElementById('dCopyRow');
   row.innerHTML = '';
   [
-    ['hex', sw.hex],
+    ['HEX', sw.hex],
     ['CMYK', `cmyk(${sw.C}%,${sw.M}%,${sw.Y}%,${sw.K}%)`],
     ['RGB',  `rgb(${sw.R},${sw.G},${sw.B})`],
     ['JSON', JSON.stringify({C:sw.C,M:sw.M,Y:sw.Y,K:sw.K,hex:sw.hex})],
