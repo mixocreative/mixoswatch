@@ -3671,6 +3671,9 @@ function openDetail(sw) {
     const m = sw.matches?.[lib.id];
     if (!m || !m.entry) continue;
 
+    // Only show if within naming accuracy tolerance
+    if (m.deltaE > curTol) continue;
+
     const chipEl = document.createElement('span');
     chipEl.classList.add('chip', `chip-${lib.id}`); // Add generic and specific class
 
