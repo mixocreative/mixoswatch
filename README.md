@@ -1,3 +1,4 @@
+
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="app/img/logo.svg">
   <img src="app/img/logo-black.svg" alt="mixoswatch" width="72">
