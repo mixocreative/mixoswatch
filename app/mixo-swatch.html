@@ -1744,6 +1744,40 @@ function _xyzToLab(X,Y,Z,wp){
   const fx=f_(X/wp.Xn), fy=f_(Y/wp.Yn), fz=f_(Z/wp.Zn);
   return [116*fy - 16, 500*(fx-fy), 200*(fy-fz)];
 }
+
+// Lab to XYZ (inverse of above)
+function f_inv(t){ return t > 0.2068966 ? t*t*t : (t - 16/116) / 7.787; }
+function labToXyz(L, a, b, wp) {
+  const fy = (L + 16) / 116;
+  const fx = a / 500 + fy;
+  const fz = fy - b / 200;
+
+  const X = wp.Xn * f_inv(fx);
+  const Y = wp.Yn * f_inv(fy);
+  const Z = wp.Zn * f_inv(fz);
+  return [X, Y, Z];
+}
+
+// XYZ to sRGB
+function lin2srgb(c){
+  return c > 0.0031308 ? 1.055 * Math.pow(c, 1/2.4) - 0.055 : 12.92 * c;
+}
+function xyzToRgb(X, Y, Z) {
+  const R_lin =  3.2404542 * X - 1.5371385 * Y - 0.4985314 * Z;
+  const G_lin = -0.9692660 * X + 1.8760108 * Y + 0.0415560 * Z;
+  const B_lin =  0.0556434 * X - 0.2040259 * Y + 1.0572252 * Z;
+
+  const R = Math.round(lin2srgb(R_lin) * 255);
+  const G = Math.round(lin2srgb(G_lin) * 255);
+  const B = Math.round(lin2srgb(B_lin) * 255);
+
+  return [
+    Math.max(0, Math.min(255, R)),
+    Math.max(0, Math.min(255, G)),
+    Math.max(0, Math.min(255, B))
+  ];
+}
+
 function rgb2lab_d65(r,g,b){
   const [X,Y,Z]=rgb2xyz(r,g,b);
   return _xyzToLab(X,Y,Z,WP_D65);
@@ -1761,6 +1795,14 @@ let LAB_MODE = 'd50';
 function rgb2lab(r,g,b){
   return LAB_MODE === 'd50' ? rgb2lab_d50(r,g,b) : rgb2lab_d65(r,g,b);
 }
+
+// Lab to Hex conversion (using D65 whitepoint by default for sRGB)
+function labToHex(L, a, b, whitepoint = WP_D65) {
+  const [X, Y, Z] = labToXyz(L, a, b, whitepoint);
+  const [R, G, B] = xyzToRgb(X, Y, Z);
+  return '#' + [R, G, B].map(v => v.toString(16).padStart(2, '0').toUpperCase()).join('');
+}
+
 function luminance(r,g,b){
   // WCAG relative luminance - same coefficients as Y in XYZ
   const R=srgb2lin(r), G=srgb2lin(g), B=srgb2lin(b);

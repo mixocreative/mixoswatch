@@ -11998,6 +11998,39 @@
             59
           ]
         }
+      ],
+      "default_display": "name_zh",
+      "anchor": "hex",
+      "source": "https://github.com/mixocreative/twsy/blob/main/data/corpora/name_corpora.json",
+      "notes": "Traditional Chinese color names from various sources, including Taiwan's Ministry of Education and historical texts."
+    },
+    {
+      "id": "wcs",
+      "label": {
+        "en": "World Color Survey",
+        "ja": "世界色彩調査",
+        "zh": "世界色彩調查"
+      },
+      "fields": [
+        {
+          "id": "name_en",
+          "label": {
+            "en": "English Name",
+            "ja": "英語名",
+            "zh": "英文名稱"
+          }
+        }
+      ],
+      "default_display": "name_en",
+      "anchor": "hex",
+      "source": "Placeholder WCS data (approximate Lab values)",
+      "entries": [
+        { "name_en": "Red",    "hex": "#E60026" },
+        { "name_en": "Green",  "hex": "#008000" },
+        { "name_en": "Blue",   "hex": "#000080" },
+        { "name_en": "Yellow", "hex": "#FFFF00" },
+        { "name_en": "Black",  "hex": "#000000" },
+        { "name_en": "White",  "hex": "#F2F2F2" }
       ]
     }
   ]
