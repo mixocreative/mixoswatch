@@ -5,11 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mixo Swatch</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+JP:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500&display=swap" rel="stylesheet">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Zen+Antique+Soft&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@200..900&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Mono:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
 <style>
 :root {
   --bg:#1B1817; --bg2:#232020; --surface:#2A2625;
@@ -17,7 +17,7 @@
   --text:#E8E6E0; --muted:#9E9A92; --faint:#6A6660;
   --accent:#C8C0B0; --accent-rgb:200 192 176;
   --accent-light:#5d5d5d;
-  --font-mono:'IBM Plex Mono','Fira Mono',monospace;
+  --font-mono:'Atkinson Hyperlegible Mono',monospace;
   --font-sans:'Noto Sans JP',system-ui,sans-serif;
   --font-tc: 'Noto Serif TC', -apple-system, serif;
   --font-jpn-serif:"Zen Antique Soft",serif;
@@ -298,7 +298,7 @@ input[type=range]{accent-color:var(--accent)}
 
 /* ── Grid area ── */
 .grid-area{display:flex;flex-direction:column;overflow:hidden;min-width:0}
-.grid-scroll{overflow-y:auto;overflow-x:hidden;flex:1;min-height:0}
+.grid-scroll{overflow-y:auto;overflow-x:hidden;flex:1;min-height:0; padding-top: .5em;}
 
 /* ── Palette panel (collapsible, sits between topbar and grid-scroll) ── */
 .palette-panel{
@@ -1332,12 +1332,12 @@ html[lang^="zh"] .intro-btn .intro-zh{display:inline}
     <div class="grid-scroll" id="gridScroll">
       <div class="swatch-grid" id="swatchGrid"></div>
       <div class="gs-wrap" id="gsWrap">
-        <div class="gs-divider" data-i18n="gs.neutral_title" data-i18n-title="gs.neutral_title_tooltip">Neutral ramp (ICC) · how the press actually hits a grey</div>
+        <div class="gs-divider" data-i18n="gs.neutral_title" data-i18n-title="gs.neutral_title">Neutral ramp (ICC) · how the press actually hits a grey</div>
         <div class="gs-sub" data-i18n="gs.neutral_sub">
           Each cell starts from a target sRGB grey (e.g. 50&#37; grey), gets reverse-routed to CMYK through the active profile (the press's <b>GCR / UCR rules pick the CMY + K mix</b>), then forward-routed back to screen sRGB. This is the grey the RIP gives you when you ask the press for a neutral.
         </div>
         <div class="gs-strip" id="gsStripNeutral"></div>
-        <div class="gs-divider mt-10" data-i18n="gs.purek_title" data-i18n-title="gs.purek_title_tooltip">Pure RGB reference · rgb(255-2.55*K, K = 0&#8594;100)</div>
+        <div class="gs-divider mt-10" data-i18n="gs.purek_title" data-i18n-title="gs.purek_title">Pure RGB reference · rgb(255-2.55*K, K = 0&#8594;100)</div>
         <div class="gs-sub" data-i18n="gs.purek_sub">
           Each cell is <b>plain sRGB grey</b>: rgb(v, v, v) where v = 255 - 2.55*K. <b>No profile routing</b> - K=100 is exact <b>#000</b>, K=0 is exact <b>#FFF</b>. This is the design-intent baseline (what your editor shows when you type "50% grey"). Compare against the ICC-neutral row above to see how far the press drifts from ideal black.
         </div>
@@ -2313,7 +2313,7 @@ function buildNamingUI() {
       if (typeof _scheduleRender === 'function') _scheduleRender();
       else if (typeof render === 'function') render();
     });
-    hideLab.append(hideIn, ' hide');
+    hideLab.append(hideIn, ' ' + (typeof t === 'function' ? t('corp.hide', 'hide') : 'hide'));
     row.appendChild(hideLab);
     div.appendChild(row);
     // Anchor switch shown only when entries carry both hex and cmyk.
@@ -2625,7 +2625,7 @@ function refreshPalUI() {
   // Always offer a "no selection" placeholder.
   const none = document.createElement('option');
   none.value = '';
-  none.textContent = palettes.length ? '- no palette selected -' : '(none - create a palette to start)';
+  none.textContent = palettes.length ? t('palette.select_placeholder_none', '- no palette selected -') : t('palette.select_placeholder_empty', '(none - create a palette to start)');
   if (!activeId) none.selected = true;
   sel.appendChild(none);
   palettes.forEach(p => {
@@ -2643,20 +2643,20 @@ function refreshPalUI() {
     const e = document.createElement('div');
     e.className = 'pal-empty';
     e.textContent = palettes.length
-      ? 'No palette selected. Pick one above, or create one.'
-      : 'No palettes yet. Click "+ New" to start one.';
+      ? t('palette.empty_none_selected', 'No palette selected. Pick one above, or create one.')
+      : t('palette.empty_no_palettes', 'No palettes yet. Click "+ New" to start one.');
     strip.appendChild(e);
   } else if (!p.swatches.length) {
     const e = document.createElement('div');
     e.className = 'pal-empty';
-    e.textContent = 'Empty - enable Select mode and click swatches.';
+    e.textContent = t('palette.empty_no_swatches', 'Empty - enable Select mode and click swatches.');
     strip.appendChild(e);
   } else {
     p.swatches.forEach(sw => {
       const c = document.createElement('div');
       c.className = 'pal-chip';
       c.style.background = sw.hex;
-      c.title = `C${sw.C} M${sw.M} Y${sw.Y} K${sw.K} · ${sw.hex} - click to remove`;
+      c.title = `C${sw.C} M${sw.M} Y${sw.Y} K${sw.K} · ${sw.hex} - ${t('palette.chip_click_remove', 'click to remove')}`;
       c.addEventListener('click', () => { removeFromPalette(sw); });
       strip.appendChild(c);
     });
@@ -2867,7 +2867,7 @@ function renderPaletteMode() {
   if (!palettes.length) {
     const e = document.createElement('div');
     e.className = 'pm-empty';
-    e.textContent = 'No palettes yet. Create one in the sidebar.';
+    e.textContent = t('palette.empty_pm_view', 'No palettes yet. Create one.');
     wrap.appendChild(e);
     return;
   }
@@ -5666,6 +5666,15 @@ const I18N = {
     'search.placeholder': 'mizuiro, coral, 桜, #A9CBE8…',
     'flt.all_libs':  'All libraries',
     'topbar.export': '↓ Export',
+    'topbar.toggle_sidebar_mobile': 'Toggle sidebar',
+    'topbar.lab_mode_badge_title': 'Color mode for calculations',
+    'topbar.count_label_title': 'Number of swatches displayed',
+    'topbar.reset_ui_title': 'Reset all UI settings to defaults',
+    'topbar.grid_mode_title': 'View swatches in a grid',
+    'topbar.palettes_mode_title': 'View and manage palettes',
+    'topbar.export_filtered_title': 'Export filtered swatches',
+    'topbar.theme_toggle_title': 'Toggle light/dark theme',
+    'topbar.lang_picker_title': 'Change UI language',
     'export.csv':    'CSV (UTF-8 BOM)',
     'export.png':    'PNG (with title band + labels)',
     'export.png_pure':'PNG pure (color only)',
@@ -5675,6 +5684,16 @@ const I18N = {
     'export.ase_cmyk':'ASE (CMYK) - prepress / RIP',
     'export.ase_rgb': 'ASE (RGB) - Adobe / Affinity / Substance',
     'export.gpl':    'GPL - GIMP / Krita / Inkscape',
+    'export.csv_title': 'Export current view as CSV',
+    'export.png_title': 'Export current view as PNG with labels',
+    'export.png_pure_title': 'Export current view as pure color PNG',
+    'export.tiff_title': 'Export current view as CMYK TIFF with labels',
+    'export.tiff_pure_title': 'Export current view as pure color CMYK TIFF',
+    'export.zip_title': 'Export current view as ZIP with individual swatches and manifest',
+    'export.ase_cmyk_title': 'Export current view as CMYK ASE for prepress/RIP',
+    'export.ase_rgb_title': 'Export current view as RGB ASE for design software',
+    'export.gpl_title': 'Export current view as GPL for GIMP/Krita/Inkscape',
+    'export.img_size_title': 'Set image size for PNG/TIFF exports',
     'export.busy':   'Generating download…',
     'pal.new_short': '+ New',
     'pal.more':      'Actions ▾',
@@ -5695,6 +5714,101 @@ const I18N = {
     'gs.neutral_sub':   "Each cell starts from a target sRGB grey (e.g. 50% grey), gets reverse-routed to CMYK through the active profile (the press's <b>GCR / UCR rules pick the CMY + K mix</b>), then forward-routed back to screen sRGB. This is the grey the RIP gives you when you ask the press for a neutral.",
     'gs.purek_title':   'Pure RGB reference · rgb(255-2.55*K, K = 0→100)',
     'gs.purek_sub':     'Each cell is <b>plain sRGB grey</b>: rgb(v, v, v) where v = 255 - 2.55*K. <b>No profile routing</b> - K=100 is exact <b>#000</b>, K=0 is exact <b>#FFF</b>. This is the design-intent baseline (what your editor shows when you type "50% grey"). Compare against the ICC-neutral row above to see how far the press drifts from ideal black.',
+    'sidebar.icc_profile_help': 'To add a profile: drop the <code>.icc</code> into <code>icc/</code>, run <code>python scripts/gen_luts.py</code>, refresh.',
+    'sidebar.k_range_help': 'Low K by default; deep darks only when needed.',
+    'sidebar.color_mode_title': 'Switch print (D50) / screen (D65) math',
+    'sidebar.icc_profile_select_title': 'Select CMYK output profile',
+    'sidebar.icc_status_title': 'Active ICC profile status',
+    'sidebar.round_trip_de_max_title': 'Max round-trip dE safety threshold',
+    'sidebar.step_5_title': 'Step interval: 5%',
+    'sidebar.step_10_title': 'Step interval: 10%',
+    'sidebar.step_15_title': 'Step interval: 15%',
+    'sidebar.step_20_title': 'Step interval: 20%',
+    'sidebar.cell_20_title': 'Cell size: 20 px',
+    'sidebar.cell_32_title': 'Cell size: 32 px',
+    'sidebar.cell_48_title': 'Cell size: 48 px',
+    'sidebar.cell_64_title': 'Cell size: 64 px',
+    'sidebar.cell_80_title': 'Cell size: 80 px',
+    'sidebar.cell_100_title': 'Cell size: 100 px',
+    'sidebar.cell_120_title': 'Cell size: 120 px',
+    'sidebar.cell_160_title': 'Cell size: 160 px',
+    'sidebar.cell_slider_title': 'Fine-tune cell size',
+    'sidebar.cell_val_title': 'Current cell size',
+    'sidebar.tac_override_title': 'Lift TAC ceiling to allow heavier ink',
+    'sidebar.tac_limit_title': 'Total area coverage limit (%)',
+    'sidebar.tac_220_title': 'TAC limit: 220%',
+    'sidebar.tac_240_title': 'TAC limit: 240%',
+    'sidebar.tac_260_title': 'TAC limit: 260%',
+    'sidebar.tac_300_title': 'TAC limit: 300%',
+    'sidebar.tac_330_title': 'TAC limit: 330%',
+    'sidebar.tac_350_title': 'TAC limit: 350%',
+    'sidebar.threed_toggle_title': 'Force 3D-print envelope (D50 + TAC + dE)',
+    'sidebar.ktier_1_title': 'K tier 1 - brand',
+    'sidebar.ktier_2_title': 'K tier 2 - support',
+    'sidebar.ktier_3_title': 'K tier 3 - deep',
+    'sidebar.k_range_min_title': 'Minimum K (%)',
+    'sidebar.k_range_max_title': 'Maximum K (%)',
+    'sidebar.named_all_title': 'Show all swatches (no name filter)',
+    'sidebar.named_any_title': 'Show only swatches with at least one name',
+    'sidebar.filter_checkboxes_title': 'Restrict to swatches named by selected libraries',
+    'sidebar.match_settings_title': 'Apply match settings across every library',
+    'sidebar.naming_accuracy_title': 'Naming match accuracy / dE tolerance',
+    'sidebar.naming_rows_title': 'Per-library naming controls',
+    'corp.hide': 'hide',
+    'sidebar.wcag_aa_title': 'Show only WCAG AA contrast pairs',
+    'sidebar.wcag_aaa_title': 'Show only WCAG AAA contrast pairs',
+    'sidebar.white_text_title': 'Show only swatches that take white text',
+    'sidebar.black_text_title': 'Show only swatches that take black text',
+    'sidebar.search_input_title': 'Search by name or hex',
+    'sidebar.sort_hue_title': 'Sort by hue',
+    'sidebar.sort_light_title': 'Sort by lightness',
+    'sidebar.sort_tac_title': 'Sort by TAC',
+    'sidebar.sort_cyan_title': 'Sort by cyan ink',
+    'sidebar.sort_chroma_title': 'Sort by chroma',
+    'sidebar.sort_safety_title': 'Sort by round-trip safety',
+    'sidebar.sort_huelight_title': 'Sort by hue x lightness grid',
+    'sidebar.links_home_title': 'Back to home',
+    'sidebar.links_readme_title': 'Open project README',
+    'sidebar.links_github_title': 'Open project on GitHub',
+    'sidebar.links_about_title': 'About mixocreative',
+    'palette.select_title': 'Toggle swatch selection',
+    'palette.new_title': 'Create new palette',
+    'palette.toggle_select_mode_title': 'Toggle palette selection mode',
+    'palette.swatches_in_active_title': 'Swatches in active palette',
+    'palette.global_actions_title': 'Backup, import, manage palettes',
+    'palette.img_size_title': 'Image size for PNG / TIFF export',
+    'palette.strip_remove_title': 'Click swatch to remove from palette',
+    'intro.learn_app_title': 'Learn about Mixo Swatch',
+    'intro.follow_instagram_title': 'Follow mixocreative on Instagram',
+    'intro.follow_facebook_title': 'Follow mixocreative on Facebook',
+    'intro.portfolio_behance_title': 'Portfolio on Behance',
+    'intro.github_title': 'Mixo Swatch on GitHub',
+    'intro.twsy_github_title': 'TEAM TAIWAN Open Source Initiative on GitHub',
+    'intro.about_us_title': 'About mixocreative',
+    'export.img_size': 'PNG / TIFF size',
+    'palette.toggle_panel_aria_label': 'Toggle palette panel',
+    'detail.close_button_aria_label': 'Close detail panel',
+    'detail.cmyk_key': 'CMYK',
+    'detail.tac_key': 'TAC',
+    'detail.k_tier_key': 'K tier',
+    'detail.de_round_trip_key': 'ΔE round-trip',
+    'detail.hex_key': 'HEX',
+    'detail.rgb_key': 'RGB',
+    'detail.lab_key': 'L* a* b*',
+    'detail.luminance_key': 'Luminance',
+    'detail.contrast_key': 'Contrast',
+    'detail.color_names_key': 'Color names',
+    'sidebar.match_help': 'Match by CMYK-Lab (print) or hex-Lab (screen). html corpus falls back to hex when anchor=cmyk.',
+    'sidebar.naming_accuracy_help': 'Higher = more swatches show names. Set to 0 to show only literal closest matches per library.',
+    'sidebar.naming_rows_help': 'Add a corpus by editing <code>data/corpora/name_corpora.json</code> and refreshing. Per-corpus prefs are stored in your browser.',
+    'sidebar.add_profiles_help': '<b>New ICC profile?</b> Drop the <code>.icc</code> / <code>.icm</code> into <code>icc/</code> then run <code>python scripts/gen_luts.py</code>, then refresh.<br><br><b>New Japanese / HTML name?</b> Edit <code>data/corpora/name_corpora.json</code>. Append an entry (<code>{"name": "桜色", "romaji": "sakura-iro", "hex": "#FCC9D2"}</code> for jpn, <code>{"name": "rose", "hex": "#FF007F"}</code> for html), save, refresh. No Python rebuild needed - Lab is computed in browser.',
+    'palette.select_placeholder_empty': '(none - create a palette to start)',
+    'palette.empty_no_palettes': 'No palettes yet. Click "+ New" to start one.',
+    'palette.empty_pm_view': 'No palettes yet. Create one.',
+    'palette.select_placeholder_none': '- no palette selected -',
+    'palette.empty_none_selected': 'No palette selected. Pick one above, or create one.',
+    'palette.empty_no_swatches': 'Empty - enable Select mode and click swatches.',
+    'palette.chip_click_remove': 'click to remove',
   },
   ja: {
     'badge.mode_d50': 'モード: 印刷 (D50)',
@@ -5778,6 +5892,15 @@ const I18N = {
     'search.placeholder': '水色、coral、桜、#A9CBE8…',
     'flt.all_libs':  '全ライブラリ',
     'topbar.export': '↓ 書き出し',
+    'topbar.toggle_sidebar_mobile': 'サイドバーを開閉',
+    'topbar.lab_mode_badge_title': '計算用カラーモード',
+    'topbar.count_label_title': '表示中のスウォッチ数',
+    'topbar.reset_ui_title': 'UI設定をすべて初期値に戻す',
+    'topbar.grid_mode_title': 'グリッド表示でスウォッチを見る',
+    'topbar.palettes_mode_title': 'パレットを表示・管理',
+    'topbar.export_filtered_title': '絞り込んだスウォッチを書き出し',
+    'topbar.theme_toggle_title': '明暗テーマを切替',
+    'topbar.lang_picker_title': 'UI言語を変更',
     'export.csv':    'CSV (UTF-8 BOM)',
     'export.png':    'PNG (タイトル帯 + ラベル付き)',
     'export.png_pure':'PNG 純色',
@@ -5787,6 +5910,16 @@ const I18N = {
     'export.ase_cmyk':'ASE (CMYK) - プリプレス / RIP',
     'export.ase_rgb': 'ASE (RGB) - Adobe / Affinity / Substance',
     'export.gpl':    'GPL - GIMP / Krita / Inkscape',
+    'export.csv_title': '現在の表示をCSVで書き出し',
+    'export.png_title': '現在の表示をラベル付きPNGで書き出し',
+    'export.png_pure_title': '現在の表示を純色PNGで書き出し',
+    'export.tiff_title': '現在の表示をラベル付きCMYK TIFFで書き出し',
+    'export.tiff_pure_title': '現在の表示を純色CMYK TIFFで書き出し',
+    'export.zip_title': '現在の表示を1色ずつのZIP（マニフェスト付き）で書き出し',
+    'export.ase_cmyk_title': '現在の表示をCMYK ASE（プリプレス / RIP用）で書き出し',
+    'export.ase_rgb_title': '現在の表示をRGB ASE（デザインソフト用）で書き出し',
+    'export.gpl_title': '現在の表示をGPL（GIMP / Krita / Inkscape用）で書き出し',
+    'export.img_size_title': 'PNG / TIFF書き出し時の画像サイズを設定',
     'export.busy':   'ダウンロード生成中…',
     'pal.new_short': '+ 新規',
     'pal.more':      'アクション ▾',
@@ -5806,7 +5939,102 @@ const I18N = {
     'gs.neutral_title': 'ニュートラルランプ (ICC) · プリンタが実際にグレーを再現する経路',
     'gs.neutral_sub':   '各セルは目標sRGBグレー（例: 50%グレー）から出発し、アクティブプロファイルで逆方向ルーティングしてCMYKを得る（<b>プリンタのGCR / UCRルールがCMY + Kの配合を決める</b>）。そのあと順方向で画面sRGBに戻す。RIPに「ニュートラル」を頼んだときに実際に得られるグレー。',
     'gs.purek_title':   '純粋RGB基準 · rgb(255-2.55*K, K = 0→100)',
-    'gs.purek_sub':     '各セルは <b>純粋なsRGBグレー</b>：rgb(v, v, v)（v = 255 - 2.55*K）。<b>プロファイル変換なし</b> - K=100は正確に <b>#000</b>、K=0は正確に <b>#FFF</b>。デザイン基準（エディタで「50%グレー」と入力したときに表示される値）。上のICCニュートラルランプと比較して、プリンタが理想のブラックからどれだけ離れているかを確認できる。',
+    'gs.purek_sub':     '各セルは <b>純粋なsRGBグレー</b>：rgb(v, v, v)（v = 255 - 2.55*K）（v = 255 - 2.55*K）。<b>プロファイル変換なし</b> - K=100は正確に <b>#000</b>、K=0は正確に <b>#FFF</b>。デザイン基準（エディタで「50%グレー」と入力したときに表示される値）。上のICCニュートラルランプと比較して、プリンタが理想のブラックからどれだけ離れているかを確認できる。',
+    'sidebar.icc_profile_help': 'プロファイル追加：<code>.icc</code> を <code>icc/</code> に置き、<code>python scripts/gen_luts.py</code> を実行して再読み込み。',
+    'sidebar.k_range_help': '既定では低K。深い暗部のみKを上げる。',
+    'sidebar.color_mode_title': '印刷(D50) / 画面(D65)の計算を切替',
+    'sidebar.icc_profile_select_title': 'CMYK出力プロファイルを選択',
+    'sidebar.icc_status_title': '有効なICCプロファイルの状態',
+    'sidebar.round_trip_de_max_title': '往復ΔE許容しきい値',
+    'sidebar.step_5_title': 'ステップ間隔: 5%',
+    'sidebar.step_10_title': 'ステップ間隔: 10%',
+    'sidebar.step_15_title': 'ステップ間隔: 15%',
+    'sidebar.step_20_title': 'ステップ間隔: 20%',
+    'sidebar.cell_20_title': 'セルサイズ: 20px',
+    'sidebar.cell_32_title': 'セルサイズ: 32px',
+    'sidebar.cell_48_title': 'セルサイズ: 48px',
+    'sidebar.cell_64_title': 'セルサイズ: 64px',
+    'sidebar.cell_80_title': 'セルサイズ: 80px',
+    'sidebar.cell_100_title': 'セルサイズ: 100px',
+    'sidebar.cell_120_title': 'セルサイズ: 120px',
+    'sidebar.cell_160_title': 'セルサイズ: 160px',
+    'sidebar.cell_slider_title': 'セルサイズを微調整',
+    'sidebar.cell_val_title': '現在のセルサイズ',
+    'sidebar.tac_override_title': 'TAC上限を解除して濃いインクを許可',
+    'sidebar.tac_limit_title': '総インク使用率の上限 (%)',
+    'sidebar.tac_220_title': 'TAC上限: 220%',
+    'sidebar.tac_240_title': 'TAC上限: 240%',
+    'sidebar.tac_260_title': 'TAC上限: 260%',
+    'sidebar.tac_300_title': 'TAC上限: 300%',
+    'sidebar.tac_330_title': 'TAC上限: 330%',
+    'sidebar.tac_350_title': 'TAC上限: 350%',
+    'sidebar.threed_toggle_title': '3Dプリント条件を一括適用 (D50 + TAC + ΔE)',
+    'sidebar.ktier_1_title': 'K階層1 - ブランド',
+    'sidebar.ktier_2_title': 'K階層2 - サポート',
+    'sidebar.ktier_3_title': 'K階層3 - 深色',
+    'sidebar.k_range_min_title': 'K下限 (%)',
+    'sidebar.k_range_max_title': 'K上限 (%)',
+    'sidebar.named_all_title': '全スウォッチを表示 (名前フィルタなし)',
+    'sidebar.named_any_title': '名前が1つ以上あるスウォッチのみ表示',
+    'sidebar.filter_checkboxes_title': '選択したライブラリで命名されたスウォッチに絞り込み',
+    'sidebar.match_settings_title': '全ライブラリにマッチ設定を一括適用',
+    'sidebar.naming_accuracy_title': '名前一致精度 / ΔE許容範囲',
+    'sidebar.naming_rows_title': 'ライブラリごとの命名設定',
+    'corp.hide': '非表示',
+    'sidebar.wcag_aa_title': 'WCAG AAコントラストのみ表示',
+    'sidebar.wcag_aaa_title': 'WCAG AAAコントラストのみ表示',
+    'sidebar.white_text_title': '白文字が読めるスウォッチのみ表示',
+    'sidebar.black_text_title': '黒文字が読めるスウォッチのみ表示',
+    'sidebar.search_input_title': '名前または16進数で検索',
+    'sidebar.sort_hue_title': '色相で並べ替え',
+    'sidebar.sort_light_title': '明度で並べ替え',
+    'sidebar.sort_tac_title': 'TACで並べ替え',
+    'sidebar.sort_cyan_title': 'シアンの濃度で並べ替え',
+    'sidebar.sort_chroma_title': '彩度で並べ替え',
+    'sidebar.sort_safety_title': '往復安全度で並べ替え',
+    'sidebar.sort_huelight_title': '色相×明度のグリッドで並べ替え',
+    'sidebar.links_home_title': 'ホームに戻る',
+    'sidebar.links_readme_title': 'プロジェクトREADMEを開く',
+    'sidebar.links_github_title': 'GitHubでプロジェクトを開く',
+    'sidebar.links_about_title': 'mixocreativeについて',
+    'palette.select_title': 'スウォッチ選択を切替',
+    'palette.new_title': '新しいパレットを作成',
+    'palette.toggle_select_mode_title': 'パレット選択モードを切替',
+    'palette.swatches_in_active_title': '使用中パレットのスウォッチ',
+    'palette.global_actions_title': 'バックアップ / 読み込み / パレット管理',
+    'palette.img_size_title': 'PNG / TIFF書き出しの画像サイズ',
+    'palette.strip_remove_title': 'スウォッチをクリックでパレットから削除',
+    'intro.learn_app_title': 'Mixo Swatchについて',
+    'intro.follow_instagram_title': 'Instagramでmixocreativeをフォロー',
+    'intro.follow_facebook_title': 'Facebookでmixocreativeをフォロー',
+    'intro.portfolio_behance_title': 'Behanceでポートフォリオを見る',
+    'intro.github_title': 'GitHubでMixo Swatchを見る',
+    'intro.twsy_github_title': 'TEAM TAIWAN Open Source InitiativeをGitHubで見る',
+    'intro.about_us_title': 'mixocreativeについて',
+    'export.img_size': 'PNG / TIFFサイズ',
+    'palette.toggle_panel_aria_label': 'パレットパネルを開閉',
+    'detail.close_button_aria_label': '詳細パネルを閉じる',
+    'detail.cmyk_key': 'CMYK',
+    'detail.tac_key': 'TAC',
+    'detail.k_tier_key': 'K階層',
+    'detail.de_round_trip_key': 'ΔE 往復',
+    'detail.hex_key': 'HEX',
+    'detail.rgb_key': 'RGB',
+    'detail.lab_key': 'L* a* b*',
+    'detail.luminance_key': '輝度',
+    'detail.contrast_key': 'コントラスト',
+    'detail.color_names_key': '色名',
+    'sidebar.match_help': 'CMYK-Lab（印刷）または hex-Lab（画面）で照合。html コーパスは anchor=cmyk のとき hex にフォールバック。',
+    'sidebar.naming_accuracy_help': '高いほど名前の付くスウォッチが増える。0 にすると各ライブラリの完全一致のみ表示。',
+    'sidebar.naming_rows_help': 'コーパス追加：<code>data/corpora/name_corpora.json</code> を編集して再読み込み。コーパスごとの設定はブラウザに保存される。',
+    'sidebar.add_profiles_help': '<b>新しい ICC プロファイル？</b> <code>.icc</code> / <code>.icm</code> を <code>icc/</code> に置き、<code>python scripts/gen_luts.py</code> を実行して再読み込み。<br><br><b>新しい日本語 / HTML 名？</b> <code>data/corpora/name_corpora.json</code> を編集してエントリを追加（jpn は <code>{"name": "桜色", "romaji": "sakura-iro", "hex": "#FCC9D2"}</code>、html は <code>{"name": "rose", "hex": "#FF007F"}</code>）、保存して再読み込み。Python の再ビルドは不要。Lab はブラウザで計算される。',
+    'palette.select_placeholder_empty': '（なし - パレットを作成して開始）',
+    'palette.empty_no_palettes': 'パレット未作成。「+ 新規」で開始。',
+    'palette.empty_pm_view': 'パレット未作成。新しく作成してください。',
+    'palette.select_placeholder_none': '- パレット未選択 -',
+    'palette.empty_none_selected': 'パレット未選択。上から選ぶか新規作成。',
+    'palette.empty_no_swatches': '空 - 選択モードを有効にしてスウォッチをクリック。',
+    'palette.chip_click_remove': 'クリックで削除',
   },
   zh: {
     'badge.mode_d50': '模式：印刷 (D50)',
@@ -5890,6 +6118,15 @@ const I18N = {
     'search.placeholder': '水色、coral、櫻、#A9CBE8…',
     'flt.all_libs':  '全部資料庫',
     'topbar.export': '↓ 匯出',
+    'topbar.toggle_sidebar_mobile': '切換側欄',
+    'topbar.lab_mode_badge_title': '計算用色彩模式',
+    'topbar.count_label_title': '顯示色板數量',
+    'topbar.reset_ui_title': '將介面設定全部重設為預設值',
+    'topbar.grid_mode_title': '以網格檢視色板',
+    'topbar.palettes_mode_title': '檢視與管理調色盤',
+    'topbar.export_filtered_title': '匯出篩選後的色板',
+    'topbar.theme_toggle_title': '切換明暗主題',
+    'topbar.lang_picker_title': '變更介面語言',
     'export.csv':    'CSV（UTF-8 BOM）',
     'export.png':    'PNG（含標題列與標籤）',
     'export.png_pure':'PNG 純色',
@@ -5899,6 +6136,16 @@ const I18N = {
     'export.ase_cmyk':'ASE（CMYK）- 印前 / RIP',
     'export.ase_rgb': 'ASE（RGB）- Adobe / Affinity / Substance',
     'export.gpl':    'GPL - GIMP / Krita / Inkscape',
+    'export.csv_title': '將目前檢視匯出為 CSV',
+    'export.png_title': '將目前檢視匯出為含標籤的 PNG',
+    'export.png_pure_title': '將目前檢視匯出為純色 PNG',
+    'export.tiff_title': '將目前檢視匯出為含標籤的 CMYK TIFF',
+    'export.tiff_pure_title': '將目前檢視匯出為純色 CMYK TIFF',
+    'export.zip_title': '將目前檢視匯出為 ZIP（逐色 + 清單）',
+    'export.ase_cmyk_title': '將目前檢視匯出為 CMYK ASE（印前 / RIP 用）',
+    'export.ase_rgb_title': '將目前檢視匯出為 RGB ASE（設計軟體用）',
+    'export.gpl_title': '將目前檢視匯出為 GPL（GIMP / Krita / Inkscape 用）',
+    'export.img_size_title': '設定 PNG / TIFF 匯出的影像尺寸',
     'export.busy':   '正在產生下載檔…',
     'pal.new_short': '+ 新建',
     'pal.more':      '操作 ▾',
@@ -5919,6 +6166,101 @@ const I18N = {
     'gs.neutral_sub':   '每個色塊都從目標 sRGB 灰（例如 50% 灰）出發，先反向經由目前的描述檔路由成 CMYK（<b>由印刷機的 GCR / UCR 規則決定 CMY 與 K 的混合比例</b>），再正向回到螢幕 sRGB。這就是你叫 RIP「給我中性灰」時實際拿到的灰。',
     'gs.purek_title':   '純 RGB 基準 · rgb(255-2.55*K, K = 0→100)',
     'gs.purek_sub':     '每個色塊是 <b>純 sRGB 灰</b>：rgb(v, v, v)（v = 255 - 2.55*K）。<b>不經任何描述檔轉換</b> - K=100 為正中 <b>#000</b>，K=0 為正中 <b>#FFF</b>。這是設計端的理想基準（在編輯器輸入「50% 灰」時看到的顏色）。對比上方 ICC 中性灰，可以看出印刷端離理想黑色有多遠。',
+    'sidebar.icc_profile_help': '新增描述檔：將 <code>.icc</code> 放入 <code>icc/</code>，執行 <code>python scripts/gen_luts.py</code>，重新整理。',
+    'sidebar.k_range_help': '預設低 K；僅在需要深暗時加 K。',
+    'sidebar.color_mode_title': '切換印刷 (D50) / 螢幕 (D65) 計算',
+    'sidebar.icc_profile_select_title': '選擇 CMYK 輸出描述檔',
+    'sidebar.icc_status_title': '使用中 ICC 描述檔狀態',
+    'sidebar.round_trip_de_max_title': '循環 dE 安全門檻',
+    'sidebar.step_5_title': '步距：5%',
+    'sidebar.step_10_title': '步距：10%',
+    'sidebar.step_15_title': '步距：15%',
+    'sidebar.step_20_title': '步距：20%',
+    'sidebar.cell_20_title': '色板尺寸：20px',
+    'sidebar.cell_32_title': '色板尺寸：32px',
+    'sidebar.cell_48_title': '色板尺寸：48px',
+    'sidebar.cell_64_title': '色板尺寸：64px',
+    'sidebar.cell_80_title': '色板尺寸：80px',
+    'sidebar.cell_100_title': '色板尺寸：100px',
+    'sidebar.cell_120_title': '色板尺寸：120px',
+    'sidebar.cell_160_title': '色板尺寸：160px',
+    'sidebar.cell_slider_title': '微調色板尺寸',
+    'sidebar.cell_val_title': '目前色板尺寸',
+    'sidebar.tac_override_title': '解除 TAC 上限以允許更深的油墨',
+    'sidebar.tac_limit_title': '總油墨覆蓋上限 (%)',
+    'sidebar.tac_220_title': 'TAC 上限：220%',
+    'sidebar.tac_240_title': 'TAC 上限：240%',
+    'sidebar.tac_260_title': 'TAC 上限：260%',
+    'sidebar.tac_300_title': 'TAC 上限：300%',
+    'sidebar.tac_330_title': 'TAC 上限：330%',
+    'sidebar.tac_350_title': 'TAC 上限：350%',
+    'sidebar.threed_toggle_title': '一鍵套用 3D 列印條件 (D50 + TAC + dE)',
+    'sidebar.ktier_1_title': 'K 階 1 - 品牌',
+    'sidebar.ktier_2_title': 'K 階 2 - 輔助',
+    'sidebar.ktier_3_title': 'K 階 3 - 深暗',
+    'sidebar.k_range_min_title': 'K 下限 (%)',
+    'sidebar.k_range_max_title': 'K 上限 (%)',
+    'sidebar.named_all_title': '顯示全部色板（不限名稱）',
+    'sidebar.named_any_title': '只顯示至少有一個名稱的色板',
+    'sidebar.filter_checkboxes_title': '只顯示由選定資料庫命名的色板',
+    'sidebar.match_settings_title': '將配對設定一次套用全部資料庫',
+    'sidebar.naming_accuracy_title': '命名精準度 / dE 容忍範圍',
+    'sidebar.naming_rows_title': '各資料庫的命名設定',
+    'corp.hide': '隱藏',
+    'sidebar.wcag_aa_title': '只顯示符合 WCAG AA 對比的色板',
+    'sidebar.wcag_aaa_title': '只顯示符合 WCAG AAA 對比的色板',
+    'sidebar.white_text_title': '只顯示適用白字的色板',
+    'sidebar.black_text_title': '只顯示適用黑字的色板',
+    'sidebar.search_input_title': '依名稱或十六進位搜尋',
+    'sidebar.sort_hue_title': '依色相排序',
+    'sidebar.sort_light_title': '依明度排序',
+    'sidebar.sort_tac_title': '依 TAC 排序',
+    'sidebar.sort_cyan_title': '依青色濃度排序',
+    'sidebar.sort_chroma_title': '依彩度排序',
+    'sidebar.sort_safety_title': '依循環安全度排序',
+    'sidebar.sort_huelight_title': '依色相×明度網格排序',
+    'sidebar.links_home_title': '回首頁',
+    'sidebar.links_readme_title': '開啟專案 README',
+    'sidebar.links_github_title': '前往 GitHub 專案',
+    'sidebar.links_about_title': '關於 mixocreative',
+    'palette.select_title': '切換色塊選取',
+    'palette.new_title': '建立新的調色盤',
+    'palette.toggle_select_mode_title': '切換調色盤選取模式',
+    'palette.swatches_in_active_title': '使用中調色盤的色塊',
+    'palette.global_actions_title': '備份、匯入、管理調色盤',
+    'palette.img_size_title': 'PNG / TIFF 匯出尺寸',
+    'palette.strip_remove_title': '點擊色塊即可從調色盤移除',
+    'intro.learn_app_title': '了解 Mixo Swatch',
+    'intro.follow_instagram_title': '在 Instagram 追蹤 mixocreative',
+    'intro.follow_facebook_title': '在 Facebook 追蹤 mixocreative',
+    'intro.portfolio_behance_title': '在 Behance 觀看作品集',
+    'intro.github_title': '在 GitHub 觀看 Mixo Swatch',
+    'intro.twsy_github_title': '在 GitHub 觀看 TEAM TAIWAN Open Source Initiative',
+    'intro.about_us_title': '關於 mixocreative',
+    'export.img_size': 'PNG / TIFF 尺寸',
+    'palette.toggle_panel_aria_label': '展開或收起調色盤面板',
+    'detail.close_button_aria_label': '關閉詳細面板',
+    'detail.cmyk_key': 'CMYK',
+    'detail.tac_key': 'TAC',
+    'detail.k_tier_key': 'K 階',
+    'detail.de_round_trip_key': 'ΔE 循環',
+    'detail.hex_key': 'HEX',
+    'detail.rgb_key': 'RGB',
+    'detail.lab_key': 'L* a* b*',
+    'detail.luminance_key': '亮度',
+    'detail.contrast_key': '對比',
+    'detail.color_names_key': '色彩名稱',
+    'sidebar.match_help': '以 CMYK-Lab（印刷）或 hex-Lab（螢幕）配對。html 資料庫在 anchor=cmyk 時退回 hex。',
+    'sidebar.naming_accuracy_help': '數值越高，顯示名稱的色板越多。設為 0 只顯示各資料庫的精確命中。',
+    'sidebar.naming_rows_help': '新增資料庫：編輯 <code>data/corpora/name_corpora.json</code> 後重新整理。各資料庫設定保存在瀏覽器中。',
+    'sidebar.add_profiles_help': '<b>新增 ICC 描述檔？</b> 將 <code>.icc</code> / <code>.icm</code> 放入 <code>icc/</code>，執行 <code>python scripts/gen_luts.py</code>，重新整理。<br><br><b>新增日文 / HTML 名稱？</b> 編輯 <code>data/corpora/name_corpora.json</code>，新增條目（jpn 用 <code>{"name": "桜色", "romaji": "sakura-iro", "hex": "#FCC9D2"}</code>，html 用 <code>{"name": "rose", "hex": "#FF007F"}</code>），儲存後重新整理。不需重新跑 Python，Lab 在瀏覽器中計算。',
+    'palette.select_placeholder_empty': '（無 - 建立調色盤以開始）',
+    'palette.empty_no_palettes': '尚無調色盤。點「+ 新建」開始。',
+    'palette.empty_pm_view': '尚無調色盤。請建立新調色盤。',
+    'palette.select_placeholder_none': '- 未選擇調色盤 -',
+    'palette.empty_none_selected': '尚未選擇調色盤。請從上方挑選或新建一個。',
+    'palette.empty_no_swatches': '空 - 啟用選取模式並點選色板。',
+    'palette.chip_click_remove': '點擊以移除',
   }
 };
 let UI_LANG = 'en';
@@ -5983,6 +6325,7 @@ function applyI18n() {
   // Re-render dynamic UI rows that bake strings at build time
   if (typeof buildNamingUI === 'function') buildNamingUI();
   if (typeof buildFilterUI === 'function') buildFilterUI();
+  if (typeof refreshPalUI === 'function') refreshPalUI();
 }
 function setUILang(lang) {
   if (!['en','ja','zh','auto'].includes(lang)) return;

@@ -49,6 +49,19 @@
       "source": "https://nipponcolors.com/ (250 entries, public)",
       "entries": [
         {
+          "name_ja": "白",
+          "romaji": "shiro",
+          "name_en": "white",
+          "name_zh": "白",
+          "hex": "#FFFFFF",
+          "cmyk": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
           "name_ja": "撫子",
           "romaji": "nadeshiko",
           "name_en": "pink dianthus",
@@ -3338,6 +3351,18 @@
       "source": "https://www.w3.org/TR/css-color-4/#named-colors",
       "entries": [
         {
+          "name_en": "white",
+          "name_ja": "白",
+          "name_zh": "白",
+          "hex": "#FFFFFF",
+          "cmyk": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
           "name_en": "aliceblue",
           "name_ja": "アリスブルー",
           "name_zh": "愛麗絲藍",
@@ -5161,10 +5186,23 @@
       "source": "https://color-term.com/traditional-color-of-china/ (526 colors, Chinese Academy of Sciences color name dictionary, 1957)",
       "entries": [
         {
+          "name_zh": "白",
+          "pinyin": "bai",
+          "name_en": "white",
+          "name_ja": "白",
+          "hex": "#FFFFFF",
+          "cmyk": [
+            38,
+            87,
+            69,
+            60
+          ]
+        },
+        {
           "name_zh": "暗玉紫",
           "pinyin": "anyuzi",
-          "name_en": "anyuzi",
-          "name_ja": "anyuzi",
+          "name_en": "dark jade purple",
+          "name_ja": "暗玉紫",
           "hex": "#5C2223",
           "cmyk": [
             38,
@@ -5176,8 +5214,8 @@
         {
           "name_zh": "牡丹粉紅",
           "pinyin": "mudanfenhong",
-          "name_en": "mudanfenhong",
-          "name_ja": "mudanfenhong",
+          "name_en": "peony pink",
+          "name_ja": "牡丹ピンク",
           "hex": "#EEA2A4",
           "cmyk": [
             7,
@@ -5189,8 +5227,8 @@
         {
           "name_zh": "慄紫",
           "pinyin": "lizi",
-          "name_en": "lizi",
-          "name_ja": "lizi",
+          "name_en": "chestnut purple",
+          "name_ja": "栗紫",
           "hex": "#5A191B",
           "cmyk": [
             38,
@@ -5202,8 +5240,8 @@
         {
           "name_zh": "香葉紅",
           "pinyin": "xiangyehong",
-          "name_en": "xiangyehong",
-          "name_ja": "xiangyehong",
+          "name_en": "fragrant leaf red",
+          "name_ja": "香葉紅",
           "hex": "#F07C82",
           "cmyk": [
             6,
@@ -5215,8 +5253,8 @@
         {
           "name_zh": "葡萄醬紫",
           "pinyin": "putaojiangzi",
-          "name_en": "putaojiangzi",
-          "name_ja": "putaojiangzi",
+          "name_en": "grape jam purple",
+          "name_ja": "葡萄ジャム紫",
           "hex": "#5A1216",
           "cmyk": [
             38,
@@ -5228,8 +5266,8 @@
         {
           "name_zh": "豔紅",
           "pinyin": "yanhong",
-          "name_en": "yanhong",
-          "name_ja": "yanhong",
+          "name_en": "gorgeous red",
+          "name_ja": "艶紅",
           "hex": "#ED5A65",
           "cmyk": [
             7,
@@ -5241,8 +5279,8 @@
         {
           "name_zh": "玉紅",
           "pinyin": "yuhong",
-          "name_en": "yuhong",
-          "name_ja": "yuhong",
+          "name_en": "jade red",
+          "name_ja": "玉紅",
           "hex": "#C04851",
           "cmyk": [
             22,
@@ -5254,8 +5292,8 @@
         {
           "name_zh": "茶花紅",
           "pinyin": "chahuahong",
-          "name_en": "chahuahong",
-          "name_ja": "chahuahong",
+          "name_en": "camellia red",
+          "name_ja": "椿紅",
           "hex": "#EE3F4D",
           "cmyk": [
             5,
@@ -5267,8 +5305,8 @@
         {
           "name_zh": "高粱紅",
           "pinyin": "gaolianghong",
-          "name_en": "gaolianghong",
-          "name_ja": "gaolianghong",
+          "name_en": "sorghum red",
+          "name_ja": "高粱紅",
           "hex": "#C02C38",
           "cmyk": [
             20,
@@ -5280,8 +5318,8 @@
         {
           "name_zh": "滿江紅",
           "pinyin": "manjianghong",
-          "name_en": "manjianghong",
-          "name_ja": "manjianghong",
+          "name_en": "azolla red",
+          "name_ja": "満江紅",
           "hex": "#A7535A",
           "cmyk": [
             27,
@@ -5293,8 +5331,8 @@
         {
           "name_zh": "鼠鼻紅",
           "pinyin": "shubihong",
-          "name_en": "shubihong",
-          "name_ja": "shubihong",
+          "name_en": "mouse nose red",
+          "name_ja": "鼠鼻紅",
           "hex": "#E3B4B8",
           "cmyk": [
             12,
@@ -5306,8 +5344,8 @@
         {
           "name_zh": "合歡紅",
           "pinyin": "hehuanhong",
-          "name_en": "hehuanhong",
-          "name_ja": "hehuanhong",
+          "name_en": "silk tree red",
+          "name_ja": "合歓紅",
           "hex": "#F0A1A8",
           "cmyk": [
             6,
@@ -5319,8 +5357,8 @@
         {
           "name_zh": "春梅紅",
           "pinyin": "chunmeihong",
-          "name_en": "chunmeihong",
-          "name_ja": "chunmeihong",
+          "name_en": "spring plum red",
+          "name_ja": "春梅紅",
           "hex": "#F1939C",
           "cmyk": [
             6,
@@ -5332,8 +5370,8 @@
         {
           "name_zh": "莧菜紅",
           "pinyin": "xiancaihong",
-          "name_en": "xiancaihong",
-          "name_ja": "xiancaihong",
+          "name_en": "amaranth red",
+          "name_ja": "莧菜紅",
           "hex": "#A61B29",
           "cmyk": [
             25,
@@ -5345,8 +5383,8 @@
         {
           "name_zh": "煙紅",
           "pinyin": "yanhong_2",
-          "name_en": "yanhong_2",
-          "name_ja": "yanhong_2",
+          "name_en": "smoke red",
+          "name_ja": "煙紅",
           "hex": "#894E54",
           "cmyk": [
             33,
@@ -5358,8 +5396,8 @@
         {
           "name_zh": "莓紅",
           "pinyin": "meihong",
-          "name_en": "meihong",
-          "name_ja": "meihong",
+          "name_en": "berry red",
+          "name_ja": "苺紅",
           "hex": "#C45A65",
           "cmyk": [
             21,
@@ -5371,8 +5409,8 @@
         {
           "name_zh": "鵝冠紅",
           "pinyin": "eguanhong",
-          "name_en": "eguanhong",
-          "name_ja": "eguanhong",
+          "name_en": "cockscomb red",
+          "name_ja": "鶏冠紅",
           "hex": "#D11A2D",
           "cmyk": [
             16,
@@ -5384,8 +5422,8 @@
         {
           "name_zh": "楓葉紅",
           "pinyin": "fengyehong",
-          "name_en": "fengyehong",
-          "name_ja": "fengyehong",
+          "name_en": "maple leaf red",
+          "name_ja": "楓葉紅",
           "hex": "#C21F30",
           "cmyk": [
             20,
@@ -5397,8 +5435,8 @@
         {
           "name_zh": "唐菖蒲紅",
           "pinyin": "tangchangpuhong",
-          "name_en": "tangchangpuhong",
-          "name_ja": "tangchangpuhong",
+          "name_en": "gladiolus red",
+          "name_ja": "唐菖蒲紅",
           "hex": "#DE1C31",
           "cmyk": [
             11,
@@ -5410,8 +5448,8 @@
         {
           "name_zh": "棗紅",
           "pinyin": "zaohong",
-          "name_en": "zaohong",
-          "name_ja": "zaohong",
+          "name_en": "jujube red",
+          "name_ja": "棗紅",
           "hex": "#7C1823",
           "cmyk": [
             31,
@@ -5423,8 +5461,8 @@
         {
           "name_zh": "豬肝紫",
           "pinyin": "zhuganzi",
-          "name_en": "zhuganzi",
-          "name_ja": "zhuganzi",
+          "name_en": "pig liver purple",
+          "name_ja": "豚肝紫",
           "hex": "#541E24",
           "cmyk": [
             40,
@@ -5436,8 +5474,8 @@
         {
           "name_zh": "葡萄紫",
           "pinyin": "putaozi",
-          "name_en": "putaozi",
-          "name_ja": "putaozi",
+          "name_en": "grape purple",
+          "name_ja": "葡萄紫",
           "hex": "#4C1F24",
           "cmyk": [
             42,
@@ -5449,8 +5487,8 @@
         {
           "name_zh": "暗紫苑紅",
           "pinyin": "anziyuanhong",
-          "name_en": "anziyuanhong",
-          "name_ja": "anziyuanhong",
+          "name_en": "dark aster red",
+          "name_ja": "暗紫苑紅",
           "hex": "#82202B",
           "cmyk": [
             31,
@@ -5462,8 +5500,8 @@
         {
           "name_zh": "殷紅",
           "pinyin": "yinhong",
-          "name_en": "yinhong",
-          "name_ja": "yinhong",
+          "name_en": "dark red",
+          "name_ja": "殷紅",
           "hex": "#82111F",
           "cmyk": [
             30,
@@ -5475,8 +5513,8 @@
         {
           "name_zh": "草茉莉紅",
           "pinyin": "caomolihong",
-          "name_en": "caomolihong",
-          "name_ja": "caomolihong",
+          "name_en": "grass jasmine red",
+          "name_ja": "草茉莉紅",
           "hex": "#EF475D",
           "cmyk": [
             5,
@@ -5488,8 +5526,8 @@
         {
           "name_zh": "醬紫",
           "pinyin": "jiangzi",
-          "name_en": "jiangzi",
-          "name_ja": "jiangzi",
+          "name_en": "sauce purple",
+          "name_ja": "醬紫",
           "hex": "#4D1018",
           "cmyk": [
             41,
@@ -5501,8 +5539,8 @@
         {
           "name_zh": "山茶紅",
           "pinyin": "shanchahong",
-          "name_en": "shanchahong",
-          "name_ja": "shanchahong",
+          "name_en": "camellia red",
+          "name_ja": "山茶紅",
           "hex": "#ED556A",
           "cmyk": [
             7,
@@ -5514,8 +5552,8 @@
         {
           "name_zh": "鋅灰",
           "pinyin": "xinhui",
-          "name_en": "xinhui",
-          "name_ja": "xinhui",
+          "name_en": "zinc gray",
+          "name_ja": "亜鉛灰",
           "hex": "#7A7374",
           "cmyk": [
             49,
@@ -5540,8 +5578,8 @@
         {
           "name_zh": "薊粉紅",
           "pinyin": "jifenhong",
-          "name_en": "jifenhong",
-          "name_ja": "jifenhong",
+          "name_en": "thistle pink",
+          "name_ja": "薊ピンク",
           "hex": "#E6D2D5",
           "cmyk": [
             11,
@@ -5553,8 +5591,8 @@
         {
           "name_zh": "石蕊紅",
           "pinyin": "shiruihong",
-          "name_en": "shiruihong",
-          "name_ja": "shiruihong",
+          "name_en": "lichen red",
+          "name_ja": "石蕊紅",
           "hex": "#F0C9CF",
           "cmyk": [
             6,
@@ -5566,8 +5604,8 @@
         {
           "name_zh": "淡曙紅",
           "pinyin": "danshuhong",
-          "name_en": "danshuhong",
-          "name_ja": "danshuhong",
+          "name_en": "pale dawn red",
+          "name_ja": "淡曙紅",
           "hex": "#EE2746",
           "cmyk": [
             5,
@@ -5579,8 +5617,8 @@
         {
           "name_zh": "李紫",
           "pinyin": "lizi_2",
-          "name_en": "lizi_2",
-          "name_ja": "lizi_2",
+          "name_en": "plum purple",
+          "name_ja": "李紫",
           "hex": "#2B1216",
           "cmyk": [
             56,
@@ -5592,8 +5630,8 @@
         {
           "name_zh": "石竹紅",
           "pinyin": "shizhuhong",
-          "name_en": "shizhuhong",
-          "name_ja": "shizhuhong",
+          "name_en": "carnation red",
+          "name_ja": "石竹紅",
           "hex": "#EE4863",
           "cmyk": [
             5,
@@ -5605,8 +5643,8 @@
         {
           "name_zh": "淡茜紅",
           "pinyin": "danqianhong",
-          "name_en": "danqianhong",
-          "name_ja": "danqianhong",
+          "name_en": "pale madder red",
+          "name_ja": "淡茜紅",
           "hex": "#E77C8E",
           "cmyk": [
             11,
@@ -5618,8 +5656,8 @@
         {
           "name_zh": "金魚紫",
           "pinyin": "jinyuzi",
-          "name_en": "jinyuzi",
-          "name_ja": "jinyuzi",
+          "name_en": "goldfish purple",
+          "name_ja": "金魚紫",
           "hex": "#500A16",
           "cmyk": [
             41,
@@ -5631,8 +5669,8 @@
         {
           "name_zh": "山黎豆紅",
           "pinyin": "shanlidouhong",
-          "name_en": "shanlidouhong",
-          "name_ja": "shanlidouhong",
+          "name_en": "mountain pea red",
+          "name_ja": "山黎豆紅",
           "hex": "#C27C88",
           "cmyk": [
             23,
@@ -5644,8 +5682,8 @@
         {
           "name_zh": "鼠背灰",
           "pinyin": "shubeihui",
-          "name_en": "shubeihui",
-          "name_ja": "shubeihui",
+          "name_en": "mouse back gray",
+          "name_ja": "鼠背灰",
           "hex": "#73575C",
           "cmyk": [
             45,
@@ -5657,8 +5695,8 @@
         {
           "name_zh": "淡蕊香紅",
           "pinyin": "danruixianghong",
-          "name_en": "danruixianghong",
-          "name_ja": "danruixianghong",
+          "name_en": "pale honeysuckle red",
+          "name_ja": "淡蕊香紅",
           "hex": "#EE4866",
           "cmyk": [
             5,
@@ -5670,8 +5708,8 @@
         {
           "name_zh": "甘蔗紫",
           "pinyin": "ganzhezi",
-          "name_en": "ganzhezi",
-          "name_ja": "ganzhezi",
+          "name_en": "sugarcane purple",
+          "name_ja": "甘蔗紫",
           "hex": "#621624",
           "cmyk": [
             36,
@@ -5683,8 +5721,8 @@
         {
           "name_zh": "月季紅",
           "pinyin": "yuejihong",
-          "name_en": "yuejihong",
-          "name_ja": "yuejihong",
+          "name_en": "china rose red",
+          "name_ja": "月季紅",
           "hex": "#CE5777",
           "cmyk": [
             19,
@@ -5696,8 +5734,8 @@
         {
           "name_zh": "尖晶玉紅",
           "pinyin": "jianjingyuhong",
-          "name_en": "jianjingyuhong",
-          "name_ja": "jianjingyuhong",
+          "name_en": "spinel jade red",
+          "name_ja": "尖晶玉紅",
           "hex": "#CC163A",
           "cmyk": [
             17,
@@ -5709,8 +5747,8 @@
         {
           "name_zh": "水紅",
           "pinyin": "shuihong",
-          "name_en": "shuihong",
-          "name_ja": "shuihong",
+          "name_en": "water red",
+          "name_ja": "水紅",
           "hex": "#F1C4CD",
           "cmyk": [
             5,
@@ -5722,8 +5760,8 @@
         {
           "name_zh": "姜紅",
           "pinyin": "jianghong",
-          "name_en": "jianghong",
-          "name_ja": "jianghong",
+          "name_en": "ginger red",
+          "name_ja": "姜紅",
           "hex": "#EEB8C3",
           "cmyk": [
             7,
@@ -5735,8 +5773,8 @@
         {
           "name_zh": "蘆灰",
           "pinyin": "luhui",
-          "name_en": "luhui",
-          "name_ja": "luhui",
+          "name_en": "reed gray",
+          "name_ja": "蘆灰",
           "hex": "#856D72",
           "cmyk": [
             43,
@@ -5748,8 +5786,8 @@
         {
           "name_zh": "茄皮紫",
           "pinyin": "jiapizi",
-          "name_en": "jiapizi",
-          "name_ja": "jiapizi",
+          "name_en": "eggplant skin purple",
+          "name_ja": "茄皮紫",
           "hex": "#2D0C13",
           "cmyk": [
             55,
@@ -5761,8 +5799,8 @@
         {
           "name_zh": "吊鐘花紅",
           "pinyin": "diaozhonghuahong",
-          "name_en": "diaozhonghuahong",
-          "name_ja": "diaozhonghuahong",
+          "name_en": "fuchsia red",
+          "name_ja": "吊鐘花紅",
           "hex": "#2D0C13",
           "cmyk": [
             55,
@@ -5774,8 +5812,8 @@
         {
           "name_zh": "蒼蠅灰",
           "pinyin": "cangyinghui",
-          "name_en": "cangyinghui",
-          "name_ja": "cangyinghui",
+          "name_en": "fly gray",
+          "name_ja": "蒼蠅灰",
           "hex": "#36282B",
           "cmyk": [
             61,
@@ -5787,8 +5825,8 @@
         {
           "name_zh": "錦葵紅",
           "pinyin": "jinkuihong",
-          "name_en": "jinkuihong",
-          "name_ja": "jinkuihong",
+          "name_en": "mallow red",
+          "name_ja": "錦葵紅",
           "hex": "#BF3553",
           "cmyk": [
             21,
@@ -5800,8 +5838,8 @@
         {
           "name_zh": "粉團花紅",
           "pinyin": "fentuanhuahong",
-          "name_en": "fentuanhuahong",
-          "name_ja": "fentuanhuahong",
+          "name_en": "snowball flower red",
+          "name_ja": "粉団花紅",
           "hex": "#EC9BAD",
           "cmyk": [
             9,
@@ -5813,8 +5851,8 @@
         {
           "name_zh": "石竹紫",
           "pinyin": "shizhuzi",
-          "name_en": "shizhuzi",
-          "name_ja": "shizhuzi",
+          "name_en": "carnation purple",
+          "name_ja": "石竹紫",
           "hex": "#63071C",
           "cmyk": [
             36,
@@ -5826,8 +5864,8 @@
         {
           "name_zh": "卵石紫",
           "pinyin": "luanshizi",
-          "name_en": "luanshizi",
-          "name_ja": "luanshizi",
+          "name_en": "pebble purple",
+          "name_ja": "卵石紫",
           "hex": "#30161C",
           "cmyk": [
             56,
@@ -5839,8 +5877,8 @@
         {
           "name_zh": "晶紅",
           "pinyin": "jinghong",
-          "name_en": "jinghong",
-          "name_ja": "jinghong",
+          "name_en": "crystal red",
+          "name_ja": "晶紅",
           "hex": "#EEA6B7",
           "cmyk": [
             7,
@@ -5852,8 +5890,8 @@
         {
           "name_zh": "芍藥耕紅",
           "pinyin": "shaoyaogenghong",
-          "name_en": "shaoyaogenghong",
-          "name_ja": "shaoyaogenghong",
+          "name_en": "peony red",
+          "name_ja": "芍薬耕紅",
           "hex": "#EBA0B3",
           "cmyk": [
             9,
@@ -5865,8 +5903,8 @@
         {
           "name_zh": "暮雲灰",
           "pinyin": "muyunhui",
-          "name_en": "muyunhui",
-          "name_ja": "muyunhui",
+          "name_en": "dusk cloud gray",
+          "name_ja": "暮雲灰",
           "hex": "#4F383E",
           "cmyk": [
             55,
@@ -5878,8 +5916,8 @@
         {
           "name_zh": "豇豆紅",
           "pinyin": "jiangdouhong",
-          "name_en": "jiangdouhong",
-          "name_ja": "jiangdouhong",
+          "name_en": "cowpea red",
+          "name_ja": "豇豆紅",
           "hex": "#ED9DB2",
           "cmyk": [
             8,
@@ -5891,8 +5929,8 @@
         {
           "name_zh": "報春紅",
           "pinyin": "baochunhong",
-          "name_en": "baochunhong",
-          "name_ja": "baochunhong",
+          "name_en": "primrose red",
+          "name_ja": "報春紅",
           "hex": "#EC8AA4",
           "cmyk": [
             9,
@@ -5904,8 +5942,8 @@
         {
           "name_zh": "淡絳紅",
           "pinyin": "danjianghong",
-          "name_en": "danjianghong",
-          "name_ja": "danjianghong",
+          "name_en": "pale crimson",
+          "name_ja": "淡絳紅",
           "hex": "#EC7696",
           "cmyk": [
             9,
@@ -5917,8 +5955,8 @@
         {
           "name_zh": "鳳仙花紅",
           "pinyin": "fengxianhuahong",
-          "name_en": "fengxianhuahong",
-          "name_ja": "fengxianhuahong",
+          "name_en": "impatiens red",
+          "name_ja": "鳳仙花紅",
           "hex": "#EA7293",
           "cmyk": [
             10,
@@ -5930,8 +5968,8 @@
         {
           "name_zh": "霞光紅",
           "pinyin": "xiaguanghong",
-          "name_en": "xiaguanghong",
-          "name_ja": "xiaguanghong",
+          "name_en": "rosy glow red",
+          "name_ja": "霞光紅",
           "hex": "#EF82A0",
           "cmyk": [
             7,
@@ -5943,8 +5981,8 @@
         {
           "name_zh": "喜蛋紅",
           "pinyin": "xidanhong",
-          "name_en": "xidanhong",
-          "name_ja": "xidanhong",
+          "name_en": "happy egg red",
+          "name_ja": "喜蛋紅",
           "hex": "#EC2C64",
           "cmyk": [
             7,
@@ -5956,8 +5994,8 @@
         {
           "name_zh": "夾竹桃紅",
           "pinyin": "jiazhutaohong",
-          "name_en": "jiazhutaohong",
-          "name_ja": "jiazhutaohong",
+          "name_en": "oleander red",
+          "name_ja": "夾竹桃紅",
           "hex": "#EB507E",
           "cmyk": [
             8,
@@ -5969,8 +6007,8 @@
         {
           "name_zh": "松葉牡丹紅",
           "pinyin": "songyemudanhong",
-          "name_en": "songyemudanhong",
-          "name_ja": "songyemudanhong",
+          "name_en": "moss rose red",
+          "name_ja": "松葉牡丹紅",
           "hex": "#EB3C70",
           "cmyk": [
             7,
@@ -5982,8 +6020,8 @@
         {
           "name_zh": "蓮瓣紅",
           "pinyin": "lianbanhong",
-          "name_en": "lianbanhong",
-          "name_ja": "lianbanhong",
+          "name_en": "lotus petal red",
+          "name_ja": "蓮弁紅",
           "hex": "#EA517F",
           "cmyk": [
             9,
@@ -5995,8 +6033,8 @@
         {
           "name_zh": "白芨紅",
           "pinyin": "baijihong",
-          "name_en": "baijihong",
-          "name_ja": "baijihong",
+          "name_en": "bamboo orchid red",
+          "name_ja": "白芨紅",
           "hex": "#DE7897",
           "cmyk": [
             15,
@@ -6008,8 +6046,8 @@
         {
           "name_zh": "隱紅灰",
           "pinyin": "yinhonghui",
-          "name_en": "yinhonghui",
-          "name_ja": "yinhonghui",
+          "name_en": "hidden red gray",
+          "name_ja": "隠紅灰",
           "hex": "#B598A1",
           "cmyk": [
             31,
@@ -6021,8 +6059,8 @@
         {
           "name_zh": "榲桲紅",
           "pinyin": "wenpohong",
-          "name_en": "wenpohong",
-          "name_ja": "wenpohong",
+          "name_en": "quince red",
+          "name_ja": "榲桲紅",
           "hex": "#ED2F6A",
           "cmyk": [
             6,
@@ -6034,8 +6072,8 @@
         {
           "name_zh": "酢醬草紅",
           "pinyin": "cujiangcaohong",
-          "name_en": "cujiangcaohong",
-          "name_ja": "cujiangcaohong",
+          "name_en": "sorrel red",
+          "name_ja": "酢醬草紅",
           "hex": "#C5708B",
           "cmyk": [
             24,
@@ -6047,8 +6085,8 @@
         {
           "name_zh": "火鵝紫",
           "pinyin": "huoezi",
-          "name_en": "huoezi",
-          "name_ja": "huoezi",
+          "name_en": "fire goose purple",
+          "name_ja": "火鵝紫",
           "hex": "#33141E",
           "cmyk": [
             55,
@@ -6060,8 +6098,8 @@
         {
           "name_zh": "鷂冠紫",
           "pinyin": "yaoguanzi",
-          "name_en": "yaoguanzi",
-          "name_ja": "yaoguanzi",
+          "name_en": "sparrowhawk crest purple",
+          "name_ja": "鷂冠紫",
           "hex": "#621D34",
           "cmyk": [
             38,
@@ -6073,8 +6111,8 @@
         {
           "name_zh": "品紅",
           "pinyin": "pinhong",
-          "name_en": "pinhong",
-          "name_ja": "pinhong",
+          "name_en": "magenta",
+          "name_ja": "品紅",
           "hex": "#EF3473",
           "cmyk": [
             6,
@@ -6086,8 +6124,8 @@
         {
           "name_zh": "磨石紫",
           "pinyin": "moshizi",
-          "name_en": "moshizi",
-          "name_ja": "moshizi",
+          "name_en": "terrazzo purple",
+          "name_ja": "磨石紫",
           "hex": "#382129",
           "cmyk": [
             59,
@@ -6099,8 +6137,8 @@
         {
           "name_zh": "墨紫",
           "pinyin": "mozi",
-          "name_en": "mozi",
-          "name_ja": "mozi",
+          "name_en": "ink purple",
+          "name_ja": "墨紫",
           "hex": "#310F1B",
           "cmyk": [
             55,
@@ -6112,8 +6150,8 @@
         {
           "name_zh": "檀紫",
           "pinyin": "tanzi",
-          "name_en": "tanzi",
-          "name_ja": "tanzi",
+          "name_en": "sandalwood purple",
+          "name_ja": "檀紫",
           "hex": "#381924",
           "cmyk": [
             56,
@@ -6125,8 +6163,8 @@
         {
           "name_zh": "初荷紅",
           "pinyin": "chuhehong",
-          "name_en": "chuhehong",
-          "name_ja": "chuhehong",
+          "name_en": "early lotus red",
+          "name_ja": "初荷紅",
           "hex": "#E16C96",
           "cmyk": [
             15,
@@ -6138,8 +6176,8 @@
         {
           "name_zh": "菜頭紫",
           "pinyin": "caitouzi",
-          "name_en": "caitouzi",
-          "name_ja": "caitouzi",
+          "name_en": "radish purple",
+          "name_ja": "菜頭紫",
           "hex": "#951C48",
           "cmyk": [
             29,
@@ -6151,8 +6189,8 @@
         {
           "name_zh": "葡萄酒紅",
           "pinyin": "putaojiuhong",
-          "name_en": "putaojiuhong",
-          "name_ja": "putaojiuhong",
+          "name_en": "wine red",
+          "name_ja": "葡萄酒紅",
           "hex": "#62102E",
           "cmyk": [
             36,
@@ -6164,8 +6202,8 @@
         {
           "name_zh": "淡青紫",
           "pinyin": "danqingzi",
-          "name_en": "danqingzi",
-          "name_ja": "danqingzi",
+          "name_en": "pale cyan purple",
+          "name_ja": "淡青紫",
           "hex": "#E0C8D1",
           "cmyk": [
             14,
@@ -6177,8 +6215,8 @@
         {
           "name_zh": "菠根紅",
           "pinyin": "bogenhong",
-          "name_en": "bogenhong",
-          "name_ja": "bogenhong",
+          "name_en": "spinach root red",
+          "name_ja": "菠根紅",
           "hex": "#D13C74",
           "cmyk": [
             18,
@@ -6190,8 +6228,8 @@
         {
           "name_zh": "海象紫",
           "pinyin": "haixiangzi",
-          "name_en": "haixiangzi",
-          "name_ja": "haixiangzi",
+          "name_en": "walrus purple",
+          "name_ja": "海象紫",
           "hex": "#4B1E2F",
           "cmyk": [
             49,
@@ -6203,8 +6241,8 @@
         {
           "name_zh": "兔眼紅",
           "pinyin": "tuyanhong",
-          "name_en": "tuyanhong",
-          "name_ja": "tuyanhong",
+          "name_en": "rabbit eye red",
+          "name_ja": "兎眼紅",
           "hex": "#EC4E8A",
           "cmyk": [
             8,
@@ -6216,8 +6254,8 @@
         {
           "name_zh": "嫩菱紅",
           "pinyin": "nenlinghong",
-          "name_en": "nenlinghong",
-          "name_ja": "nenlinghong",
+          "name_en": "tender water caltrop red",
+          "name_ja": "嫩菱紅",
           "hex": "#DE3F7C",
           "cmyk": [
             14,
@@ -6229,8 +6267,8 @@
         {
           "name_zh": "洋蔥紫",
           "pinyin": "yangcongzi",
-          "name_en": "yangcongzi",
-          "name_ja": "yangcongzi",
+          "name_en": "onion purple",
+          "name_ja": "玉葱紫",
           "hex": "#A8456B",
           "cmyk": [
             31,
@@ -6242,8 +6280,8 @@
         {
           "name_zh": "紺紫",
           "pinyin": "ganzi",
-          "name_en": "ganzi",
-          "name_ja": "ganzi",
+          "name_en": "dark blue purple",
+          "name_ja": "紺紫",
           "hex": "#461629",
           "cmyk": [
             49,
@@ -6255,8 +6293,8 @@
         {
           "name_zh": "紫荊紅",
           "pinyin": "zijinghong",
-          "name_en": "zijinghong",
-          "name_ja": "zijinghong",
+          "name_en": "redbud red",
+          "name_ja": "紫荊紅",
           "hex": "#EE2C79",
           "cmyk": [
             6,
@@ -6268,8 +6306,8 @@
         {
           "name_zh": "扁豆花紅",
           "pinyin": "biandouhuahong",
-          "name_en": "biandouhuahong",
-          "name_ja": "biandouhuahong",
+          "name_en": "lentil flower red",
+          "name_ja": "扁豆花紅",
           "hex": "#EF498B",
           "cmyk": [
             7,
@@ -6281,8 +6319,8 @@
         {
           "name_zh": "馬鞭草紫",
           "pinyin": "mabiancaozi",
-          "name_en": "mabiancaozi",
-          "name_ja": "mabiancaozi",
+          "name_en": "verbena purple",
+          "name_ja": "馬鞭草紫",
           "hex": "#EDE3E7",
           "cmyk": [
             8,
@@ -6294,8 +6332,8 @@
         {
           "name_zh": "藏花紅",
           "pinyin": "canghuahong",
-          "name_en": "canghuahong",
-          "name_ja": "canghuahong",
+          "name_en": "saffron red",
+          "name_ja": "蔵花紅",
           "hex": "#EC2D7A",
           "cmyk": [
             7,
@@ -6307,8 +6345,8 @@
         {
           "name_zh": "斑鳩灰",
           "pinyin": "banjiuhui",
-          "name_en": "banjiuhui",
-          "name_ja": "banjiuhui",
+          "name_en": "dove gray",
+          "name_ja": "斑鳩灰",
           "hex": "#482936",
           "cmyk": [
             56,
@@ -6320,8 +6358,8 @@
         {
           "name_zh": "古銅紫",
           "pinyin": "gutongzi",
-          "name_en": "gutongzi",
-          "name_ja": "gutongzi",
+          "name_en": "bronze purple",
+          "name_ja": "古銅紫",
           "hex": "#440E25",
           "cmyk": [
             47,
@@ -6333,8 +6371,8 @@
         {
           "name_zh": "丹紫紅",
           "pinyin": "danzihong",
-          "name_en": "danzihong",
-          "name_ja": "danzihong",
+          "name_en": "cinnabar purple red",
+          "name_ja": "丹紫紅",
           "hex": "#D2568C",
           "cmyk": [
             21,
@@ -6346,8 +6384,8 @@
         {
           "name_zh": "丁香淡紫",
           "pinyin": "dingxiangdanzi",
-          "name_en": "dingxiangdanzi",
-          "name_ja": "dingxiangdanzi",
+          "name_en": "lilac pale purple",
+          "name_ja": "丁香淡紫",
           "hex": "#E9D7DF",
           "cmyk": [
             10,
@@ -6372,8 +6410,8 @@
         {
           "name_zh": "古鼎灰",
           "pinyin": "gudinghui",
-          "name_en": "gudinghui",
-          "name_ja": "gudinghui",
+          "name_en": "ancient tripod gray",
+          "name_ja": "古鼎灰",
           "hex": "#36292F",
           "cmyk": [
             65,
@@ -6385,8 +6423,8 @@
         {
           "name_zh": "菱錳紅",
           "pinyin": "lingmenghong",
-          "name_en": "lingmenghong",
-          "name_ja": "lingmenghong",
+          "name_en": "rhodochrosite red",
+          "name_ja": "菱錳紅",
           "hex": "#D276A3",
           "cmyk": [
             22,
@@ -6398,8 +6436,8 @@
         {
           "name_zh": "櫻草紫",
           "pinyin": "yingcaozi",
-          "name_en": "yingcaozi",
-          "name_ja": "yingcaozi",
+          "name_en": "primrose purple",
+          "name_ja": "桜草紫",
           "hex": "#C06F98",
           "cmyk": [
             30,
@@ -6411,8 +6449,8 @@
         {
           "name_zh": "龍鬚紅",
           "pinyin": "longxuhong",
-          "name_en": "longxuhong",
-          "name_ja": "longxuhong",
+          "name_en": "dragon beard red",
+          "name_ja": "龍鬚紅",
           "hex": "#CC5595",
           "cmyk": [
             25,
@@ -6424,8 +6462,8 @@
         {
           "name_zh": "電氣石紅",
           "pinyin": "dianqishihong",
-          "name_en": "dianqishihong",
-          "name_ja": "dianqishihong",
+          "name_en": "tourmaline red",
+          "name_ja": "電気石紅",
           "hex": "#C35691",
           "cmyk": [
             30,
@@ -6437,8 +6475,8 @@
         {
           "name_zh": "玫瑰紫",
           "pinyin": "meiguizi",
-          "name_en": "meiguizi",
-          "name_ja": "meiguizi",
+          "name_en": "rose purple",
+          "name_ja": "薔薇紫",
           "hex": "#BA2F7B",
           "cmyk": [
             31,
@@ -6450,8 +6488,8 @@
         {
           "name_zh": "莧菜紫",
           "pinyin": "xiancaizi",
-          "name_en": "xiancaizi",
-          "name_ja": "xiancaizi",
+          "name_en": "amaranth purple",
+          "name_ja": "莧菜紫",
           "hex": "#9B1E64",
           "cmyk": [
             38,
@@ -6463,8 +6501,8 @@
         {
           "name_zh": "紫灰",
           "pinyin": "zihui",
-          "name_en": "zihui",
-          "name_ja": "zihui",
+          "name_en": "purple gray",
+          "name_ja": "紫灰",
           "hex": "#5D3F51",
           "cmyk": [
             58,
@@ -6476,8 +6514,8 @@
         {
           "name_zh": "龍睛魚紫",
           "pinyin": "longjingyuzi",
-          "name_en": "longjingyuzi",
-          "name_ja": "longjingyuzi",
+          "name_en": "dragon eye fish purple",
+          "name_ja": "龍睛魚紫",
           "hex": "#4E2A40",
           "cmyk": [
             61,
@@ -6489,8 +6527,8 @@
         {
           "name_zh": "青蛤殼紫",
           "pinyin": "qinghakezi",
-          "name_en": "qinghakezi",
-          "name_ja": "qinghakezi",
+          "name_en": "green clam shell purple",
+          "name_ja": "青蛤殻紫",
           "hex": "#BC84A8",
           "cmyk": [
             32,
@@ -6502,8 +6540,8 @@
         {
           "name_zh": "蘿蘭紫",
           "pinyin": "luolanzi",
-          "name_en": "luolanzi",
-          "name_ja": "luolanzi",
+          "name_en": "loran purple",
+          "name_ja": "蘿蘭紫",
           "hex": "#C08EAF",
           "cmyk": [
             30,
@@ -6515,8 +6553,8 @@
         {
           "name_zh": "荸薺紫",
           "pinyin": "biqizi",
-          "name_en": "biqizi",
-          "name_ja": "biqizi",
+          "name_en": "water chestnut purple",
+          "name_ja": "荸薺紫",
           "hex": "#411C35",
           "cmyk": [
             65,
@@ -6528,8 +6566,8 @@
         {
           "name_zh": "豆蔻紫",
           "pinyin": "doukouzi",
-          "name_en": "doukouzi",
-          "name_ja": "doukouzi",
+          "name_en": "cardamom purple",
+          "name_ja": "豆蔻紫",
           "hex": "#AD6598",
           "cmyk": [
             40,
@@ -6541,8 +6579,8 @@
         {
           "name_zh": "扁豆紫",
           "pinyin": "biandouzi",
-          "name_en": "biandouzi",
-          "name_ja": "biandouzi",
+          "name_en": "lentil purple",
+          "name_ja": "扁豆紫",
           "hex": "#A35C8F",
           "cmyk": [
             44,
@@ -6554,8 +6592,8 @@
         {
           "name_zh": "牽牛紫",
           "pinyin": "qianniuzi",
-          "name_en": "qianniuzi",
-          "name_ja": "qianniuzi",
+          "name_en": "morning glory purple",
+          "name_ja": "牽牛紫",
           "hex": "#681752",
           "cmyk": [
             59,
@@ -6567,8 +6605,8 @@
         {
           "name_zh": "芓紫",
           "pinyin": "zizi",
-          "name_en": "zizi",
-          "name_ja": "zizi",
+          "name_en": "taro purple",
+          "name_ja": "芓紫",
           "hex": "#894276",
           "cmyk": [
             53,
@@ -6580,8 +6618,8 @@
         {
           "name_zh": "葛巾紫",
           "pinyin": "gejinzi",
-          "name_en": "gejinzi",
-          "name_ja": "gejinzi",
+          "name_en": "gejin purple",
+          "name_ja": "葛巾紫",
           "hex": "#7E2065",
           "cmyk": [
             55,
@@ -6593,8 +6631,8 @@
         {
           "name_zh": "青蓮",
           "pinyin": "qinglian",
-          "name_en": "qinglian",
-          "name_ja": "qinglian",
+          "name_en": "green lotus",
+          "name_ja": "青蓮",
           "hex": "#8B2671",
           "cmyk": [
             53,
@@ -6606,8 +6644,8 @@
         {
           "name_zh": "芥花紫",
           "pinyin": "jiehuazi",
-          "name_en": "jiehuazi",
-          "name_ja": "jiehuazi",
+          "name_en": "mustard flower purple",
+          "name_ja": "芥花紫",
           "hex": "#983680",
           "cmyk": [
             50,
@@ -6619,8 +6657,8 @@
         {
           "name_zh": "鳳信紫",
           "pinyin": "fengxinzi",
-          "name_en": "fengxinzi",
-          "name_ja": "fengxinzi",
+          "name_en": "phoenix letter purple",
+          "name_ja": "鳳信紫",
           "hex": "#C8ADC4",
           "cmyk": [
             26,
@@ -6632,8 +6670,8 @@
         {
           "name_zh": "深牽牛紫",
           "pinyin": "shenqianniuzi",
-          "name_en": "shenqianniuzi",
-          "name_ja": "shenqianniuzi",
+          "name_en": "deep morning glory purple",
+          "name_ja": "深牽牛紫",
           "hex": "#1C0D1A",
           "cmyk": [
             80,
@@ -6645,8 +6683,8 @@
         {
           "name_zh": "魏紫",
           "pinyin": "weizi",
-          "name_en": "weizi",
-          "name_ja": "weizi",
+          "name_en": "wei purple",
+          "name_ja": "魏紫",
           "hex": "#7E1671",
           "cmyk": [
             62,
@@ -6658,8 +6696,8 @@
         {
           "name_zh": "芝蘭紫",
           "pinyin": "zhilanzi",
-          "name_en": "zhilanzi",
-          "name_ja": "zhilanzi",
+          "name_en": "orchid purple",
+          "name_ja": "芝蘭紫",
           "hex": "#7E1671",
           "cmyk": [
             62,
@@ -6671,8 +6709,8 @@
         {
           "name_zh": "鳥梅紫",
           "pinyin": "niaomeizi",
-          "name_en": "niaomeizi",
-          "name_ja": "niaomeizi",
+          "name_en": "bird plum purple",
+          "name_ja": "鳥梅紫",
           "hex": "#1E131D",
           "cmyk": [
             78,
@@ -6684,8 +6722,8 @@
         {
           "name_zh": "桔梗紫",
           "pinyin": "jiegengzi",
-          "name_en": "jiegengzi",
-          "name_ja": "jiegengzi",
+          "name_en": "platycodon purple",
+          "name_ja": "桔梗紫",
           "hex": "#813C85",
           "cmyk": [
             62,
@@ -6697,8 +6735,8 @@
         {
           "name_zh": "淡牽牛紫",
           "pinyin": "danqianniuzi",
-          "name_en": "danqianniuzi",
-          "name_ja": "danqianniuzi",
+          "name_en": "pale morning glory purple",
+          "name_ja": "淡牽牛紫",
           "hex": "#D1C2D3",
           "cmyk": [
             21,
@@ -6710,8 +6748,8 @@
         {
           "name_zh": "劍鋒紫",
           "pinyin": "jianfengzi",
-          "name_en": "jianfengzi",
-          "name_ja": "jianfengzi",
+          "name_en": "sword edge purple",
+          "name_ja": "剣鋒紫",
           "hex": "#3E3841",
           "cmyk": [
             69,
@@ -6723,8 +6761,8 @@
         {
           "name_zh": "蕈紫",
           "pinyin": "xunzi",
-          "name_en": "xunzi",
-          "name_ja": "xunzi",
+          "name_en": "mushroom purple",
+          "name_ja": "蕈紫",
           "hex": "#815C94",
           "cmyk": [
             60,
@@ -6736,8 +6774,8 @@
         {
           "name_zh": "槿紫",
           "pinyin": "jinzi",
-          "name_en": "jinzi",
-          "name_ja": "jinzi",
+          "name_en": "hibiscus purple",
+          "name_ja": "槿紫",
           "hex": "#806D9E",
           "cmyk": [
             59,
@@ -6749,8 +6787,8 @@
         {
           "name_zh": "芡食白",
           "pinyin": "qianshibai",
-          "name_en": "qianshibai",
-          "name_ja": "qianshibai",
+          "name_en": "gorgon fruit white",
+          "name_ja": "芡食白",
           "hex": "#E2E1E4",
           "cmyk": [
             13,
@@ -6762,8 +6800,8 @@
         {
           "name_zh": "龍葵紫",
           "pinyin": "longkuizi",
-          "name_en": "longkuizi",
-          "name_ja": "longkuizi",
+          "name_en": "black nightshade purple",
+          "name_ja": "龍葵紫",
           "hex": "#322F3B",
           "cmyk": [
             76,
@@ -6775,8 +6813,8 @@
         {
           "name_zh": "藤蘿紫",
           "pinyin": "tengluozi",
-          "name_en": "tengluozi",
-          "name_ja": "tengluozi",
+          "name_en": "wisteria purple",
+          "name_ja": "藤蘿紫",
           "hex": "#8076A3",
           "cmyk": [
             58,
@@ -6788,8 +6826,8 @@
         {
           "name_zh": "沙魚灰",
           "pinyin": "shayuhui",
-          "name_en": "shayuhui",
-          "name_ja": "shayuhui",
+          "name_en": "shark gray",
+          "name_ja": "鮫灰",
           "hex": "#35333C",
           "cmyk": [
             73,
@@ -6801,8 +6839,8 @@
         {
           "name_zh": "暗龍膽紫",
           "pinyin": "anlongdanzi",
-          "name_en": "anlongdanzi",
-          "name_ja": "anlongdanzi",
+          "name_en": "dark gentian purple",
+          "name_ja": "暗竜胆紫",
           "hex": "#22202E",
           "cmyk": [
             84,
@@ -6814,8 +6852,8 @@
         {
           "name_zh": "暗藍紫",
           "pinyin": "anlanzi",
-          "name_en": "anlanzi",
-          "name_ja": "anlanzi",
+          "name_en": "dark blue purple",
+          "name_ja": "暗藍紫",
           "hex": "#131124",
           "cmyk": [
             96,
@@ -6827,8 +6865,8 @@
         {
           "name_zh": "野葡萄紫",
           "pinyin": "yeputaozi",
-          "name_en": "yeputaozi",
-          "name_ja": "yeputaozi",
+          "name_en": "wild grape purple",
+          "name_ja": "野葡萄紫",
           "hex": "#302F4B",
           "cmyk": [
             86,
@@ -6840,8 +6878,8 @@
         {
           "name_zh": "野菊紫",
           "pinyin": "yejuzi",
-          "name_en": "yejuzi",
-          "name_ja": "yejuzi",
+          "name_en": "wild chrysanthemum purple",
+          "name_ja": "野菊紫",
           "hex": "#525288",
           "cmyk": [
             79,
@@ -6853,8 +6891,8 @@
         {
           "name_zh": "水牛灰",
           "pinyin": "shuiniuhui",
-          "name_en": "shuiniuhui",
-          "name_ja": "shuiniuhui",
+          "name_en": "buffalo gray",
+          "name_ja": "水牛灰",
           "hex": "#2F2F35",
           "cmyk": [
             74,
@@ -6866,8 +6904,8 @@
         {
           "name_zh": "遠山紫",
           "pinyin": "yuanshanzi",
-          "name_en": "yuanshanzi",
-          "name_ja": "yuanshanzi",
+          "name_en": "distant mountain purple",
+          "name_ja": "遠山紫",
           "hex": "#CCCCD6",
           "cmyk": [
             23,
@@ -6879,8 +6917,8 @@
         {
           "name_zh": "螺甸紫",
           "pinyin": "luodianzi",
-          "name_en": "luodianzi",
-          "name_ja": "luodianzi",
+          "name_en": "mother-of-pearl purple",
+          "name_ja": "螺鈿紫",
           "hex": "#74759B",
           "cmyk": [
             62,
@@ -6892,8 +6930,8 @@
         {
           "name_zh": "晶石紫",
           "pinyin": "jingshizi",
-          "name_en": "jingshizi",
-          "name_ja": "jingshizi",
+          "name_en": "crystal purple",
+          "name_ja": "晶石紫",
           "hex": "#1F2040",
           "cmyk": [
             98,
@@ -6905,8 +6943,8 @@
         {
           "name_zh": "滿天星紫",
           "pinyin": "mantianxingzi",
-          "name_en": "mantianxingzi",
-          "name_ja": "mantianxingzi",
+          "name_en": "gypsophila purple",
+          "name_ja": "満天星紫",
           "hex": "#2E317C",
           "cmyk": [
             98,
@@ -6918,8 +6956,8 @@
         {
           "name_zh": "淡藍紫",
           "pinyin": "danlanzi",
-          "name_en": "danlanzi",
-          "name_ja": "danlanzi",
+          "name_en": "pale blue purple",
+          "name_ja": "淡藍紫",
           "hex": "#A7A8BD",
           "cmyk": [
             39,
@@ -6931,8 +6969,8 @@
         {
           "name_zh": "山梗紫",
           "pinyin": "shangengzi",
-          "name_en": "shangengzi",
-          "name_ja": "shangengzi",
+          "name_en": "lobelia purple",
+          "name_ja": "山梗紫",
           "hex": "#61649F",
           "cmyk": [
             73,
@@ -6944,8 +6982,8 @@
         {
           "name_zh": "牛角灰",
           "pinyin": "niujiaohui",
-          "name_en": "niujiaohui",
-          "name_ja": "niujiaohui",
+          "name_en": "ox horn gray",
+          "name_ja": "牛角灰",
           "hex": "#2D2E36",
           "cmyk": [
             76,
@@ -6957,8 +6995,8 @@
         {
           "name_zh": "魚尾灰",
           "pinyin": "yuweihui",
-          "name_en": "yuweihui",
-          "name_ja": "yuweihui",
+          "name_en": "fish tail gray",
+          "name_ja": "魚尾灰",
           "hex": "#5E616D",
           "cmyk": [
             63,
@@ -6970,8 +7008,8 @@
         {
           "name_zh": "瓦罐灰",
           "pinyin": "waguanhui",
-          "name_en": "waguanhui",
-          "name_ja": "waguanhui",
+          "name_en": "earthenware pot gray",
+          "name_ja": "瓦罐灰",
           "hex": "#47484C",
           "cmyk": [
             65,
@@ -6983,8 +7021,8 @@
         {
           "name_zh": "鋼藍",
           "pinyin": "ganglan",
-          "name_en": "ganglan",
-          "name_ja": "ganglan",
+          "name_en": "steel blue",
+          "name_ja": "鋼藍",
           "hex": "#0F1423",
           "cmyk": [
             97,
@@ -6996,8 +7034,8 @@
         {
           "name_zh": "燕頷藍",
           "pinyin": "yanhanlan",
-          "name_en": "yanhanlan",
-          "name_ja": "yanhanlan",
+          "name_en": "swallow jaw blue",
+          "name_ja": "燕頷藍",
           "hex": "#131824",
           "cmyk": [
             93,
@@ -7009,8 +7047,8 @@
         {
           "name_zh": "鯨魚灰",
           "pinyin": "jingyuhui",
-          "name_en": "jingyuhui",
-          "name_ja": "jingyuhui",
+          "name_en": "whale gray",
+          "name_ja": "鯨魚灰",
           "hex": "#475164",
           "cmyk": [
             74,
@@ -7022,8 +7060,8 @@
         {
           "name_zh": "青灰",
           "pinyin": "qinghui",
-          "name_en": "qinghui",
-          "name_ja": "qinghui",
+          "name_en": "cyan gray",
+          "name_ja": "青灰",
           "hex": "#2B333E",
           "cmyk": [
             81,
@@ -7035,8 +7073,8 @@
         {
           "name_zh": "鴿藍",
           "pinyin": "gelan",
-          "name_en": "gelan",
-          "name_ja": "gelan",
+          "name_en": "dove blue",
+          "name_ja": "鳩藍",
           "hex": "#1C2938",
           "cmyk": [
             91,
@@ -7048,8 +7086,8 @@
         {
           "name_zh": "暗藍",
           "pinyin": "anlan",
-          "name_en": "anlan",
-          "name_ja": "anlan",
+          "name_en": "dark blue",
+          "name_ja": "暗藍",
           "hex": "#101F30",
           "cmyk": [
             98,
@@ -7061,8 +7099,8 @@
         {
           "name_zh": "鋼青",
           "pinyin": "gangqing",
-          "name_en": "gangqing",
-          "name_ja": "gangqing",
+          "name_en": "steel cyan",
+          "name_ja": "鋼青",
           "hex": "#142334",
           "cmyk": [
             96,
@@ -7074,8 +7112,8 @@
         {
           "name_zh": "海濤藍",
           "pinyin": "haitaolan",
-          "name_en": "haitaolan",
-          "name_ja": "haitaolan",
+          "name_en": "sea wave blue",
+          "name_ja": "海濤藍",
           "hex": "#15559A",
           "cmyk": [
             95,
@@ -7087,8 +7125,8 @@
         {
           "name_zh": "飛燕草藍",
           "pinyin": "feiyancaolan",
-          "name_en": "feiyancaolan",
-          "name_ja": "feiyancaolan",
+          "name_en": "larkspur blue",
+          "name_ja": "飛燕草藍",
           "hex": "#0F59A4",
           "cmyk": [
             94,
@@ -7113,8 +7151,8 @@
         {
           "name_zh": "安安藍",
           "pinyin": "ananlan",
-          "name_en": "ananlan",
-          "name_ja": "ananlan",
+          "name_en": "anan blue",
+          "name_ja": "安安藍",
           "hex": "#3170A7",
           "cmyk": [
             83,
@@ -7126,8 +7164,8 @@
         {
           "name_zh": "海軍藍",
           "pinyin": "haijunlan",
-          "name_en": "haijunlan",
-          "name_ja": "haijunlan",
+          "name_en": "navy blue",
+          "name_ja": "海軍藍",
           "hex": "#346C9C",
           "cmyk": [
             83,
@@ -7139,8 +7177,8 @@
         {
           "name_zh": "景泰藍",
           "pinyin": "jingtailan",
-          "name_en": "jingtailan",
-          "name_ja": "jingtailan",
+          "name_en": "cloisonné blue",
+          "name_ja": "景泰藍",
           "hex": "#2775B6",
           "cmyk": [
             84,
@@ -7152,8 +7190,8 @@
         {
           "name_zh": "品藍",
           "pinyin": "pinlan",
-          "name_en": "pinlan",
-          "name_ja": "pinlan",
+          "name_en": "azure blue",
+          "name_ja": "品藍",
           "hex": "#2B73AF",
           "cmyk": [
             84,
@@ -7165,8 +7203,8 @@
         {
           "name_zh": "尼羅藍",
           "pinyin": "niluolan",
-          "name_en": "niluolan",
-          "name_ja": "niluolan",
+          "name_en": "nile blue",
+          "name_ja": "尼羅藍",
           "hex": "#2474B5",
           "cmyk": [
             84,
@@ -7178,8 +7216,8 @@
         {
           "name_zh": "蝶翅藍",
           "pinyin": "diechilan",
-          "name_en": "diechilan",
-          "name_ja": "diechilan",
+          "name_en": "butterfly wing blue",
+          "name_ja": "蝶翅藍",
           "hex": "#4E7CA1",
           "cmyk": [
             73,
@@ -7191,8 +7229,8 @@
         {
           "name_zh": "花青",
           "pinyin": "huaqing",
-          "name_en": "huaqing",
-          "name_ja": "huaqing",
+          "name_en": "flower cyan",
+          "name_ja": "花青",
           "hex": "#2376B7",
           "cmyk": [
             84,
@@ -7204,8 +7242,8 @@
         {
           "name_zh": "鷃藍",
           "pinyin": "yanlan",
-          "name_en": "yanlan",
-          "name_ja": "yanlan",
+          "name_en": "wren blue",
+          "name_ja": "鷃藍",
           "hex": "#144A74",
           "cmyk": [
             96,
@@ -7217,8 +7255,8 @@
         {
           "name_zh": "星藍",
           "pinyin": "xinglan",
-          "name_en": "xinglan",
-          "name_ja": "xinglan",
+          "name_en": "star blue",
+          "name_ja": "星藍",
           "hex": "#93B5CF",
           "cmyk": [
             47,
@@ -7230,8 +7268,8 @@
         {
           "name_zh": "虹藍",
           "pinyin": "honglan",
-          "name_en": "honglan",
-          "name_ja": "honglan",
+          "name_en": "rainbow blue",
+          "name_ja": "虹藍",
           "hex": "#2177B8",
           "cmyk": [
             84,
@@ -7243,8 +7281,8 @@
         {
           "name_zh": "柏林藍",
           "pinyin": "bolinlan",
-          "name_en": "bolinlan",
-          "name_ja": "bolinlan",
+          "name_en": "berlin blue",
+          "name_ja": "ベルリン藍",
           "hex": "#126BAE",
           "cmyk": [
             89,
@@ -7269,8 +7307,8 @@
         {
           "name_zh": "雲水藍",
           "pinyin": "yunshuilan",
-          "name_en": "yunshuilan",
-          "name_ja": "yunshuilan",
+          "name_en": "cloud water blue",
+          "name_ja": "雲水藍",
           "hex": "#BACCD9",
           "cmyk": [
             32,
@@ -7282,8 +7320,8 @@
         {
           "name_zh": "羽扇豆藍",
           "pinyin": "yushandoulan",
-          "name_en": "yushandoulan",
-          "name_ja": "yushandoulan",
+          "name_en": "lupine blue",
+          "name_ja": "羽扇豆藍",
           "hex": "#619AC3",
           "cmyk": [
             65,
@@ -7295,8 +7333,8 @@
         {
           "name_zh": "戰艦灰",
           "pinyin": "zhanjianhui",
-          "name_en": "zhanjianhui",
-          "name_ja": "zhanjianhui",
+          "name_en": "battleship gray",
+          "name_ja": "戦艦灰",
           "hex": "#495C69",
           "cmyk": [
             71,
@@ -7308,8 +7346,8 @@
         {
           "name_zh": "晴山藍",
           "pinyin": "qingshanlan",
-          "name_en": "qingshanlan",
-          "name_ja": "qingshanlan",
+          "name_en": "clear mountain blue",
+          "name_ja": "晴山藍",
           "hex": "#8FB2C9",
           "cmyk": [
             49,
@@ -7321,8 +7359,8 @@
         {
           "name_zh": "睛藍",
           "pinyin": "jinglan",
-          "name_en": "jinglan",
-          "name_ja": "jinglan",
+          "name_en": "eye blue",
+          "name_ja": "睛藍",
           "hex": "#5698C3",
           "cmyk": [
             68,
@@ -7334,8 +7372,8 @@
         {
           "name_zh": "搪磁藍",
           "pinyin": "tangcilan",
-          "name_en": "tangcilan",
-          "name_ja": "tangcilan",
+          "name_en": "enamel blue",
+          "name_ja": "搪磁藍",
           "hex": "#11659A",
           "cmyk": [
             90,
@@ -7347,8 +7385,8 @@
         {
           "name_zh": "潮藍",
           "pinyin": "chaolan",
-          "name_en": "chaolan",
-          "name_ja": "chaolan",
+          "name_en": "tide blue",
+          "name_ja": "潮藍",
           "hex": "#2983BB",
           "cmyk": [
             80,
@@ -7360,8 +7398,8 @@
         {
           "name_zh": "天藍",
           "pinyin": "tianlan",
-          "name_en": "tianlan",
-          "name_ja": "tianlan",
+          "name_en": "sky blue",
+          "name_ja": "天藍",
           "hex": "#1677B3",
           "cmyk": [
             85,
@@ -7373,8 +7411,8 @@
         {
           "name_zh": "大理石灰",
           "pinyin": "dalishihui",
-          "name_en": "dalishihui",
-          "name_ja": "dalishihui",
+          "name_en": "marble gray",
+          "name_ja": "大理石灰",
           "hex": "#C4CBCF",
           "cmyk": [
             27,
@@ -7386,8 +7424,8 @@
         {
           "name_zh": "牽牛花藍",
           "pinyin": "qianniuhualan",
-          "name_en": "qianniuhualan",
-          "name_ja": "qianniuhualan",
+          "name_en": "morning glory blue",
+          "name_ja": "牽牛花藍",
           "hex": "#1177B0",
           "cmyk": [
             85,
@@ -7399,8 +7437,8 @@
         {
           "name_zh": "寶石藍",
           "pinyin": "baoshilan",
-          "name_en": "baoshilan",
-          "name_ja": "baoshilan",
+          "name_en": "gem blue",
+          "name_ja": "宝石藍",
           "hex": "#2486B9",
           "cmyk": [
             80,
@@ -7412,8 +7450,8 @@
         {
           "name_zh": "淡藍灰",
           "pinyin": "danlanhui",
-          "name_en": "danlanhui",
-          "name_ja": "danlanhui",
+          "name_en": "pale blue gray",
+          "name_ja": "淡藍灰",
           "hex": "#5E7987",
           "cmyk": [
             65,
@@ -7425,8 +7463,8 @@
         {
           "name_zh": "嫩灰",
           "pinyin": "nenhui",
-          "name_en": "nenhui",
-          "name_ja": "nenhui",
+          "name_en": "tender gray",
+          "name_ja": "嫩灰",
           "hex": "#74787A",
           "cmyk": [
             53,
@@ -7438,8 +7476,8 @@
         {
           "name_zh": "銀魚白",
           "pinyin": "yinyubai",
-          "name_en": "yinyubai",
-          "name_ja": "yinyubai",
+          "name_en": "silver fish white",
+          "name_ja": "銀魚白",
           "hex": "#CDD1D3",
           "cmyk": [
             23,
@@ -7451,8 +7489,8 @@
         {
           "name_zh": "釉藍",
           "pinyin": "youlan",
-          "name_en": "youlan",
-          "name_ja": "youlan",
+          "name_en": "glaze blue",
+          "name_ja": "釉藍",
           "hex": "#1781B5",
           "cmyk": [
             82,
@@ -7464,8 +7502,8 @@
         {
           "name_zh": "澗石藍",
           "pinyin": "jianshilan",
-          "name_en": "jianshilan",
-          "name_ja": "jianshilan",
+          "name_en": "stream stone blue",
+          "name_ja": "澗石藍",
           "hex": "#66A9C9",
           "cmyk": [
             62,
@@ -7477,8 +7515,8 @@
         {
           "name_zh": "遠天藍",
           "pinyin": "yuantianlan",
-          "name_en": "yuantianlan",
-          "name_ja": "yuantianlan",
+          "name_en": "distant sky blue",
+          "name_ja": "遠天藍",
           "hex": "#D0DFE6",
           "cmyk": [
             22,
@@ -7490,8 +7528,8 @@
         {
           "name_zh": "雲山藍",
           "pinyin": "yunshanlan",
-          "name_en": "yunshanlan",
-          "name_ja": "yunshanlan",
+          "name_en": "cloud mountain blue",
+          "name_ja": "雲山藍",
           "hex": "#2F90B9",
           "cmyk": [
             76,
@@ -7503,8 +7541,8 @@
         {
           "name_zh": "秋波藍",
           "pinyin": "qiubolan",
-          "name_en": "qiubolan",
-          "name_ja": "qiubolan",
+          "name_en": "autumn wave blue",
+          "name_ja": "秋波藍",
           "hex": "#8ABCD1",
           "cmyk": [
             51,
@@ -7516,8 +7554,8 @@
         {
           "name_zh": "井天藍",
           "pinyin": "jingtianlan",
-          "name_en": "jingtianlan",
-          "name_ja": "jingtianlan",
+          "name_en": "well sky blue",
+          "name_ja": "井天藍",
           "hex": "#C3D7DF",
           "cmyk": [
             28,
@@ -7529,8 +7567,8 @@
         {
           "name_zh": "鳶尾藍",
           "pinyin": "yuanweilan",
-          "name_en": "yuanweilan",
-          "name_ja": "yuanweilan",
+          "name_en": "iris blue",
+          "name_ja": "鳶尾藍",
           "hex": "#158BB8",
           "cmyk": [
             80,
@@ -7542,8 +7580,8 @@
         {
           "name_zh": "雲峯白",
           "pinyin": "yunfengbai",
-          "name_en": "yunfengbai",
-          "name_ja": "yunfengbai",
+          "name_en": "cloud peak white",
+          "name_ja": "雲峰白",
           "hex": "#D8E3E7",
           "cmyk": [
             18,
@@ -7555,8 +7593,8 @@
         {
           "name_zh": "星灰",
           "pinyin": "xinghui",
-          "name_en": "xinghui",
-          "name_ja": "xinghui",
+          "name_en": "star gray",
+          "name_ja": "星灰",
           "hex": "#B2BBBE",
           "cmyk": [
             34,
@@ -7568,8 +7606,8 @@
         {
           "name_zh": "鈷藍",
           "pinyin": "gulan",
-          "name_en": "gulan",
-          "name_ja": "gulan",
+          "name_en": "cobalt blue",
+          "name_ja": "コバルト藍",
           "hex": "#1A94BC",
           "cmyk": [
             78,
@@ -7581,8 +7619,8 @@
         {
           "name_zh": "碧青",
           "pinyin": "biqing",
-          "name_en": "biqing",
-          "name_ja": "biqing",
+          "name_en": "jade green",
+          "name_ja": "碧青",
           "hex": "#5CB3CC",
           "cmyk": [
             64,
@@ -7594,8 +7632,8 @@
         {
           "name_zh": "蒼藍",
           "pinyin": "canglan",
-          "name_en": "canglan",
-          "name_ja": "canglan",
+          "name_en": "azure blue",
+          "name_ja": "蒼藍",
           "hex": "#134857",
           "cmyk": [
             90,
@@ -7607,8 +7645,8 @@
         {
           "name_zh": "深灰藍",
           "pinyin": "shenhuilan",
-          "name_en": "shenhuilan",
-          "name_ja": "shenhuilan",
+          "name_en": "deep gray blue",
+          "name_ja": "深灰藍",
           "hex": "#132C33",
           "cmyk": [
             90,
@@ -7620,8 +7658,8 @@
         {
           "name_zh": "灰藍",
           "pinyin": "huilan",
-          "name_en": "huilan",
-          "name_ja": "huilan",
+          "name_en": "gray blue",
+          "name_ja": "灰藍",
           "hex": "#21373D",
           "cmyk": [
             84,
@@ -7633,8 +7671,8 @@
         {
           "name_zh": "湖水藍",
           "pinyin": "hushuilan",
-          "name_en": "hushuilan",
-          "name_ja": "hushuilan",
+          "name_en": "lake blue",
+          "name_ja": "湖水藍",
           "hex": "#B0D5DF",
           "cmyk": [
             36,
@@ -7646,8 +7684,8 @@
         {
           "name_zh": "海青",
           "pinyin": "haiqing",
-          "name_en": "haiqing",
-          "name_ja": "haiqing",
+          "name_en": "sea cyan",
+          "name_ja": "海青",
           "hex": "#22A2C3",
           "cmyk": [
             75,
@@ -7659,8 +7697,8 @@
         {
           "name_zh": "黃昏灰",
           "pinyin": "huanghunhui",
-          "name_en": "huanghunhui",
-          "name_ja": "huanghunhui",
+          "name_en": "dusk gray",
+          "name_ja": "黄昏灰",
           "hex": "#474B4C",
           "cmyk": [
             65,
@@ -7672,8 +7710,8 @@
         {
           "name_zh": "霽青",
           "pinyin": "jiqing",
-          "name_en": "jiqing",
-          "name_ja": "jiqing",
+          "name_en": "sky blue after rain",
+          "name_ja": "霽青",
           "hex": "#63BBD0",
           "cmyk": [
             62,
@@ -7685,8 +7723,8 @@
         {
           "name_zh": "玉釒蘭藍",
           "pinyin": "yuqinlan",
-          "name_en": "yuqinlan",
-          "name_ja": "yuqinlan",
+          "name_en": "jade orchid blue",
+          "name_ja": "玉琴藍",
           "hex": "#126E82",
           "cmyk": [
             84,
@@ -7698,8 +7736,8 @@
         {
           "name_zh": "膽礬藍",
           "pinyin": "danfanlan",
-          "name_en": "danfanlan",
-          "name_ja": "danfanlan",
+          "name_en": "chalcanthite blue",
+          "name_ja": "胆礬藍",
           "hex": "#0F95B0",
           "cmyk": [
             78,
@@ -7711,8 +7749,8 @@
         {
           "name_zh": "樫鳥藍",
           "pinyin": "jianniaolan",
-          "name_en": "jianniaolan",
-          "name_ja": "jianniaolan",
+          "name_en": "jay blue",
+          "name_ja": "樫鳥藍",
           "hex": "#1491A8",
           "cmyk": [
             78,
@@ -7724,8 +7762,8 @@
         {
           "name_zh": "鷗藍",
           "pinyin": "oulan",
-          "name_en": "oulan",
-          "name_ja": "oulan",
+          "name_en": "gull blue",
+          "name_ja": "鴎藍",
           "hex": "#C7D2D4",
           "cmyk": [
             26,
@@ -7737,8 +7775,8 @@
         {
           "name_zh": "翠藍",
           "pinyin": "cuilan",
-          "name_en": "cuilan",
-          "name_ja": "cuilan",
+          "name_en": "emerald blue",
+          "name_ja": "翠藍",
           "hex": "#1E9EB3",
           "cmyk": [
             76,
@@ -7750,8 +7788,8 @@
         {
           "name_zh": "蜻蜓藍",
           "pinyin": "qingtinglan",
-          "name_en": "qingtinglan",
-          "name_ja": "qingtinglan",
+          "name_en": "dragonfly blue",
+          "name_ja": "蜻蜓藍",
           "hex": "#3B818C",
           "cmyk": [
             75,
@@ -7776,8 +7814,8 @@
         {
           "name_zh": "蔚藍",
           "pinyin": "weilan",
-          "name_en": "weilan",
-          "name_ja": "weilan",
+          "name_en": "sky blue",
+          "name_ja": "蔚藍",
           "hex": "#29B7CB",
           "cmyk": [
             71,
@@ -7789,8 +7827,8 @@
         {
           "name_zh": "瀑布藍",
           "pinyin": "pubulan",
-          "name_en": "pubulan",
-          "name_ja": "pubulan",
+          "name_en": "waterfall blue",
+          "name_ja": "瀑布藍",
           "hex": "#51C4D3",
           "cmyk": [
             64,
@@ -7802,8 +7840,8 @@
         {
           "name_zh": "閃藍",
           "pinyin": "shanlan",
-          "name_en": "shanlan",
-          "name_ja": "shanlan",
+          "name_en": "flash blue",
+          "name_ja": "閃藍",
           "hex": "#7CABB1",
           "cmyk": [
             56,
@@ -7815,8 +7853,8 @@
         {
           "name_zh": "甸子藍",
           "pinyin": "dianzilan",
-          "name_en": "dianzilan",
-          "name_ja": "dianzilan",
+          "name_en": "meadow blue",
+          "name_ja": "甸子藍",
           "hex": "#10AEC2",
           "cmyk": [
             75,
@@ -7828,8 +7866,8 @@
         {
           "name_zh": "晚波藍",
           "pinyin": "wanbolan",
-          "name_en": "wanbolan",
-          "name_ja": "wanbolan",
+          "name_en": "evening wave blue",
+          "name_ja": "晩波藍",
           "hex": "#648E93",
           "cmyk": [
             63,
@@ -7841,8 +7879,8 @@
         {
           "name_zh": "清水藍",
           "pinyin": "qingshuilan",
-          "name_en": "qingshuilan",
-          "name_ja": "qingshuilan",
+          "name_en": "clear water blue",
+          "name_ja": "清水藍",
           "hex": "#93D5DC",
           "cmyk": [
             47,
@@ -7854,8 +7892,8 @@
         {
           "name_zh": "夏雲灰",
           "pinyin": "xiayunhui",
-          "name_en": "xiayunhui",
-          "name_ja": "xiayunhui",
+          "name_en": "summer cloud gray",
+          "name_ja": "夏雲灰",
           "hex": "#617172",
           "cmyk": [
             61,
@@ -7867,8 +7905,8 @@
         {
           "name_zh": "海天藍",
           "pinyin": "haitianlan",
-          "name_en": "haitianlan",
-          "name_ja": "haitianlan",
+          "name_en": "sea and sky blue",
+          "name_ja": "海天藍",
           "hex": "#C6E6E8",
           "cmyk": [
             27,
@@ -7880,8 +7918,8 @@
         {
           "name_zh": "蝦殼青",
           "pinyin": "xiakeqing",
-          "name_en": "xiakeqing",
-          "name_ja": "xiakeqing",
+          "name_en": "shrimp shell cyan",
+          "name_ja": "蝦殻青",
           "hex": "#869D9D",
           "cmyk": [
             51,
@@ -7893,8 +7931,8 @@
         {
           "name_zh": "石綠",
           "pinyin": "shilv",
-          "name_en": "shilv",
-          "name_ja": "shilv",
+          "name_en": "stone green",
+          "name_ja": "石緑",
           "hex": "#57C3C2",
           "cmyk": [
             64,
@@ -7906,8 +7944,8 @@
         {
           "name_zh": "穹灰",
           "pinyin": "qionghui",
-          "name_en": "qionghui",
-          "name_ja": "qionghui",
+          "name_en": "dome gray",
+          "name_ja": "穹灰",
           "hex": "#C4D7D6",
           "cmyk": [
             28,
@@ -7919,8 +7957,8 @@
         {
           "name_zh": "美蝶綠",
           "pinyin": "meidielv",
-          "name_en": "meidielv",
-          "name_ja": "meidielv",
+          "name_en": "beautiful butterfly green",
+          "name_ja": "美蝶緑",
           "hex": "#12AA9C",
           "cmyk": [
             76,
@@ -7932,8 +7970,8 @@
         {
           "name_zh": "堊灰",
           "pinyin": "ehui",
-          "name_en": "ehui",
-          "name_ja": "ehui",
+          "name_en": "chalk gray",
+          "name_ja": "堊灰",
           "hex": "#737C7B",
           "cmyk": [
             55,
@@ -7945,8 +7983,8 @@
         {
           "name_zh": "藍綠",
           "pinyin": "lanlv",
-          "name_en": "lanlv",
-          "name_ja": "lanlv",
+          "name_en": "blue green",
+          "name_ja": "藍緑",
           "hex": "#12A182",
           "cmyk": [
             78,
@@ -7971,8 +8009,8 @@
         {
           "name_zh": "亞丁綠",
           "pinyin": "yadinglv",
-          "name_en": "yadinglv",
-          "name_ja": "yadinglv",
+          "name_en": "aden green",
+          "name_ja": "アデン緑",
           "hex": "#428675",
           "cmyk": [
             74,
@@ -7984,8 +8022,8 @@
         {
           "name_zh": "月影白",
           "pinyin": "yueyingbai",
-          "name_en": "yueyingbai",
-          "name_ja": "yueyingbai",
+          "name_en": "moon shadow white",
+          "name_ja": "月影白",
           "hex": "#C0C4C3",
           "cmyk": [
             28,
@@ -7997,8 +8035,8 @@
         {
           "name_zh": "海王綠",
           "pinyin": "haiwanglv",
-          "name_en": "haiwanglv",
-          "name_ja": "haiwanglv",
+          "name_en": "neptune green",
+          "name_ja": "海王緑",
           "hex": "#248067",
           "cmyk": [
             82,
@@ -8010,8 +8048,8 @@
         {
           "name_zh": "深海綠",
           "pinyin": "shenhailv",
-          "name_en": "shenhailv",
-          "name_ja": "shenhailv",
+          "name_en": "deep sea green",
+          "name_ja": "深海緑",
           "hex": "#1A3B32",
           "cmyk": [
             84,
@@ -8023,8 +8061,8 @@
         {
           "name_zh": "綠灰",
           "pinyin": "lvhui",
-          "name_en": "lvhui",
-          "name_ja": "lvhui",
+          "name_en": "green gray",
+          "name_ja": "緑灰",
           "hex": "#314A43",
           "cmyk": [
             76,
@@ -8036,8 +8074,8 @@
         {
           "name_zh": "青礬綠",
           "pinyin": "qingfanlv",
-          "name_en": "qingfanlv",
-          "name_ja": "qingfanlv",
+          "name_en": "green vitriol green",
+          "name_ja": "青礬緑",
           "hex": "#2C9678",
           "cmyk": [
             78,
@@ -8049,8 +8087,8 @@
         {
           "name_zh": "蒼綠",
           "pinyin": "canglv",
-          "name_en": "canglv",
-          "name_ja": "canglv",
+          "name_en": "dark green",
+          "name_ja": "蒼緑",
           "hex": "#223E36",
           "cmyk": [
             81,
@@ -8062,8 +8100,8 @@
         {
           "name_zh": "飛泉綠",
           "pinyin": "feiquanlv",
-          "name_en": "feiquanlv",
-          "name_ja": "feiquanlv",
+          "name_en": "flying spring green",
+          "name_ja": "飛泉緑",
           "hex": "#497568",
           "cmyk": [
             71,
@@ -8075,8 +8113,8 @@
         {
           "name_zh": "莽叢綠",
           "pinyin": "mangconglv",
-          "name_en": "mangconglv",
-          "name_ja": "mangconglv",
+          "name_en": "dense bush green",
+          "name_ja": "莽叢緑",
           "hex": "#141E1B",
           "cmyk": [
             82,
@@ -8088,8 +8126,8 @@
         {
           "name_zh": "梧枝綠",
           "pinyin": "wuzhilv",
-          "name_en": "wuzhilv",
-          "name_ja": "wuzhilv",
+          "name_en": "phoenix tree branch green",
+          "name_ja": "梧枝緑",
           "hex": "#69A794",
           "cmyk": [
             63,
@@ -8101,8 +8139,8 @@
         {
           "name_zh": "銅綠",
           "pinyin": "tonglv",
-          "name_en": "tonglv",
-          "name_ja": "tonglv",
+          "name_en": "copper green",
+          "name_ja": "銅緑",
           "hex": "#2BAE85",
           "cmyk": [
             75,
@@ -8114,8 +8152,8 @@
         {
           "name_zh": "草原遠綠",
           "pinyin": "caoyuanyuanlv",
-          "name_en": "caoyuanyuanlv",
-          "name_ja": "caoyuanyuanlv",
+          "name_en": "grassland distant green",
+          "name_ja": "草原遠緑",
           "hex": "#9ABEAF",
           "cmyk": [
             46,
@@ -8127,8 +8165,8 @@
         {
           "name_zh": "蛙綠",
           "pinyin": "walv",
-          "name_en": "walv",
-          "name_ja": "walv",
+          "name_en": "frog green",
+          "name_ja": "蛙緑",
           "hex": "#45B787",
           "cmyk": [
             70,
@@ -8140,8 +8178,8 @@
         {
           "name_zh": "浪花綠",
           "pinyin": "langhualv",
-          "name_en": "langhualv",
-          "name_ja": "langhualv",
+          "name_en": "wave green",
+          "name_ja": "浪花緑",
           "hex": "#92B3A5",
           "cmyk": [
             48,
@@ -8153,8 +8191,8 @@
         {
           "name_zh": "苷藍綠",
           "pinyin": "ganlanlv",
-          "name_en": "ganlanlv",
-          "name_ja": "ganlanlv",
+          "name_en": "cabbage green",
+          "name_ja": "甘藍緑",
           "hex": "#1F2623",
           "cmyk": [
             76,
@@ -8166,8 +8204,8 @@
         {
           "name_zh": "粉綠",
           "pinyin": "fenlv",
-          "name_en": "fenlv",
-          "name_ja": "fenlv",
+          "name_en": "powder green",
+          "name_ja": "粉緑",
           "hex": "#83CBAC",
           "cmyk": [
             54,
@@ -8179,8 +8217,8 @@
         {
           "name_zh": "淡綠灰",
           "pinyin": "danlvhui",
-          "name_en": "danlvhui",
-          "name_ja": "danlvhui",
+          "name_en": "pale green gray",
+          "name_ja": "淡緑灰",
           "hex": "#70887D",
           "cmyk": [
             58,
@@ -8192,8 +8230,8 @@
         {
           "name_zh": "麥苗綠",
           "pinyin": "maimiaolv",
-          "name_en": "maimiaolv",
-          "name_ja": "maimiaolv",
+          "name_en": "wheat seedling green",
+          "name_ja": "麦苗緑",
           "hex": "#55BB8A",
           "cmyk": [
             67,
@@ -8218,8 +8256,8 @@
         {
           "name_zh": "蔥綠",
           "pinyin": "conglv",
-          "name_en": "conglv",
-          "name_ja": "conglv",
+          "name_en": "scallion green",
+          "name_ja": "葱緑",
           "hex": "#40A070",
           "cmyk": [
             74,
@@ -8231,8 +8269,8 @@
         {
           "name_zh": "荷葉綠",
           "pinyin": "heyelv",
-          "name_en": "heyelv",
-          "name_ja": "heyelv",
+          "name_en": "lotus leaf green",
+          "name_ja": "荷葉緑",
           "hex": "#1A6840",
           "cmyk": [
             86,
@@ -8244,8 +8282,8 @@
         {
           "name_zh": "淡綠",
           "pinyin": "danlv",
-          "name_en": "danlv",
-          "name_ja": "danlv",
+          "name_en": "pale green",
+          "name_ja": "淡緑",
           "hex": "#61AC85",
           "cmyk": [
             65,
@@ -8257,8 +8295,8 @@
         {
           "name_zh": "田園綠",
           "pinyin": "tianyuanlv",
-          "name_en": "tianyuanlv",
-          "name_ja": "tianyuanlv",
+          "name_en": "pastoral green",
+          "name_ja": "田園緑",
           "hex": "#68B88E",
           "cmyk": [
             63,
@@ -8270,8 +8308,8 @@
         {
           "name_zh": "玉簪綠",
           "pinyin": "yuzanlv",
-          "name_en": "yuzanlv",
-          "name_ja": "yuzanlv",
+          "name_en": "hosta green",
+          "name_ja": "玉簪緑",
           "hex": "#A4CAB6",
           "cmyk": [
             42,
@@ -8283,8 +8321,8 @@
         {
           "name_zh": "蟾綠",
           "pinyin": "chanlv",
-          "name_en": "chanlv",
-          "name_ja": "chanlv",
+          "name_en": "toad green",
+          "name_ja": "蟾緑",
           "hex": "#3C9566",
           "cmyk": [
             76,
@@ -8296,8 +8334,8 @@
         {
           "name_zh": "蔻梢綠",
           "pinyin": "koushaolv",
-          "name_en": "koushaolv",
-          "name_ja": "koushaolv",
+          "name_en": "cardamom tip green",
+          "name_ja": "蔻梢緑",
           "hex": "#5DBE8A",
           "cmyk": [
             65,
@@ -8309,8 +8347,8 @@
         {
           "name_zh": "薄荷綠",
           "pinyin": "bohelv",
-          "name_en": "bohelv",
-          "name_ja": "bohelv",
+          "name_en": "mint green",
+          "name_ja": "薄荷緑",
           "hex": "#207F4C",
           "cmyk": [
             84,
@@ -8322,8 +8360,8 @@
         {
           "name_zh": "月白",
           "pinyin": "yuebai",
-          "name_en": "yuebai",
-          "name_ja": "yuebai",
+          "name_en": "moon white",
+          "name_ja": "月白",
           "hex": "#EEF7F2",
           "cmyk": [
             9,
@@ -8335,8 +8373,8 @@
         {
           "name_zh": "蛋白石綠",
           "pinyin": "danbaishilv",
-          "name_en": "danbaishilv",
-          "name_ja": "danbaishilv",
+          "name_en": "opal green",
+          "name_ja": "蛋白石緑",
           "hex": "#579572",
           "cmyk": [
             69,
@@ -8348,8 +8386,8 @@
         {
           "name_zh": "竹篁綠",
           "pinyin": "zhuhuanglv",
-          "name_en": "zhuhuanglv",
-          "name_ja": "zhuhuanglv",
+          "name_en": "bamboo grove green",
+          "name_ja": "竹篁緑",
           "hex": "#B9DEC9",
           "cmyk": [
             34,
@@ -8374,8 +8412,8 @@
         {
           "name_zh": "宮殿綠",
           "pinyin": "gongdianlv",
-          "name_en": "gongdianlv",
-          "name_ja": "gongdianlv",
+          "name_en": "palace green",
+          "name_ja": "宮殿緑",
           "hex": "#20894D",
           "cmyk": [
             82,
@@ -8387,8 +8425,8 @@
         {
           "name_zh": "雲杉綠",
           "pinyin": "yunshanlv",
-          "name_en": "yunshanlv",
-          "name_ja": "yunshanlv",
+          "name_en": "spruce green",
+          "name_ja": "雲杉緑",
           "hex": "#15231B",
           "cmyk": [
             82,
@@ -8400,8 +8438,8 @@
         {
           "name_zh": "毛綠",
           "pinyin": "maolv",
-          "name_en": "maolv",
-          "name_ja": "maolv",
+          "name_en": "fur green",
+          "name_ja": "毛緑",
           "hex": "#66C18C",
           "cmyk": [
             62,
@@ -8413,8 +8451,8 @@
         {
           "name_zh": "冰山藍",
           "pinyin": "bingshanlan",
-          "name_en": "bingshanlan",
-          "name_ja": "bingshanlan",
+          "name_en": "iceberg blue",
+          "name_ja": "氷山藍",
           "hex": "#A4ACA7",
           "cmyk": [
             38,
@@ -8426,8 +8464,8 @@
         {
           "name_zh": "明灰",
           "pinyin": "minghui",
-          "name_en": "minghui",
-          "name_ja": "minghui",
+          "name_en": "bright gray",
+          "name_ja": "明灰",
           "hex": "#8A988E",
           "cmyk": [
             48,
@@ -8439,8 +8477,8 @@
         {
           "name_zh": "明綠",
           "pinyin": "minglv",
-          "name_en": "minglv",
-          "name_ja": "minglv",
+          "name_en": "bright green",
+          "name_ja": "明緑",
           "hex": "#9ECCAB",
           "cmyk": [
             45,
@@ -8452,8 +8490,8 @@
         {
           "name_zh": "松霜綠",
           "pinyin": "songshuanglv",
-          "name_en": "songshuanglv",
-          "name_ja": "songshuanglv",
+          "name_en": "pine frost green",
+          "name_ja": "松霜緑",
           "hex": "#83A78D",
           "cmyk": [
             54,
@@ -8465,8 +8503,8 @@
         {
           "name_zh": "白屈菜綠",
           "pinyin": "baiqucailv",
-          "name_en": "baiqucailv",
-          "name_ja": "baiqucailv",
+          "name_en": "celandine green",
+          "name_ja": "白屈菜緑",
           "hex": "#485B4D",
           "cmyk": [
             68,
@@ -8478,8 +8516,8 @@
         {
           "name_zh": "狼煙灰",
           "pinyin": "langyanhui",
-          "name_en": "langyanhui",
-          "name_ja": "langyanhui",
+          "name_en": "wolf smoke gray",
+          "name_ja": "狼煙灰",
           "hex": "#5D655F",
           "cmyk": [
             60,
@@ -8491,8 +8529,8 @@
         {
           "name_zh": "瓦松綠",
           "pinyin": "wasonglv",
-          "name_en": "wasonglv",
-          "name_ja": "wasonglv",
+          "name_en": "oreostachys green",
+          "name_ja": "瓦松緑",
           "hex": "#6E8B74",
           "cmyk": [
             60,
@@ -8504,8 +8542,8 @@
         {
           "name_zh": "槲寄生綠",
           "pinyin": "hujishenglv",
-          "name_en": "hujishenglv",
-          "name_ja": "hujishenglv",
+          "name_en": "mistletoe green",
+          "name_ja": "槲寄生緑",
           "hex": "#2B312C",
           "cmyk": [
             72,
@@ -8517,8 +8555,8 @@
         {
           "name_zh": "淡翠綠",
           "pinyin": "dancuilv",
-          "name_en": "dancuilv",
-          "name_ja": "dancuilv",
+          "name_en": "pale emerald green",
+          "name_ja": "淡翠緑",
           "hex": "#C6DFC8",
           "cmyk": [
             28,
@@ -8530,8 +8568,8 @@
         {
           "name_zh": "玉髓綠",
           "pinyin": "yusuilv",
-          "name_en": "yusuilv",
-          "name_ja": "yusuilv",
+          "name_en": "chalcedony green",
+          "name_ja": "玉髄緑",
           "hex": "#41B349",
           "cmyk": [
             73,
@@ -8543,8 +8581,8 @@
         {
           "name_zh": "鮮綠",
           "pinyin": "xianlv",
-          "name_en": "xianlv",
-          "name_ja": "xianlv",
+          "name_en": "fresh green",
+          "name_ja": "鮮緑",
           "hex": "#43B244",
           "cmyk": [
             73,
@@ -8556,8 +8594,8 @@
         {
           "name_zh": "油綠",
           "pinyin": "youlv",
-          "name_en": "youlv",
-          "name_ja": "youlv",
+          "name_en": "oil green",
+          "name_ja": "油緑",
           "hex": "#253D24",
           "cmyk": [
             80,
@@ -8569,8 +8607,8 @@
         {
           "name_zh": "寶石綠",
           "pinyin": "baoshilv",
-          "name_en": "baoshilv",
-          "name_ja": "baoshilv",
+          "name_en": "gem green",
+          "name_ja": "宝石緑",
           "hex": "#41AE3C",
           "cmyk": [
             73,
@@ -8582,8 +8620,8 @@
         {
           "name_zh": "嘉陵水綠",
           "pinyin": "jialingshuilv",
-          "name_en": "jialingshuilv",
-          "name_ja": "jialingshuilv",
+          "name_en": "jialing river green",
+          "name_ja": "嘉陵水緑",
           "hex": "#ADD5A2",
           "cmyk": [
             40,
@@ -8595,8 +8633,8 @@
         {
           "name_zh": "田螺綠",
           "pinyin": "tianluolv",
-          "name_en": "tianluolv",
-          "name_ja": "tianluolv",
+          "name_en": "snail green",
+          "name_ja": "田螺緑",
           "hex": "#5E665B",
           "cmyk": [
             59,
@@ -8608,8 +8646,8 @@
         {
           "name_zh": "水綠",
           "pinyin": "shuilv",
-          "name_en": "shuilv",
-          "name_ja": "shuilv",
+          "name_en": "water green",
+          "name_ja": "水緑",
           "hex": "#8CC269",
           "cmyk": [
             54,
@@ -8621,8 +8659,8 @@
         {
           "name_zh": "鸚鵡綠",
           "pinyin": "yingwulv",
-          "name_en": "yingwulv",
-          "name_ja": "yingwulv",
+          "name_en": "parrot green",
+          "name_ja": "鸚鵡緑",
           "hex": "#5BAE23",
           "cmyk": [
             69,
@@ -8634,8 +8672,8 @@
         {
           "name_zh": "艾背綠",
           "pinyin": "aibeilv",
-          "name_en": "aibeilv",
-          "name_ja": "aibeilv",
+          "name_en": "mugwort back green",
+          "name_ja": "艾背緑",
           "hex": "#DFECD5",
           "cmyk": [
             17,
@@ -8647,8 +8685,8 @@
         {
           "name_zh": "艾綠",
           "pinyin": "ailv",
-          "name_en": "ailv",
-          "name_ja": "ailv",
+          "name_en": "mugwort green",
+          "name_ja": "艾緑",
           "hex": "#CAD3C3",
           "cmyk": [
             25,
@@ -8660,8 +8698,8 @@
         {
           "name_zh": "鎳灰",
           "pinyin": "niehui",
-          "name_en": "niehui",
-          "name_ja": "niehui",
+          "name_en": "nickel gray",
+          "name_ja": "ニッケル灰",
           "hex": "#9FA39A",
           "cmyk": [
             39,
@@ -8673,8 +8711,8 @@
         {
           "name_zh": "橄欖石綠",
           "pinyin": "ganlanshilv",
-          "name_en": "ganlanshilv",
-          "name_ja": "ganlanshilv",
+          "name_en": "olivine green",
+          "name_ja": "橄欖石緑",
           "hex": "#B2CF87",
           "cmyk": [
             39,
@@ -8686,8 +8724,8 @@
         {
           "name_zh": "芽綠",
           "pinyin": "yalv",
-          "name_en": "yalv",
-          "name_ja": "yalv",
+          "name_en": "bud green",
+          "name_ja": "芽緑",
           "hex": "#96C24E",
           "cmyk": [
             51,
@@ -8699,8 +8737,8 @@
         {
           "name_zh": "嫩菊綠",
           "pinyin": "nenjulv",
-          "name_en": "nenjulv",
-          "name_ja": "nenjulv",
+          "name_en": "tender chrysanthemum green",
+          "name_ja": "嫩菊緑",
           "hex": "#F0F5E5",
           "cmyk": [
             8,
@@ -8712,8 +8750,8 @@
         {
           "name_zh": "蘆葦綠",
           "pinyin": "luweilv",
-          "name_en": "luweilv",
-          "name_ja": "luweilv",
+          "name_en": "reed green",
+          "name_ja": "蘆葦緑",
           "hex": "#B7D07A",
           "cmyk": [
             37,
@@ -8725,8 +8763,8 @@
         {
           "name_zh": "姚黃",
           "pinyin": "yaohuang",
-          "name_en": "yaohuang",
-          "name_ja": "yaohuang",
+          "name_en": "yao yellow",
+          "name_ja": "姚黄",
           "hex": "#D0DEAA",
           "cmyk": [
             25,
@@ -8738,8 +8776,8 @@
         {
           "name_zh": "蒽油綠",
           "pinyin": "enyoulv",
-          "name_en": "enyoulv",
-          "name_ja": "enyoulv",
+          "name_en": "anthracene oil green",
+          "name_ja": "蒽油緑",
           "hex": "#373834",
           "cmyk": [
             66,
@@ -8751,8 +8789,8 @@
         {
           "name_zh": "蘋果綠",
           "pinyin": "pingguolv",
-          "name_en": "pingguolv",
-          "name_ja": "pingguolv",
+          "name_en": "apple green",
+          "name_ja": "林檎緑",
           "hex": "#BACF65",
           "cmyk": [
             37,
@@ -8764,8 +8802,8 @@
         {
           "name_zh": "海沬綠",
           "pinyin": "haimeilv",
-          "name_en": "haimeilv",
-          "name_ja": "haimeilv",
+          "name_en": "sea foam green",
+          "name_ja": "海沫緑",
           "hex": "#E2E7BF",
           "cmyk": [
             16,
@@ -8777,8 +8815,8 @@
         {
           "name_zh": "橄欖黃綠",
           "pinyin": "ganlanhuanglv",
-          "name_en": "ganlanhuanglv",
-          "name_ja": "ganlanhuanglv",
+          "name_en": "olive yellow green",
+          "name_ja": "橄欖黄緑",
           "hex": "#BEC936",
           "cmyk": [
             36,
@@ -8790,8 +8828,8 @@
         {
           "name_zh": "槐花黃綠",
           "pinyin": "huaihuahuanglv",
-          "name_en": "huaihuahuanglv",
-          "name_ja": "huaihuahuanglv",
+          "name_en": "pagoda tree flower yellow green",
+          "name_ja": "槐花黄緑",
           "hex": "#D2D97A",
           "cmyk": [
             26,
@@ -8803,8 +8841,8 @@
         {
           "name_zh": "蝶黃",
           "pinyin": "diehuang",
-          "name_en": "diehuang",
-          "name_ja": "diehuang",
+          "name_en": "butterfly yellow",
+          "name_ja": "蝶黄",
           "hex": "#E2D849",
           "cmyk": [
             20,
@@ -8829,8 +8867,8 @@
         {
           "name_zh": "橄欖綠",
           "pinyin": "ganlanlv_2",
-          "name_en": "ganlanlv_2",
-          "name_ja": "ganlanlv_2",
+          "name_en": "olive green",
+          "name_ja": "橄欖緑",
           "hex": "#5E5314",
           "cmyk": [
             53,
@@ -8842,8 +8880,8 @@
         {
           "name_zh": "雪白",
           "pinyin": "xuebai",
-          "name_en": "xuebai",
-          "name_ja": "xuebai",
+          "name_en": "snow white",
+          "name_ja": "雪白",
           "hex": "#FFFEF9",
           "cmyk": [
             0,
@@ -8855,8 +8893,8 @@
         {
           "name_zh": "淡灰綠",
           "pinyin": "danhuilv",
-          "name_en": "danhuilv",
-          "name_ja": "danhuilv",
+          "name_en": "pale gray green",
+          "name_ja": "淡灰緑",
           "hex": "#AD9E5F",
           "cmyk": [
             33,
@@ -8868,8 +8906,8 @@
         {
           "name_zh": "佛手黃",
           "pinyin": "foshouhuang",
-          "name_en": "foshouhuang",
-          "name_ja": "foshouhuang",
+          "name_en": "bergamot yellow",
+          "name_ja": "仏手黄",
           "hex": "#FED71A",
           "cmyk": [
             6,
@@ -8881,8 +8919,8 @@
         {
           "name_zh": "乳白",
           "pinyin": "rubai",
-          "name_en": "rubai",
-          "name_ja": "rubai",
+          "name_en": "milk white",
+          "name_ja": "乳白",
           "hex": "#F9F4DC",
           "cmyk": [
             4,
@@ -8894,8 +8932,8 @@
         {
           "name_zh": "香蕉黃",
           "pinyin": "xiangjiaohuang",
-          "name_en": "xiangjiaohuang",
-          "name_ja": "xiangjiaohuang",
+          "name_en": "banana yellow",
+          "name_ja": "バナナ黄",
           "hex": "#E4BF11",
           "cmyk": [
             16,
@@ -8907,8 +8945,8 @@
         {
           "name_zh": "新禾綠",
           "pinyin": "xinhelv",
-          "name_en": "xinhelv",
-          "name_ja": "xinhelv",
+          "name_en": "new grain green",
+          "name_ja": "新禾緑",
           "hex": "#D2B116",
           "cmyk": [
             21,
@@ -8920,8 +8958,8 @@
         {
           "name_zh": "油菜花黃",
           "pinyin": "youcaihuahuang",
-          "name_en": "youcaihuahuang",
-          "name_ja": "youcaihuahuang",
+          "name_en": "rapeseed flower yellow",
+          "name_ja": "菜の花黄",
           "hex": "#FBDA41",
           "cmyk": [
             7,
@@ -8933,8 +8971,8 @@
         {
           "name_zh": "秋葵黃",
           "pinyin": "qiukuihuang",
-          "name_en": "qiukuihuang",
-          "name_ja": "qiukuihuang",
+          "name_en": "okra yellow",
+          "name_ja": "秋葵黄",
           "hex": "#EED045",
           "cmyk": [
             13,
@@ -8946,8 +8984,8 @@
         {
           "name_zh": "柚黃",
           "pinyin": "youhuang",
-          "name_en": "youhuang",
-          "name_ja": "youhuang",
+          "name_en": "pomelo yellow",
+          "name_ja": "柚黄",
           "hex": "#F1CA17",
           "cmyk": [
             11,
@@ -8959,8 +8997,8 @@
         {
           "name_zh": "草黃",
           "pinyin": "caohuang",
-          "name_en": "caohuang",
-          "name_ja": "caohuang",
+          "name_en": "grass yellow",
+          "name_ja": "草黄",
           "hex": "#D2B42C",
           "cmyk": [
             21,
@@ -8972,8 +9010,8 @@
         {
           "name_zh": "硫華黃",
           "pinyin": "liuhuahuang",
-          "name_en": "liuhuahuang",
-          "name_ja": "liuhuahuang",
+          "name_en": "sulfur yellow",
+          "name_ja": "硫華黄",
           "hex": "#F2CE2B",
           "cmyk": [
             11,
@@ -8985,8 +9023,8 @@
         {
           "name_zh": "薑黃",
           "pinyin": "jianghuang",
-          "name_en": "jianghuang",
-          "name_ja": "jianghuang",
+          "name_en": "turmeric yellow",
+          "name_ja": "姜黄",
           "hex": "#E2C027",
           "cmyk": [
             16,
@@ -8998,8 +9036,8 @@
         {
           "name_zh": "潭水綠",
           "pinyin": "tanshuilv",
-          "name_en": "tanshuilv",
-          "name_ja": "tanshuilv",
+          "name_en": "pool water green",
+          "name_ja": "潭水緑",
           "hex": "#645822",
           "cmyk": [
             50,
@@ -9011,8 +9049,8 @@
         {
           "name_zh": "金瓜黃",
           "pinyin": "jinguahuang",
-          "name_en": "jinguahuang",
-          "name_ja": "jinguahuang",
+          "name_en": "golden melon yellow",
+          "name_ja": "金瓜黄",
           "hex": "#FCD217",
           "cmyk": [
             7,
@@ -9024,8 +9062,8 @@
         {
           "name_zh": "麥稈黃",
           "pinyin": "maiganhuang",
-          "name_en": "maiganhuang",
-          "name_ja": "maiganhuang",
+          "name_en": "straw yellow",
+          "name_ja": "麦稈黄",
           "hex": "#F8DF70",
           "cmyk": [
             8,
@@ -9037,8 +9075,8 @@
         {
           "name_zh": "蒿黃",
           "pinyin": "haohuang",
-          "name_en": "haohuang",
-          "name_ja": "haohuang",
+          "name_en": "wormwood yellow",
+          "name_ja": "蒿黄",
           "hex": "#DFC243",
           "cmyk": [
             18,
@@ -9050,8 +9088,8 @@
         {
           "name_zh": "茉莉黃",
           "pinyin": "molihuang",
-          "name_en": "molihuang",
-          "name_ja": "molihuang",
+          "name_en": "jasmine yellow",
+          "name_ja": "茉莉黄",
           "hex": "#F8DF72",
           "cmyk": [
             8,
@@ -9076,8 +9114,8 @@
         {
           "name_zh": "芒果黃",
           "pinyin": "mangguohuang",
-          "name_en": "mangguohuang",
-          "name_ja": "mangguohuang",
+          "name_en": "mango yellow",
+          "name_ja": "マンゴー黄",
           "hex": "#DDC871",
           "cmyk": [
             18,
@@ -9089,8 +9127,8 @@
         {
           "name_zh": "海蔘灰",
           "pinyin": "haishenhui",
-          "name_en": "haishenhui",
-          "name_ja": "haishenhui",
+          "name_en": "sea cucumber gray",
+          "name_ja": "海参灰",
           "hex": "#FFFEFA",
           "cmyk": [
             0,
@@ -9102,8 +9140,8 @@
         {
           "name_zh": "碧螺春綠",
           "pinyin": "biluochunlv",
-          "name_en": "biluochunlv",
-          "name_ja": "biluochunlv",
+          "name_en": "biluochun green",
+          "name_ja": "碧螺春緑",
           "hex": "#867018",
           "cmyk": [
             40,
@@ -9115,8 +9153,8 @@
         {
           "name_zh": "苔綠",
           "pinyin": "tailv",
-          "name_en": "tailv",
-          "name_ja": "tailv",
+          "name_en": "moss green",
+          "name_ja": "苔緑",
           "hex": "#887322",
           "cmyk": [
             40,
@@ -9128,8 +9166,8 @@
         {
           "name_zh": "檸檬黃",
           "pinyin": "ningmenghuang",
-          "name_en": "ningmenghuang",
-          "name_ja": "ningmenghuang",
+          "name_en": "lemon yellow",
+          "name_ja": "レモン黄",
           "hex": "#FCD337",
           "cmyk": [
             7,
@@ -9141,8 +9179,8 @@
         {
           "name_zh": "草灰綠",
           "pinyin": "caohuilv",
-          "name_en": "caohuilv",
-          "name_ja": "caohuilv",
+          "name_en": "grass gray green",
+          "name_ja": "草灰緑",
           "hex": "#8E804B",
           "cmyk": [
             41,
@@ -9154,8 +9192,8 @@
         {
           "name_zh": "向日葵黃",
           "pinyin": "xiangrikuihuang",
-          "name_en": "xiangrikuihuang",
-          "name_ja": "xiangrikuihuang",
+          "name_en": "sunflower yellow",
+          "name_ja": "向日葵黄",
           "hex": "#FECC11",
           "cmyk": [
             5,
@@ -9167,8 +9205,8 @@
         {
           "name_zh": "素馨黃",
           "pinyin": "suxinhuang",
-          "name_en": "suxinhuang",
-          "name_ja": "suxinhuang",
+          "name_en": "jasmine yellow",
+          "name_ja": "素馨黄",
           "hex": "#FCCB16",
           "cmyk": [
             6,
@@ -9180,8 +9218,8 @@
         {
           "name_zh": "乳鴨黃",
           "pinyin": "ruyahuang",
-          "name_en": "ruyahuang",
-          "name_ja": "ruyahuang",
+          "name_en": "duckling yellow",
+          "name_ja": "乳鴨黄",
           "hex": "#FFC90C",
           "cmyk": [
             4,
@@ -9193,8 +9231,8 @@
         {
           "name_zh": "月灰",
           "pinyin": "yuehui",
-          "name_en": "yuehui",
-          "name_ja": "yuehui",
+          "name_en": "moon gray",
+          "name_ja": "月灰",
           "hex": "#B7AE8F",
           "cmyk": [
             30,
@@ -9206,8 +9244,8 @@
         {
           "name_zh": "葵扇黃",
           "pinyin": "kuishanhuang",
-          "name_en": "kuishanhuang",
-          "name_ja": "kuishanhuang",
+          "name_en": "palm fan yellow",
+          "name_ja": "葵扇黄",
           "hex": "#F8D86A",
           "cmyk": [
             8,
@@ -9219,8 +9257,8 @@
         {
           "name_zh": "大豆黃",
           "pinyin": "dadouhuang",
-          "name_en": "dadouhuang",
-          "name_ja": "dadouhuang",
+          "name_en": "soybean yellow",
+          "name_ja": "大豆黄",
           "hex": "#FBCD31",
           "cmyk": [
             6,
@@ -9232,8 +9270,8 @@
         {
           "name_zh": "金盞黃",
           "pinyin": "jinzhanhuang",
-          "name_en": "jinzhanhuang",
-          "name_ja": "jinzhanhuang",
+          "name_en": "marigold yellow",
+          "name_ja": "金盞黄",
           "hex": "#FCC307",
           "cmyk": [
             5,
@@ -9245,8 +9283,8 @@
         {
           "name_zh": "菊蕾白",
           "pinyin": "juleibai",
-          "name_en": "juleibai",
-          "name_ja": "juleibai",
+          "name_en": "chrysanthemum bud white",
+          "name_ja": "菊蕾白",
           "hex": "#E9DDB6",
           "cmyk": [
             12,
@@ -9258,8 +9296,8 @@
         {
           "name_zh": "黃連黃",
           "pinyin": "huanglianhuang",
-          "name_en": "huanglianhuang",
-          "name_ja": "huanglianhuang",
+          "name_en": "coptis yellow",
+          "name_ja": "黄連黄",
           "hex": "#FCC515",
           "cmyk": [
             5,
@@ -9271,8 +9309,8 @@
         {
           "name_zh": "杏仁黃",
           "pinyin": "xingrenhuang",
-          "name_en": "xingrenhuang",
-          "name_ja": "xingrenhuang",
+          "name_en": "almond yellow",
+          "name_ja": "杏仁黄",
           "hex": "#F7E8AA",
           "cmyk": [
             7,
@@ -9284,8 +9322,8 @@
         {
           "name_zh": "谷黃",
           "pinyin": "guhuang",
-          "name_en": "guhuang",
-          "name_ja": "guhuang",
+          "name_en": "grain yellow",
+          "name_ja": "谷黄",
           "hex": "#E8B004",
           "cmyk": [
             13,
@@ -9297,8 +9335,8 @@
         {
           "name_zh": "木瓜黃",
           "pinyin": "muguahuang",
-          "name_en": "muguahuang",
-          "name_ja": "muguahuang",
+          "name_en": "papaya yellow",
+          "name_ja": "木瓜黄",
           "hex": "#F9C116",
           "cmyk": [
             7,
@@ -9310,8 +9348,8 @@
         {
           "name_zh": "淡繭黃",
           "pinyin": "danjianhuang",
-          "name_en": "danjianhuang",
-          "name_ja": "danjianhuang",
+          "name_en": "pale cocoon yellow",
+          "name_ja": "淡繭黄",
           "hex": "#F9D770",
           "cmyk": [
             7,
@@ -9323,8 +9361,8 @@
         {
           "name_zh": "雅梨黃",
           "pinyin": "yalihuang",
-          "name_en": "yalihuang",
-          "name_ja": "yalihuang",
+          "name_en": "elegant pear yellow",
+          "name_ja": "雅梨黄",
           "hex": "#FBC82F",
           "cmyk": [
             6,
@@ -9336,8 +9374,8 @@
         {
           "name_zh": "銀白",
           "pinyin": "yinbai",
-          "name_en": "yinbai",
-          "name_ja": "yinbai",
+          "name_en": "silver white",
+          "name_ja": "銀白",
           "hex": "#F1F0ED",
           "cmyk": [
             6,
@@ -9349,8 +9387,8 @@
         {
           "name_zh": "棕櫚綠",
           "pinyin": "zonglvlv",
-          "name_en": "zonglvlv",
-          "name_ja": "zonglvlv",
+          "name_en": "palm green",
+          "name_ja": "棕櫚緑",
           "hex": "#5B4913",
           "cmyk": [
             49,
@@ -9362,8 +9400,8 @@
         {
           "name_zh": "鸚鵡冠黃",
           "pinyin": "yingwuguanhuang",
-          "name_en": "yingwuguanhuang",
-          "name_ja": "yingwuguanhuang",
+          "name_en": "parrot crest yellow",
+          "name_ja": "鸚鵡冠黄",
           "hex": "#F6C430",
           "cmyk": [
             8,
@@ -9375,8 +9413,8 @@
         {
           "name_zh": "枯綠",
           "pinyin": "kulv",
-          "name_en": "kulv",
-          "name_ja": "kulv",
+          "name_en": "withered green",
+          "name_ja": "枯緑",
           "hex": "#B78D12",
           "cmyk": [
             26,
@@ -9388,8 +9426,8 @@
         {
           "name_zh": "淺烙黃",
           "pinyin": "qianlaohuang",
-          "name_en": "qianlaohuang",
-          "name_ja": "qianlaohuang",
+          "name_en": "light chrome yellow",
+          "name_ja": "浅烙黄",
           "hex": "#F9BD10",
           "cmyk": [
             6,
@@ -9401,8 +9439,8 @@
         {
           "name_zh": "淡密黃",
           "pinyin": "danmihuang",
-          "name_en": "danmihuang",
-          "name_ja": "danmihuang",
+          "name_en": "pale honey yellow",
+          "name_ja": "淡密黄",
           "hex": "#F9D367",
           "cmyk": [
             7,
@@ -9414,8 +9452,8 @@
         {
           "name_zh": "芥黃",
           "pinyin": "jiehuang",
-          "name_en": "jiehuang",
-          "name_ja": "jiehuang",
+          "name_en": "mustard yellow",
+          "name_ja": "芥黄",
           "hex": "#D9A40E",
           "cmyk": [
             17,
@@ -9427,8 +9465,8 @@
         {
           "name_zh": "梔子黃",
           "pinyin": "zhizihuang",
-          "name_en": "zhizihuang",
-          "name_ja": "zhizihuang",
+          "name_en": "gardenia yellow",
+          "name_ja": "梔子黄",
           "hex": "#EBB10D",
           "cmyk": [
             11,
@@ -9440,8 +9478,8 @@
         {
           "name_zh": "暗海水綠",
           "pinyin": "anhaishuilv",
-          "name_en": "anhaishuilv",
-          "name_ja": "anhaishuilv",
+          "name_en": "dark sea water green",
+          "name_ja": "暗海水緑",
           "hex": "#584717",
           "cmyk": [
             49,
@@ -9453,8 +9491,8 @@
         {
           "name_zh": "篾黃",
           "pinyin": "miehuang",
-          "name_en": "miehuang",
-          "name_ja": "miehuang",
+          "name_en": "bamboo strip yellow",
+          "name_ja": "篾黄",
           "hex": "#F7DE98",
           "cmyk": [
             7,
@@ -9466,8 +9504,8 @@
         {
           "name_zh": "蚌肉白",
           "pinyin": "bangroubai",
-          "name_en": "bangroubai",
-          "name_ja": "bangroubai",
+          "name_en": "clam meat white",
+          "name_ja": "蚌肉白",
           "hex": "#F9F1DB",
           "cmyk": [
             4,
@@ -9479,8 +9517,8 @@
         {
           "name_zh": "炒米黃",
           "pinyin": "chaomihuang",
-          "name_en": "chaomihuang",
-          "name_ja": "chaomihuang",
+          "name_en": "fried rice yellow",
+          "name_ja": "炒米黄",
           "hex": "#F4CE69",
           "cmyk": [
             9,
@@ -9492,8 +9530,8 @@
         {
           "name_zh": "琥珀黃",
           "pinyin": "hupohuang",
-          "name_en": "hupohuang",
-          "name_ja": "hupohuang",
+          "name_en": "amber yellow",
+          "name_ja": "琥珀黄",
           "hex": "#FEBA07",
           "cmyk": [
             4,
@@ -9505,8 +9543,8 @@
         {
           "name_zh": "灰綠",
           "pinyin": "huilv",
-          "name_en": "huilv",
-          "name_ja": "huilv",
+          "name_en": "gray green",
+          "name_ja": "灰緑",
           "hex": "#8A6913",
           "cmyk": [
             35,
@@ -9518,8 +9556,8 @@
         {
           "name_zh": "糉葉綠",
           "pinyin": "zongyelv",
-          "name_en": "zongyelv",
-          "name_ja": "zongyelv",
+          "name_en": "zongzi leaf green",
+          "name_ja": "粽葉緑",
           "hex": "#876818",
           "cmyk": [
             36,
@@ -9531,8 +9569,8 @@
         {
           "name_zh": "塵灰",
           "pinyin": "chenhui",
-          "name_en": "chenhui",
-          "name_ja": "chenhui",
+          "name_en": "dust gray",
+          "name_ja": "塵灰",
           "hex": "#B6A476",
           "cmyk": [
             29,
@@ -9544,8 +9582,8 @@
         {
           "name_zh": "鼬黃",
           "pinyin": "youhuang_2",
-          "name_en": "youhuang_2",
-          "name_ja": "youhuang_2",
+          "name_en": "weasel yellow",
+          "name_ja": "鼬黄",
           "hex": "#FCB70A",
           "cmyk": [
             4,
@@ -9557,8 +9595,8 @@
         {
           "name_zh": "象牙黃",
           "pinyin": "xiangyahuang",
-          "name_en": "xiangyahuang",
-          "name_ja": "xiangyahuang",
+          "name_en": "ivory yellow",
+          "name_ja": "象牙黄",
           "hex": "#F0D695",
           "cmyk": [
             10,
@@ -9570,8 +9608,8 @@
         {
           "name_zh": "鮫青",
           "pinyin": "jiaoqing",
-          "name_en": "jiaoqing",
-          "name_ja": "jiaoqing",
+          "name_en": "shark cyan",
+          "name_ja": "鮫青",
           "hex": "#87723E",
           "cmyk": [
             39,
@@ -9583,8 +9621,8 @@
         {
           "name_zh": "豆汁黃",
           "pinyin": "douzhihuang",
-          "name_en": "douzhihuang",
-          "name_ja": "douzhihuang",
+          "name_en": "bean juice yellow",
+          "name_ja": "豆汁黄",
           "hex": "#F8E8C1",
           "cmyk": [
             5,
@@ -9596,8 +9634,8 @@
         {
           "name_zh": "土黃",
           "pinyin": "tuhuang",
-          "name_en": "tuhuang",
-          "name_ja": "tuhuang",
+          "name_en": "earth yellow",
+          "name_ja": "土黄",
           "hex": "#D6A01D",
           "cmyk": [
             18,
@@ -9609,8 +9647,8 @@
         {
           "name_zh": "香水玫瑰黃",
           "pinyin": "xiangshuimeiguihuang",
-          "name_en": "xiangshuimeiguihuang",
-          "name_ja": "xiangshuimeiguihuang",
+          "name_en": "perfume rose yellow",
+          "name_ja": "香水薔薇黄",
           "hex": "#F7DA94",
           "cmyk": [
             7,
@@ -9622,8 +9660,8 @@
         {
           "name_zh": "虎皮黃",
           "pinyin": "hupihuang",
-          "name_en": "hupihuang",
-          "name_ja": "hupihuang",
+          "name_en": "tiger skin yellow",
+          "name_ja": "虎皮黄",
           "hex": "#EAAD1A",
           "cmyk": [
             11,
@@ -9635,8 +9673,8 @@
         {
           "name_zh": "雞蛋黃",
           "pinyin": "jidanhuang",
-          "name_en": "jidanhuang",
-          "name_ja": "jidanhuang",
+          "name_en": "egg yolk yellow",
+          "name_ja": "鶏卵黄",
           "hex": "#FBB612",
           "cmyk": [
             4,
@@ -9648,8 +9686,8 @@
         {
           "name_zh": "銀鼠灰",
           "pinyin": "yinshuhui",
-          "name_en": "yinshuhui",
-          "name_ja": "yinshuhui",
+          "name_en": "silver mouse gray",
+          "name_ja": "銀鼠灰",
           "hex": "#B5AA90",
           "cmyk": [
             30,
@@ -9661,8 +9699,8 @@
         {
           "name_zh": "魚肚白",
           "pinyin": "yudubai",
-          "name_en": "yudubai",
-          "name_ja": "yudubai",
+          "name_en": "fish belly white",
+          "name_ja": "魚肚白",
           "hex": "#F7F4ED",
           "cmyk": [
             4,
@@ -9674,8 +9712,8 @@
         {
           "name_zh": "初熟杏黃",
           "pinyin": "chushuxinghuang",
-          "name_en": "chushuxinghuang",
-          "name_ja": "chushuxinghuang",
+          "name_en": "early ripe apricot yellow",
+          "name_ja": "初熟杏黄",
           "hex": "#F8BC31",
           "cmyk": [
             6,
@@ -9687,8 +9725,8 @@
         {
           "name_zh": "山雞黃",
           "pinyin": "shanjihuang",
-          "name_en": "shanjihuang",
-          "name_ja": "shanjihuang",
+          "name_en": "pheasant yellow",
+          "name_ja": "山鶏黄",
           "hex": "#B78B26",
           "cmyk": [
             25,
@@ -9700,8 +9738,8 @@
         {
           "name_zh": "蓮子白",
           "pinyin": "lianzibai",
-          "name_en": "lianzibai",
-          "name_ja": "lianzibai",
+          "name_en": "lotus seed white",
+          "name_ja": "蓮子白",
           "hex": "#E5D3AA",
           "cmyk": [
             13,
@@ -9713,8 +9751,8 @@
         {
           "name_zh": "蟹殼灰",
           "pinyin": "xiekehui",
-          "name_en": "xiekehui",
-          "name_ja": "xiekehui",
+          "name_en": "crab shell gray",
+          "name_ja": "蟹殻灰",
           "hex": "#695E45",
           "cmyk": [
             49,
@@ -9726,8 +9764,8 @@
         {
           "name_zh": "沙石黃",
           "pinyin": "shashihuang",
-          "name_en": "shashihuang",
-          "name_ja": "shashihuang",
+          "name_en": "sandstone yellow",
+          "name_ja": "沙石黄",
           "hex": "#E5B751",
           "cmyk": [
             14,
@@ -9739,8 +9777,8 @@
         {
           "name_zh": "甘草黃",
           "pinyin": "gancaohuang",
-          "name_en": "gancaohuang",
-          "name_ja": "gancaohuang",
+          "name_en": "licorice yellow",
+          "name_ja": "甘草黄",
           "hex": "#F3BF4C",
           "cmyk": [
             9,
@@ -9752,8 +9790,8 @@
         {
           "name_zh": "燕羽灰",
           "pinyin": "yanyuhui",
-          "name_en": "yanyuhui",
-          "name_ja": "yanyuhui",
+          "name_en": "swallow feather gray",
+          "name_ja": "燕羽灰",
           "hex": "#685E48",
           "cmyk": [
             49,
@@ -9765,8 +9803,8 @@
         {
           "name_zh": "鵝掌黃",
           "pinyin": "ezhanghuang",
-          "name_en": "ezhanghuang",
-          "name_ja": "ezhanghuang",
+          "name_en": "goose palm yellow",
+          "name_ja": "鵝掌黄",
           "hex": "#FBB929",
           "cmyk": [
             5,
@@ -9778,8 +9816,8 @@
         {
           "name_zh": "麥芽糖黃",
           "pinyin": "maiyatanghuang",
-          "name_en": "maiyatanghuang",
-          "name_ja": "maiyatanghuang",
+          "name_en": "maltose yellow",
+          "name_ja": "麦芽糖黄",
           "hex": "#F9D27D",
           "cmyk": [
             6,
@@ -9791,8 +9829,8 @@
         {
           "name_zh": "淺駝色",
           "pinyin": "qiantuose",
-          "name_en": "qiantuose",
-          "name_ja": "qiantuose",
+          "name_en": "light camel color",
+          "name_ja": "浅駝色",
           "hex": "#E2C17C",
           "cmyk": [
             14,
@@ -9804,8 +9842,8 @@
         {
           "name_zh": "百靈鳥灰",
           "pinyin": "bailingniaohui",
-          "name_en": "bailingniaohui",
-          "name_ja": "bailingniaohui",
+          "name_en": "lark gray",
+          "name_ja": "百霊鳥灰",
           "hex": "#B4A992",
           "cmyk": [
             30,
@@ -9817,8 +9855,8 @@
         {
           "name_zh": "酪黃",
           "pinyin": "laohuang",
-          "name_en": "laohuang",
-          "name_ja": "laohuang",
+          "name_en": "cheese yellow",
+          "name_ja": "酪黄",
           "hex": "#F6DEAD",
           "cmyk": [
             6,
@@ -9830,8 +9868,8 @@
         {
           "name_zh": "荔肉白",
           "pinyin": "liroubai",
-          "name_en": "liroubai",
-          "name_ja": "liroubai",
+          "name_en": "lychee flesh white",
+          "name_ja": "茘肉白",
           "hex": "#F2E6CE",
           "cmyk": [
             7,
@@ -9843,8 +9881,8 @@
         {
           "name_zh": "淡肉色",
           "pinyin": "danrouse",
-          "name_en": "danrouse",
-          "name_ja": "danrouse",
+          "name_en": "pale flesh color",
+          "name_ja": "淡肉色",
           "hex": "#F8E0B0",
           "cmyk": [
             5,
@@ -9856,8 +9894,8 @@
         {
           "name_zh": "河豚灰",
           "pinyin": "hetunhui",
-          "name_en": "hetunhui",
-          "name_ja": "hetunhui",
+          "name_en": "pufferfish gray",
+          "name_ja": "河豚灰",
           "hex": "#393733",
           "cmyk": [
             64,
@@ -9869,8 +9907,8 @@
         {
           "name_zh": "蜴蜊綠",
           "pinyin": "yililv",
-          "name_en": "yililv",
-          "name_ja": "yililv",
+          "name_en": "lizard green",
+          "name_ja": "蜥蜴緑",
           "hex": "#835E1D",
           "cmyk": [
             35,
@@ -9882,8 +9920,8 @@
         {
           "name_zh": "漢白玉",
           "pinyin": "hanbaiyu",
-          "name_en": "hanbaiyu",
-          "name_ja": "hanbaiyu",
+          "name_en": "han white jade",
+          "name_ja": "漢白玉",
           "hex": "#F8F4ED",
           "cmyk": [
             3,
@@ -9895,8 +9933,8 @@
         {
           "name_zh": "橙皮黃",
           "pinyin": "chengpihuang",
-          "name_en": "chengpihuang",
-          "name_ja": "chengpihuang",
+          "name_en": "orange peel yellow",
+          "name_ja": "橙皮黄",
           "hex": "#FCA104",
           "cmyk": [
             2,
@@ -9908,8 +9946,8 @@
         {
           "name_zh": "萊陽梨黃",
           "pinyin": "laiyanglihuang",
-          "name_en": "laiyanglihuang",
-          "name_ja": "laiyanglihuang",
+          "name_en": "laiyang pear yellow",
+          "name_ja": "萊陽梨黄",
           "hex": "#815F25",
           "cmyk": [
             36,
@@ -9921,8 +9959,8 @@
         {
           "name_zh": "枇杷黃",
           "pinyin": "pipahuang",
-          "name_en": "pipahuang",
-          "name_ja": "pipahuang",
+          "name_en": "loquat yellow",
+          "name_ja": "枇杷黄",
           "hex": "#FCA106",
           "cmyk": [
             2,
@@ -9934,8 +9972,8 @@
         {
           "name_zh": "金葉黃",
           "pinyin": "jinyehuang",
-          "name_en": "jinyehuang",
-          "name_ja": "jinyehuang",
+          "name_en": "golden leaf yellow",
+          "name_ja": "金葉黄",
           "hex": "#FFA60F",
           "cmyk": [
             0,
@@ -9947,8 +9985,8 @@
         {
           "name_zh": "蒼黃",
           "pinyin": "canghuang",
-          "name_en": "canghuang",
-          "name_ja": "canghuang",
+          "name_en": "pale yellow",
+          "name_ja": "蒼黄",
           "hex": "#806332",
           "cmyk": [
             37,
@@ -9960,8 +9998,8 @@
         {
           "name_zh": "粉白",
           "pinyin": "fenbai",
-          "name_en": "fenbai",
-          "name_ja": "fenbai",
+          "name_en": "powder white",
+          "name_ja": "粉白",
           "hex": "#FBF2E3",
           "cmyk": [
             2,
@@ -9973,8 +10011,8 @@
         {
           "name_zh": "淡橘橙",
           "pinyin": "danjucheng",
-          "name_en": "danjucheng",
-          "name_ja": "danjucheng",
+          "name_en": "pale orange",
+          "name_ja": "淡橘橙",
           "hex": "#FBA414",
           "cmyk": [
             2,
@@ -9986,8 +10024,8 @@
         {
           "name_zh": "珍珠灰",
           "pinyin": "zhenzhuhui",
-          "name_en": "zhenzhuhui",
-          "name_ja": "zhenzhuhui",
+          "name_en": "pearl gray",
+          "name_ja": "真珠灰",
           "hex": "#E4DFD7",
           "cmyk": [
             13,
@@ -9999,8 +10037,8 @@
         {
           "name_zh": "龜背黃",
           "pinyin": "guibeihuang",
-          "name_en": "guibeihuang",
-          "name_ja": "guibeihuang",
+          "name_en": "turtle shell yellow",
+          "name_ja": "亀背黄",
           "hex": "#826B48",
           "cmyk": [
             38,
@@ -10012,8 +10050,8 @@
         {
           "name_zh": "淺灰",
           "pinyin": "qianhui",
-          "name_en": "qianhui",
-          "name_ja": "qianhui",
+          "name_en": "light gray",
+          "name_ja": "浅灰",
           "hex": "#DAD4CB",
           "cmyk": [
             17,
@@ -10025,8 +10063,8 @@
         {
           "name_zh": "鉛灰",
           "pinyin": "qianhui_2",
-          "name_en": "qianhui_2",
-          "name_ja": "qianhui_2",
+          "name_en": "lead gray",
+          "name_ja": "鉛灰",
           "hex": "#BBB5AC",
           "cmyk": [
             29,
@@ -10038,8 +10076,8 @@
         {
           "name_zh": "中灰",
           "pinyin": "zhonghui",
-          "name_en": "zhonghui",
-          "name_ja": "zhonghui",
+          "name_en": "medium gray",
+          "name_ja": "中灰",
           "hex": "#BBB5AC",
           "cmyk": [
             29,
@@ -10051,8 +10089,8 @@
         {
           "name_zh": "雄黃",
           "pinyin": "xionghuang",
-          "name_en": "xionghuang",
-          "name_ja": "xionghuang",
+          "name_en": "realgar yellow",
+          "name_ja": "雄黄",
           "hex": "#FF9900",
           "cmyk": [
             0,
@@ -10064,8 +10102,8 @@
         {
           "name_zh": "蜜黃",
           "pinyin": "mihuang",
-          "name_en": "mihuang",
-          "name_ja": "mihuang",
+          "name_en": "honey yellow",
+          "name_ja": "蜜黄",
           "hex": "#FBB957",
           "cmyk": [
             4,
@@ -10077,8 +10115,8 @@
         {
           "name_zh": "風帆黃",
           "pinyin": "fengfanhuang",
-          "name_en": "fengfanhuang",
-          "name_ja": "fengfanhuang",
+          "name_en": "sail yellow",
+          "name_ja": "帆黄",
           "hex": "#DC9123",
           "cmyk": [
             15,
@@ -10090,8 +10128,8 @@
         {
           "name_zh": "桂皮淡棕",
           "pinyin": "guipidanzong",
-          "name_en": "guipidanzong",
-          "name_ja": "guipidanzong",
+          "name_en": "cinnamon pale brown",
+          "name_ja": "桂皮淡棕",
           "hex": "#C09351",
           "cmyk": [
             23,
@@ -10103,8 +10141,8 @@
         {
           "name_zh": "金鶯黃",
           "pinyin": "jinyinghuang",
-          "name_en": "jinyinghuang",
-          "name_ja": "jinyinghuang",
+          "name_en": "golden oriole yellow",
+          "name_ja": "金鶯黄",
           "hex": "#F4A83A",
           "cmyk": [
             6,
@@ -10116,8 +10154,8 @@
         {
           "name_zh": "肉色",
           "pinyin": "rouse",
-          "name_en": "rouse",
-          "name_ja": "rouse",
+          "name_en": "flesh color",
+          "name_ja": "肉色",
           "hex": "#F7C173",
           "cmyk": [
             5,
@@ -10129,8 +10167,8 @@
         {
           "name_zh": "凋葉棕",
           "pinyin": "diaoyezong",
-          "name_en": "diaoyezong",
-          "name_ja": "diaoyezong",
+          "name_en": "withered leaf brown",
+          "name_ja": "凋葉棕",
           "hex": "#E7A23F",
           "cmyk": [
             11,
@@ -10142,8 +10180,8 @@
         {
           "name_zh": "古銅綠",
           "pinyin": "gutonglv",
-          "name_en": "gutonglv",
-          "name_ja": "gutonglv",
+          "name_en": "bronze green",
+          "name_ja": "古銅緑",
           "hex": "#533C1B",
           "cmyk": [
             45,
@@ -10155,8 +10193,8 @@
         {
           "name_zh": "落英淡粉",
           "pinyin": "luoyingdanfen",
-          "name_en": "luoyingdanfen",
-          "name_ja": "luoyingdanfen",
+          "name_en": "falling petals pale pink",
+          "name_ja": "落英淡粉",
           "hex": "#F9E8D0",
           "cmyk": [
             3,
@@ -10168,8 +10206,8 @@
         {
           "name_zh": "軟木黃",
           "pinyin": "ruanmuhuang",
-          "name_en": "ruanmuhuang",
-          "name_ja": "ruanmuhuang",
+          "name_en": "cork yellow",
+          "name_ja": "軟木黄",
           "hex": "#DE9E44",
           "cmyk": [
             15,
@@ -10181,8 +10219,8 @@
         {
           "name_zh": "瓜瓤粉",
           "pinyin": "guarangfen",
-          "name_en": "guarangfen",
-          "name_ja": "guarangfen",
+          "name_en": "melon flesh pink",
+          "name_ja": "瓜瓤粉",
           "hex": "#F9CB8B",
           "cmyk": [
             5,
@@ -10194,8 +10232,8 @@
         {
           "name_zh": "榴萼黃",
           "pinyin": "liuehuang",
-          "name_en": "liuehuang",
-          "name_ja": "liuehuang",
+          "name_en": "pomegranate calyx yellow",
+          "name_ja": "榴萼黄",
           "hex": "#F9A633",
           "cmyk": [
             4,
@@ -10207,8 +10245,8 @@
         {
           "name_zh": "玳瑁黃",
           "pinyin": "daimaohuang",
-          "name_en": "daimaohuang",
-          "name_ja": "daimaohuang",
+          "name_en": "hawksbill turtle yellow",
+          "name_ja": "玳瑁黄",
           "hex": "#DAA45A",
           "cmyk": [
             16,
@@ -10220,8 +10258,8 @@
         {
           "name_zh": "焦茶綠",
           "pinyin": "jiaochalv",
-          "name_en": "jiaochalv",
-          "name_ja": "jiaochalv",
+          "name_en": "burnt tea green",
+          "name_ja": "焦茶緑",
           "hex": "#553B18",
           "cmyk": [
             44,
@@ -10233,8 +10271,8 @@
         {
           "name_zh": "蟹殼綠",
           "pinyin": "xiekelv",
-          "name_en": "xiekelv",
-          "name_ja": "xiekelv",
+          "name_en": "crab shell green",
+          "name_ja": "蟹殻緑",
           "hex": "#513C20",
           "cmyk": [
             47,
@@ -10246,8 +10284,8 @@
         {
           "name_zh": "山雞褐",
           "pinyin": "shanjihe",
-          "name_en": "shanjihe",
-          "name_ja": "shanjihe",
+          "name_en": "pheasant brown",
+          "name_ja": "山鶏褐",
           "hex": "#986524",
           "cmyk": [
             30,
@@ -10259,8 +10297,8 @@
         {
           "name_zh": "猴毛灰",
           "pinyin": "houmaohui",
-          "name_en": "houmaohui",
-          "name_ja": "houmaohui",
+          "name_en": "monkey fur gray",
+          "name_ja": "猿毛灰",
           "hex": "#97846C",
           "cmyk": [
             36,
@@ -10272,8 +10310,8 @@
         {
           "name_zh": "鹿角棕",
           "pinyin": "lujiaozong",
-          "name_en": "lujiaozong",
-          "name_ja": "lujiaozong",
+          "name_en": "deer antler brown",
+          "name_ja": "鹿角棕",
           "hex": "#E3BD8D",
           "cmyk": [
             13,
@@ -10285,8 +10323,8 @@
         {
           "name_zh": "淡松煙",
           "pinyin": "dansongyan",
-          "name_en": "dansongyan",
-          "name_ja": "dansongyan",
+          "name_en": "pale pine smoke",
+          "name_ja": "淡松煙",
           "hex": "#4D4030",
           "cmyk": [
             52,
@@ -10298,8 +10336,8 @@
         {
           "name_zh": "萬壽菊黃",
           "pinyin": "wanshoujuhuang",
-          "name_en": "wanshoujuhuang",
-          "name_ja": "wanshoujuhuang",
+          "name_en": "marigold yellow",
+          "name_ja": "マリーゴールド黄",
           "hex": "#FB8B05",
           "cmyk": [
             1,
@@ -10311,8 +10349,8 @@
         {
           "name_zh": "蛋殼黃",
           "pinyin": "dankehuang",
-          "name_en": "dankehuang",
-          "name_ja": "dankehuang",
+          "name_en": "egg shell yellow",
+          "name_ja": "卵殻黄",
           "hex": "#F8C387",
           "cmyk": [
             4,
@@ -10324,8 +10362,8 @@
         {
           "name_zh": "杏黃",
           "pinyin": "xinghuang",
-          "name_en": "xinghuang",
-          "name_ja": "xinghuang",
+          "name_en": "apricot yellow",
+          "name_ja": "杏黄",
           "hex": "#F28E16",
           "cmyk": [
             5,
@@ -10337,8 +10375,8 @@
         {
           "name_zh": "橄欖灰",
           "pinyin": "ganlanhui",
-          "name_en": "ganlanhui",
-          "name_ja": "ganlanhui",
+          "name_en": "olive gray",
+          "name_ja": "橄欖灰",
           "hex": "#503E2A",
           "cmyk": [
             49,
@@ -10350,8 +10388,8 @@
         {
           "name_zh": "鶴灰",
           "pinyin": "hehui",
-          "name_en": "hehui",
-          "name_ja": "hehui",
+          "name_en": "crane gray",
+          "name_ja": "鶴灰",
           "hex": "#4A4035",
           "cmyk": [
             55,
@@ -10363,8 +10401,8 @@
         {
           "name_zh": "瑪瑙灰",
           "pinyin": "manaohui",
-          "name_en": "manaohui",
-          "name_ja": "manaohui",
+          "name_en": "agate gray",
+          "name_ja": "瑪瑙灰",
           "hex": "#CFCCC9",
           "cmyk": [
             22,
@@ -10376,8 +10414,8 @@
         {
           "name_zh": "淡銀灰",
           "pinyin": "danyinhui",
-          "name_en": "danyinhui",
-          "name_ja": "danyinhui",
+          "name_en": "pale silver gray",
+          "name_ja": "淡銀灰",
           "hex": "#C1B2A3",
           "cmyk": [
             25,
@@ -10389,8 +10427,8 @@
         {
           "name_zh": "瓦灰",
           "pinyin": "wahui",
-          "name_en": "wahui",
-          "name_ja": "wahui",
+          "name_en": "tile gray",
+          "name_ja": "瓦灰",
           "hex": "#867E76",
           "cmyk": [
             44,
@@ -10402,8 +10440,8 @@
         {
           "name_zh": "夜灰",
           "pinyin": "yehui",
-          "name_en": "yehui",
-          "name_ja": "yehui",
+          "name_en": "night gray",
+          "name_ja": "夜灰",
           "hex": "#847C74",
           "cmyk": [
             44,
@@ -10415,8 +10453,8 @@
         {
           "name_zh": "北瓜黃",
           "pinyin": "beiguahuang",
-          "name_en": "beiguahuang",
-          "name_ja": "beiguahuang",
+          "name_en": "squash yellow",
+          "name_ja": "北瓜黄",
           "hex": "#FC8C23",
           "cmyk": [
             1,
@@ -10428,8 +10466,8 @@
         {
           "name_zh": "荷花白",
           "pinyin": "hehuabai",
-          "name_en": "hehuabai",
-          "name_ja": "hehuabai",
+          "name_en": "lotus white",
+          "name_ja": "蓮花白",
           "hex": "#FBECDE",
           "cmyk": [
             2,
@@ -10441,8 +10479,8 @@
         {
           "name_zh": "松鼠灰",
           "pinyin": "songshuhui",
-          "name_en": "songshuhui",
-          "name_ja": "songshuhui",
+          "name_en": "squirrel gray",
+          "name_ja": "リス灰",
           "hex": "#4F4032",
           "cmyk": [
             51,
@@ -10454,8 +10492,8 @@
         {
           "name_zh": "淡米粉",
           "pinyin": "danmifen",
-          "name_en": "danmifen",
-          "name_ja": "danmifen",
+          "name_en": "pale rice powder",
+          "name_ja": "淡米粉",
           "hex": "#FBEEE2",
           "cmyk": [
             2,
@@ -10467,8 +10505,8 @@
         {
           "name_zh": "深灰",
           "pinyin": "shenhui",
-          "name_en": "shenhui",
-          "name_ja": "shenhui",
+          "name_en": "dark gray",
+          "name_ja": "深灰",
           "hex": "#81776E",
           "cmyk": [
             44,
@@ -10480,8 +10518,8 @@
         {
           "name_zh": "海鷗灰",
           "pinyin": "haiouhui",
-          "name_en": "haiouhui",
-          "name_ja": "haiouhui",
+          "name_en": "seagull gray",
+          "name_ja": "カモメ灰",
           "hex": "#9A8878",
           "cmyk": [
             35,
@@ -10493,8 +10531,8 @@
         {
           "name_zh": "茶褐",
           "pinyin": "chahe",
-          "name_en": "chahe",
-          "name_ja": "chahe",
+          "name_en": "tea brown",
+          "name_ja": "茶褐",
           "hex": "#5D3D21",
           "cmyk": [
             41,
@@ -10506,8 +10544,8 @@
         {
           "name_zh": "駝色",
           "pinyin": "tuose",
-          "name_en": "tuose",
-          "name_ja": "tuose",
+          "name_en": "camel color",
+          "name_ja": "駝色",
           "hex": "#66462A",
           "cmyk": [
             40,
@@ -10519,8 +10557,8 @@
         {
           "name_zh": "銀灰",
           "pinyin": "yinhui",
-          "name_en": "yinhui",
-          "name_ja": "yinhui",
+          "name_en": "silver gray",
+          "name_ja": "銀灰",
           "hex": "#918072",
           "cmyk": [
             38,
@@ -10532,8 +10570,8 @@
         {
           "name_zh": "鹿皮褐",
           "pinyin": "lupihe",
-          "name_en": "lupihe",
-          "name_ja": "lupihe",
+          "name_en": "deerskin brown",
+          "name_ja": "鹿皮褐",
           "hex": "#D99156",
           "cmyk": [
             15,
@@ -10545,8 +10583,8 @@
         {
           "name_zh": "檳榔棕",
           "pinyin": "binglangzong",
-          "name_en": "binglangzong",
-          "name_ja": "binglangzong",
+          "name_en": "betel nut brown",
+          "name_ja": "檳榔棕",
           "hex": "#C1651A",
           "cmyk": [
             21,
@@ -10558,8 +10596,8 @@
         {
           "name_zh": "曉灰",
           "pinyin": "xiaohui",
-          "name_en": "xiaohui",
-          "name_ja": "xiaohui",
+          "name_en": "dawn gray",
+          "name_ja": "暁灰",
           "hex": "#D4C4B7",
           "cmyk": [
             19,
@@ -10571,8 +10609,8 @@
         {
           "name_zh": "淡赭",
           "pinyin": "danzhe",
-          "name_en": "danzhe",
-          "name_ja": "danzhe",
+          "name_en": "pale ochre",
+          "name_ja": "淡赭",
           "hex": "#BE7E4A",
           "cmyk": [
             22,
@@ -10584,8 +10622,8 @@
         {
           "name_zh": "古銅褐",
           "pinyin": "gutonghe",
-          "name_en": "gutonghe",
-          "name_ja": "gutonghe",
+          "name_en": "bronze brown",
+          "name_ja": "古銅褐",
           "hex": "#5C3719",
           "cmyk": [
             40,
@@ -10597,8 +10635,8 @@
         {
           "name_zh": "麂棕",
           "pinyin": "jizong",
-          "name_en": "jizong",
-          "name_ja": "jizong",
+          "name_en": "muntjac brown",
+          "name_ja": "麂棕",
           "hex": "#DE7622",
           "cmyk": [
             13,
@@ -10610,8 +10648,8 @@
         {
           "name_zh": "醉瓜肉",
           "pinyin": "zuiguarou",
-          "name_en": "zuiguarou",
-          "name_ja": "zuiguarou",
+          "name_en": "drunk melon flesh",
+          "name_ja": "酔瓜肉",
           "hex": "#DB8540",
           "cmyk": [
             15,
@@ -10623,8 +10661,8 @@
         {
           "name_zh": "雁灰",
           "pinyin": "yanhui",
-          "name_en": "yanhui",
-          "name_ja": "yanhui",
+          "name_en": "goose gray",
+          "name_ja": "雁灰",
           "hex": "#80766E",
           "cmyk": [
             44,
@@ -10636,8 +10674,8 @@
         {
           "name_zh": "鮭魚紅",
           "pinyin": "guiyuhong",
-          "name_en": "guiyuhong",
-          "name_ja": "guiyuhong",
+          "name_en": "salmon red",
+          "name_ja": "鮭魚紅",
           "hex": "#F09C5A",
           "cmyk": [
             7,
@@ -10649,8 +10687,8 @@
         {
           "name_zh": "橘橙",
           "pinyin": "jucheng",
-          "name_en": "jucheng",
-          "name_ja": "jucheng",
+          "name_en": "orange",
+          "name_ja": "橘橙",
           "hex": "#F97D1C",
           "cmyk": [
             1,
@@ -10675,8 +10713,8 @@
         {
           "name_zh": "玫瑰粉",
           "pinyin": "meiguifen",
-          "name_en": "meiguifen",
-          "name_ja": "meiguifen",
+          "name_en": "rose pink",
+          "name_ja": "薔薇粉",
           "hex": "#F8B37F",
           "cmyk": [
             4,
@@ -10688,8 +10726,8 @@
         {
           "name_zh": "美人焦橙",
           "pinyin": "meirenjiaocheng",
-          "name_en": "meirenjiaocheng",
-          "name_ja": "meirenjiaocheng",
+          "name_en": "canna orange",
+          "name_ja": "美人蕉橙",
           "hex": "#FA7E23",
           "cmyk": [
             1,
@@ -10701,8 +10739,8 @@
         {
           "name_zh": "米色",
           "pinyin": "mise",
-          "name_en": "mise",
-          "name_ja": "mise",
+          "name_en": "beige",
+          "name_ja": "米色",
           "hex": "#F9E9CD",
           "cmyk": [
             4,
@@ -10714,8 +10752,8 @@
         {
           "name_zh": "蛛網灰",
           "pinyin": "zhuwanghui",
-          "name_en": "zhuwanghui",
-          "name_ja": "zhuwanghui",
+          "name_en": "spider web gray",
+          "name_ja": "蜘蛛網灰",
           "hex": "#B7A091",
           "cmyk": [
             27,
@@ -10727,8 +10765,8 @@
         {
           "name_zh": "淡咖啡",
           "pinyin": "dankafei",
-          "name_en": "dankafei",
-          "name_ja": "dankafei",
+          "name_en": "pale coffee",
+          "name_ja": "淡コーヒー",
           "hex": "#945833",
           "cmyk": [
             31,
@@ -10740,8 +10778,8 @@
         {
           "name_zh": "海螺橙",
           "pinyin": "hailuocheng",
-          "name_en": "hailuocheng",
-          "name_ja": "hailuocheng",
+          "name_en": "conch orange",
+          "name_ja": "海螺橙",
           "hex": "#F0945D",
           "cmyk": [
             6,
@@ -10753,8 +10791,8 @@
         {
           "name_zh": "岩石棕",
           "pinyin": "yanshizong",
-          "name_en": "yanshizong",
-          "name_ja": "yanshizong",
+          "name_en": "rock brown",
+          "name_ja": "岩石棕",
           "hex": "#964D22",
           "cmyk": [
             29,
@@ -10766,8 +10804,8 @@
         {
           "name_zh": "芒果棕",
           "pinyin": "mangguozong",
-          "name_en": "mangguozong",
-          "name_ja": "mangguozong",
+          "name_en": "mango brown",
+          "name_ja": "マンゴー棕",
           "hex": "#954416",
           "cmyk": [
             29,
@@ -10779,8 +10817,8 @@
         {
           "name_zh": "陶瓷紅",
           "pinyin": "taocihong",
-          "name_en": "taocihong",
-          "name_ja": "taocihong",
+          "name_en": "ceramic red",
+          "name_ja": "陶磁紅",
           "hex": "#E16723",
           "cmyk": [
             11,
@@ -10792,8 +10830,8 @@
         {
           "name_zh": "菠蘿紅",
           "pinyin": "boluohong",
-          "name_en": "boluohong",
-          "name_ja": "boluohong",
+          "name_en": "pineapple red",
+          "name_ja": "パイナップル紅",
           "hex": "#FC7930",
           "cmyk": [
             0,
@@ -10805,8 +10843,8 @@
         {
           "name_zh": "餘燼紅",
           "pinyin": "yujinhong",
-          "name_en": "yujinhong",
-          "name_ja": "yujinhong",
+          "name_en": "ember red",
+          "name_ja": "余燼紅",
           "hex": "#CF7543",
           "cmyk": [
             18,
@@ -10818,8 +10856,8 @@
         {
           "name_zh": "金蓮花橙",
           "pinyin": "jinlianhuacheng",
-          "name_en": "jinlianhuacheng",
-          "name_ja": "jinlianhuacheng",
+          "name_en": "nasturtium orange",
+          "name_ja": "金蓮花橙",
           "hex": "#F86B1D",
           "cmyk": [
             0,
