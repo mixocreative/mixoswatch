@@ -3623,8 +3623,8 @@ function openDetail(sw) {
   const L = (typeof UI_LANG === 'string' && UI_LANG) ? UI_LANG : 'en';
 
   for (const lib of CORPORA.libraries) {
-    // Hide the chip if the library is set to 'hide' in namingRows settings
-    if (_libDisplayField(lib.id) === null) continue;
+    const fieldId = _libDisplayField(lib.id); // Get the selected field ID
+    if (fieldId === null) continue; // Skip if set to hide
 
     const m = sw.matches?.[lib.id];
     if (!m || !m.entry) continue;
@@ -3632,12 +3632,9 @@ function openDetail(sw) {
     const chipEl = document.createElement('span');
     chipEl.classList.add('chip', `chip-${lib.id}`); // Add generic and specific class
 
-    // v2.1: render every declared field of the matched entry, separated by " · "
-    const fieldTxt = lib.fields
-      .map(f => m.entry[f.id])
-      .filter(Boolean)
-      .join(' · ');
-    if (!fieldTxt) continue;
+    // Use only the name as selected in corp-radio
+    const displayName = m.entry[fieldId];
+    if (!displayName) continue;
 
     const anchorTag = lib._hasCmyk
       ? ` <em style="opacity:.5;font-style:normal">[${m.anchor}]</em>`
@@ -3647,7 +3644,7 @@ function openDetail(sw) {
 
     chipEl.title = `${libLabel} - anchor: ${m.anchor}`;
     chipEl.innerHTML = `<em style="opacity:.6;font-style:normal;font-size:.85em">${libLabel}:</em> `
-                     + `${fieldTxt} `
+                     + `${displayName} ` // Changed from fieldTxt to displayName
                      + `<em style="opacity:.65;font-style:normal">ΔE ${m.deltaE.toFixed(1)}</em>`
                      + `${anchorTag}`;
     
