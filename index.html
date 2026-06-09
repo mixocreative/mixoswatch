@@ -33,6 +33,31 @@
       --tc: 'Noto Serif TC', -apple-system, serif;
       --tcsans: 'Noto Sans TC', -apple-system, sans-serif;
       color-scheme: light;
+
+      /* ── Glassmorphism tokens ────────────────────────────── */
+      --glass-bg: rgba(255, 255, 255, 0.55);
+      --glass-bg-strong: rgba(255, 255, 255, 0.72);
+      --glass-border: rgba(255, 255, 255, 0.35);
+      --glass-border-strong: rgba(255, 255, 255, 0.50);
+      --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+      --glass-shadow-strong: 0 12px 48px rgba(0, 0, 0, 0.10);
+      --glass-blur: blur(14px);
+      --glass-blur-strong: blur(22px);
+    }
+
+    .glass {
+      background: var(--glass-bg) !important;
+      backdrop-filter: var(--glass-blur) !important;
+      -webkit-backdrop-filter: var(--glass-blur) !important;
+      border: 1px solid var(--glass-border) !important;
+      box-shadow: var(--glass-shadow) !important;
+    }
+    .glass-strong {
+      background: var(--glass-bg-strong) !important;
+      backdrop-filter: var(--glass-blur-strong) !important;
+      -webkit-backdrop-filter: var(--glass-blur-strong) !important;
+      border: 1px solid var(--glass-border-strong) !important;
+      box-shadow: var(--glass-shadow-strong) !important;
     }
 
     
@@ -1618,7 +1643,7 @@
 
 <body>
 
-    <header class="mark-row">
+    <header class="mark-row glass">
       <div class="mark" style="padding: 0 1em;"><img src="app/img/logo-black.svg" alt="" class="brand-logo" aria-hidden="true">mixoswatch<span class="mark-jp">墨色見本</span></div>
       <div class="header-actions">
         <nav class="nav-mini">
@@ -1696,7 +1721,7 @@
         <span data-zh>由 Mixo Creative Ltd. 提供</span>
       </span>
       <div class="badge-container">
-        <div class="studio-badge">
+        <div class="studio-badge glass">
         <img width="60" src="app/img/logo3d.png" alt="Mixo Creative 3D mark" />
         <img width="50" src="app/img/logotype.svg" alt="Mixo Creative logotype" />
         </div>
@@ -1704,6 +1729,22 @@
         <img width="120" style="filter: saturate(.5);" src="app/img/cults-cert-gold.png" alt="Cults3D Selected Designer" />
         <img width="120" style="filter: saturate(.5);" src="app/img/behance-cert-gold.png" alt="Adobe Behance featured designer" />
       </div>
+            <nav class="studio-links" aria-label="mixocreative social links">
+        <a href="https://www.instagram.com/mixocreative" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://www.facebook.com/mixocreative" target="_blank" rel="noopener">Facebook</a>
+        <a href="https://www.behance.net/mixocreative" target="_blank" rel="noopener">Behance</a>
+        <a href="https://github.com/mixocreative" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://github.com/mixocreative/twsy" target="_blank" rel="noopener">
+          <span data-en>twsy &middot; TEAM TAIWAN Open Source Initiative</span>
+          <span data-ja>twsy &middot; 台湾尚勇オープンソース計画</span>
+          <span data-zh>twsy &middot; 台灣尚勇開源計劃</span>
+        </a>
+        <a href="https://mixocreative.com/about/" target="_blank" rel="noopener" class="primary">
+          <span data-en>About us &rarr;</span>
+          <span data-ja>私たちについて &rarr;</span>
+          <span data-zh>關於我們 &rarr;</span>
+        </a>
+      </nav>
     </section>
 
     <section class="section" id="why">

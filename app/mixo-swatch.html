@@ -16,13 +16,51 @@
   --border:rgba(255,255,255,0.14); --border2:rgba(255,255,255,0.07);
   --text:#E8E6E0; --muted:#9E9A92; --faint:#6A6660;
   --accent:#C8C0B0; --accent-rgb:200 192 176;
-  --accent-light:#8C8576;
+  --accent-light:#5d5d5d;
   --font-mono:'IBM Plex Mono','Fira Mono',monospace;
   --font-sans:'Noto Sans JP',system-ui,sans-serif;
   --font-tc: 'Noto Serif TC', -apple-system, serif;
   --font-jpn-serif:"Zen Antique Soft",serif;
   --r:6px; --rl:10px;
   color-scheme:dark;
+
+  /* ── Glassmorphism tokens ────────────────────────────── */
+  --glass-bg: rgba(42, 38, 37, 0.55);
+  --glass-bg-strong: rgba(42, 38, 37, 0.72);
+  --glass-border: rgba(255, 255, 255, 0.12);
+  --glass-border-strong: rgba(255, 255, 255, 0.20);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.30);
+  --glass-shadow-strong: 0 12px 48px rgba(0, 0, 0, 0.40);
+  --glass-blur: blur(14px);
+  --glass-blur-strong: blur(22px);
+}
+.glass {
+  background: var(--glass-bg) !important;
+  backdrop-filter: var(--glass-blur) !important;
+  -webkit-backdrop-filter: var(--glass-blur) !important;
+  border: 1px solid var(--glass-border) !important;
+  box-shadow: var(--glass-shadow) !important;
+}
+.glass-strong {
+  background: var(--glass-bg-strong) !important;
+  backdrop-filter: var(--glass-blur-strong) !important;
+  -webkit-backdrop-filter: var(--glass-blur-strong) !important;
+  border: 1px solid var(--glass-border-strong) !important;
+  box-shadow: var(--glass-shadow-strong) !important;
+}
+:root[data-theme="light"] .glass {
+  background: rgba(255, 255, 255, 0.55) !important;
+  backdrop-filter: blur(14px) !important;
+  -webkit-backdrop-filter: blur(14px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.35) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06) !important;
+}
+:root[data-theme="light"] .glass-strong {
+  background: rgba(255, 255, 255, 0.72) !important;
+  backdrop-filter: blur(22px) !important;
+  -webkit-backdrop-filter: blur(22px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.50) !important;
+  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.10) !important;
 }
 /* Light theme. Mirrors index.html tokens exactly so the landing page
    and tool surface share one visual identity. Activated by
@@ -31,7 +69,7 @@
   --bg:#FAF8F3; --bg2:#F2EFE7; --surface:#FFFFFF;
   --border:rgba(0,0,0,0.14); --border2:rgba(0,0,0,0.07);
   --text:#15130E; --muted:#6B6862; --faint:#A8A49B;
-  --accent:#3D3424; --accent-light:#6E6648; --accent-rgb:61 52 36;
+  --accent:#3D3424; --accent-light:#e1e0dd; --accent-rgb:61 52 36;
   color-scheme:light;
 }
 *{box-sizing:border-box;margin:0;padding:0}
@@ -279,7 +317,7 @@ input[type=range]{accent-color:var(--accent)}
   padding:10px 16px;cursor:pointer;user-select:none;
   background:var(--bg2);
   border:1.5px solid var(--accent-light);border-radius:var(--rl);
-  box-shadow:0 0 0 1px rgb(var(--accent-rgb) / .25), 0 2px 10px rgb(var(--accent-rgb) / .12);
+
   transition:background .15s, border-color .15s, box-shadow .15s;
   position:relative;
 }
@@ -306,7 +344,7 @@ input[type=range]{accent-color:var(--accent)}
 .palette-panel.open .palette-panel-header{
   background:rgb(var(--accent-rgb) / .08);
   border-radius:var(--rl) var(--rl) 0 0;
-  border-bottom-color:var(--accent);
+  border-bottom-color:var(--accent-light);
 }
 .palette-panel.open .palette-panel-header .pp-action{
   background:transparent;color:var(--accent);
