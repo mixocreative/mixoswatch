@@ -1,4 +1,7 @@
-![mixoswatch](app/img/logo-black.svg)
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="app/img/logo.svg">
+  <img src="app/img/logo-black.svg" alt="mixoswatch" width="72">
+</picture>
 
 # Mixo Swatch
 
@@ -248,6 +251,16 @@ Mixo Creative is a Taiwan-based professional design studio specializing in brand
 明上堂 Mixo Creative 是一家扎根於台灣、兼具國際視野的專業設計公司。深耕品牌識別幾何學、3D 造型設計與印刷。
 
 明上堂（Mixo Creative）は、台湾に拠点を置くプロフェッショナルなデザイン会社です。ブランドアイデンティティの幾何学、3Dモデリング、印刷技術を深く追求しています。
+
+<p>
+  <img width="48" src="app/img/logo3d.png" alt="Mixo Creative 3D mark" />
+  &nbsp;
+  <img width="48" src="app/img/logotype.svg" alt="Mixo Creative logotype" />
+  &nbsp;&nbsp;
+  <img width="100" src="app/img/cults-cert-gold.png" alt="Cults3D Selected Designer" />
+  &nbsp;
+  <img width="100" src="app/img/behance-cert-gold.png" alt="Adobe Behance featured designer" />
+</p>
 
 [Instagram](https://www.instagram.com/mixocreative) · [Behance](https://www.behance.net/mixocreative) · [GitHub](https://github.com/mixocreative) · [About us](https://mixocreative.com/about/)
 
