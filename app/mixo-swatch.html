@@ -24,13 +24,13 @@
   --font-jpn-serif:"Shippori Mincho B1",serif;
   --r:6px; --rl:10px;
   color-scheme:dark;
-   --overlay: rgba(0,0,0,.52);
+   --overlay: rgba(0,0,0,.4);
 
   /* ── Glassmorphism tokens ────────────────────────────── */
   --glass-bg: rgba(42, 38, 37, 0.55);
   --glass-bg-strong: rgba(42, 38, 37, 0.72);
-  --glass-border: rgba(255, 255, 255, 0.12);
-  --glass-border-strong: rgba(255, 255, 255, 0.20);
+  --glass-border: rgba(255, 255, 255, 0.8);
+  --glass-border-strong: rgba(255, 255, 255, 0.8);
   --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.30);
   --glass-shadow-strong: 0 12px 48px rgba(0, 0, 0, 0.40);
   --glass-blur: blur(14px);
@@ -40,14 +40,14 @@
   background: var(--glass-bg) !important;
   backdrop-filter: var(--glass-blur) !important;
   -webkit-backdrop-filter: var(--glass-blur) !important;
-  border: 1px solid var(--glass-border) !important;
+  border: 2px solid var(--glass-border) !important;
   box-shadow: var(--glass-shadow) !important;
 }
 .glass-strong {
   background: var(--glass-bg-strong) !important;
   backdrop-filter: var(--glass-blur-strong) !important;
   -webkit-backdrop-filter: var(--glass-blur-strong) !important;
-  border: 1px solid var(--glass-border-strong) !important;
+  border: 2px solid var(--glass-border-strong) !important;
   box-shadow: var(--glass-shadow-strong) !important;
 }
 :root[data-theme="light"] .glass {
@@ -74,7 +74,7 @@
   --text:#15130E; --muted:#6B6862; --faint:#A8A49B;
   --accent:#3D3424; --accent-light:#e1e0dd; --accent-rgb:61 52 36;
   color-scheme:light;
-  --overlay: rgba(255, 253, 246, 0.726);
+  --overlay: rgba(255, 253, 246, 0.4);
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:100vh;overflow:hidden}
@@ -854,8 +854,8 @@ input[type=range]{accent-color:var(--accent)}
 .lp-sub{font-size:11px;color:var(--muted);font-family:var(--font-mono)}
 
 /* ── Intro overlay (first-run welcome card) ── */
-#introOverlay{position:fixed;inset:0;z-index:9000;display:none;align-items:center;justify-content:center;background:var(--overlay);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
-#introOverlay.open{display:flex}
+/* #introOverlay{position:fixed;inset:0;z-index:9000;display:none;align-items:center;justify-content:center;background:var(--overlay);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+#introOverlay.open{display:flex} */
 .intro-card{
   background:var(--surface);border:1px solid var(--border);border-radius:14px;
   width:min(520px,94vw);max-height:88vh;overflow:auto;padding:34px 32px 28px;
@@ -1427,8 +1427,8 @@ html[lang^="zh"] .intro-btn .intro-zh{display:inline}
 <!-- All 3 languages are inlined in the same block on purpose. Intro is a
      one-shot brand greeting; showing all 3 at once is friendlier than
      forcing a language switch, and keeps the markup easy to edit. -->
-<div id="introOverlay" onclick="if(event.target===this) closeIntro()">
-  <div class="intro-card" role="dialog" aria-labelledby="introTag" aria-modal="true">
+<div id="introOverlay" class="overlay" onclick="if(event.target===this) closeIntro()">
+  <div class="intro-card glass" role="dialog" aria-labelledby="introTag" aria-modal="true">
     <button class="intro-close" onclick="closeIntro()" aria-label="Close intro">&#x2715;</button>
     
     <div>
