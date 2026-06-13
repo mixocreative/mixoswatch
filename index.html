@@ -10,11 +10,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500&family=Noto+Sans+JP:wght@300;400&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400&display=swap"
     rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@200..900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Mono:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -1681,10 +1680,10 @@
             <span data-zh>UI</span>
           </a>
         </nav>
-        <div class="lang-switch" id="langSwitch" title="Language / 言語 / 語言">
-          <button data-lang="en" class="on">EN</button>
-          <button data-lang="ja">日本語</button>
-          <button data-lang="zh">繁中</button>
+        <div class="lang-switch" id="langSwitch" role="group" aria-label="Language / 言語 / 語言" title="Language / 言語 / 語言">
+          <button data-lang="en" class="on" aria-pressed="true">EN</button>
+          <button data-lang="ja" aria-pressed="false">日本語</button>
+          <button data-lang="zh" aria-pressed="false">繁中</button>
         </div>
       </div>
     </header>
@@ -1693,9 +1692,9 @@
 
     <section class="hero">
       <h1>
-        <span data-en>Screen ✕ Press ✕ 3D Print <em  style="display:inline-block;"><b>Cross-Media Color System</b></em></span>
-        <span data-ja>スクリーン✕印刷✕3Dプリント <em  style="display:inline-block;"><b>クロスメディア・カラースウォッチ</b></em></span>
-        <span data-zh><span style="display:inline-block;">螢幕</span> ✕ <span style="display:inline-block;">印刷</span> ✕ <span style="display:inline-block;">3D列印</span>  <em  style="display:inline-block;"><b>跨媒介色版</b></em></span>
+        <span data-en>Screen <span aria-hidden="true">✕</span> Press <span aria-hidden="true">✕</span> 3D Print <em  style="display:inline-block;"><b>Cross-Media Color System</b></em></span>
+        <span data-ja>スクリーン<span aria-hidden="true">✕</span>印刷<span aria-hidden="true">✕</span>3Dプリント <em  style="display:inline-block;"><b>クロスメディア・カラースウォッチ</b></em></span>
+        <span data-zh><span style="display:inline-block;">螢幕</span> <span aria-hidden="true">✕</span> <span style="display:inline-block;">印刷</span> <span aria-hidden="true">✕</span> <span style="display:inline-block;">3D列印</span>  <em  style="display:inline-block;"><b>跨媒介色版</b></em></span>
       </h1>
       <p class="lede">
         <span data-en><b>Mixo Swatch</b> helps designers select ICC-aware CMYK swatches, filter unstable colors, build palettes, and export production-ready files.</span>
@@ -1706,11 +1705,10 @@
         <a class="tool" target="_blank" href="app/mixo-swatch.html">
           <div>
             <div class="micro">live</div>
-            <h2><img src="app/img/logo-black.svg" style="display:inline-block; height:1em; width:1em; margin: 0 0 -0.15em 0; " alt="Mixo Swatch" class="hero-logo"> Mixo Swatch</h2>
+            <h2><img src="app/img/logo-black.svg" style="display:inline-block; height:1em; width:1em; margin: 0 0 -0.15em 0; " alt="" aria-hidden="true" class="hero-logo"> Mixo Swatch</h2>
             <h3 data-en>Color Reliability System for Digital, Press, and 3D Print Workflows</h3>
             <h3 data-zh>平面數位、紙品與3D印刷用色彩可靠性系統</h3>
             <h3 data-ja>デジタル・紙媒体・3Dプリント色再現安定システム</h3>
-          </div>
           </div>
           <span class="go">GO</span>
         </a>
@@ -1728,11 +1726,10 @@
         <img width="60" src="app/img/logo3d.png" alt="Mixo Creative 3D mark" />
         <img width="50" src="app/img/logotype.svg" alt="Mixo Creative logotype" />
         </div>
-        <br/>
         <img width="120" style="filter: saturate(.5);" src="app/img/cults-cert-gold.png" alt="Cults3D Selected Designer" />
         <img width="120" style="filter: saturate(.5);" src="app/img/behance-cert-gold.png" alt="Adobe Behance featured designer" />
       </div>
-            <nav class="studio-links" aria-label="mixocreative social links">
+            <nav class="studio-links" aria-label="Mixo Creative links (header)">
         <a href="https://www.instagram.com/mixocreative" target="_blank" rel="noopener">Instagram</a>
         <a href="https://www.facebook.com/mixocreative" target="_blank" rel="noopener">Facebook</a>
         <a href="https://www.behance.net/mixocreative" target="_blank" rel="noopener">Behance</a>
@@ -1794,7 +1791,7 @@
        </div>
         <div class="col">
           <h4>
-            <svg class="h4-icon" viewBox="0 0 16 16"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14Zm0-2A5 5 1 0 0 8 3a5 5 0 0 0 0 10Zm0-2a3 3 0 1 1 0-6 3 3 0 0 1 0 6Z"/></svg>
+            <svg class="h4-icon" viewBox="0 0 16 16"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14Zm0-2A5 5 0 0 0 8 3a5 5 0 0 0 0 10Zm0-2a3 3 0 1 1 0-6 3 3 0 0 1 0 6Z"/></svg>
             <span data-en>You set the tolerance</span>
             <span data-ja>許容差は自分で決める</span>
             <span data-zh>容差由你定</span>
@@ -1898,9 +1895,9 @@
             <span class="tag"><span data-en>local</span><span data-ja>ローカル拡張</span><span data-zh>在地端擴充</span></span>
           </h4>
           <p>
-            <span data-en>If your factory's specific profile isn't built-in, just drop the .icc / .icm file into the icc/ folder and run the Python script (scripts/gen_luts.py). It uses Pillow + LittleCMS to sample the profile on a $17^4$ grid and output a browser-readable LUT. Detailed algorithm logic is in ARCHITECTURE.md.</span>
-            <span data-ja>内蔵されていないプロファイルも、.icc / .icm ファイルを icc/ フォルダに入れ、Pythonスクリプト（scripts/gen_luts.py）を実行するだけで追加可能。Pillow + LittleCMSで $17^4$ グリッドをサンプリングし、ブラウザ用のLUTを出力します。詳細は ARCHITECTURE.md を参照。</span>
-            <span data-zh>若工具未內建你工廠或配合廠商的特定描述檔，只需把 .icc / .icm 檔案放進 icc/ 資料夾，執行單支 Python 腳本（scripts/gen_luts.py）即可。該腳本同樣使用 Pillow + LittleCMS 引擎，以 $17^4$ 網格精確取樣描述檔，並輸出瀏覽器可讀的查找表（LUT）。演算法原理詳述於 ARCHITECTURE.md。</span>
+            <span data-en>If your factory's specific profile isn't built-in, just drop the .icc / .icm file into the icc/ folder and run the Python script (scripts/gen_luts.py). It uses Pillow + LittleCMS to sample the profile on a 17⁴ grid and output a browser-readable LUT. Detailed algorithm logic is in ARCHITECTURE.md.</span>
+            <span data-ja>内蔵されていないプロファイルも、.icc / .icm ファイルを icc/ フォルダに入れ、Pythonスクリプト（scripts/gen_luts.py）を実行するだけで追加可能。Pillow + LittleCMSで 17⁴ グリッドをサンプリングし、ブラウザ用のLUTを出力します。詳細は ARCHITECTURE.md を参照。</span>
+            <span data-zh>若工具未內建你工廠或配合廠商的特定描述檔，只需把 .icc / .icm 檔案放進 icc/ 資料夾，執行單支 Python 腳本（scripts/gen_luts.py）即可。該腳本同樣使用 Pillow + LittleCMS 引擎，以 17⁴ 網格精確取樣描述檔，並輸出瀏覽器可讀的查找表（LUT）。演算法原理詳述於 ARCHITECTURE.md。</span>
           </p><br />
         </div>
       </div>
@@ -2216,33 +2213,43 @@
             <ul style="margin-top:6px;padding-left:0;list-style:none;display:flex;flex-direction:column;gap:8px">
               <li>
                 <span style="font-family:var(--mono);font-size:11px;color:var(--accent)">jp-trad</span> &nbsp;
-                <span style="font-family:var(--jp);font-size:12.5px;color:var(--text)">日本の伝統色 (NipponColors) · 250色</span>
+                <span style="font-family:var(--jp);font-size:12.5px;color:var(--text)">日本の伝統色 (NipponColors) · 251色</span>
                 <span class="gloss"
-                  data-en="250 traditional Japanese colors from nipponcolors.com. Each entry carries kanji, romaji, and CMYK from the source.">250 traditional Japanese colors from nipponcolors.com. Each entry carries kanji, romaji, and CMYK from the source.</span>
+                  data-en="251 traditional Japanese colors from nipponcolors.com. Each entry carries kanji, romaji, and CMYK from the source.">251 traditional Japanese colors from nipponcolors.com. Each entry carries kanji, romaji, and CMYK from the source.</span>
                 <span class="gloss"
-                  data-ja="nipponcolors.com 由来の日本の伝統色 250 色。各エントリは漢字・ローマ字・CMYK を保持。">nipponcolors.com 由来の日本の伝統色 250 色。各エントリは漢字・ローマ字・CMYK を保持。</span>
+                  data-ja="nipponcolors.com 由来の日本の伝統色 251 色。各エントリは漢字・ローマ字・CMYK を保持。">nipponcolors.com 由来の日本の伝統色 251 色。各エントリは漢字・ローマ字・CMYK を保持。</span>
                 <span class="gloss"
-                  data-zh="來自 nipponcolors.com 的 250 個日本傳統色。每筆包含漢字、羅馬拼音與 CMYK。">來自 nipponcolors.com 的 250 個日本傳統色。每筆包含漢字、羅馬拼音與 CMYK。</span>
+                  data-zh="來自 nipponcolors.com 的 251 個日本傳統色。每筆包含漢字、羅馬拼音與 CMYK。">來自 nipponcolors.com 的 251 個日本傳統色。每筆包含漢字、羅馬拼音與 CMYK。</span>
               </li>
               <li>
-                <span style="font-family:var(--mono);font-size:11px;color:var(--accent)">html</span> &nbsp;
-                <span style="font-family:var(--jp);font-size:12.5px;color:var(--text)">W3C CSS Color Module Level 4 · 148色</span>
+                <span style="font-family:var(--mono);font-size:11px;color:var(--accent)">w3c-names</span> &nbsp;
+                <span style="font-family:var(--jp);font-size:12.5px;color:var(--text)">W3C CSS Color Module Level 4 · 149色</span>
                 <span class="gloss"
-                  data-en="The 148 W3C-canonical named CSS colors every browser ships. sRGB-native; useful when you need a web-friendly name alongside the ink-friendly one.">The 148 W3C-canonical named CSS colors every browser ships. sRGB-native; useful when you need a web-friendly name alongside the ink-friendly one.</span>
+                  data-en="The 149 W3C-canonical named CSS colors every browser ships. sRGB-native; useful when you need a web-friendly name alongside the ink-friendly one.">The 149 W3C-canonical named CSS colors every browser ships. sRGB-native; useful when you need a web-friendly name alongside the ink-friendly one.</span>
                 <span class="gloss"
-                  data-ja="全ブラウザ標準搭載の W3C 公認 CSS 命名色 148 色。sRGB ネイティブ。プリント向け名とウェブ向け名を併記したい時に有効。">全ブラウザ標準搭載の W3C 公認 CSS 命名色 148 色。sRGB ネイティブ。プリント向け名とウェブ向け名を併記したい時に有効。</span>
+                  data-ja="全ブラウザ標準搭載の W3C 公認 CSS 命名色 149 色。sRGB ネイティブ。プリント向け名とウェブ向け名を併記したい時に有効。">全ブラウザ標準搭載の W3C 公認 CSS 命名色 149 色。sRGB ネイティブ。プリント向け名とウェブ向け名を併記したい時に有効。</span>
                 <span class="gloss"
-                  data-zh="所有瀏覽器都內建的 W3C 公認 148 個 CSS 命名色，sRGB 原生。當你需要在油墨色名旁附上網頁色名時很有用。">所有瀏覽器都內建的 W3C 公認 148 個 CSS 命名色，sRGB 原生。當你需要在油墨色名旁附上網頁色名時很有用。</span>
+                  data-zh="所有瀏覽器都內建的 W3C 公認 149 個 CSS 命名色，sRGB 原生。當你需要在油墨色名旁附上網頁色名時很有用。">所有瀏覽器都內建的 W3C 公認 149 個 CSS 命名色，sRGB 原生。當你需要在油墨色名旁附上網頁色名時很有用。</span>
               </li>
               <li>
                 <span style="font-family:var(--mono);font-size:11px;color:var(--accent)">zh-trad</span> &nbsp;
-                <span style="font-family:var(--jp);font-size:12.5px;color:var(--text)">中国の伝統色 · 526色</span>
+                <span style="font-family:var(--jp);font-size:12.5px;color:var(--text)">中国の伝統色 · 528色</span>
                 <span class="gloss"
-                  data-en="526 traditional Chinese colors sourced from the 1957 Chinese Academy of Science color dictionary (mirrored on color-term.com). Each entry carries the Chinese character form (name_zh, Traditional), pinyin, hex, and derived CMYK.">526 traditional Chinese colors sourced from the 1957 Chinese Academy of Science color dictionary (mirrored on color-term.com). Each entry carries the Chinese character form (name_zh, Traditional), pinyin, hex, and derived CMYK.</span>
+                  data-en="528 traditional Chinese colors sourced from the 1957 Chinese Academy of Science color dictionary (mirrored on color-term.com). Each entry carries the Chinese character form (name_zh, Traditional), pinyin, hex, and derived CMYK.">528 traditional Chinese colors sourced from the 1957 Chinese Academy of Science color dictionary (mirrored on color-term.com). Each entry carries the Chinese character form (name_zh, Traditional), pinyin, hex, and derived CMYK.</span>
                 <span class="gloss"
-                  data-ja="1957 年中国科学院色名辞典に由来する中国の伝統色 526 色 (color-term.com にミラー)。各エントリは漢字・拼音・hex・派生 CMYK を保持。">1957 年中国科学院色名辞典に由来する中国の伝統色 526 色 (color-term.com にミラー)。各エントリは漢字・拼音・hex・派生 CMYK を保持。</span>
+                  data-ja="1957 年中国科学院色名辞典に由来する中国の伝統色 528 色 (color-term.com にミラー)。各エントリは漢字・拼音・hex・派生 CMYK を保持。">1957 年中国科学院色名辞典に由来する中国の伝統色 528 色 (color-term.com にミラー)。各エントリは漢字・拼音・hex・派生 CMYK を保持。</span>
                 <span class="gloss"
-                  data-zh="源自 1957 年中國科學院色名辭典的中國傳統色 526 種，鏡像於 color-term.com。每筆包含漢字、拼音、hex 與推導出的 CMYK。">源自 1957 年中國科學院色名辭典的中國傳統色 526 種，鏡像於 color-term.com。每筆包含漢字、拼音、hex 與推導出的 CMYK。</span>
+                  data-zh="源自 1957 年中國科學院色名辭典的中國傳統色 528 種，鏡像於 color-term.com。每筆包含漢字、拼音、hex 與推導出的 CMYK。">源自 1957 年中國科學院色名辭典的中國傳統色 528 種，鏡像於 color-term.com。每筆包含漢字、拼音、hex 與推導出的 CMYK。</span>
+              </li>
+              <li>
+                <span style="font-family:var(--mono);font-size:11px;color:var(--accent)">colour-in-translation</span> &nbsp;
+                <span style="font-family:var(--jp);font-size:12.5px;color:var(--text)">NEU (UK) Colour in Translation · 529色</span>
+                <span class="gloss"
+                  data-en="529 colors from Northeastern University London's Colour in Translation project, pairing English color names with cross-cultural sources. sRGB hex with derived CMYK.">529 colors from Northeastern University London's Colour in Translation project, pairing English color names with cross-cultural sources. sRGB hex with derived CMYK.</span>
+                <span class="gloss"
+                  data-ja="ノースイースタン大学ロンドン校「Colour in Translation」由来の 529 色。英語の色名を異文化の出典と対応付け。sRGB hex と派生 CMYK を保持。">ノースイースタン大学ロンドン校「Colour in Translation」由来の 529 色。英語の色名を異文化の出典と対応付け。sRGB hex と派生 CMYK を保持。</span>
+                <span class="gloss"
+                  data-zh="源自東北大學倫敦校區「Colour in Translation」專案的 529 色，將英文色名與跨文化來源對應。sRGB hex 與推導出的 CMYK。">源自東北大學倫敦校區「Colour in Translation」專案的 529 色，將英文色名與跨文化來源對應。sRGB hex 與推導出的 CMYK。</span>
               </li>
             </ul>
           </div>
@@ -2385,7 +2392,7 @@
             <div class="demo" data-demo="namefilter">
               <div class="demo-controls demo-check">
                 <label><input type="checkbox" value="jp-trad" checked> jp-trad</label>
-                <label><input type="checkbox" value="html" checked> html</label>
+                <label><input type="checkbox" value="w3c-names" checked> w3c-names</label>
                 <label><input type="checkbox" value="zh-trad" checked> zh-trad</label>
                 <span class="demo-count" id="d-nf-count">5 / 8 named</span>
               </div>
@@ -2696,7 +2703,7 @@
         <span data-ja><b>Mixo Creative Ltd.</b> 明上堂有限公司 </span>
         <span data-zh><b>明上堂有限公司</b> Mixo Creative Ltd. </span>
       </p>
-      <nav class="studio-links" aria-label="mixocreative social links">
+      <nav class="studio-links" aria-label="Mixo Creative links (footer)">
         <a href="https://www.instagram.com/mixocreative" target="_blank" rel="noopener">Instagram</a>
         <a href="https://www.facebook.com/mixocreative" target="_blank" rel="noopener">Facebook</a>
         <a href="https://www.behance.net/mixocreative" target="_blank" rel="noopener">Behance</a>
@@ -2734,9 +2741,9 @@
           <span data-zh>實話實說</span>
         </div>
         <p>
-          <span data-zh>色差 ΔE 小於 1.0 僅代表「低於肉眼辨識度」，並不等於「完全精準」。列印機終究是列印機。這些工具的作用是在「你所選的顏色」與「數位、紙本印刷、立體3D列印呈現出來的顏色」之間的取得平衡。面對關鍵作品，請務必在最終的實體紙材/材質上進行打樣。</span>
           <span data-en>A ΔE under 1.0 just means it's "below the limit of human perception". It doesn't mean it's a 100% perfect match. A printer is still a printer. The whole point of these tools is simply to help you find a beautiful balance between the colors you choose on screen and how they actually turn out in digital, flat print, and 3D print formats. For critical work, always do a test print on your final material.</span>
           <span data-ja>ΔE が1.0未満というのは、あくまで「肉眼での識別限界以下」という意味であり、「100%完全に精密」というわけではありません。プリンターはどこまでいってもプリンターです。このツールの目的は、「あなたが選んだ色」と「デジタル、平面印刷、3Dプリントで実際に表現される色」のバランスをうまく調整することにあります。妥協の許されない重要な作品では、必ず最終の実際の材質（本紙や造形素材）でテスト出力を行ってください。</span>
+          <span data-zh>色差 ΔE 小於 1.0 僅代表「低於肉眼辨識度」，並不等於「完全精準」。列印機終究是列印機。這些工具的作用是在「你所選的顏色」與「數位、紙本印刷、立體3D列印呈現出來的顏色」之間的取得平衡。面對關鍵作品，請務必在最終的實體紙材/材質上進行打樣。</span>
         </p>
           
       </div>
@@ -2938,8 +2945,8 @@
         const out = root.querySelector('#d-nf-out');
         const ct = root.querySelector('#d-nf-count');
         const named = {
-          sakura: ['jp-trad', 'html'], kariyasu: ['jp-trad'], yamabuki: ['jp-trad'],
-          moegi: ['jp-trad'], asagi: ['jp-trad', 'html'], enji: ['jp-trad'],
+          sakura: ['jp-trad', 'w3c-names'], kariyasu: ['jp-trad'], yamabuki: ['jp-trad'],
+          moegi: ['jp-trad'], asagi: ['jp-trad', 'w3c-names'], enji: ['jp-trad'],
           ai: ['jp-trad', 'zh-trad'], sumi: ['jp-trad'],
         };
         out.innerHTML = '';
@@ -3190,8 +3197,11 @@
       const apply = (lang) => {
         if (!valid.has(lang)) lang = 'en';
         html.setAttribute('lang', lang);
-        sw.querySelectorAll('button').forEach(b =>
-          b.classList.toggle('on', b.dataset.lang === lang));
+        sw.querySelectorAll('button').forEach(b => {
+          const active = b.dataset.lang === lang;
+          b.classList.toggle('on', active);
+          b.setAttribute('aria-pressed', String(active));
+        });
         try { localStorage.setItem(KEY, lang); } catch { }
       };
       sw.querySelectorAll('button').forEach(b => {
