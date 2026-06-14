@@ -311,7 +311,7 @@ select:focus-visible{
 .mz-panel{
   background:var(--surface);color:var(--text);border:1px solid var(--border);
   border-radius:var(--rl);box-shadow:0 18px 60px rgba(0,0,0,.45);
-  width:min(1100px,96vw);max-height:92vh;
+  width:min(1100px,96vw);height:92vh;
   display:flex;flex-direction:column;gap:12px;padding:16px 18px;
 }
 .mz-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
@@ -349,7 +349,7 @@ select:focus-visible{
 /* glow sizes in user units, set per-svg from the display scale (JS) so the
    rendered glow is a FIXED screen size regardless of the pixel-size ratio.
    Declared on the svg (not the path) so the paths inherit the computed value. */
-.mz-stage svg{width:100%;height:auto;max-height:78vh;display:block;overflow:visible;--g1:4px;--g2off:2px;--g2blur:7px}
+.mz-stage svg{max-width:100%;max-height:100%;width:100%;height:100%;display:block;overflow:visible;--g1:4px;--g2off:2px;--g2blur:7px}
 .mz-region-path{cursor:pointer;transition:filter .15s ease}
 /* Hover: lift the region with a fixed-size coloured drop shadow. */
 .mz-region-path.mz-hot,.mz-region-path:focus-visible{
@@ -7511,12 +7511,12 @@ const MosaicMode = (function () {
 
         const { reg, regions } = components(idx, bx, by);
         const showNames = namesInput.checked;
-        // px-per-block at display. Use the stage WIDTH (stable as soon as the
-        // modal opens) and the 78vh height cap, NOT stage.clientHeight - on the
-        // very first load the empty stage has ~0 height, which would shrink
-        // every label below the min size and hide all names until a reflow.
-        const stageW = stage.clientWidth || Math.min(1100, window.innerWidth * 0.96) - 36;
-        const unitPx = Math.max(1, Math.min(stageW / bx, (window.innerHeight * 0.78) / by));
+        // px-per-block at display = the meet-fit scale = min(stageW/bx, stageH/by).
+        // The panel now has a definite height, so the stage has a real height
+        // even on first load; fall back to viewport-derived sizes just in case.
+        const stageW = stage.clientWidth || (Math.min(1100, window.innerWidth * 0.96) - 36);
+        const stageH = stage.clientHeight || (window.innerHeight * 0.82);
+        const unitPx = Math.max(1, Math.min(stageW / bx, stageH / by));
         const svg = buildSVG(reg, regions, bx, by, pal, showNames, unitPx);
         setLoaded(svg);
         resultCanvas = renderDownloadCanvas(reg, regions, bx, by, pal, showNames);
