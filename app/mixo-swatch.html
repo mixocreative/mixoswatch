@@ -352,12 +352,14 @@ select:focus-visible{
   transition:transform .15s ease,filter .15s ease,opacity .15s ease;
 }
 /* Hover: enlarge the region and lift it with a drop shadow over the others. */
-.mz-region-path:hover,.mz-region-path:focus-visible{
+.mz-region-path.mz-hot,.mz-region-path:focus-visible{
   outline:none;transform:scale(1.07);
   filter:drop-shadow(0 0 4px var(--c)) drop-shadow(0 2px 7px rgba(0,0,0,.55));
 }
-/* While one region is focused, blur + dim the rest so the hovered one pops. */
-.mz-focus .mz-region-path:not(:hover){filter:blur(1.6px);opacity:.55}
+/* While one region is focused, blur + dim the rest so the hovered one pops.
+   Driven by the .mz-hot class (not :hover) so re-appending the hovered path
+   never leaves every region matching :not(:hover) and blurs the whole svg. */
+.mz-focus .mz-region-path:not(.mz-hot){filter:blur(1.6px);opacity:.55}
 .mz-focus .mz-rlabel{opacity:.3;transition:opacity .15s}
 .mz-rlabel{font-family:var(--font-jpn-serif);pointer-events:none;dominant-baseline:central;text-anchor:middle}
 .mz-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
@@ -7312,7 +7314,10 @@ const MosaicMode = (function () {
     const svg = document.createElementNS(SVGNS, 'svg');
     svg.setAttribute('viewBox', `0 0 ${bx} ${by}`);
     svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
-    svg.addEventListener('mouseleave', () => svg.classList.remove('mz-focus'));
+    svg.addEventListener('mouseleave', () => {
+      svg.classList.remove('mz-focus');
+      svg.querySelectorAll('.mz-hot').forEach(p => p.classList.remove('mz-hot'));
+    });
     const labels = [];
     for (let id = 0; id < regions.length; id++) {
       const region = regions[id];
@@ -7347,12 +7352,18 @@ const MosaicMode = (function () {
         path.addEventListener('keydown', (ev) => { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); go(ev); } });
       }
       // raise on hover so the enlarged region + its shadow sit over the others,
-      // and flag the svg so the rest blur/dim
+      // and flag the svg so the rest blur/dim. mz-hot marks THIS region as the
+      // focused one (class survives the re-append; :hover would not).
       path.addEventListener('mouseenter', () => {
         svg.classList.add('mz-focus');
-        svg.appendChild(path);
-        if (path._label) svg.appendChild(path._label);
+        path.classList.add('mz-hot');
+        const last = path._label || path;
+        if (svg.lastChild !== last) {
+          svg.appendChild(path);
+          if (path._label) svg.appendChild(path._label);
+        }
       });
+      path.addEventListener('mouseleave', () => path.classList.remove('mz-hot'));
       svg.appendChild(path);
 
       if (showNames) {
