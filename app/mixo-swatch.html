@@ -9,6 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
 <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=New+Tegomin&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@200..900&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Mono:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
 <style>
@@ -21,7 +22,7 @@
   --font-mono:'Atkinson Hyperlegible Mono',monospace;
   --font-sans:'Noto Sans JP',system-ui,sans-serif;
   --font-tc: 'Noto Serif TC', -apple-system, serif;
-  --font-jpn-serif:"Shippori Mincho B1",serif;
+  --font-jpn-serif:"New Tegomin","Shippori Mincho B1",serif;
   --r:6px; --rl:10px;
   color-scheme:dark;
    --overlay: rgba(0,0,0,.4);
@@ -7454,7 +7455,7 @@ const MosaicMode = (function () {
         const fs = fU * cell;
         const cx = (lr.x + lr.w / 2) * cell, cy = (lr.y + lr.h / 2) * cell;
         c.fillStyle = (sw && sw.text_color) || '#000';
-        c.font = `${fs}px "Shippori Mincho B1","Noto Serif TC",serif`;
+        c.font = `${fs}px "New Tegomin","Shippori Mincho B1",serif`;
         c.textAlign = 'center'; c.textBaseline = 'middle';
         if (vert) {
           const chars = [...nm], y0 = cy - (chars.length - 1) * fs / 2;
