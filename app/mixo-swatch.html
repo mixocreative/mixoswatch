@@ -334,7 +334,7 @@ select:focus-visible{
    large screens get a larger mosaic. */
 .mz-stage{
   flex:1 1 auto;min-height:0;display:flex;align-items:center;justify-content:center;
-  background:var(--bg2);border:1px solid var(--border2);border-radius:var(--r);
+  background:transparent;border:1px solid var(--border2);border-radius:var(--r);
   overflow:hidden;position:relative;
 }
 .mz-stage.empty{
@@ -356,11 +356,8 @@ select:focus-visible{
   outline:none;transform:scale(1.07);
   filter:drop-shadow(0 0 4px var(--c)) drop-shadow(0 2px 7px rgba(0,0,0,.55));
 }
-/* While one region is focused, blur + dim the rest so the hovered one pops.
-   Driven by the .mz-hot class (not :hover) so re-appending the hovered path
-   never leaves every region matching :not(:hover) and blurs the whole svg. */
-.mz-focus .mz-region-path:not(.mz-hot){filter:blur(.18px);opacity:.94}
-.mz-focus .mz-rlabel{opacity:.6;transition:opacity .15s}
+/* The other regions are left untouched on hover (no blur/dim); only the hovered
+   region enlarges and lifts above them. */
 .mz-rlabel{font-family:var(--font-jpn-serif);pointer-events:none;dominant-baseline:central;text-anchor:middle}
 .mz-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
 .mz-meta{font-size:11px;color:var(--muted);font-family:var(--font-mono)}
