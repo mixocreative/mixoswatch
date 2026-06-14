@@ -7365,7 +7365,13 @@ const MosaicMode = (function () {
         path.setAttribute('tabindex', '0');
         path.setAttribute('role', 'button');
         path.setAttribute('aria-label', `${nm} (${hex})`);
-        const go = (ev) => { if (ev) ev.stopPropagation(); openDetailTop(sw); };
+        const go = (ev) => {
+          if (ev) ev.stopPropagation();
+          // Drop focus before opening so the detail card's focus-return on close
+          // does not land back on this path and leave a stray focus glow.
+          if (document.activeElement === path && typeof path.blur === 'function') path.blur();
+          openDetailTop(sw);
+        };
         path.addEventListener('click', go);
         path.addEventListener('keydown', (ev) => { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); go(ev); } });
       }
