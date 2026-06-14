@@ -354,7 +354,7 @@ select:focus-visible{
 /* Hover: lift the region with a fixed-size coloured drop shadow. */
 .mz-region-path.mz-hot,.mz-region-path:focus-visible{
   outline:none;
-  filter:drop-shadow(0 0 var(--g1) var(--c)) drop-shadow(0 var(--g2off) var(--g2blur) rgba(0,0,0,.55));
+  filter:drop-shadow(0 0 var(--g1) #fff) drop-shadow(0 0 var(--g1) #fff) drop-shadow(0 var(--g2off) var(--g2blur) rgba(0,0,0,.5));
 }
 /* The other regions are left untouched on hover (no blur/dim); only the hovered
    region enlarges and lifts above them. */
@@ -7332,9 +7332,9 @@ const MosaicMode = (function () {
     // Convert fixed screen-px glow sizes into user units (viewBox space) so the
     // glow renders at a constant size whatever the pixel-size ratio / zoom.
     const sc = unitPx || 1;
-    svg.style.setProperty('--g1', (6 / sc) + 'px');
+    svg.style.setProperty('--g1', (4 / sc) + 'px');
     svg.style.setProperty('--g2off', (2 / sc) + 'px');
-    svg.style.setProperty('--g2blur', (6 / sc) + 'px');
+    svg.style.setProperty('--g2blur', (4 / sc) + 'px');
     const labels = [];
     for (let id = 0; id < regions.length; id++) {
       const region = regions[id];
