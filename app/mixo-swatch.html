@@ -344,10 +344,21 @@ select:focus-visible{
 .mz-stage.empty:hover,.mz-stage.empty.drag{
   border-color:var(--accent);background:rgb(var(--accent-rgb) / .06);color:var(--text);
 }
-.mz-stage svg{max-width:100%;max-height:100%;width:auto;height:auto;display:block}
-.mz-region-path{cursor:pointer;transition:filter .12s}
-.mz-region-path:hover{filter:drop-shadow(0 0 4px var(--c)) drop-shadow(0 0 9px var(--c))}
-.mz-region-path:focus-visible{outline:none;filter:drop-shadow(0 0 4px var(--c)) drop-shadow(0 0 9px var(--c))}
+/* Fill the stage width; height follows the viewBox aspect, capped so a tall
+   image never overflows. preserveAspectRatio="meet" letterboxes, no distortion. */
+.mz-stage svg{width:100%;height:auto;max-height:78vh;display:block;overflow:visible}
+.mz-region-path{
+  cursor:pointer;transform-box:fill-box;transform-origin:center;
+  transition:transform .15s ease,filter .15s ease,opacity .15s ease;
+}
+/* Hover: enlarge the region and lift it with a drop shadow over the others. */
+.mz-region-path:hover,.mz-region-path:focus-visible{
+  outline:none;transform:scale(1.07);
+  filter:drop-shadow(0 0 4px var(--c)) drop-shadow(0 2px 7px rgba(0,0,0,.55));
+}
+/* While one region is focused, blur + dim the rest so the hovered one pops. */
+.mz-focus .mz-region-path:not(:hover){filter:blur(1.6px);opacity:.55}
+.mz-focus .mz-rlabel{opacity:.3;transition:opacity .15s}
 .mz-rlabel{font-family:var(--font-jpn-serif);pointer-events:none;dominant-baseline:central;text-anchor:middle}
 .mz-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
 .mz-meta{font-size:11px;color:var(--muted);font-family:var(--font-mono)}
@@ -7301,6 +7312,7 @@ const MosaicMode = (function () {
     const svg = document.createElementNS(SVGNS, 'svg');
     svg.setAttribute('viewBox', `0 0 ${bx} ${by}`);
     svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
+    svg.addEventListener('mouseleave', () => svg.classList.remove('mz-focus'));
     const labels = [];
     for (let id = 0; id < regions.length; id++) {
       const region = regions[id];
@@ -7330,12 +7342,14 @@ const MosaicMode = (function () {
         path.setAttribute('tabindex', '0');
         path.setAttribute('role', 'button');
         path.setAttribute('aria-label', `${nm} (${hex})`);
-        const go = () => openDetailTop(sw);
+        const go = (ev) => { if (ev) ev.stopPropagation(); openDetailTop(sw); };
         path.addEventListener('click', go);
-        path.addEventListener('keydown', (ev) => { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); go(); } });
+        path.addEventListener('keydown', (ev) => { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); go(ev); } });
       }
-      // raise on hover so the coloured glow bleeds OVER neighbours
+      // raise on hover so the enlarged region + its shadow sit over the others,
+      // and flag the svg so the rest blur/dim
       path.addEventListener('mouseenter', () => {
+        svg.classList.add('mz-focus');
         svg.appendChild(path);
         if (path._label) svg.appendChild(path._label);
       });
