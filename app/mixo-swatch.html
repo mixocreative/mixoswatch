@@ -359,8 +359,8 @@ select:focus-visible{
 /* While one region is focused, blur + dim the rest so the hovered one pops.
    Driven by the .mz-hot class (not :hover) so re-appending the hovered path
    never leaves every region matching :not(:hover) and blurs the whole svg. */
-.mz-focus .mz-region-path:not(.mz-hot){filter:blur(1.6px);opacity:.55}
-.mz-focus .mz-rlabel{opacity:.3;transition:opacity .15s}
+.mz-focus .mz-region-path:not(.mz-hot){filter:blur(.7px);opacity:.82}
+.mz-focus .mz-rlabel{opacity:.6;transition:opacity .15s}
 .mz-rlabel{font-family:var(--font-jpn-serif);pointer-events:none;dominant-baseline:central;text-anchor:middle}
 .mz-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
 .mz-meta{font-size:11px;color:var(--muted);font-family:var(--font-mono)}
