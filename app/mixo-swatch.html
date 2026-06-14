@@ -457,7 +457,11 @@ select:focus-visible{
   aspect-ratio:1;border-radius:4px;cursor:pointer;
   position:relative;overflow:hidden;
   border:1px solid rgba(0,0,0,0.07);
-  transition:transform .1s,box-shadow .1s;
+  transition:transform .18s cubic-bezier(.2,.8,.2,1),box-shadow .18s ease;
+  /* Per-cell swatch colour (space-separated rgb triplet) written by the cell
+     factories; powers the magnetic-hover coloured shadow. Neutral default so
+     cells without it (e.g. grey-ramp strips) still cast a sane shadow. */
+  --sw-rgb: 0 0 0;
   flex-shrink:0;
   /* Skip rendering off-screen cells for 10k+ grids. Reserves layout space
      so scrollbar stays accurate. */
@@ -477,7 +481,18 @@ select:focus-visible{
   --lh-badg: 1.4;
   --lh-cr:   1.3;
 }
-.swatch-cell:hover{transform:scale(1.14);z-index:5;box-shadow:0 4px 20px rgba(0,0,0,0.22)}
+/* Magnetic hover: cell lifts off the grid and casts a glow tinted by its own
+   swatch colour (--sw-rgb), so it reads as a chip floating above the surface. */
+.swatch-cell:hover{
+  transform:translateY(-11px) scale(1.24);
+  z-index:5;
+  box-shadow:
+    0 2px 5px rgba(0,0,0,0.28),
+    0 0 0 1.5px rgb(var(--sw-rgb) / .60),
+    0 10px 20px rgb(var(--sw-rgb) / .60),
+    0 24px 52px rgb(var(--sw-rgb) / .50),
+    0 9px 18px rgb(var(--sw-rgb) / .42);
+}
 .swatch-cell.in-palette{
   box-shadow: inset 0 0 7px 1px var(--bg), 0 0 7px 4px var(--text);
 }
@@ -3146,7 +3161,7 @@ function renderPaletteMode() {
         const sw = _liveSwatch(stored);
         const cell = document.createElement('div');
         cell.className = 'swatch-cell';
-        cell.style.cssText = `background:${sw.hex};width:${cs}px;contain-intrinsic-size:${cs}px ${cs}px;${cellVars}`;
+        cell.style.cssText = `background:${sw.hex};--sw-rgb:${_swRgb(sw.hex)};width:${cs}px;contain-intrinsic-size:${cs}px ${cs}px;${cellVars}`;
 
         if (showLabel && sw.text_color) {
           const e = document.createElement('div');
@@ -3459,12 +3474,24 @@ function sorted(arr) {
 
 // ── render ───────────────────────────────────────────────────────────────────
 
+// "#rrggbb" -> "r g b" space-triplet for the magnetic-hover coloured shadow
+// (rgb(var(--sw-rgb) / a)). Falls back to mid-grey on a malformed hex.
+function _swRgb(hex) {
+  if (typeof hex !== 'string') return '128 128 128';
+  let h = hex.replace('#', '');
+  if (h.length === 3) h = h[0]+h[0]+h[1]+h[1]+h[2]+h[2];
+  if (h.length < 6) return '128 128 128';
+  const n = parseInt(h.slice(0, 6), 16);
+  if (!isFinite(n)) return '128 128 128';
+  return ((n >> 16) & 255) + ' ' + ((n >> 8) & 255) + ' ' + (n & 255);
+}
+
 // -- _makeSwatchCell - shared between full + virtualized renderers ------
 function _makeSwatchCell(sw, ctx) {
   const cell = document.createElement('div');
   cell.className = 'swatch-cell' + (ctx.palSet.has(_swKey(sw)) ? ' in-palette' : '');
   const cellVars = _cellFzVars({cmyk:ctx.fzCmyk, hex:ctx.fzHex, jpn:ctx.fzJpn, sib:ctx.fzSib, html:ctx.fzHtml, badg:ctx.fzBadg, cr:ctx.fzCR});
-  cell.style.cssText = `background:${sw.hex};width:${ctx.cs}px;contain-intrinsic-size:${ctx.cs}px ${ctx.cs}px;${cellVars}`;
+  cell.style.cssText = `background:${sw.hex};--sw-rgb:${_swRgb(sw.hex)};width:${ctx.cs}px;contain-intrinsic-size:${ctx.cs}px ${ctx.cs}px;${cellVars}`;
 
   if (ctx.showLabel) {
     const e = document.createElement('div');
@@ -3877,7 +3904,7 @@ function renderGS() {
     const cell = document.createElement('div');
     cell.className = 'gs-cell swatch-cell' + (palSet.has(_swKey(sw)) ? ' in-palette' : '');
     const stripVars = _cellFzVars({cmyk:fzCmyk, hex:fzHex, jpn:fzJpn, sib:fzSib, html:fzHtml, badg:fzBadg});
-    cell.style.cssText = `background:${sw.hex};width:${cs}px;contain-intrinsic-size:${cs}px ${cs}px;${stripVars}`;
+    cell.style.cssText = `background:${sw.hex};--sw-rgb:${_swRgb(sw.hex)};width:${cs}px;contain-intrinsic-size:${cs}px ${cs}px;${stripVars}`;
 
     const k = document.createElement('div');
     k.className = 'cell-cmyk';
@@ -3945,7 +3972,7 @@ function renderGS() {
     const cell = document.createElement('div');
     cell.className = 'gs-cell swatch-cell' + (palSet.has(_swKey(sw)) ? ' in-palette' : '');
     const stripVars = _cellFzVars({cmyk:fzCmyk, hex:fzHex, jpn:fzJpn, sib:fzSib, html:fzHtml, badg:fzBadg});
-    cell.style.cssText = `background:${hex};width:${cs}px;contain-intrinsic-size:${cs}px ${cs}px;${stripVars}`;
+    cell.style.cssText = `background:${hex};--sw-rgb:${_swRgb(hex)};width:${cs}px;contain-intrinsic-size:${cs}px ${cs}px;${stripVars}`;
     const k = document.createElement('div');
     k.className = 'cell-cmyk';
     k.style.color = tc;
