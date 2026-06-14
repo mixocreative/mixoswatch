@@ -359,7 +359,7 @@ select:focus-visible{
 /* While one region is focused, blur + dim the rest so the hovered one pops.
    Driven by the .mz-hot class (not :hover) so re-appending the hovered path
    never leaves every region matching :not(:hover) and blurs the whole svg. */
-.mz-focus .mz-region-path:not(.mz-hot){filter:blur(.35px);opacity:.9}
+.mz-focus .mz-region-path:not(.mz-hot){filter:blur(.18px);opacity:.94}
 .mz-focus .mz-rlabel{opacity:.6;transition:opacity .15s}
 .mz-rlabel{font-family:var(--font-jpn-serif);pointer-events:none;dominant-baseline:central;text-anchor:middle}
 .mz-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
@@ -7494,8 +7494,12 @@ const MosaicMode = (function () {
 
         const { reg, regions } = components(idx, bx, by);
         const showNames = namesInput.checked;
-        const stageW = stage.clientWidth || 600, stageH = stage.clientHeight || 400;
-        const unitPx = Math.max(1, Math.min(stageW / bx, stageH / by));
+        // px-per-block at display. Use the stage WIDTH (stable as soon as the
+        // modal opens) and the 78vh height cap, NOT stage.clientHeight - on the
+        // very first load the empty stage has ~0 height, which would shrink
+        // every label below the min size and hide all names until a reflow.
+        const stageW = stage.clientWidth || Math.min(1100, window.innerWidth * 0.96) - 36;
+        const unitPx = Math.max(1, Math.min(stageW / bx, (window.innerHeight * 0.78) / by));
         const svg = buildSVG(reg, regions, bx, by, pal, showNames, unitPx);
         setLoaded(svg);
         resultCanvas = renderDownloadCanvas(reg, regions, bx, by, pal, showNames);
