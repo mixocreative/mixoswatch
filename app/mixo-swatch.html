@@ -354,7 +354,7 @@ select:focus-visible{
 /* Hover: lift the region with a fixed-size coloured drop shadow. */
 .mz-region-path.mz-hot,.mz-region-path:focus-visible{
   outline:none;
-  filter:drop-shadow(0 0 var(--g1) #fff) drop-shadow(0 0 var(--g1) #fff) drop-shadow(0 var(--g2off) var(--g2blur) rgba(0,0,0,.5));
+  filter:drop-shadow(0 0 var(--g1) var(--c)) drop-shadow(0 0 var(--g1) var(--c)) drop-shadow(0 var(--g2off) var(--g2blur) var(--c));
 }
 /* The other regions are left untouched on hover (no blur/dim); only the hovered
    region enlarges and lifts above them. */
