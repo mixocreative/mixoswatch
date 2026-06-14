@@ -346,15 +346,15 @@ select:focus-visible{
 }
 /* Fill the stage width; height follows the viewBox aspect, capped so a tall
    image never overflows. preserveAspectRatio="meet" letterboxes, no distortion. */
-.mz-stage svg{width:100%;height:auto;max-height:78vh;display:block;overflow:visible}
-.mz-region-path{
-  cursor:pointer;transform-box:fill-box;transform-origin:center;
-  transition:transform .15s ease,filter .15s ease,opacity .15s ease;
-}
-/* Hover: enlarge the region and lift it with a drop shadow over the others. */
+/* glow sizes in user units, set per-svg from the display scale (JS) so the
+   rendered glow is a FIXED screen size regardless of the pixel-size ratio.
+   Declared on the svg (not the path) so the paths inherit the computed value. */
+.mz-stage svg{width:100%;height:auto;max-height:78vh;display:block;overflow:visible;--g1:4px;--g2off:2px;--g2blur:7px}
+.mz-region-path{cursor:pointer;transition:filter .15s ease}
+/* Hover: lift the region with a fixed-size coloured drop shadow. */
 .mz-region-path.mz-hot,.mz-region-path:focus-visible{
   outline:none;
-  filter:drop-shadow(0 0 4px var(--c)) drop-shadow(0 2px 7px rgba(0,0,0,.55));
+  filter:drop-shadow(0 0 var(--g1) var(--c)) drop-shadow(0 var(--g2off) var(--g2blur) rgba(0,0,0,.55));
 }
 /* The other regions are left untouched on hover (no blur/dim); only the hovered
    region enlarges and lifts above them. */
@@ -7315,6 +7315,12 @@ const MosaicMode = (function () {
       svg.classList.remove('mz-focus');
       svg.querySelectorAll('.mz-hot').forEach(p => p.classList.remove('mz-hot'));
     });
+    // Convert fixed screen-px glow sizes into user units (viewBox space) so the
+    // glow renders at a constant size whatever the pixel-size ratio / zoom.
+    const sc = unitPx || 1;
+    svg.style.setProperty('--g1', (6 / sc) + 'px');
+    svg.style.setProperty('--g2off', (2 / sc) + 'px');
+    svg.style.setProperty('--g2blur', (6 / sc) + 'px');
     const labels = [];
     for (let id = 0; id < regions.length; id++) {
       const region = regions[id];
