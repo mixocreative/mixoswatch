@@ -359,7 +359,7 @@ select:focus-visible{
 /* While one region is focused, blur + dim the rest so the hovered one pops.
    Driven by the .mz-hot class (not :hover) so re-appending the hovered path
    never leaves every region matching :not(:hover) and blurs the whole svg. */
-.mz-focus .mz-region-path:not(.mz-hot){filter:blur(.7px);opacity:.82}
+.mz-focus .mz-region-path:not(.mz-hot){filter:blur(.35px);opacity:.9}
 .mz-focus .mz-rlabel{opacity:.6;transition:opacity .15s}
 .mz-rlabel{font-family:var(--font-jpn-serif);pointer-events:none;dominant-baseline:central;text-anchor:middle}
 .mz-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
@@ -7473,7 +7473,7 @@ const MosaicMode = (function () {
         wctx.drawImage(img, 0, 0, w, h);
         const data = wctx.getImageData(0, 0, w, h).data;
 
-        const block = parseInt(sizeInput.value, 10) || 14;
+        const block = parseInt(sizeInput.value, 10) || 28;
         const bx = Math.ceil(w / block), by = Math.ceil(h / block);
         const idx = new Int32Array(bx * by);
         for (let gy = 0; gy < by; gy++) {
@@ -7565,7 +7565,7 @@ const MosaicMode = (function () {
         '<div class="mz-head"><h2></h2><button type="button" class="mz-close" aria-label="">✕</button></div>' +
         '<div class="mz-controls">' +
           '<label><span class="mz-lbl-src"></span><select class="mz-src"></select></label>' +
-          '<label><span class="mz-lbl-size"></span><input type="range" class="mz-size" min="4" max="48" step="1" value="14"><span class="mz-val">14</span></label>' +
+          '<label><span class="mz-lbl-size"></span><input type="range" class="mz-size" min="4" max="48" step="1" value="28"><span class="mz-val">28</span></label>' +
           '<label><input type="checkbox" class="mz-names" checked><span class="mz-lbl-names"></span></label>' +
           '<span class="mz-busy"></span>' +
         '</div>' +
