@@ -79,6 +79,14 @@
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:var(--font-sans);background:var(--bg);color:var(--text);height:100vh;overflow:hidden}
 
+/* Washi paper grain: a faint fixed tooth over the whole surface so flat
+   fills read as pigment on paper rather than flat screen colour. */
+body::before{
+  content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;
+  opacity:.04;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='w'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23w)'/%3E%3C/svg%3E");
+}
+
 /* ── Small utility classes (used to replace repeated inline styles) ── */
 .hidden{display:none !important}
 .mt-6{margin-top:6px}
@@ -292,6 +300,66 @@ select:focus-visible{
   border:1px solid var(--border2);border-radius:var(--r);transition:background .15s;
 }
 .grid-empty-reset:hover{background:var(--bg2)}
+
+/* ── Swatch mosaic (image -> merged swatch regions), see MosaicMode module ── */
+.mz-overlay{
+  position:fixed;inset:0;z-index:1200;display:none;
+  align-items:center;justify-content:center;
+  background:rgba(0,0,0,.55);backdrop-filter:blur(2px);padding:24px;
+}
+.mz-overlay.open{display:flex}
+.mz-panel{
+  background:var(--surface);color:var(--text);border:1px solid var(--border);
+  border-radius:var(--rl);box-shadow:0 18px 60px rgba(0,0,0,.45);
+  width:min(1100px,96vw);max-height:92vh;
+  display:flex;flex-direction:column;gap:12px;padding:16px 18px;
+}
+.mz-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.mz-head h2{font-size:16px;font-weight:600;letter-spacing:.02em}
+.mz-close{
+  background:transparent;border:1px solid var(--border);color:var(--text);
+  width:30px;height:30px;border-radius:var(--r);cursor:pointer;font-size:15px;line-height:1;
+}
+.mz-close:hover{background:var(--bg2)}
+.mz-controls{display:flex;flex-wrap:wrap;align-items:center;gap:14px 18px;font-size:12px}
+.mz-controls label{display:flex;align-items:center;gap:8px;color:var(--muted)}
+.mz-controls select{
+  font:inherit;font-size:12px;background:var(--bg2);color:var(--text);
+  border:1px solid var(--border);border-radius:var(--r);padding:3px 6px;max-width:200px;
+}
+.mz-controls input[type=range]{accent-color:var(--accent)}
+.mz-val{font-family:var(--font-mono);color:var(--text);min-width:26px}
+.mz-busy{font-size:12px;color:var(--accent)}
+/* Unified drop + display stage. No min-height: it grows to fill the panel so
+   large screens get a larger mosaic. */
+.mz-stage{
+  flex:1 1 auto;min-height:0;display:flex;align-items:center;justify-content:center;
+  background:var(--bg2);border:1px solid var(--border2);border-radius:var(--r);
+  overflow:hidden;position:relative;
+}
+.mz-stage.empty{
+  border:1.5px dashed var(--border);cursor:pointer;color:var(--muted);
+  text-align:center;padding:48px 16px;font-size:13px;
+}
+.mz-stage.empty:hover,.mz-stage.empty.drag{
+  border-color:var(--accent);background:rgb(var(--accent-rgb) / .06);color:var(--text);
+}
+.mz-stage svg{max-width:100%;max-height:100%;width:auto;height:auto;display:block}
+.mz-region-path{cursor:pointer;transition:filter .12s}
+.mz-region-path:hover{filter:drop-shadow(0 0 4px var(--c)) drop-shadow(0 0 9px var(--c))}
+.mz-region-path:focus-visible{outline:none;filter:drop-shadow(0 0 4px var(--c)) drop-shadow(0 0 9px var(--c))}
+.mz-rlabel{font-family:var(--font-jpn-serif);pointer-events:none;dominant-baseline:central;text-anchor:middle}
+.mz-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.mz-meta{font-size:11px;color:var(--muted);font-family:var(--font-mono)}
+.mz-actions{display:flex;gap:8px}
+.mz-btn{
+  font:inherit;font-size:13px;padding:8px 14px;cursor:pointer;border-radius:var(--r);
+  border:1px solid var(--border);background:transparent;color:var(--text);
+}
+.mz-btn:hover{background:var(--bg2)}
+.mz-btn:disabled{opacity:.45;cursor:not-allowed}
+.mz-dl{color:var(--bg);background:var(--accent);border-color:var(--accent)}
+.mz-dl:hover:not(:disabled){background:var(--accent);filter:brightness(1.08)}
 
 .search-inp{
   width:100%;padding:6px 10px;font-size:12px;
@@ -763,7 +831,7 @@ select:focus-visible{
 
 /* ── Detail overlay ── */
 .overlay{
-  display:none;position:fixed;inset:0;z-index:200;
+  display:none;position:fixed;inset:0;z-index:1300;
   background:var(--overlay);backdrop-filter:blur(12px);
   align-items:center;justify-content:center;
 }
@@ -1073,6 +1141,9 @@ html[lang^="zh"] .intro-btn .intro-zh{display:inline}
   </div>
   <button type="button" class="theme-toggle" id="themeToggleBtn" onclick="toggleTheme()" data-i18n-title="topbar.theme_toggle_title">
     <span class="tt-glyph" id="themeGlyph" aria-hidden="true">&#9789;</span><span id="themeLabel" data-i18n="theme.dark">DARK</span>
+  </button>
+  <button type="button" class="theme-toggle" id="mosaicBtn" onclick="MosaicMode.open()" data-i18n-title="topbar.mosaic_title">
+    <span class="tt-glyph" aria-hidden="true">&#9638;</span><span data-i18n="mosaic.btn">MOSAIC</span>
   </button>
   <div class="lang-picker">
     <button type="button" class="lang-picker-btn" id="langPickerBtn" onclick="toggleLangMenu()" aria-haspopup="menu" aria-expanded="false" aria-controls="langPickerMenu" data-i18n-title="topbar.lang_picker_title">
@@ -6036,6 +6107,23 @@ const I18N = {
     'palette.open':  'Open palettes',
     'grid.empty': 'No swatches match the current filters.',
     'grid.reset_filters': 'Reset to defaults',
+    'topbar.mosaic_title': 'Pixel-mosaic an image using only the swatches currently on screen',
+    'mosaic.btn': 'MOSAIC',
+    'mosaic.title': 'Swatch mosaic',
+    'mosaic.upload': 'Drop an image here, or click to choose',
+    'mosaic.pixel_size': 'Pixel size',
+    'mosaic.detect_bg': 'Detect background (flat fill)',
+    'mosaic.download': 'Download PNG',
+    'mosaic.processing': 'Processing...',
+    'mosaic.no_swatches': 'No swatches on screen. Adjust the filters first.',
+    'mosaic.swatches_used': 'swatches',
+    'mosaic.regions': 'regions',
+    'mosaic.labels': 'Names',
+    'mosaic.source': 'Swatch source',
+    'mosaic.src_screen': 'On screen',
+    'mosaic.remove': 'Remove image',
+    'mosaic.src_empty': 'That palette is empty - using on-screen swatches.',
+    'mosaic.close': 'Close',
     'palette.close': 'Close palettes',
     'sec.color_mode': 'Color mode',
     'sec.icc_profile': 'ICC profile (CMYK output)',
@@ -6277,6 +6365,23 @@ const I18N = {
     'palette.open':  'パレットを開く',
     'grid.empty': '現在のフィルターに一致するスウォッチがありません。',
     'grid.reset_filters': '初期設定に戻す',
+    'topbar.mosaic_title': '画面に表示中のスウォッチだけで画像をピクセルモザイク化します',
+    'mosaic.btn': 'モザイク',
+    'mosaic.title': 'スウォッチモザイク',
+    'mosaic.upload': '画像をここにドロップ、またはクリックして選択',
+    'mosaic.pixel_size': 'ピクセルサイズ',
+    'mosaic.detect_bg': '背景を検出（単色で塗りつぶし）',
+    'mosaic.download': 'PNGをダウンロード',
+    'mosaic.processing': '処理中...',
+    'mosaic.no_swatches': '画面にスウォッチがありません。先にフィルターを調整してください。',
+    'mosaic.swatches_used': '色',
+    'mosaic.regions': '領域',
+    'mosaic.labels': '色名',
+    'mosaic.source': 'スウォッチソース',
+    'mosaic.src_screen': '画面のスウォッチ',
+    'mosaic.remove': '画像を削除',
+    'mosaic.src_empty': 'そのパレットは空です。画面のスウォッチを使用します。',
+    'mosaic.close': '閉じる',
     'palette.close': 'パレットを閉じる',
     'sec.color_mode': 'カラーモード',
     'sec.icc_profile': 'ICCプロファイル (CMYK)',
@@ -6518,6 +6623,23 @@ const I18N = {
     'palette.open':  '展開調色盤',
     'grid.empty': '沒有符合目前篩選條件的色票。',
     'grid.reset_filters': '重設為預設值',
+    'topbar.mosaic_title': '只用目前畫面上的色票將圖片像素化為馬賽克',
+    'mosaic.btn': '馬賽克',
+    'mosaic.title': '色票馬賽克',
+    'mosaic.upload': '將圖片拖放到此處，或點擊選擇',
+    'mosaic.pixel_size': '像素大小',
+    'mosaic.detect_bg': '偵測背景（單色填滿）',
+    'mosaic.download': '下載 PNG',
+    'mosaic.processing': '處理中...',
+    'mosaic.no_swatches': '畫面上沒有色票，請先調整篩選條件。',
+    'mosaic.swatches_used': '色',
+    'mosaic.regions': '區塊',
+    'mosaic.labels': '色名',
+    'mosaic.source': '色票來源',
+    'mosaic.src_screen': '畫面色票',
+    'mosaic.remove': '移除圖片',
+    'mosaic.src_empty': '該調色盤為空，改用畫面色票。',
+    'mosaic.close': '關閉',
     'palette.close': '收起調色盤',
     'sec.color_mode': '色彩模式',
     'sec.icc_profile': 'ICC 色彩設定檔 (CMYK)',
@@ -7001,5 +7123,507 @@ document.addEventListener('click', (e) => {
   }
 })();
 </script>
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+  SWATCH MOSAIC - turn an uploaded image into merged colour regions drawn from
+  a chosen swatch pool (the on-screen filtered grid, or any saved palette).
+
+  Pipeline: image -> downscaled work canvas -> per-block nearest swatch (Lab dE,
+  pool = selected source) -> 4-connectivity connected components (corner-only
+  touch stays separate) -> one SVG <path> per region (union of its cells) with a
+  Japanese traditional colour name. Hover glows a region in its own colour;
+  click opens the swatch detail card ON TOP of this modal; Remove returns to the
+  upload state.
+
+  100% client-side (FileReader + canvas/SVG), so it runs as-is on GitHub Pages.
+  Self-contained: the only edits to existing code are the topbar button, the
+  i18n keys, and the .mz-* styles above.
+═══════════════════════════════════════════════════════════════════════════ -->
+<script>
+const MosaicMode = (function () {
+  'use strict';
+
+  const SVGNS = 'http://www.w3.org/2000/svg';
+  const WORK_MAX = 600;     // longest edge of the analysis canvas
+  const OUT_TARGET = 900;   // longest edge of the downloaded PNG
+  const MIN_LABEL_PX = 8;   // hide a region name below this rendered size
+
+  let overlay = null, stage = null, sourceSel = null, sizeInput = null, sizeVal = null,
+      namesInput = null, fileInput = null, dlBtn = null, removeBtn = null, meta = null, busyEl = null;
+  let img = null, imgUrl = null, resultCanvas = null, built = false, processing = false, pal = null;
+
+  const T = (k, f) => (typeof t === 'function') ? t(k, f) : f;
+
+  /* ── colour helpers (sRGB -> Lab) ───────────────────────────────────────── */
+  function srgb2lin(c) { c /= 255; return c <= 0.04045 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4); }
+  function rgb2lab(r, g, b) {
+    const R = srgb2lin(r), G = srgb2lin(g), B = srgb2lin(b);
+    let X = (R * 0.4124 + G * 0.3576 + B * 0.1805) / 0.95047;
+    let Y = (R * 0.2126 + G * 0.7152 + B * 0.0722);
+    let Z = (R * 0.0193 + G * 0.1192 + B * 0.9505) / 1.08883;
+    const f = v => v > 0.008856 ? Math.cbrt(v) : (7.787 * v + 16 / 116);
+    const fx = f(X), fy = f(Y), fz = f(Z);
+    return [116 * fy - 16, 500 * (fx - fy), 200 * (fy - fz)];
+  }
+  function hexRgb(hex) {
+    let h = String(hex).replace('#', '');
+    if (h.length === 3) h = h[0]+h[0]+h[1]+h[1]+h[2]+h[2];
+    const n = parseInt(h.slice(0, 6), 16);
+    return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+  }
+  function jpName(sw) {
+    if (!sw) return null;
+    try {
+      const m = sw.matches && sw.matches['jp-trad'];
+      if (m && m.entry) { const nm = m.entry.name_ja || m.entry.name || m.entry.romaji; if (nm) return nm; }
+    } catch {}
+    return sw.hex || null;
+  }
+  function isCJK(s) { return /[　-ヿ㐀-鿿豈-﫿]/.test(s || ''); }
+
+  /* ── swatch pool from the chosen source ─────────────────────────────────── */
+  function listSources() {
+    let screenN = 0;
+    try { if (typeof filtered === 'function') screenN = (filtered() || []).length; } catch {}
+    const out = [{ id: 'screen', name: T('mosaic.src_screen', 'On screen'), n: screenN }];
+    try {
+      if (typeof palettes !== 'undefined' && Array.isArray(palettes))
+        for (const p of palettes) out.push({ id: p.id, name: p.name, n: (p.swatches || []).length });
+    } catch {}
+    return out;
+  }
+  function poolFromSource(src) {
+    const seen = new Set(), pool = [];
+    const add = (s, full) => {
+      if (!s || !s.hex || seen.has(s.hex)) return;
+      seen.add(s.hex);
+      const [r, g, b] = hexRgb(s.hex);
+      const [L, a, bb] = rgb2lab(r, g, b);
+      pool.push({ hex: s.hex, L, a, b2: bb, sw: full || s });
+    };
+    if (src === 'screen' || !src) {
+      try { if (typeof filtered === 'function') (filtered() || []).forEach(s => add(s, s)); } catch {}
+      try { if (typeof GS_DATA !== 'undefined' && Array.isArray(GS_DATA)) GS_DATA.forEach(s => add(s, s)); } catch {}
+    } else {
+      let p = null;
+      try { if (typeof palettes !== 'undefined') p = palettes.find(q => q.id === src); } catch {}
+      if (p) for (const s of (p.swatches || [])) {
+        let full = null;
+        try {
+          if (typeof DEDUP_BY_KEY !== 'undefined' && typeof _swKey === 'function') full = DEDUP_BY_KEY.get(_swKey(s));
+        } catch {}
+        add(s, full || s);
+      }
+    }
+    return pool;
+  }
+  function nearestIdx(L, a, b, pool) {
+    let bi = 0, bd = Infinity;
+    for (let i = 0; i < pool.length; i++) {
+      const p = pool[i];
+      const dl = L - p.L, da = a - p.a, db = b - p.b2;
+      const d = dl * dl + da * da + db * db;
+      if (d < bd) { bd = d; bi = i; }
+    }
+    return bi;
+  }
+
+  /* ── 4-connectivity connected components over the block-index grid ──────── */
+  function components(idx, bx, by) {
+    const reg = new Int32Array(bx * by).fill(-1);
+    const regions = [];
+    const stack = [];
+    for (let p0 = 0; p0 < bx * by; p0++) {
+      if (reg[p0] !== -1) continue;
+      const id = regions.length, swIdx = idx[p0];
+      let minx = bx, miny = by, maxx = 0, maxy = 0, count = 0;
+      reg[p0] = id; stack.length = 0; stack.push(p0);
+      while (stack.length) {
+        const p = stack.pop(), x = p % bx, y = (p - x) / bx;
+        count++;
+        if (x < minx) minx = x; if (x > maxx) maxx = x;
+        if (y < miny) miny = y; if (y > maxy) maxy = y;
+        if (x > 0)      { const q = p - 1;  if (reg[q] === -1 && idx[q] === swIdx) { reg[q] = id; stack.push(q); } }
+        if (x < bx - 1) { const q = p + 1;  if (reg[q] === -1 && idx[q] === swIdx) { reg[q] = id; stack.push(q); } }
+        if (y > 0)      { const q = p - bx; if (reg[q] === -1 && idx[q] === swIdx) { reg[q] = id; stack.push(q); } }
+        if (y < by - 1) { const q = p + bx; if (reg[q] === -1 && idx[q] === swIdx) { reg[q] = id; stack.push(q); } }
+      }
+      regions.push({ swIdx, minx, miny, maxx, maxy, count });
+    }
+    return { reg, regions };
+  }
+
+  // Largest all-region rectangle inside a region's bbox (histogram method).
+  // Used to place one label fully inside even a concave region.
+  function largestRect(reg, id, region, bx) {
+    const { minx, miny, maxx, maxy } = region;
+    const W = maxx - minx + 1;
+    const heights = new Int32Array(W);
+    let best = null, bestArea = 0;
+    const st = [];
+    for (let y = miny; y <= maxy; y++) {
+      for (let i = 0; i < W; i++) {
+        const p = y * bx + (minx + i);
+        heights[i] = (reg[p] === id) ? heights[i] + 1 : 0;
+      }
+      st.length = 0;
+      for (let i = 0; i <= W; i++) {
+        const cur = i < W ? heights[i] : 0;
+        while (st.length && heights[st[st.length - 1]] >= cur) {
+          const h = heights[st.pop()];
+          const left = st.length ? st[st.length - 1] + 1 : 0;
+          const w = i - left;
+          const area = h * w;
+          if (area > bestArea) { bestArea = area; best = { x: minx + left, y: y - h + 1, w, h }; }
+        }
+        st.push(i);
+      }
+    }
+    return best;
+  }
+
+  // Largest font (in block units) for `name` inside a w x h block rect, or 0 if
+  // it would render below MIN_LABEL_PX at the given px-per-block scale.
+  function fitFont(name, wU, hU, vertical, unitPx) {
+    const M = 0.18;
+    const aw = wU - 2 * M, ah = hU - 2 * M;
+    if (aw <= 0 || ah <= 0) return 0;
+    const n = [...name].length || 1;
+    const cw = isCJK(name) ? 1.0 : 0.62;
+    let fU = vertical ? Math.min(ah / n, aw) : Math.min(aw / (n * cw), ah);
+    if (fU > 2.4) fU = 2.4;
+    if (fU * unitPx < MIN_LABEL_PX) return 0;
+    return fU;
+  }
+
+  /* ── SVG render ─────────────────────────────────────────────────────────── */
+  function buildSVG(reg, regions, bx, by, pool, showNames, unitPx) {
+    const svg = document.createElementNS(SVGNS, 'svg');
+    svg.setAttribute('viewBox', `0 0 ${bx} ${by}`);
+    svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
+    const labels = [];
+    for (let id = 0; id < regions.length; id++) {
+      const region = regions[id];
+      const entry = pool[region.swIdx];
+      if (!entry) continue;
+      const hex = entry.hex, sw = entry.sw;
+      // path = union of the region's cells, merged into per-row horizontal runs
+      let d = '';
+      for (let y = region.miny; y <= region.maxy; y++) {
+        let runStart = -1;
+        for (let x = region.minx; x <= region.maxx + 1; x++) {
+          const inside = x <= region.maxx && reg[y * bx + x] === id;
+          if (inside && runStart === -1) runStart = x;
+          else if (!inside && runStart !== -1) {
+            d += `M${runStart} ${y}h${x - runStart}v1h${-(x - runStart)}z`;
+            runStart = -1;
+          }
+        }
+      }
+      const path = document.createElementNS(SVGNS, 'path');
+      path.setAttribute('d', d);
+      path.setAttribute('fill', hex);
+      path.setAttribute('class', 'mz-region-path');
+      path.style.setProperty('--c', hex);
+      const nm = jpName(sw) || hex;
+      if (sw && sw.L_star != null) {
+        path.setAttribute('tabindex', '0');
+        path.setAttribute('role', 'button');
+        path.setAttribute('aria-label', `${nm} (${hex})`);
+        const go = () => openDetailTop(sw);
+        path.addEventListener('click', go);
+        path.addEventListener('keydown', (ev) => { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); go(); } });
+      }
+      // raise on hover so the coloured glow bleeds OVER neighbours
+      path.addEventListener('mouseenter', () => {
+        svg.appendChild(path);
+        if (path._label) svg.appendChild(path._label);
+      });
+      svg.appendChild(path);
+
+      if (showNames) {
+        const lr = largestRect(reg, id, region, bx);
+        if (lr) {
+          const vert = isCJK(nm) && lr.h > lr.w * 1.5;
+          const fU = fitFont(nm, lr.w, lr.h, vert, unitPx);
+          if (fU) {
+            const cx = lr.x + lr.w / 2, cy = lr.y + lr.h / 2;
+            const text = document.createElementNS(SVGNS, 'text');
+            text.setAttribute('class', 'mz-rlabel');
+            text.setAttribute('x', cx);
+            text.setAttribute('y', cy);
+            text.setAttribute('font-size', fU);
+            text.setAttribute('fill', (sw && sw.text_color) || '#000');
+            if (vert) {
+              const chars = [...nm];
+              const y0 = cy - (chars.length - 1) * fU / 2;
+              chars.forEach((ch, i) => {
+                const ts = document.createElementNS(SVGNS, 'tspan');
+                ts.setAttribute('x', cx);
+                ts.setAttribute('y', y0 + i * fU);
+                ts.textContent = ch;
+                text.appendChild(ts);
+              });
+            } else {
+              text.textContent = nm;
+            }
+            path._label = text;
+            labels.push(text);
+          }
+        }
+      }
+    }
+    for (const l of labels) svg.appendChild(l);
+    return svg;
+  }
+
+  // Open the detail card on top of (without closing) the mosaic modal. The
+  // detail overlay is z-index 1300 > the mosaic's 1200.
+  function openDetailTop(sw) {
+    if (!sw || sw.L_star == null || typeof openDetail !== 'function') return;
+    try { openDetail(sw); } catch (e) { console.warn('[MosaicMode] openDetail', e); }
+  }
+
+  /* ── PNG download: raster of the same regions + labels ──────────────────── */
+  function renderDownloadCanvas(reg, regions, bx, by, pool, showNames) {
+    const cell = Math.max(4, Math.min(40, Math.round(OUT_TARGET / Math.max(bx, by))));
+    const cv = document.createElement('canvas');
+    cv.width = bx * cell; cv.height = by * cell;
+    const c = cv.getContext('2d');
+    // fill cells
+    for (let p = 0; p < bx * by; p++) {
+      const id = reg[p];
+      const entry = pool[regions[id].swIdx];
+      if (!entry) continue;
+      const x = p % bx, y = (p - x) / bx;
+      c.fillStyle = entry.hex;
+      c.fillRect(x * cell, y * cell, cell, cell);
+    }
+    if (showNames) {
+      for (let id = 0; id < regions.length; id++) {
+        const region = regions[id], entry = pool[region.swIdx];
+        if (!entry) continue;
+        const sw = entry.sw, nm = jpName(sw) || entry.hex;
+        const lr = largestRect(reg, id, region, bx);
+        if (!lr) continue;
+        const vert = isCJK(nm) && lr.h > lr.w * 1.5;
+        const fU = fitFont(nm, lr.w, lr.h, vert, cell);
+        if (!fU) continue;
+        const fs = fU * cell;
+        const cx = (lr.x + lr.w / 2) * cell, cy = (lr.y + lr.h / 2) * cell;
+        c.fillStyle = (sw && sw.text_color) || '#000';
+        c.font = `${fs}px "Shippori Mincho B1","Noto Serif TC",serif`;
+        c.textAlign = 'center'; c.textBaseline = 'middle';
+        if (vert) {
+          const chars = [...nm], y0 = cy - (chars.length - 1) * fs / 2;
+          chars.forEach((ch, i) => c.fillText(ch, cx, y0 + i * fs));
+        } else {
+          c.fillText(nm, cx, cy);
+        }
+      }
+    }
+    return cv;
+  }
+
+  /* ── core ───────────────────────────────────────────────────────────────── */
+  function process() {
+    if (!img || processing) return;
+    let src = sourceSel.value || 'screen';
+    pal = poolFromSource(src);
+    if (!pal.length && src !== 'screen') {
+      sourceSel.value = 'screen'; src = 'screen'; pal = poolFromSource('screen');
+      setBusy(T('mosaic.src_empty', 'That palette is empty - using on-screen swatches.'));
+    }
+    if (!pal.length) { setBusy(T('mosaic.no_swatches', 'No swatches in this source. Adjust the filters first.')); resultCanvas = null; dlBtn.disabled = true; return; }
+    processing = true;
+    if (!busyEl.textContent) setBusy(T('mosaic.processing', 'Processing...'));
+
+    setTimeout(() => {
+      try {
+        const scale = Math.min(1, WORK_MAX / Math.max(img.width, img.height));
+        const w = Math.max(1, Math.round(img.width * scale));
+        const h = Math.max(1, Math.round(img.height * scale));
+        const wc = document.createElement('canvas'); wc.width = w; wc.height = h;
+        const wctx = wc.getContext('2d', { willReadFrequently: true });
+        wctx.drawImage(img, 0, 0, w, h);
+        const data = wctx.getImageData(0, 0, w, h).data;
+
+        const block = parseInt(sizeInput.value, 10) || 14;
+        const bx = Math.ceil(w / block), by = Math.ceil(h / block);
+        const idx = new Int32Array(bx * by);
+        for (let gy = 0; gy < by; gy++) {
+          for (let gx = 0; gx < bx; gx++) {
+            const x0 = gx * block, y0 = gy * block;
+            const x1 = Math.min(w, x0 + block), y1 = Math.min(h, y0 + block);
+            let rs = 0, gs = 0, bs = 0, n = 0;
+            for (let y = y0; y < y1; y++) {
+              for (let x = x0; x < x1; x++) {
+                const i = (y * w + x) * 4;
+                rs += data[i]; gs += data[i+1]; bs += data[i+2]; n++;
+              }
+            }
+            const [L, a, b] = rgb2lab(rs / n, gs / n, bs / n);
+            idx[gy * bx + gx] = nearestIdx(L, a, b, pal);
+          }
+        }
+
+        const { reg, regions } = components(idx, bx, by);
+        const showNames = namesInput.checked;
+        const stageW = stage.clientWidth || 600, stageH = stage.clientHeight || 400;
+        const unitPx = Math.max(1, Math.min(stageW / bx, stageH / by));
+        const svg = buildSVG(reg, regions, bx, by, pal, showNames, unitPx);
+        setLoaded(svg);
+        resultCanvas = renderDownloadCanvas(reg, regions, bx, by, pal, showNames);
+        dlBtn.disabled = false;
+        meta.textContent = `${bx}×${by} · ${regions.length} ${T('mosaic.regions', 'regions')} · ${pal.length} ${T('mosaic.swatches_used', 'swatches')}`;
+        setBusy('');
+      } catch (e) {
+        console.warn('[MosaicMode]', e);
+        setBusy('');
+      } finally {
+        processing = false;
+      }
+    }, 24);
+  }
+
+  function setBusy(txt) { if (busyEl) busyEl.textContent = txt || ''; }
+
+  function download() {
+    if (!resultCanvas) return;
+    resultCanvas.toBlob((blob) => {
+      if (!blob) return;
+      const a = document.createElement('a');
+      const url = URL.createObjectURL(blob);
+      a.href = url; a.download = 'mixo-mosaic.png';
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 60000);
+    }, 'image/png');
+  }
+
+  /* ── file intake + state ────────────────────────────────────────────────── */
+  function loadFile(file) {
+    if (!file || !/^image\//.test(file.type)) return;
+    if (imgUrl) URL.revokeObjectURL(imgUrl);
+    imgUrl = URL.createObjectURL(file);
+    const im = new Image();
+    im.onload = () => { img = im; process(); };
+    im.onerror = () => setBusy('');
+    im.src = imgUrl;
+  }
+  function clearImage() {
+    if (imgUrl) { URL.revokeObjectURL(imgUrl); imgUrl = null; }
+    img = null; resultCanvas = null;
+    dlBtn.disabled = true; removeBtn.disabled = true;
+    meta.textContent = ''; setBusy('');
+    setEmpty();
+  }
+  function setEmpty() {
+    stage.classList.add('empty');
+    stage.innerHTML = '';
+    stage.textContent = T('mosaic.upload', 'Drop an image here, or click to choose');
+  }
+  function setLoaded(svg) {
+    stage.classList.remove('empty');
+    stage.innerHTML = '';
+    stage.appendChild(svg);
+    removeBtn.disabled = false;
+  }
+
+  /* ── modal scaffolding ──────────────────────────────────────────────────── */
+  function build() {
+    overlay = document.createElement('div');
+    overlay.className = 'mz-overlay';
+    overlay.setAttribute('role', 'dialog');
+    overlay.setAttribute('aria-modal', 'true');
+    overlay.innerHTML =
+      '<div class="mz-panel">' +
+        '<div class="mz-head"><h2></h2><button type="button" class="mz-close" aria-label="">✕</button></div>' +
+        '<div class="mz-controls">' +
+          '<label><span class="mz-lbl-src"></span><select class="mz-src"></select></label>' +
+          '<label><span class="mz-lbl-size"></span><input type="range" class="mz-size" min="4" max="48" step="1" value="14"><span class="mz-val">14</span></label>' +
+          '<label><input type="checkbox" class="mz-names" checked><span class="mz-lbl-names"></span></label>' +
+          '<span class="mz-busy"></span>' +
+        '</div>' +
+        '<div class="mz-stage empty" tabindex="0" role="button"></div>' +
+        '<input type="file" accept="image/*" hidden>' +
+        '<div class="mz-foot"><span class="mz-meta"></span><div class="mz-actions">' +
+          '<button type="button" class="mz-btn mz-remove" disabled></button>' +
+          '<button type="button" class="mz-btn mz-dl" disabled></button>' +
+        '</div></div>' +
+      '</div>';
+    document.body.appendChild(overlay);
+
+    const $ = (s) => overlay.querySelector(s);
+    stage = $('.mz-stage'); sourceSel = $('.mz-src');
+    sizeInput = $('.mz-size'); sizeVal = $('.mz-val'); namesInput = $('.mz-names');
+    fileInput = $('input[type=file]'); dlBtn = $('.mz-dl'); removeBtn = $('.mz-remove');
+    meta = $('.mz-meta'); busyEl = $('.mz-busy');
+
+    stage.addEventListener('click', () => { if (stage.classList.contains('empty')) fileInput.click(); });
+    stage.addEventListener('keydown', (e) => { if (stage.classList.contains('empty') && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); fileInput.click(); } });
+    ['dragenter', 'dragover'].forEach(ev => stage.addEventListener(ev, (e) => { e.preventDefault(); stage.classList.add('drag'); }));
+    ['dragleave', 'drop'].forEach(ev => stage.addEventListener(ev, (e) => { e.preventDefault(); stage.classList.remove('drag'); }));
+    stage.addEventListener('drop', (e) => loadFile(e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]));
+    fileInput.addEventListener('change', (e) => loadFile(e.target.files && e.target.files[0]));
+
+    sizeInput.addEventListener('input', () => { sizeVal.textContent = sizeInput.value; if (img) process(); });
+    namesInput.addEventListener('change', () => { if (img) process(); });
+    sourceSel.addEventListener('change', () => { if (img) process(); });
+    dlBtn.addEventListener('click', download);
+    removeBtn.addEventListener('click', clearImage);
+    $('.mz-close').addEventListener('click', close);
+    overlay.addEventListener('click', (e) => { if (e.target === overlay) close(); });
+    // Escape closes the mosaic only when the detail card is NOT open on top.
+    // Capture phase so we observe the detail's open state BEFORE the app's
+    // document-level closeDetail handler (bubble phase) closes it - otherwise a
+    // single Escape would close both.
+    window.addEventListener('keydown', (e) => {
+      if (e.key !== 'Escape' || !overlay.classList.contains('open')) return;
+      const det = document.getElementById('overlay');
+      if (det && det.classList.contains('open')) return; // detail takes this Escape
+      close();
+    }, true);
+
+    built = true;
+  }
+
+  function refreshSources() {
+    const cur = sourceSel.value;
+    const list = listSources();
+    sourceSel.innerHTML = '';
+    for (const s of list) {
+      const o = document.createElement('option');
+      o.value = s.id;
+      o.textContent = s.id === 'screen' ? `${s.name} (${s.n})` : `${s.name} · ${s.n}`;
+      sourceSel.appendChild(o);
+    }
+    sourceSel.value = list.some(s => s.id === cur) ? cur : 'screen';
+  }
+
+  function localize() {
+    const $ = (s) => overlay.querySelector(s);
+    $('.mz-head h2').textContent = T('mosaic.title', 'Swatch mosaic');
+    $('.mz-close').setAttribute('aria-label', T('mosaic.close', 'Close'));
+    $('.mz-lbl-src').textContent = T('mosaic.source', 'Swatch source');
+    $('.mz-lbl-size').textContent = T('mosaic.pixel_size', 'Pixel size');
+    $('.mz-lbl-names').textContent = T('mosaic.labels', 'Names');
+    removeBtn.textContent = T('mosaic.remove', 'Remove image');
+    dlBtn.textContent = T('mosaic.download', 'Download PNG');
+    if (stage.classList.contains('empty')) stage.textContent = T('mosaic.upload', 'Drop an image here, or click to choose');
+  }
+
+  function open() {
+    if (!built) { build(); setEmpty(); }
+    refreshSources();
+    localize();
+    overlay.classList.add('open');
+    (img ? removeBtn : stage).focus();
+  }
+  function close() { if (overlay) overlay.classList.remove('open'); }
+
+  return { open, close };
+})();
+</script>
+
 </body>
 </html>
