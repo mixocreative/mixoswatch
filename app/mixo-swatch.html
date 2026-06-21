@@ -500,6 +500,36 @@ select:focus-visible{
 .theme-toggle:hover{background:var(--bg2)}
 .theme-toggle .tt-glyph{font-size:13px;line-height:1}
 
+/* ── MOSAIC button: make it shout. Pulsing colour + little hop. ── */
+#mosaicBtn{
+  border-color:transparent;color:#fff;font-weight:700;
+  background:linear-gradient(135deg,#ff2d95,#ff9a00,#00d4ff);
+  background-size:200% 200%;
+  animation:mosaicHop 1.1s ease-in-out infinite, mosaicBlink 1.1s ease-in-out infinite, mosaicShift 4s linear infinite;
+  transform-origin:center bottom;
+  box-shadow:0 0 0 0 rgba(255,45,149,.6);
+}
+#mosaicBtn:hover{
+  background:linear-gradient(135deg,#ff2d95,#ff9a00,#00d4ff);
+  background-size:200% 200%;
+}
+@keyframes mosaicHop{
+  0%,100%{transform:translateY(0) scale(1)}
+  20%{transform:translateY(-6px) scale(1.06)}
+  40%{transform:translateY(0) scale(1)}
+}
+@keyframes mosaicBlink{
+  0%,100%{opacity:1;box-shadow:0 0 14px 2px rgba(255,45,149,.75)}
+  50%{opacity:.45;box-shadow:0 0 0 0 rgba(255,45,149,0)}
+}
+@keyframes mosaicShift{
+  0%{background-position:0% 50%}
+  100%{background-position:200% 50%}
+}
+@media(prefers-reduced-motion:reduce){
+  #mosaicBtn{animation:mosaicShift 4s linear infinite}
+}
+
 /* ── Language picker (topbar) ── */
 .lang-picker{
   position:relative;display:inline-flex;align-items:center;
